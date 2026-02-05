@@ -193,6 +193,13 @@ IMAGE_ALLOWED_MIMETYPES = [
 CKEDITOR_UPLOAD_PATH = "uploads/"
 CKEDITOR_RESTRICT_BY_DATE = False
 
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',  
+        'rest_framework.authentication.BasicAuthentication',    
+    ],
+}
+
 
 LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/'

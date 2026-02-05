@@ -1,12 +1,13 @@
-from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAdminUser 
 
 from articles.models import Article 
 from blog.models import Blog    
 from .serializers import ArticleSerializer, BlogSerializer
 
-@login_required
+@permission_classes([IsAdminUser])
 @api_view(['GET'])
 def get_article(request, slug):
     """
@@ -36,7 +37,7 @@ def get_article(request, slug):
     # Send the JSON response
     return Response(serializer.data)
 
-@login_required
+@permission_classes([IsAdminUser])
 @api_view(['GET'])
 def get_blog(request, slug):
     """
@@ -66,7 +67,7 @@ def get_blog(request, slug):
     # Send the JSON response
     return Response(serializer.data)
 
-@login_required
+@permission_classes([IsAdminUser])
 @api_view(['GET'])
 def get_all_blogs(request):
     """
@@ -84,7 +85,7 @@ def get_all_blogs(request):
     return Response(serializer.data)
 
 
-@login_required
+@permission_classes([IsAdminUser])
 @api_view(['GET'])
 def get_all_articles(request):
     """

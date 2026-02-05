@@ -5302,3 +5302,7 @@ INFO 2026-02-05 12:50:00,803 autoreload Watching for file changes with StatReloa
 INFO 2026-02-05 12:53:14,720 autoreload D:\project\api\serializers.py changed, reloading.
 INFO 2026-02-05 12:53:15,335 autoreload Watching for file changes with StatReloader
 INFO 2026-02-05 13:23:33,236 autoreload Watching for file changes with StatReloader
+INFO 2026-02-05 15:40:02,143 autoreload Watching for file changes with StatReloader
+WARNING 2026-02-05 15:40:08,502 log Not Found: /favicon.ico
+WARNING 2026-02-05 15:40:15,963 log Not Found: /api/visitor-stats/
+WARNING 2026-02-05 15:40:20,963 log Not Found: /api/visitor-stats/

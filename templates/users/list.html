@@ -15,7 +15,7 @@
         </tr>
     </thead>
     <tbody>
-    {% for u in users %}
+        {% for u in users %}
         <tr>
             <td>{{ u.username }}</td>
             <td>{{ u.email }}</td>
@@ -23,26 +23,26 @@
                 {% if u.is_active %}Active{% else %}Inactive{% endif %}
             </td>
             <td>{{ u.date_joined|date:"Y-m-d" }}</td>
-            <td>
+            <td>{% if not u.is_superuser and u != request.user %}
                 <a href="{% url 'user_edit' u.id %}" class="edit">Edit</a> |
 
-                {% if not u.is_superuser and u != request.user %}
-                    <button class="delete" 
-                            onclick="openDeleteModal('user', '{{ u.username }}', '{% url 'delete_object' 'user' u.id %}',false)"
-                            style="background:none;border:none;color:#ef4444;cursor:pointer;padding:0;">
-                        Delete
-                    </button>
-                    {% else %}
-                        <span style="color:#9ca3af;">Delete</span>
-                    {% endif %}
+
+                <button class="delete"
+                    onclick="openDeleteModal('user', '{{ u.username }}', '{% url 'delete_object' 'user' u.id %}',false)"
+                    style="background:none;border:none;color:#ef4444;cursor:pointer;padding:0;">
+                    Delete
+                </button>
+                {% else %}
+                <span style="color:#9ca3af;">Delete</span>
+                {% endif %}
 
             </td>
         </tr>
-    {% empty %}
+        {% empty %}
         <tr>
             <td colspan="5" style="text-align:center;color:#6b7280;">No users found.</td>
         </tr>
-    {% endfor %}
+        {% endfor %}
     </tbody>
 </table>
 

@@ -46,9 +46,13 @@ INSTALLED_APPS = [
     'users',
     'articles',
     'blog',
+    'api',
+    'rest_framework',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -139,6 +143,8 @@ LOGGING = {
 
 # Internationalization
 # https://docs.djangoproject.com/en/6.0/topics/i18n/
+CORS_ALLOW_ALL_ORIGINS = True
+
 
 LANGUAGE_CODE = 'en-us'
 

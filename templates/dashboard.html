@@ -2,44 +2,133 @@
 {% block title %}Dashboard{% endblock %}
 
 {% block content %}
-<h2>DASHBOARD</h2>
 
-<!-- MODULE TILES -->
-<div class="tiles">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CMS Dashboard</title>
+  <!-- Bootstrap CSS CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <a href="{% url 'user_list' %}">
-    <div class="tile blue">
-        <i class="fa-solid fa-users"></i>
-        <span>Users</span>
+  <style>
+    body {
+      background-color: #f5f6fa;
+      font-family: 'Segoe UI', sans-serif;
+    }
+    .card {
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .card h3 {
+      font-weight: 600;
+      font-size: 1.5rem;
+    }
+    .card p {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 0;
+    }
+    .dashboard-header {
+      margin: 20px 0;
+    }
+    .card-icon {
+      font-size: 3rem;
+      color: #4e73df;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="dashboard-header text-center">
+      <h1>Python CMS Dashboard</h1>
+      <p class="text-muted">Visitor Analytics</p>
     </div>
-    </a>
 
-    <div class="tile orange">
-        <i class="fa-solid fa-list"></i>
-        <span>Menu Mgmt</span>
+    <div class="row g-4">
+      <!-- Total Visitors Card -->
+      <div class="col-md-6">
+        <div class="card p-4 d-flex flex-row align-items-center justify-content-between">
+          <div>
+            <h3>Total Visitors</h3>
+            <p id="totalVisitors">{{ total_visitors }}</p>
+          </div>
+          <div class="card-icon">
+            🌐
+          </div>
+        </div>
+      </div>
+
+      <!-- Live Viewers Card -->
+      <div class="col-md-6">
+        <div class="card p-4 d-flex flex-row align-items-center justify-content-between">
+          <div>
+            <h3>Live Viewers</h3>
+            <p id="liveVisitors">{{ live_visitors }}</p>
+          </div>
+          <div class="card-icon">
+            👁️
+          </div>
+        </div>
+      </div>
     </div>
 
-    <div class="tile red">
-        <i class="fa-solid fa-a"></i>
-        <span>Articles Mgmt</span>
+    <!-- Optional: Visitor Chart -->
+    <div class="row mt-5">
+      <div class="col-12">
+        <div class="card p-4">
+          <h3>Visitor Trends</h3>
+          <canvas id="visitorChart" height="100"></canvas>
+        </div>
+      </div>
     </div>
+  </div>
 
-    <div class="tile green">
-        <i class="fa-solid fa-film"></i>
-        <span>Slideshow Mgmt</span>
-    </div>
+  <!-- Bootstrap JS & dependencies -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    <div class="tile lime">
-        <i class="fa-solid fa-bullhorn"></i>
-        <span>Package Mgmt</span>
-    </div>
+  <script>
+    // Auto-update visitor stats every 5 seconds
+    async function updateVisitorStats() {
+      const res = await fetch('/api/visitor-stats/');
+      const data = await res.json();
+      document.getElementById('totalVisitors').innerText = data.total_visitors;
+      document.getElementById('liveVisitors').innerText = data.live_visitors;
+    }
+    setInterval(updateVisitorStats, 5000);
+    updateVisitorStats();
 
-    <div class="tile cyan">
-        <i class="fa-solid fa-vr-cardboard"></i>
-        <span>Virtual Tour</span>
-    </div>
+    // Example chart (Visitor Trends)
+    const ctx = document.getElementById('visitorChart').getContext('2d');
+    const visitorChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: ['8 AM', '10 AM', '12 PM', '2 PM', '4 PM', '6 PM', '8 PM'], // example labels
+        datasets: [{
+          label: 'Visitors',
+          data: [12, 19, 14, 22, 18, 25, 20], // replace with real data
+          backgroundColor: 'rgba(78, 115, 223, 0.2)',
+          borderColor: 'rgba(78, 115, 223, 1)',
+          borderWidth: 2,
+          fill: true,
+          tension: 0.4
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { display: false }
+        },
+        scales: {
+          y: { beginAtZero: true }
+        }
+      }
+    });
+  </script>
+</body>
 
-</div>
+
 
 
 

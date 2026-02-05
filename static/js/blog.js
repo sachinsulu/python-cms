@@ -24,7 +24,11 @@ $(document).ready(function() {
         pageLength: 10,
         columnDefs: [
             { targets: 0, visible: false } // Hide the ID/Position column
-        ]
+        ],
+        lengthMenu: [
+        [10, 25, 50, -1],  // -1 tells DataTables to show all rows
+        [10, 25, 50, "All"] // The labels displayed in the dropdown
+    ]
     });
 
     $('#listTable_filter input').off().on('keyup', function() {

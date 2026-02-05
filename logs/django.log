@@ -2757,3 +2757,2547 @@ WARNING 2026-01-22 16:04:26,671 log Not Found: /.well-known/appspecific/com.chro
 WARNING 2026-01-22 16:06:13,586 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
 WARNING 2026-01-22 16:10:23,690 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
 WARNING 2026-01-22 16:10:26,992 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+INFO 2026-01-22 16:33:06,753 autoreload Watching for file changes with StatReloader
+WARNING 2026-01-22 16:33:07,916 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+INFO 2026-01-22 16:34:48,712 autoreload Watching for file changes with StatReloader
+WARNING 2026-01-22 16:34:50,210 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-01-22 16:35:02,997 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-01-22 16:35:07,393 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-01-22 16:35:38,652 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-01-22 16:35:53,392 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-01-22 16:37:13,327 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-01-22 16:37:28,681 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-01-22 16:37:31,001 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-01-22 16:37:37,905 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-01-22 16:37:48,795 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-01-22 16:37:53,343 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-01-22 16:37:58,527 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-01-22 16:38:19,122 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-01-22 16:38:23,642 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-01-22 16:38:28,398 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-01-22 16:38:35,659 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-01-22 16:39:37,373 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-01-22 16:39:48,032 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-01-22 17:04:13,889 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-01-22 17:04:15,554 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-01-22 17:04:15,853 log Not Found: /api/visitor-stats/
+WARNING 2026-01-22 17:04:21,287 log Not Found: /api/visitor-stats/
+WARNING 2026-01-22 17:04:26,282 log Not Found: /api/visitor-stats/
+WARNING 2026-01-22 17:04:31,289 log Not Found: /api/visitor-stats/
+WARNING 2026-01-22 17:04:36,278 log Not Found: /api/visitor-stats/
+WARNING 2026-01-22 17:04:41,283 log Not Found: /api/visitor-stats/
+WARNING 2026-01-22 17:04:46,278 log Not Found: /api/visitor-stats/
+WARNING 2026-01-22 17:04:50,874 log Not Found: /api/visitor-stats/
+WARNING 2026-01-22 17:11:22,215 log Not Found: /api/visitor-stats/
+WARNING 2026-01-22 17:11:27,223 log Not Found: /api/visitor-stats/
+WARNING 2026-01-22 17:13:04,938 log Not Found: /api/visitor-stats/
+WARNING 2026-01-22 17:13:09,944 log Not Found: /api/visitor-stats/
+WARNING 2026-01-22 17:13:14,933 log Not Found: /api/visitor-stats/
+INFO 2026-02-05 10:55:44,917 autoreload Watching for file changes with StatReloader
+WARNING 2026-02-05 10:55:59,368 log Not Found: /favicon.ico
+WARNING 2026-02-05 10:56:11,581 log Not Found: /api/visitor-stats/
+WARNING 2026-02-05 10:56:16,599 log Not Found: /api/visitor-stats/
+WARNING 2026-02-05 10:56:21,595 log Not Found: /api/visitor-stats/
+WARNING 2026-02-05 10:56:33,719 log Not Found: /articles/about-us
+INFO 2026-02-05 10:57:42,730 autoreload D:\project\cms\urls.py changed, reloading.
+INFO 2026-02-05 10:57:43,418 autoreload Watching for file changes with StatReloader
+INFO 2026-02-05 10:57:54,867 autoreload D:\project\api\views.py changed, reloading.
+INFO 2026-02-05 10:57:55,899 autoreload Watching for file changes with StatReloader
+INFO 2026-02-05 10:57:57,231 autoreload D:\project\api\views.py changed, reloading.
+INFO 2026-02-05 10:57:57,963 autoreload Watching for file changes with StatReloader
+INFO 2026-02-05 10:57:59,140 autoreload D:\project\api\views.py changed, reloading.
+INFO 2026-02-05 10:57:59,747 autoreload Watching for file changes with StatReloader
+INFO 2026-02-05 10:58:01,037 autoreload D:\project\api\views.py changed, reloading.
+INFO 2026-02-05 10:58:01,686 autoreload Watching for file changes with StatReloader
+WARNING 2026-02-05 10:58:16,591 log Not Found: /about-us
+ERROR 2026-02-05 10:58:32,633 log Internal Server Error: /api/about-us/
+Traceback (most recent call last):
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\generic\base.py", line 106, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\rest_framework\decorators.py", line 50, in handler
+    return func(*args, **kwargs)
+  File "D:\project\api\views.py", line 36, in get_article
+    return Response(serializer.data)
+                    ^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\serializers.py", line 573, in data
+    ret = super().data
+          ^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\serializers.py", line 251, in data
+    self._data = self.to_representation(self.instance)
+                 ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\serializers.py", line 525, in to_representation
+    for field in fields:
+                 ^^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\serializers.py", line 386, in _readable_fields
+    for field in self.fields.values():
+                 ^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\utils\functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ~~~~~~~~~^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\serializers.py", line 374, in fields
+    for key, value in self.get_fields().items():
+                      ~~~~~~~~~~~~~~~^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\serializers.py", line 1081, in get_fields
+    field_names = self.get_field_names(declared_fields, info)
+  File "D:\project\venv\Lib\site-packages\rest_framework\serializers.py", line 1177, in get_field_names
+    assert field_name in fields, (
+           ^^^^^^^^^^^^^^^^^^^^
+AssertionError: The field 'author_name' was declared on serializer ArticleSerializer, but has not been included in the 'fields' option.
+INFO 2026-02-05 10:58:47,070 autoreload D:\project\api\serializers.py changed, reloading.
+INFO 2026-02-05 10:58:47,761 autoreload Watching for file changes with StatReloader
+INFO 2026-02-05 11:07:11,268 autoreload Watching for file changes with StatReloader
+WARNING 2026-02-05 11:08:14,611 log Not Found: /api/visitor-stats/
+WARNING 2026-02-05 11:08:49,296 log Not Found: /articles/edit/asdas/images/resource/about1-1.jpg
+WARNING 2026-02-05 11:08:49,303 log Not Found: /articles/edit/asdas/images/resource/about1-2.jpg
+WARNING 2026-02-05 11:08:49,337 log Not Found: /articles/edit/asdas/images/resource/about1-1.jpg
+WARNING 2026-02-05 11:09:04,244 log Not Found: /articles/edit/asdas/images/resource/about1-2.jpg
+WARNING 2026-02-05 11:09:04,249 log Not Found: /articles/edit/asdas/images/resource/about1-1.jpg
+WARNING 2026-02-05 11:09:04,289 log Not Found: /articles/edit/asdas/images/resource/about1-1.jpg
+WARNING 2026-02-05 11:09:04,291 log Not Found: /articles/edit/asdas/images/resource/about1-2.jpg
+WARNING 2026-02-05 11:09:48,750 log Not Found: /articles/edit/asdas/css/flatpickr.min.css
+WARNING 2026-02-05 11:09:48,770 log Not Found: /articles/edit/asdas/css/bootstrap.min.css
+WARNING 2026-02-05 11:09:48,784 log Not Found: /articles/edit/asdas/css/style.css
+WARNING 2026-02-05 11:09:48,755 log Not Found: /articles/edit/asdas/css/custom.css
+WARNING 2026-02-05 11:09:48,800 log Not Found: /articles/edit/asdas/css/slick.css
+WARNING 2026-02-05 11:09:48,813 log Not Found: /articles/edit/asdas/css/slick-theme.css
+WARNING 2026-02-05 11:09:48,849 log Not Found: /articles/edit/asdas/images/logo.png
+WARNING 2026-02-05 11:09:48,895 log Not Found: /articles/edit/asdas/images/resource/about1-1.jpg
+WARNING 2026-02-05 11:09:48,955 log Not Found: /articles/edit/asdas/css/flatpickr.min.css
+WARNING 2026-02-05 11:09:49,003 log Not Found: /articles/edit/asdas/images/resource/about1-2.jpg
+WARNING 2026-02-05 11:09:49,086 log Not Found: /articles/edit/asdas/images/logo-white.png
+WARNING 2026-02-05 11:09:49,146 log Not Found: /articles/edit/asdas/images/icons/address.png
+WARNING 2026-02-05 11:09:49,151 log Not Found: /articles/edit/asdas/images/icons/whatsapp.png
+WARNING 2026-02-05 11:09:49,184 log Not Found: /articles/edit/asdas/images/icons/tour.jpg
+WARNING 2026-02-05 11:09:49,200 log Not Found: /articles/edit/asdas/css/style.css
+WARNING 2026-02-05 11:09:49,214 log Not Found: /articles/edit/asdas/css/custom.css
+WARNING 2026-02-05 11:09:49,224 log Not Found: /articles/edit/asdas/css/slick-theme.css
+WARNING 2026-02-05 11:09:49,231 log Not Found: /articles/edit/asdas/css/slick.css
+WARNING 2026-02-05 11:09:49,247 log Not Found: /articles/edit/asdas/images/logo.png
+WARNING 2026-02-05 11:09:49,252 log Not Found: /articles/edit/asdas/images/banner/about-us.jpg
+WARNING 2026-02-05 11:09:49,301 log Not Found: /articles/edit/asdas/images/icons/address.png
+WARNING 2026-02-05 11:09:49,310 log Not Found: /articles/edit/asdas/images/logo-white.png
+WARNING 2026-02-05 11:09:49,313 log Not Found: /articles/edit/asdas/images/icons/tour.jpg
+WARNING 2026-02-05 11:09:49,317 log Not Found: /articles/edit/asdas/images/resource/about1-2.jpg
+WARNING 2026-02-05 11:09:49,321 log Not Found: /articles/edit/asdas/images/icons/whatsapp.png
+WARNING 2026-02-05 11:09:49,327 log Not Found: /articles/edit/asdas/images/resource/about1-1.jpg
+WARNING 2026-02-05 11:09:49,334 log Not Found: /articles/edit/asdas/images/logo.png
+WARNING 2026-02-05 11:11:34,476 log Not Found: /api/articles/about-us/
+WARNING 2026-02-05 11:11:37,711 log Not Found: /api//about-us/
+WARNING 2026-02-05 11:11:48,951 log Not Found: /api/about-u/
+WARNING 2026-02-05 11:11:49,191 log Not Found: /api/about-/
+WARNING 2026-02-05 11:11:49,466 log Not Found: /api/abo/
+WARNING 2026-02-05 11:11:49,932 log Not Found: /api/ab/
+WARNING 2026-02-05 11:11:50,428 log Not Found: /api//
+INFO 2026-02-05 11:12:41,579 autoreload D:\project\api\serializers.py changed, reloading.
+INFO 2026-02-05 11:12:42,348 autoreload Watching for file changes with StatReloader
+INFO 2026-02-05 11:12:46,595 autoreload D:\project\api\serializers.py changed, reloading.
+INFO 2026-02-05 11:12:47,380 autoreload Watching for file changes with StatReloader
+INFO 2026-02-05 11:13:16,282 autoreload D:\project\api\views.py changed, reloading.
+INFO 2026-02-05 11:13:17,006 autoreload Watching for file changes with StatReloader
+WARNING 2026-02-05 11:15:22,239 log Not Found: /articles/edit/asdas/images/resource/about1-1.jpg
+WARNING 2026-02-05 11:15:22,245 log Not Found: /articles/edit/asdas/images/resource/about1-2.jpg
+WARNING 2026-02-05 11:25:40,450 log Not Found: /api/articles/about-us/
+WARNING 2026-02-05 11:25:40,735 log Not Found: /api/articles/about-us/
+WARNING 2026-02-05 11:25:41,951 log Not Found: /api/articles/about-us/
+WARNING 2026-02-05 11:26:02,832 log Not Found: /api//about-us/
+WARNING 2026-02-05 11:28:03,966 log Not Found: /articles/edit/asdas/images/resource/about1-1.jpg
+WARNING 2026-02-05 11:28:03,974 log Not Found: /articles/edit/asdas/images/resource/about1-2.jpg
+WARNING 2026-02-05 11:28:04,009 log Not Found: /articles/edit/asdas/images/resource/about1-1.jpg
+WARNING 2026-02-05 11:28:04,021 log Not Found: /articles/edit/asdas/images/resource/about1-2.jpg
+WARNING 2026-02-05 11:28:07,330 log Not Found: /articles/edit/contact-us/images/resource/about1-1.jpg
+WARNING 2026-02-05 11:28:07,337 log Not Found: /articles/edit/contact-us/images/resource/about1-2.jpg
+WARNING 2026-02-05 11:28:07,384 log Not Found: /articles/edit/contact-us/images/resource/about1-1.jpg
+WARNING 2026-02-05 11:28:07,387 log Not Found: /articles/edit/contact-us/images/resource/about1-2.jpg
+WARNING 2026-02-05 11:29:21,702 log Not Found: /articles/edit/contact-us/images/resource/about1-2.jpg
+WARNING 2026-02-05 11:29:21,712 log Not Found: /articles/edit/contact-us/images/resource/about1-1.jpg
+WARNING 2026-02-05 11:30:05,919 log Not Found: /api/-us/
+WARNING 2026-02-05 11:30:07,745 log Not Found: /api/-us/
+WARNING 2026-02-05 11:30:08,459 log Not Found: /api/co-us/
+WARNING 2026-02-05 11:30:08,763 log Not Found: /api/con-us/
+WARNING 2026-02-05 11:30:09,039 log Not Found: /api/cont-us/
+WARNING 2026-02-05 11:32:28,659 log Not Found: /api/articles/about-us/
+WARNING 2026-02-05 11:32:29,130 log Not Found: /api/articles/about-us/
+WARNING 2026-02-05 11:32:44,374 log Not Found: /api/articles/about-us/
+WARNING 2026-02-05 11:32:44,761 log Not Found: /api/articles/about-us/
+WARNING 2026-02-05 11:32:45,095 log Not Found: /api/articles/about-us/
+WARNING 2026-02-05 11:32:50,019 log Not Found: /api/articles/about-us/
+WARNING 2026-02-05 11:33:02,483 log Not Found: /api/articles/about-us/
+WARNING 2026-02-05 11:33:02,806 log Not Found: /api/articles/about-us/
+WARNING 2026-02-05 11:33:03,775 log Not Found: /api/articles/about-us/
+WARNING 2026-02-05 11:33:04,136 log Not Found: /api/articles/about-us/
+WARNING 2026-02-05 11:33:04,626 log Not Found: /api/articles/about-us/
+WARNING 2026-02-05 11:33:05,924 log Not Found: /api/articles/about-us/
+WARNING 2026-02-05 11:33:37,557 log Not Found: /api/articles/abou-us/
+WARNING 2026-02-05 11:33:37,916 log Not Found: /api/articles/ab-us/
+WARNING 2026-02-05 11:33:38,660 log Not Found: /api/articles/c-us/
+WARNING 2026-02-05 11:33:39,150 log Not Found: /api/articles/co-us/
+WARNING 2026-02-05 11:33:39,704 log Not Found: /api/articles/conta-us/
+WARNING 2026-02-05 11:33:40,055 log Not Found: /api/articles/contact-us/
+WARNING 2026-02-05 11:33:41,216 log Not Found: /api/articles/contact-us/
+WARNING 2026-02-05 11:33:54,401 log Not Found: /api//contact-us/
+INFO 2026-02-05 11:35:48,183 autoreload D:\project\api\urls.py changed, reloading.
+INFO 2026-02-05 11:35:48,994 autoreload Watching for file changes with StatReloader
+INFO 2026-02-05 11:35:50,333 autoreload D:\project\api\urls.py changed, reloading.
+INFO 2026-02-05 11:35:51,026 autoreload Watching for file changes with StatReloader
+WARNING 2026-02-05 11:36:03,801 log Not Found: /api//contact-us/
+INFO 2026-02-05 11:57:25,181 autoreload D:\project\api\views.py changed, reloading.
+INFO 2026-02-05 11:57:25,923 autoreload Watching for file changes with StatReloader
+INFO 2026-02-05 11:57:28,271 autoreload D:\project\api\views.py changed, reloading.
+INFO 2026-02-05 11:57:29,131 autoreload Watching for file changes with StatReloader
+INFO 2026-02-05 11:57:30,429 autoreload D:\project\api\views.py changed, reloading.
+INFO 2026-02-05 11:57:31,040 autoreload Watching for file changes with StatReloader
+INFO 2026-02-05 11:57:36,291 autoreload D:\project\api\views.py changed, reloading.
+INFO 2026-02-05 11:57:36,956 autoreload Watching for file changes with StatReloader
+INFO 2026-02-05 11:57:38,091 autoreload D:\project\api\views.py changed, reloading.
+INFO 2026-02-05 11:57:38,889 autoreload Watching for file changes with StatReloader
+INFO 2026-02-05 11:57:40,079 autoreload D:\project\api\views.py changed, reloading.
+INFO 2026-02-05 11:57:40,661 autoreload Watching for file changes with StatReloader
+INFO 2026-02-05 11:57:43,834 autoreload D:\project\api\views.py changed, reloading.
+INFO 2026-02-05 11:57:44,500 autoreload Watching for file changes with StatReloader
+INFO 2026-02-05 11:57:51,908 autoreload D:\project\api\views.py changed, reloading.
+INFO 2026-02-05 11:57:52,591 autoreload Watching for file changes with StatReloader
+INFO 2026-02-05 11:57:58,076 autoreload D:\project\api\serializers.py changed, reloading.
+INFO 2026-02-05 11:57:58,840 autoreload Watching for file changes with StatReloader
+INFO 2026-02-05 11:58:02,209 autoreload D:\project\api\serializers.py changed, reloading.
+INFO 2026-02-05 11:58:02,936 autoreload Watching for file changes with StatReloader
+INFO 2026-02-05 11:58:04,276 autoreload D:\project\api\serializers.py changed, reloading.
+INFO 2026-02-05 11:58:04,947 autoreload Watching for file changes with StatReloader
+INFO 2026-02-05 11:58:06,100 autoreload D:\project\api\serializers.py changed, reloading.
+INFO 2026-02-05 11:58:06,704 autoreload Watching for file changes with StatReloader
+INFO 2026-02-05 11:58:08,873 autoreload D:\project\api\serializers.py changed, reloading.
+INFO 2026-02-05 11:58:09,464 autoreload Watching for file changes with StatReloader
+INFO 2026-02-05 11:58:10,763 autoreload D:\project\api\serializers.py changed, reloading.
+INFO 2026-02-05 11:58:11,498 autoreload Watching for file changes with StatReloader
+INFO 2026-02-05 11:58:12,887 autoreload D:\project\api\serializers.py changed, reloading.
+INFO 2026-02-05 11:58:13,495 autoreload Watching for file changes with StatReloader
+INFO 2026-02-05 11:58:14,640 autoreload D:\project\api\serializers.py changed, reloading.
+INFO 2026-02-05 11:58:15,224 autoreload Watching for file changes with StatReloader
+INFO 2026-02-05 11:58:28,708 autoreload D:\project\api\views.py changed, reloading.
+INFO 2026-02-05 11:58:29,410 autoreload Watching for file changes with StatReloader
+INFO 2026-02-05 11:58:31,571 autoreload D:\project\api\views.py changed, reloading.
+INFO 2026-02-05 11:58:32,189 autoreload Watching for file changes with StatReloader
+INFO 2026-02-05 11:58:33,451 autoreload D:\project\api\views.py changed, reloading.
+INFO 2026-02-05 11:58:34,124 autoreload Watching for file changes with StatReloader
+INFO 2026-02-05 11:58:35,447 autoreload D:\project\api\views.py changed, reloading.
+INFO 2026-02-05 11:58:36,204 autoreload Watching for file changes with StatReloader
+INFO 2026-02-05 11:58:42,616 autoreload D:\project\api\views.py changed, reloading.
+INFO 2026-02-05 11:58:43,220 autoreload Watching for file changes with StatReloader
+INFO 2026-02-05 11:58:45,380 autoreload D:\project\api\views.py changed, reloading.
+INFO 2026-02-05 11:58:45,972 autoreload Watching for file changes with StatReloader
+INFO 2026-02-05 11:58:49,277 autoreload D:\project\api\views.py changed, reloading.
+INFO 2026-02-05 11:58:50,002 autoreload Watching for file changes with StatReloader
+INFO 2026-02-05 11:58:51,284 autoreload D:\project\api\views.py changed, reloading.
+INFO 2026-02-05 11:58:51,961 autoreload Watching for file changes with StatReloader
+INFO 2026-02-05 11:58:53,285 autoreload D:\project\api\views.py changed, reloading.
+INFO 2026-02-05 11:58:54,114 autoreload Watching for file changes with StatReloader
+INFO 2026-02-05 11:59:03,520 autoreload D:\project\api\views.py changed, reloading.
+INFO 2026-02-05 11:59:04,146 autoreload Watching for file changes with StatReloader
+INFO 2026-02-05 11:59:30,889 autoreload D:\project\api\views.py changed, reloading.
+INFO 2026-02-05 11:59:31,522 autoreload Watching for file changes with StatReloader
+INFO 2026-02-05 11:59:32,792 autoreload D:\project\api\views.py changed, reloading.
+INFO 2026-02-05 11:59:33,504 autoreload Watching for file changes with StatReloader
+INFO 2026-02-05 11:59:34,655 autoreload D:\project\api\views.py changed, reloading.
+INFO 2026-02-05 11:59:35,292 autoreload Watching for file changes with StatReloader
+INFO 2026-02-05 11:59:36,561 autoreload D:\project\api\views.py changed, reloading.
+INFO 2026-02-05 11:59:37,240 autoreload Watching for file changes with StatReloader
+INFO 2026-02-05 11:59:38,517 autoreload D:\project\api\views.py changed, reloading.
+INFO 2026-02-05 11:59:39,346 autoreload Watching for file changes with StatReloader
+INFO 2026-02-05 12:01:07,192 autoreload D:\project\api\urls.py changed, reloading.
+INFO 2026-02-05 12:01:07,796 autoreload Watching for file changes with StatReloader
+INFO 2026-02-05 12:01:09,087 autoreload D:\project\api\urls.py changed, reloading.
+INFO 2026-02-05 12:01:09,782 autoreload Watching for file changes with StatReloader
+INFO 2026-02-05 12:01:11,146 autoreload D:\project\api\urls.py changed, reloading.
+INFO 2026-02-05 12:01:11,774 autoreload Watching for file changes with StatReloader
+INFO 2026-02-05 12:01:13,960 autoreload D:\project\api\urls.py changed, reloading.
+INFO 2026-02-05 12:01:14,550 autoreload Watching for file changes with StatReloader
+INFO 2026-02-05 12:01:15,815 autoreload D:\project\api\urls.py changed, reloading.
+INFO 2026-02-05 12:01:16,589 autoreload Watching for file changes with StatReloader
+ERROR 2026-02-05 12:04:43,333 log Internal Server Error: /api/blogs/help/
+Traceback (most recent call last):
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\generic\base.py", line 106, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\rest_framework\decorators.py", line 50, in handler
+    return func(*args, **kwargs)
+  File "D:\project\api\views.py", line 54, in get_blog
+    blog = Blog.objects.get(slug=slug, is_active=True)
+  File "D:\project\venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 625, in get
+    clone = self._chain() if self.query.combinator else self.filter(*args, **kwargs)
+                                                        ~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 1542, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 1560, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 1570, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1671, in add_q
+    clause, _ = self._add_q(q_object, can_reuse)
+                ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1703, in _add_q
+    child_clause, needed_inner = self.build_filter(
+                                 ~~~~~~~~~~~~~~~~~^
+        child,
+        ^^^^^^
+    ...<7 lines>...
+        update_join_types=update_join_types,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1551, in build_filter
+    lookups, parts, reffed_expression = self.solve_lookup_type(arg, summarize)
+                                        ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1358, in solve_lookup_type
+    _, field, _, lookup_parts = self.names_to_path(lookup_splitted, self.get_meta())
+                                ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1832, in names_to_path
+    raise FieldError(
+    ...<2 lines>...
+    )
+django.core.exceptions.FieldError: Cannot resolve keyword 'is_active' into field. Choices are: active, content, homepage, id, position, slug, subtitle, title
+ERROR 2026-02-05 12:07:49,550 log Internal Server Error: /api/blogs/help/
+Traceback (most recent call last):
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\generic\base.py", line 106, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\rest_framework\decorators.py", line 50, in handler
+    return func(*args, **kwargs)
+  File "D:\project\api\views.py", line 54, in get_blog
+    blog = Blog.objects.get(slug=slug, is_active=True)
+  File "D:\project\venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 625, in get
+    clone = self._chain() if self.query.combinator else self.filter(*args, **kwargs)
+                                                        ~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 1542, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 1560, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 1570, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1671, in add_q
+    clause, _ = self._add_q(q_object, can_reuse)
+                ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1703, in _add_q
+    child_clause, needed_inner = self.build_filter(
+                                 ~~~~~~~~~~~~~~~~~^
+        child,
+        ^^^^^^
+    ...<7 lines>...
+        update_join_types=update_join_types,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1551, in build_filter
+    lookups, parts, reffed_expression = self.solve_lookup_type(arg, summarize)
+                                        ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1358, in solve_lookup_type
+    _, field, _, lookup_parts = self.names_to_path(lookup_splitted, self.get_meta())
+                                ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1832, in names_to_path
+    raise FieldError(
+    ...<2 lines>...
+    )
+django.core.exceptions.FieldError: Cannot resolve keyword 'is_active' into field. Choices are: active, content, homepage, id, position, slug, subtitle, title
+ERROR 2026-02-05 12:07:56,823 log Internal Server Error: /api/blogs/help/
+Traceback (most recent call last):
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\generic\base.py", line 106, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\rest_framework\decorators.py", line 50, in handler
+    return func(*args, **kwargs)
+  File "D:\project\api\views.py", line 54, in get_blog
+    blog = Blog.objects.get(slug=slug, is_active=True)
+  File "D:\project\venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 625, in get
+    clone = self._chain() if self.query.combinator else self.filter(*args, **kwargs)
+                                                        ~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 1542, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 1560, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 1570, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1671, in add_q
+    clause, _ = self._add_q(q_object, can_reuse)
+                ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1703, in _add_q
+    child_clause, needed_inner = self.build_filter(
+                                 ~~~~~~~~~~~~~~~~~^
+        child,
+        ^^^^^^
+    ...<7 lines>...
+        update_join_types=update_join_types,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1551, in build_filter
+    lookups, parts, reffed_expression = self.solve_lookup_type(arg, summarize)
+                                        ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1358, in solve_lookup_type
+    _, field, _, lookup_parts = self.names_to_path(lookup_splitted, self.get_meta())
+                                ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1832, in names_to_path
+    raise FieldError(
+    ...<2 lines>...
+    )
+django.core.exceptions.FieldError: Cannot resolve keyword 'is_active' into field. Choices are: active, content, homepage, id, position, slug, subtitle, title
+ERROR 2026-02-05 12:07:59,501 log Internal Server Error: /api/blogs/help/
+Traceback (most recent call last):
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\generic\base.py", line 106, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\rest_framework\decorators.py", line 50, in handler
+    return func(*args, **kwargs)
+  File "D:\project\api\views.py", line 54, in get_blog
+    blog = Blog.objects.get(slug=slug, is_active=True)
+  File "D:\project\venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 625, in get
+    clone = self._chain() if self.query.combinator else self.filter(*args, **kwargs)
+                                                        ~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 1542, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 1560, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 1570, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1671, in add_q
+    clause, _ = self._add_q(q_object, can_reuse)
+                ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1703, in _add_q
+    child_clause, needed_inner = self.build_filter(
+                                 ~~~~~~~~~~~~~~~~~^
+        child,
+        ^^^^^^
+    ...<7 lines>...
+        update_join_types=update_join_types,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1551, in build_filter
+    lookups, parts, reffed_expression = self.solve_lookup_type(arg, summarize)
+                                        ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1358, in solve_lookup_type
+    _, field, _, lookup_parts = self.names_to_path(lookup_splitted, self.get_meta())
+                                ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1832, in names_to_path
+    raise FieldError(
+    ...<2 lines>...
+    )
+django.core.exceptions.FieldError: Cannot resolve keyword 'is_active' into field. Choices are: active, content, homepage, id, position, slug, subtitle, title
+ERROR 2026-02-05 12:08:43,177 log Internal Server Error: /api/blogs/help/
+Traceback (most recent call last):
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\generic\base.py", line 106, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\rest_framework\decorators.py", line 50, in handler
+    return func(*args, **kwargs)
+  File "D:\project\api\views.py", line 54, in get_blog
+    blog = Blog.objects.get(slug=slug, is_active=True)
+  File "D:\project\venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 625, in get
+    clone = self._chain() if self.query.combinator else self.filter(*args, **kwargs)
+                                                        ~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 1542, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 1560, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 1570, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1671, in add_q
+    clause, _ = self._add_q(q_object, can_reuse)
+                ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1703, in _add_q
+    child_clause, needed_inner = self.build_filter(
+                                 ~~~~~~~~~~~~~~~~~^
+        child,
+        ^^^^^^
+    ...<7 lines>...
+        update_join_types=update_join_types,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1551, in build_filter
+    lookups, parts, reffed_expression = self.solve_lookup_type(arg, summarize)
+                                        ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1358, in solve_lookup_type
+    _, field, _, lookup_parts = self.names_to_path(lookup_splitted, self.get_meta())
+                                ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1832, in names_to_path
+    raise FieldError(
+    ...<2 lines>...
+    )
+django.core.exceptions.FieldError: Cannot resolve keyword 'is_active' into field. Choices are: active, content, homepage, id, position, slug, subtitle, title
+ERROR 2026-02-05 12:08:43,351 log Internal Server Error: /api/blogs/help/
+Traceback (most recent call last):
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\generic\base.py", line 106, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\rest_framework\decorators.py", line 50, in handler
+    return func(*args, **kwargs)
+  File "D:\project\api\views.py", line 54, in get_blog
+    blog = Blog.objects.get(slug=slug, is_active=True)
+  File "D:\project\venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 625, in get
+    clone = self._chain() if self.query.combinator else self.filter(*args, **kwargs)
+                                                        ~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 1542, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 1560, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 1570, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1671, in add_q
+    clause, _ = self._add_q(q_object, can_reuse)
+                ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1703, in _add_q
+    child_clause, needed_inner = self.build_filter(
+                                 ~~~~~~~~~~~~~~~~~^
+        child,
+        ^^^^^^
+    ...<7 lines>...
+        update_join_types=update_join_types,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1551, in build_filter
+    lookups, parts, reffed_expression = self.solve_lookup_type(arg, summarize)
+                                        ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1358, in solve_lookup_type
+    _, field, _, lookup_parts = self.names_to_path(lookup_splitted, self.get_meta())
+                                ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1832, in names_to_path
+    raise FieldError(
+    ...<2 lines>...
+    )
+django.core.exceptions.FieldError: Cannot resolve keyword 'is_active' into field. Choices are: active, content, homepage, id, position, slug, subtitle, title
+ERROR 2026-02-05 12:08:44,803 log Internal Server Error: /api/blogs/help/
+Traceback (most recent call last):
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\generic\base.py", line 106, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\rest_framework\decorators.py", line 50, in handler
+    return func(*args, **kwargs)
+  File "D:\project\api\views.py", line 54, in get_blog
+    blog = Blog.objects.get(slug=slug, is_active=True)
+  File "D:\project\venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 625, in get
+    clone = self._chain() if self.query.combinator else self.filter(*args, **kwargs)
+                                                        ~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 1542, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 1560, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 1570, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1671, in add_q
+    clause, _ = self._add_q(q_object, can_reuse)
+                ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1703, in _add_q
+    child_clause, needed_inner = self.build_filter(
+                                 ~~~~~~~~~~~~~~~~~^
+        child,
+        ^^^^^^
+    ...<7 lines>...
+        update_join_types=update_join_types,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1551, in build_filter
+    lookups, parts, reffed_expression = self.solve_lookup_type(arg, summarize)
+                                        ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1358, in solve_lookup_type
+    _, field, _, lookup_parts = self.names_to_path(lookup_splitted, self.get_meta())
+                                ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1832, in names_to_path
+    raise FieldError(
+    ...<2 lines>...
+    )
+django.core.exceptions.FieldError: Cannot resolve keyword 'is_active' into field. Choices are: active, content, homepage, id, position, slug, subtitle, title
+ERROR 2026-02-05 12:09:15,437 log Internal Server Error: /api/blogs/help/
+Traceback (most recent call last):
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\generic\base.py", line 106, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\rest_framework\decorators.py", line 50, in handler
+    return func(*args, **kwargs)
+  File "D:\project\api\views.py", line 54, in get_blog
+    blog = Blog.objects.get(slug=slug, is_active=True)
+  File "D:\project\venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 625, in get
+    clone = self._chain() if self.query.combinator else self.filter(*args, **kwargs)
+                                                        ~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 1542, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 1560, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 1570, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1671, in add_q
+    clause, _ = self._add_q(q_object, can_reuse)
+                ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1703, in _add_q
+    child_clause, needed_inner = self.build_filter(
+                                 ~~~~~~~~~~~~~~~~~^
+        child,
+        ^^^^^^
+    ...<7 lines>...
+        update_join_types=update_join_types,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1551, in build_filter
+    lookups, parts, reffed_expression = self.solve_lookup_type(arg, summarize)
+                                        ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1358, in solve_lookup_type
+    _, field, _, lookup_parts = self.names_to_path(lookup_splitted, self.get_meta())
+                                ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1832, in names_to_path
+    raise FieldError(
+    ...<2 lines>...
+    )
+django.core.exceptions.FieldError: Cannot resolve keyword 'is_active' into field. Choices are: active, content, homepage, id, position, slug, subtitle, title
+ERROR 2026-02-05 12:09:21,118 log Internal Server Error: /api/blogs/help/
+Traceback (most recent call last):
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\generic\base.py", line 106, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\rest_framework\decorators.py", line 50, in handler
+    return func(*args, **kwargs)
+  File "D:\project\api\views.py", line 54, in get_blog
+    blog = Blog.objects.get(slug=slug, is_active=True)
+  File "D:\project\venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 625, in get
+    clone = self._chain() if self.query.combinator else self.filter(*args, **kwargs)
+                                                        ~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 1542, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 1560, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 1570, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1671, in add_q
+    clause, _ = self._add_q(q_object, can_reuse)
+                ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1703, in _add_q
+    child_clause, needed_inner = self.build_filter(
+                                 ~~~~~~~~~~~~~~~~~^
+        child,
+        ^^^^^^
+    ...<7 lines>...
+        update_join_types=update_join_types,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1551, in build_filter
+    lookups, parts, reffed_expression = self.solve_lookup_type(arg, summarize)
+                                        ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1358, in solve_lookup_type
+    _, field, _, lookup_parts = self.names_to_path(lookup_splitted, self.get_meta())
+                                ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1832, in names_to_path
+    raise FieldError(
+    ...<2 lines>...
+    )
+django.core.exceptions.FieldError: Cannot resolve keyword 'is_active' into field. Choices are: active, content, homepage, id, position, slug, subtitle, title
+ERROR 2026-02-05 12:09:37,604 log Internal Server Error: /api/blogs/help/
+Traceback (most recent call last):
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\generic\base.py", line 106, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\rest_framework\decorators.py", line 50, in handler
+    return func(*args, **kwargs)
+  File "D:\project\api\views.py", line 54, in get_blog
+    blog = Blog.objects.get(slug=slug, is_active=True)
+  File "D:\project\venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 625, in get
+    clone = self._chain() if self.query.combinator else self.filter(*args, **kwargs)
+                                                        ~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 1542, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 1560, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 1570, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1671, in add_q
+    clause, _ = self._add_q(q_object, can_reuse)
+                ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1703, in _add_q
+    child_clause, needed_inner = self.build_filter(
+                                 ~~~~~~~~~~~~~~~~~^
+        child,
+        ^^^^^^
+    ...<7 lines>...
+        update_join_types=update_join_types,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1551, in build_filter
+    lookups, parts, reffed_expression = self.solve_lookup_type(arg, summarize)
+                                        ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1358, in solve_lookup_type
+    _, field, _, lookup_parts = self.names_to_path(lookup_splitted, self.get_meta())
+                                ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1832, in names_to_path
+    raise FieldError(
+    ...<2 lines>...
+    )
+django.core.exceptions.FieldError: Cannot resolve keyword 'is_active' into field. Choices are: active, content, homepage, id, position, slug, subtitle, title
+ERROR 2026-02-05 12:09:47,286 log Internal Server Error: /api/blogs/help/
+Traceback (most recent call last):
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\generic\base.py", line 106, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\rest_framework\decorators.py", line 50, in handler
+    return func(*args, **kwargs)
+  File "D:\project\api\views.py", line 54, in get_blog
+    blog = Blog.objects.get(slug=slug, is_active=True)
+  File "D:\project\venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 625, in get
+    clone = self._chain() if self.query.combinator else self.filter(*args, **kwargs)
+                                                        ~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 1542, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 1560, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 1570, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1671, in add_q
+    clause, _ = self._add_q(q_object, can_reuse)
+                ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1703, in _add_q
+    child_clause, needed_inner = self.build_filter(
+                                 ~~~~~~~~~~~~~~~~~^
+        child,
+        ^^^^^^
+    ...<7 lines>...
+        update_join_types=update_join_types,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1551, in build_filter
+    lookups, parts, reffed_expression = self.solve_lookup_type(arg, summarize)
+                                        ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1358, in solve_lookup_type
+    _, field, _, lookup_parts = self.names_to_path(lookup_splitted, self.get_meta())
+                                ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1832, in names_to_path
+    raise FieldError(
+    ...<2 lines>...
+    )
+django.core.exceptions.FieldError: Cannot resolve keyword 'is_active' into field. Choices are: active, content, homepage, id, position, slug, subtitle, title
+ERROR 2026-02-05 12:09:47,866 log Internal Server Error: /api/blogs/help/
+Traceback (most recent call last):
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\generic\base.py", line 106, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\rest_framework\decorators.py", line 50, in handler
+    return func(*args, **kwargs)
+  File "D:\project\api\views.py", line 54, in get_blog
+    blog = Blog.objects.get(slug=slug, is_active=True)
+  File "D:\project\venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 625, in get
+    clone = self._chain() if self.query.combinator else self.filter(*args, **kwargs)
+                                                        ~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 1542, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 1560, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 1570, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1671, in add_q
+    clause, _ = self._add_q(q_object, can_reuse)
+                ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1703, in _add_q
+    child_clause, needed_inner = self.build_filter(
+                                 ~~~~~~~~~~~~~~~~~^
+        child,
+        ^^^^^^
+    ...<7 lines>...
+        update_join_types=update_join_types,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1551, in build_filter
+    lookups, parts, reffed_expression = self.solve_lookup_type(arg, summarize)
+                                        ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1358, in solve_lookup_type
+    _, field, _, lookup_parts = self.names_to_path(lookup_splitted, self.get_meta())
+                                ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1832, in names_to_path
+    raise FieldError(
+    ...<2 lines>...
+    )
+django.core.exceptions.FieldError: Cannot resolve keyword 'is_active' into field. Choices are: active, content, homepage, id, position, slug, subtitle, title
+ERROR 2026-02-05 12:09:48,031 log Internal Server Error: /api/blogs/help/
+Traceback (most recent call last):
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\generic\base.py", line 106, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\rest_framework\decorators.py", line 50, in handler
+    return func(*args, **kwargs)
+  File "D:\project\api\views.py", line 54, in get_blog
+    blog = Blog.objects.get(slug=slug, is_active=True)
+  File "D:\project\venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 625, in get
+    clone = self._chain() if self.query.combinator else self.filter(*args, **kwargs)
+                                                        ~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 1542, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 1560, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 1570, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1671, in add_q
+    clause, _ = self._add_q(q_object, can_reuse)
+                ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1703, in _add_q
+    child_clause, needed_inner = self.build_filter(
+                                 ~~~~~~~~~~~~~~~~~^
+        child,
+        ^^^^^^
+    ...<7 lines>...
+        update_join_types=update_join_types,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1551, in build_filter
+    lookups, parts, reffed_expression = self.solve_lookup_type(arg, summarize)
+                                        ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1358, in solve_lookup_type
+    _, field, _, lookup_parts = self.names_to_path(lookup_splitted, self.get_meta())
+                                ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1832, in names_to_path
+    raise FieldError(
+    ...<2 lines>...
+    )
+django.core.exceptions.FieldError: Cannot resolve keyword 'is_active' into field. Choices are: active, content, homepage, id, position, slug, subtitle, title
+ERROR 2026-02-05 12:09:53,561 log Internal Server Error: /api/blogs/help/
+Traceback (most recent call last):
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\generic\base.py", line 106, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\rest_framework\decorators.py", line 50, in handler
+    return func(*args, **kwargs)
+  File "D:\project\api\views.py", line 54, in get_blog
+    blog = Blog.objects.get(slug=slug, is_active=True)
+  File "D:\project\venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 625, in get
+    clone = self._chain() if self.query.combinator else self.filter(*args, **kwargs)
+                                                        ~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 1542, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 1560, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 1570, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1671, in add_q
+    clause, _ = self._add_q(q_object, can_reuse)
+                ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1703, in _add_q
+    child_clause, needed_inner = self.build_filter(
+                                 ~~~~~~~~~~~~~~~~~^
+        child,
+        ^^^^^^
+    ...<7 lines>...
+        update_join_types=update_join_types,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1551, in build_filter
+    lookups, parts, reffed_expression = self.solve_lookup_type(arg, summarize)
+                                        ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1358, in solve_lookup_type
+    _, field, _, lookup_parts = self.names_to_path(lookup_splitted, self.get_meta())
+                                ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1832, in names_to_path
+    raise FieldError(
+    ...<2 lines>...
+    )
+django.core.exceptions.FieldError: Cannot resolve keyword 'is_active' into field. Choices are: active, content, homepage, id, position, slug, subtitle, title
+ERROR 2026-02-05 12:09:53,956 log Internal Server Error: /api/blogs/help/
+Traceback (most recent call last):
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\generic\base.py", line 106, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\rest_framework\decorators.py", line 50, in handler
+    return func(*args, **kwargs)
+  File "D:\project\api\views.py", line 54, in get_blog
+    blog = Blog.objects.get(slug=slug, is_active=True)
+  File "D:\project\venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 625, in get
+    clone = self._chain() if self.query.combinator else self.filter(*args, **kwargs)
+                                                        ~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 1542, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 1560, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 1570, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1671, in add_q
+    clause, _ = self._add_q(q_object, can_reuse)
+                ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1703, in _add_q
+    child_clause, needed_inner = self.build_filter(
+                                 ~~~~~~~~~~~~~~~~~^
+        child,
+        ^^^^^^
+    ...<7 lines>...
+        update_join_types=update_join_types,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1551, in build_filter
+    lookups, parts, reffed_expression = self.solve_lookup_type(arg, summarize)
+                                        ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1358, in solve_lookup_type
+    _, field, _, lookup_parts = self.names_to_path(lookup_splitted, self.get_meta())
+                                ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1832, in names_to_path
+    raise FieldError(
+    ...<2 lines>...
+    )
+django.core.exceptions.FieldError: Cannot resolve keyword 'is_active' into field. Choices are: active, content, homepage, id, position, slug, subtitle, title
+ERROR 2026-02-05 12:09:54,086 log Internal Server Error: /api/blogs/help/
+Traceback (most recent call last):
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\generic\base.py", line 106, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\rest_framework\decorators.py", line 50, in handler
+    return func(*args, **kwargs)
+  File "D:\project\api\views.py", line 54, in get_blog
+    blog = Blog.objects.get(slug=slug, is_active=True)
+  File "D:\project\venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 625, in get
+    clone = self._chain() if self.query.combinator else self.filter(*args, **kwargs)
+                                                        ~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 1542, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 1560, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 1570, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1671, in add_q
+    clause, _ = self._add_q(q_object, can_reuse)
+                ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1703, in _add_q
+    child_clause, needed_inner = self.build_filter(
+                                 ~~~~~~~~~~~~~~~~~^
+        child,
+        ^^^^^^
+    ...<7 lines>...
+        update_join_types=update_join_types,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1551, in build_filter
+    lookups, parts, reffed_expression = self.solve_lookup_type(arg, summarize)
+                                        ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1358, in solve_lookup_type
+    _, field, _, lookup_parts = self.names_to_path(lookup_splitted, self.get_meta())
+                                ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1832, in names_to_path
+    raise FieldError(
+    ...<2 lines>...
+    )
+django.core.exceptions.FieldError: Cannot resolve keyword 'is_active' into field. Choices are: active, content, homepage, id, position, slug, subtitle, title
+ERROR 2026-02-05 12:09:54,228 log Internal Server Error: /api/blogs/help/
+Traceback (most recent call last):
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\generic\base.py", line 106, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\rest_framework\decorators.py", line 50, in handler
+    return func(*args, **kwargs)
+  File "D:\project\api\views.py", line 54, in get_blog
+    blog = Blog.objects.get(slug=slug, is_active=True)
+  File "D:\project\venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 625, in get
+    clone = self._chain() if self.query.combinator else self.filter(*args, **kwargs)
+                                                        ~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 1542, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 1560, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 1570, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1671, in add_q
+    clause, _ = self._add_q(q_object, can_reuse)
+                ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1703, in _add_q
+    child_clause, needed_inner = self.build_filter(
+                                 ~~~~~~~~~~~~~~~~~^
+        child,
+        ^^^^^^
+    ...<7 lines>...
+        update_join_types=update_join_types,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1551, in build_filter
+    lookups, parts, reffed_expression = self.solve_lookup_type(arg, summarize)
+                                        ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1358, in solve_lookup_type
+    _, field, _, lookup_parts = self.names_to_path(lookup_splitted, self.get_meta())
+                                ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1832, in names_to_path
+    raise FieldError(
+    ...<2 lines>...
+    )
+django.core.exceptions.FieldError: Cannot resolve keyword 'is_active' into field. Choices are: active, content, homepage, id, position, slug, subtitle, title
+WARNING 2026-02-05 12:10:54,179 log Not Found: /api/blog/help
+ERROR 2026-02-05 12:11:09,939 log Internal Server Error: /api/blogs/help/
+Traceback (most recent call last):
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\generic\base.py", line 106, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\rest_framework\decorators.py", line 50, in handler
+    return func(*args, **kwargs)
+  File "D:\project\api\views.py", line 54, in get_blog
+    blog = Blog.objects.get(slug=slug, is_active=True)
+  File "D:\project\venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 625, in get
+    clone = self._chain() if self.query.combinator else self.filter(*args, **kwargs)
+                                                        ~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 1542, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 1560, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 1570, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1671, in add_q
+    clause, _ = self._add_q(q_object, can_reuse)
+                ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1703, in _add_q
+    child_clause, needed_inner = self.build_filter(
+                                 ~~~~~~~~~~~~~~~~~^
+        child,
+        ^^^^^^
+    ...<7 lines>...
+        update_join_types=update_join_types,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1551, in build_filter
+    lookups, parts, reffed_expression = self.solve_lookup_type(arg, summarize)
+                                        ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1358, in solve_lookup_type
+    _, field, _, lookup_parts = self.names_to_path(lookup_splitted, self.get_meta())
+                                ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1832, in names_to_path
+    raise FieldError(
+    ...<2 lines>...
+    )
+django.core.exceptions.FieldError: Cannot resolve keyword 'is_active' into field. Choices are: active, content, homepage, id, position, slug, subtitle, title
+INFO 2026-02-05 12:11:27,708 autoreload D:\project\api\views.py changed, reloading.
+INFO 2026-02-05 12:11:28,353 autoreload Watching for file changes with StatReloader
+INFO 2026-02-05 12:14:20,945 autoreload D:\project\api\serializers.py changed, reloading.
+INFO 2026-02-05 12:14:21,553 autoreload Watching for file changes with StatReloader
+INFO 2026-02-05 12:14:23,850 autoreload D:\project\api\serializers.py changed, reloading.
+INFO 2026-02-05 12:14:24,449 autoreload Watching for file changes with StatReloader
+INFO 2026-02-05 12:19:06,957 autoreload D:\project\api\serializers.py changed, reloading.
+INFO 2026-02-05 12:19:07,648 autoreload Watching for file changes with StatReloader
+INFO 2026-02-05 12:19:08,958 autoreload D:\project\api\serializers.py changed, reloading.
+INFO 2026-02-05 12:19:09,578 autoreload Watching for file changes with StatReloader
+INFO 2026-02-05 12:19:10,850 autoreload D:\project\api\serializers.py changed, reloading.
+INFO 2026-02-05 12:19:11,489 autoreload Watching for file changes with StatReloader
+INFO 2026-02-05 12:19:13,808 autoreload D:\project\api\serializers.py changed, reloading.
+INFO 2026-02-05 12:19:14,411 autoreload Watching for file changes with StatReloader
+ERROR 2026-02-05 12:19:22,470 log Internal Server Error: /api/blogs/help/
+Traceback (most recent call last):
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\generic\base.py", line 106, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\rest_framework\decorators.py", line 50, in handler
+    return func(*args, **kwargs)
+  File "D:\project\api\views.py", line 67, in get_blog
+    return Response(serializer.data)
+                    ^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\serializers.py", line 573, in data
+    ret = super().data
+          ^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\serializers.py", line 251, in data
+    self._data = self.to_representation(self.instance)
+                 ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\serializers.py", line 525, in to_representation
+    for field in fields:
+                 ^^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\serializers.py", line 386, in _readable_fields
+    for field in self.fields.values():
+                 ^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\utils\functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ~~~~~~~~~^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\serializers.py", line 374, in fields
+    for key, value in self.get_fields().items():
+                      ~~~~~~~~~~~~~~~^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\serializers.py", line 1105, in get_fields
+    field_class, field_kwargs = self.build_field(
+                                ~~~~~~~~~~~~~~~~^
+        source, info, model, depth
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\project\venv\Lib\site-packages\rest_framework\serializers.py", line 1251, in build_field
+    return self.build_unknown_field(field_name, model_class)
+           ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\serializers.py", line 1369, in build_unknown_field
+    raise ImproperlyConfigured(
+    ...<2 lines>...
+    )
+django.core.exceptions.ImproperlyConfigured: Field name `sub_title` is not valid for model `Blog` in `api.serializers.BlogSerializer`.
+ERROR 2026-02-05 12:19:22,604 log Internal Server Error: /api/blogs/help/
+Traceback (most recent call last):
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\generic\base.py", line 106, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\rest_framework\decorators.py", line 50, in handler
+    return func(*args, **kwargs)
+  File "D:\project\api\views.py", line 67, in get_blog
+    return Response(serializer.data)
+                    ^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\serializers.py", line 573, in data
+    ret = super().data
+          ^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\serializers.py", line 251, in data
+    self._data = self.to_representation(self.instance)
+                 ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\serializers.py", line 525, in to_representation
+    for field in fields:
+                 ^^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\serializers.py", line 386, in _readable_fields
+    for field in self.fields.values():
+                 ^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\utils\functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ~~~~~~~~~^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\serializers.py", line 374, in fields
+    for key, value in self.get_fields().items():
+                      ~~~~~~~~~~~~~~~^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\serializers.py", line 1105, in get_fields
+    field_class, field_kwargs = self.build_field(
+                                ~~~~~~~~~~~~~~~~^
+        source, info, model, depth
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\project\venv\Lib\site-packages\rest_framework\serializers.py", line 1251, in build_field
+    return self.build_unknown_field(field_name, model_class)
+           ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\serializers.py", line 1369, in build_unknown_field
+    raise ImproperlyConfigured(
+    ...<2 lines>...
+    )
+django.core.exceptions.ImproperlyConfigured: Field name `sub_title` is not valid for model `Blog` in `api.serializers.BlogSerializer`.
+ERROR 2026-02-05 12:19:23,364 log Internal Server Error: /api/blogs/help/
+Traceback (most recent call last):
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\generic\base.py", line 106, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\rest_framework\decorators.py", line 50, in handler
+    return func(*args, **kwargs)
+  File "D:\project\api\views.py", line 67, in get_blog
+    return Response(serializer.data)
+                    ^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\serializers.py", line 573, in data
+    ret = super().data
+          ^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\serializers.py", line 251, in data
+    self._data = self.to_representation(self.instance)
+                 ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\serializers.py", line 525, in to_representation
+    for field in fields:
+                 ^^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\serializers.py", line 386, in _readable_fields
+    for field in self.fields.values():
+                 ^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\utils\functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ~~~~~~~~~^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\serializers.py", line 374, in fields
+    for key, value in self.get_fields().items():
+                      ~~~~~~~~~~~~~~~^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\serializers.py", line 1105, in get_fields
+    field_class, field_kwargs = self.build_field(
+                                ~~~~~~~~~~~~~~~~^
+        source, info, model, depth
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\project\venv\Lib\site-packages\rest_framework\serializers.py", line 1251, in build_field
+    return self.build_unknown_field(field_name, model_class)
+           ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\serializers.py", line 1369, in build_unknown_field
+    raise ImproperlyConfigured(
+    ...<2 lines>...
+    )
+django.core.exceptions.ImproperlyConfigured: Field name `sub_title` is not valid for model `Blog` in `api.serializers.BlogSerializer`.
+ERROR 2026-02-05 12:19:23,756 log Internal Server Error: /api/blogs/help/
+Traceback (most recent call last):
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\generic\base.py", line 106, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\rest_framework\decorators.py", line 50, in handler
+    return func(*args, **kwargs)
+  File "D:\project\api\views.py", line 67, in get_blog
+    return Response(serializer.data)
+                    ^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\serializers.py", line 573, in data
+    ret = super().data
+          ^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\serializers.py", line 251, in data
+    self._data = self.to_representation(self.instance)
+                 ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\serializers.py", line 525, in to_representation
+    for field in fields:
+                 ^^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\serializers.py", line 386, in _readable_fields
+    for field in self.fields.values():
+                 ^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\utils\functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ~~~~~~~~~^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\serializers.py", line 374, in fields
+    for key, value in self.get_fields().items():
+                      ~~~~~~~~~~~~~~~^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\serializers.py", line 1105, in get_fields
+    field_class, field_kwargs = self.build_field(
+                                ~~~~~~~~~~~~~~~~^
+        source, info, model, depth
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\project\venv\Lib\site-packages\rest_framework\serializers.py", line 1251, in build_field
+    return self.build_unknown_field(field_name, model_class)
+           ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\serializers.py", line 1369, in build_unknown_field
+    raise ImproperlyConfigured(
+    ...<2 lines>...
+    )
+django.core.exceptions.ImproperlyConfigured: Field name `sub_title` is not valid for model `Blog` in `api.serializers.BlogSerializer`.
+ERROR 2026-02-05 12:19:24,035 log Internal Server Error: /api/blogs/help/
+Traceback (most recent call last):
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\generic\base.py", line 106, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\rest_framework\decorators.py", line 50, in handler
+    return func(*args, **kwargs)
+  File "D:\project\api\views.py", line 67, in get_blog
+    return Response(serializer.data)
+                    ^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\serializers.py", line 573, in data
+    ret = super().data
+          ^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\serializers.py", line 251, in data
+    self._data = self.to_representation(self.instance)
+                 ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\serializers.py", line 525, in to_representation
+    for field in fields:
+                 ^^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\serializers.py", line 386, in _readable_fields
+    for field in self.fields.values():
+                 ^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\utils\functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ~~~~~~~~~^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\serializers.py", line 374, in fields
+    for key, value in self.get_fields().items():
+                      ~~~~~~~~~~~~~~~^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\serializers.py", line 1105, in get_fields
+    field_class, field_kwargs = self.build_field(
+                                ~~~~~~~~~~~~~~~~^
+        source, info, model, depth
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\project\venv\Lib\site-packages\rest_framework\serializers.py", line 1251, in build_field
+    return self.build_unknown_field(field_name, model_class)
+           ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\serializers.py", line 1369, in build_unknown_field
+    raise ImproperlyConfigured(
+    ...<2 lines>...
+    )
+django.core.exceptions.ImproperlyConfigured: Field name `sub_title` is not valid for model `Blog` in `api.serializers.BlogSerializer`.
+ERROR 2026-02-05 12:20:05,941 log Internal Server Error: /api/blogs/help/
+Traceback (most recent call last):
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\generic\base.py", line 106, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\rest_framework\decorators.py", line 50, in handler
+    return func(*args, **kwargs)
+  File "D:\project\api\views.py", line 67, in get_blog
+    return Response(serializer.data)
+                    ^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\serializers.py", line 573, in data
+    ret = super().data
+          ^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\serializers.py", line 251, in data
+    self._data = self.to_representation(self.instance)
+                 ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\serializers.py", line 525, in to_representation
+    for field in fields:
+                 ^^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\serializers.py", line 386, in _readable_fields
+    for field in self.fields.values():
+                 ^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\utils\functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ~~~~~~~~~^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\serializers.py", line 374, in fields
+    for key, value in self.get_fields().items():
+                      ~~~~~~~~~~~~~~~^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\serializers.py", line 1105, in get_fields
+    field_class, field_kwargs = self.build_field(
+                                ~~~~~~~~~~~~~~~~^
+        source, info, model, depth
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\project\venv\Lib\site-packages\rest_framework\serializers.py", line 1251, in build_field
+    return self.build_unknown_field(field_name, model_class)
+           ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\serializers.py", line 1369, in build_unknown_field
+    raise ImproperlyConfigured(
+    ...<2 lines>...
+    )
+django.core.exceptions.ImproperlyConfigured: Field name `sub_title` is not valid for model `Blog` in `api.serializers.BlogSerializer`.
+INFO 2026-02-05 12:20:38,367 autoreload D:\project\api\serializers.py changed, reloading.
+INFO 2026-02-05 12:20:39,032 autoreload Watching for file changes with StatReloader
+INFO 2026-02-05 12:29:50,432 autoreload D:\project\api\views.py changed, reloading.
+INFO 2026-02-05 12:29:51,054 autoreload Watching for file changes with StatReloader
+INFO 2026-02-05 12:31:14,857 autoreload D:\project\api\views.py changed, reloading.
+INFO 2026-02-05 12:31:15,439 autoreload Watching for file changes with StatReloader
+INFO 2026-02-05 12:31:31,053 autoreload D:\project\api\urls.py changed, reloading.
+INFO 2026-02-05 12:31:31,659 autoreload Watching for file changes with StatReloader
+INFO 2026-02-05 12:31:32,935 autoreload D:\project\api\urls.py changed, reloading.
+INFO 2026-02-05 12:31:33,543 autoreload Watching for file changes with StatReloader
+INFO 2026-02-05 12:31:34,814 autoreload D:\project\api\urls.py changed, reloading.
+INFO 2026-02-05 12:31:35,393 autoreload Watching for file changes with StatReloader
+INFO 2026-02-05 12:31:36,657 autoreload D:\project\api\urls.py changed, reloading.
+INFO 2026-02-05 12:31:37,234 autoreload Watching for file changes with StatReloader
+WARNING 2026-02-05 12:34:32,989 log Not Found: /api/blogs/hel/
+WARNING 2026-02-05 12:34:33,370 log Not Found: /api/blogs/h/
+ERROR 2026-02-05 12:34:33,613 log Internal Server Error: /api/blogs/
+Traceback (most recent call last):
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\generic\base.py", line 106, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\rest_framework\decorators.py", line 50, in handler
+    return func(*args, **kwargs)
+  File "D:\project\api\views.py", line 78, in get_all_blogs
+    blogs = Blog.objects.filter(active=True).order_by('-created_at')
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 1772, in order_by
+    obj.query.add_ordering(*field_names)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 2333, in add_ordering
+    self.names_to_path(item.split(LOOKUP_SEP), self.model._meta)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1832, in names_to_path
+    raise FieldError(
+    ...<2 lines>...
+    )
+django.core.exceptions.FieldError: Cannot resolve keyword 'created_at' into field. Choices are: active, content, homepage, id, position, slug, subtitle, title
+ERROR 2026-02-05 12:34:35,802 log Internal Server Error: /api/blogs/
+Traceback (most recent call last):
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\generic\base.py", line 106, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\rest_framework\decorators.py", line 50, in handler
+    return func(*args, **kwargs)
+  File "D:\project\api\views.py", line 78, in get_all_blogs
+    blogs = Blog.objects.filter(active=True).order_by('-created_at')
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 1772, in order_by
+    obj.query.add_ordering(*field_names)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 2333, in add_ordering
+    self.names_to_path(item.split(LOOKUP_SEP), self.model._meta)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1832, in names_to_path
+    raise FieldError(
+    ...<2 lines>...
+    )
+django.core.exceptions.FieldError: Cannot resolve keyword 'created_at' into field. Choices are: active, content, homepage, id, position, slug, subtitle, title
+ERROR 2026-02-05 12:34:38,055 log Internal Server Error: /api/blogs/
+Traceback (most recent call last):
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\generic\base.py", line 106, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\rest_framework\decorators.py", line 50, in handler
+    return func(*args, **kwargs)
+  File "D:\project\api\views.py", line 78, in get_all_blogs
+    blogs = Blog.objects.filter(active=True).order_by('-created_at')
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 1772, in order_by
+    obj.query.add_ordering(*field_names)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 2333, in add_ordering
+    self.names_to_path(item.split(LOOKUP_SEP), self.model._meta)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1832, in names_to_path
+    raise FieldError(
+    ...<2 lines>...
+    )
+django.core.exceptions.FieldError: Cannot resolve keyword 'created_at' into field. Choices are: active, content, homepage, id, position, slug, subtitle, title
+ERROR 2026-02-05 12:34:42,144 log Internal Server Error: /api/blogs/
+Traceback (most recent call last):
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\generic\base.py", line 106, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\rest_framework\decorators.py", line 50, in handler
+    return func(*args, **kwargs)
+  File "D:\project\api\views.py", line 78, in get_all_blogs
+    blogs = Blog.objects.filter(active=True).order_by('-created_at')
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 1772, in order_by
+    obj.query.add_ordering(*field_names)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 2333, in add_ordering
+    self.names_to_path(item.split(LOOKUP_SEP), self.model._meta)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1832, in names_to_path
+    raise FieldError(
+    ...<2 lines>...
+    )
+django.core.exceptions.FieldError: Cannot resolve keyword 'created_at' into field. Choices are: active, content, homepage, id, position, slug, subtitle, title
+ERROR 2026-02-05 12:34:42,747 log Internal Server Error: /api/blogs/
+Traceback (most recent call last):
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\generic\base.py", line 106, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\rest_framework\decorators.py", line 50, in handler
+    return func(*args, **kwargs)
+  File "D:\project\api\views.py", line 78, in get_all_blogs
+    blogs = Blog.objects.filter(active=True).order_by('-created_at')
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 1772, in order_by
+    obj.query.add_ordering(*field_names)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 2333, in add_ordering
+    self.names_to_path(item.split(LOOKUP_SEP), self.model._meta)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1832, in names_to_path
+    raise FieldError(
+    ...<2 lines>...
+    )
+django.core.exceptions.FieldError: Cannot resolve keyword 'created_at' into field. Choices are: active, content, homepage, id, position, slug, subtitle, title
+ERROR 2026-02-05 12:34:42,991 log Internal Server Error: /api/blogs/
+Traceback (most recent call last):
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\generic\base.py", line 106, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\rest_framework\decorators.py", line 50, in handler
+    return func(*args, **kwargs)
+  File "D:\project\api\views.py", line 78, in get_all_blogs
+    blogs = Blog.objects.filter(active=True).order_by('-created_at')
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 1772, in order_by
+    obj.query.add_ordering(*field_names)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 2333, in add_ordering
+    self.names_to_path(item.split(LOOKUP_SEP), self.model._meta)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1832, in names_to_path
+    raise FieldError(
+    ...<2 lines>...
+    )
+django.core.exceptions.FieldError: Cannot resolve keyword 'created_at' into field. Choices are: active, content, homepage, id, position, slug, subtitle, title
+ERROR 2026-02-05 12:34:43,150 log Internal Server Error: /api/blogs/
+Traceback (most recent call last):
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\generic\base.py", line 106, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\rest_framework\decorators.py", line 50, in handler
+    return func(*args, **kwargs)
+  File "D:\project\api\views.py", line 78, in get_all_blogs
+    blogs = Blog.objects.filter(active=True).order_by('-created_at')
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 1772, in order_by
+    obj.query.add_ordering(*field_names)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 2333, in add_ordering
+    self.names_to_path(item.split(LOOKUP_SEP), self.model._meta)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1832, in names_to_path
+    raise FieldError(
+    ...<2 lines>...
+    )
+django.core.exceptions.FieldError: Cannot resolve keyword 'created_at' into field. Choices are: active, content, homepage, id, position, slug, subtitle, title
+ERROR 2026-02-05 12:34:44,628 log Internal Server Error: /api/blogs/
+Traceback (most recent call last):
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\generic\base.py", line 106, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\rest_framework\decorators.py", line 50, in handler
+    return func(*args, **kwargs)
+  File "D:\project\api\views.py", line 78, in get_all_blogs
+    blogs = Blog.objects.filter(active=True).order_by('-created_at')
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 1772, in order_by
+    obj.query.add_ordering(*field_names)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 2333, in add_ordering
+    self.names_to_path(item.split(LOOKUP_SEP), self.model._meta)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1832, in names_to_path
+    raise FieldError(
+    ...<2 lines>...
+    )
+django.core.exceptions.FieldError: Cannot resolve keyword 'created_at' into field. Choices are: active, content, homepage, id, position, slug, subtitle, title
+ERROR 2026-02-05 12:34:44,745 log Internal Server Error: /api/blogs/
+Traceback (most recent call last):
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\generic\base.py", line 106, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\rest_framework\decorators.py", line 50, in handler
+    return func(*args, **kwargs)
+  File "D:\project\api\views.py", line 78, in get_all_blogs
+    blogs = Blog.objects.filter(active=True).order_by('-created_at')
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 1772, in order_by
+    obj.query.add_ordering(*field_names)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 2333, in add_ordering
+    self.names_to_path(item.split(LOOKUP_SEP), self.model._meta)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1832, in names_to_path
+    raise FieldError(
+    ...<2 lines>...
+    )
+django.core.exceptions.FieldError: Cannot resolve keyword 'created_at' into field. Choices are: active, content, homepage, id, position, slug, subtitle, title
+ERROR 2026-02-05 12:35:39,309 log Internal Server Error: /api/blogs/
+Traceback (most recent call last):
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\generic\base.py", line 106, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\rest_framework\decorators.py", line 50, in handler
+    return func(*args, **kwargs)
+  File "D:\project\api\views.py", line 78, in get_all_blogs
+    blogs = Blog.objects.filter(active=True).order_by('-created_at')
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 1772, in order_by
+    obj.query.add_ordering(*field_names)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 2333, in add_ordering
+    self.names_to_path(item.split(LOOKUP_SEP), self.model._meta)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1832, in names_to_path
+    raise FieldError(
+    ...<2 lines>...
+    )
+django.core.exceptions.FieldError: Cannot resolve keyword 'created_at' into field. Choices are: active, content, homepage, id, position, slug, subtitle, title
+ERROR 2026-02-05 12:35:39,544 log Internal Server Error: /api/blogs/
+Traceback (most recent call last):
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\generic\base.py", line 106, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\rest_framework\decorators.py", line 50, in handler
+    return func(*args, **kwargs)
+  File "D:\project\api\views.py", line 78, in get_all_blogs
+    blogs = Blog.objects.filter(active=True).order_by('-created_at')
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 1772, in order_by
+    obj.query.add_ordering(*field_names)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 2333, in add_ordering
+    self.names_to_path(item.split(LOOKUP_SEP), self.model._meta)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1832, in names_to_path
+    raise FieldError(
+    ...<2 lines>...
+    )
+django.core.exceptions.FieldError: Cannot resolve keyword 'created_at' into field. Choices are: active, content, homepage, id, position, slug, subtitle, title
+ERROR 2026-02-05 12:35:39,746 log Internal Server Error: /api/blogs/
+Traceback (most recent call last):
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\generic\base.py", line 106, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\rest_framework\decorators.py", line 50, in handler
+    return func(*args, **kwargs)
+  File "D:\project\api\views.py", line 78, in get_all_blogs
+    blogs = Blog.objects.filter(active=True).order_by('-created_at')
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 1772, in order_by
+    obj.query.add_ordering(*field_names)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 2333, in add_ordering
+    self.names_to_path(item.split(LOOKUP_SEP), self.model._meta)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1832, in names_to_path
+    raise FieldError(
+    ...<2 lines>...
+    )
+django.core.exceptions.FieldError: Cannot resolve keyword 'created_at' into field. Choices are: active, content, homepage, id, position, slug, subtitle, title
+ERROR 2026-02-05 12:35:39,881 log Internal Server Error: /api/blogs/
+Traceback (most recent call last):
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\generic\base.py", line 106, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\rest_framework\decorators.py", line 50, in handler
+    return func(*args, **kwargs)
+  File "D:\project\api\views.py", line 78, in get_all_blogs
+    blogs = Blog.objects.filter(active=True).order_by('-created_at')
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 1772, in order_by
+    obj.query.add_ordering(*field_names)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 2333, in add_ordering
+    self.names_to_path(item.split(LOOKUP_SEP), self.model._meta)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1832, in names_to_path
+    raise FieldError(
+    ...<2 lines>...
+    )
+django.core.exceptions.FieldError: Cannot resolve keyword 'created_at' into field. Choices are: active, content, homepage, id, position, slug, subtitle, title
+ERROR 2026-02-05 12:35:49,184 log Internal Server Error: /api/blogs/
+Traceback (most recent call last):
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\generic\base.py", line 106, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\rest_framework\decorators.py", line 50, in handler
+    return func(*args, **kwargs)
+  File "D:\project\api\views.py", line 78, in get_all_blogs
+    blogs = Blog.objects.filter(active=True).order_by('-created_at')
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 1772, in order_by
+    obj.query.add_ordering(*field_names)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 2333, in add_ordering
+    self.names_to_path(item.split(LOOKUP_SEP), self.model._meta)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1832, in names_to_path
+    raise FieldError(
+    ...<2 lines>...
+    )
+django.core.exceptions.FieldError: Cannot resolve keyword 'created_at' into field. Choices are: active, content, homepage, id, position, slug, subtitle, title
+ERROR 2026-02-05 12:35:49,805 log Internal Server Error: /api/blogs/
+Traceback (most recent call last):
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\generic\base.py", line 106, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\rest_framework\decorators.py", line 50, in handler
+    return func(*args, **kwargs)
+  File "D:\project\api\views.py", line 78, in get_all_blogs
+    blogs = Blog.objects.filter(active=True).order_by('-created_at')
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 1772, in order_by
+    obj.query.add_ordering(*field_names)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 2333, in add_ordering
+    self.names_to_path(item.split(LOOKUP_SEP), self.model._meta)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1832, in names_to_path
+    raise FieldError(
+    ...<2 lines>...
+    )
+django.core.exceptions.FieldError: Cannot resolve keyword 'created_at' into field. Choices are: active, content, homepage, id, position, slug, subtitle, title
+ERROR 2026-02-05 12:35:50,076 log Internal Server Error: /api/blogs/
+Traceback (most recent call last):
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\generic\base.py", line 106, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\rest_framework\decorators.py", line 50, in handler
+    return func(*args, **kwargs)
+  File "D:\project\api\views.py", line 78, in get_all_blogs
+    blogs = Blog.objects.filter(active=True).order_by('-created_at')
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 1772, in order_by
+    obj.query.add_ordering(*field_names)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 2333, in add_ordering
+    self.names_to_path(item.split(LOOKUP_SEP), self.model._meta)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1832, in names_to_path
+    raise FieldError(
+    ...<2 lines>...
+    )
+django.core.exceptions.FieldError: Cannot resolve keyword 'created_at' into field. Choices are: active, content, homepage, id, position, slug, subtitle, title
+ERROR 2026-02-05 12:36:03,100 log Internal Server Error: /api/blogs/
+Traceback (most recent call last):
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\generic\base.py", line 106, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\rest_framework\decorators.py", line 50, in handler
+    return func(*args, **kwargs)
+  File "D:\project\api\views.py", line 78, in get_all_blogs
+    blogs = Blog.objects.filter(active=True).order_by('-created_at')
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 1772, in order_by
+    obj.query.add_ordering(*field_names)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 2333, in add_ordering
+    self.names_to_path(item.split(LOOKUP_SEP), self.model._meta)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1832, in names_to_path
+    raise FieldError(
+    ...<2 lines>...
+    )
+django.core.exceptions.FieldError: Cannot resolve keyword 'created_at' into field. Choices are: active, content, homepage, id, position, slug, subtitle, title
+INFO 2026-02-05 12:37:01,679 autoreload D:\project\api\views.py changed, reloading.
+INFO 2026-02-05 12:37:02,315 autoreload Watching for file changes with StatReloader
+INFO 2026-02-05 12:37:04,667 autoreload D:\project\api\views.py changed, reloading.
+INFO 2026-02-05 12:37:05,381 autoreload Watching for file changes with StatReloader
+WARNING 2026-02-05 12:37:28,329 log Not Found: /api/ar/
+WARNING 2026-02-05 12:37:28,641 log Not Found: /api/art/
+WARNING 2026-02-05 12:37:29,198 log Not Found: /api/arti/
+WARNING 2026-02-05 12:37:29,407 log Not Found: /api/artic/
+WARNING 2026-02-05 12:37:29,714 log Not Found: /api/article/
+INFO 2026-02-05 12:37:40,442 autoreload D:\project\api\serializers.py changed, reloading.
+INFO 2026-02-05 12:37:41,111 autoreload Watching for file changes with StatReloader
+INFO 2026-02-05 12:37:42,421 autoreload D:\project\api\serializers.py changed, reloading.
+INFO 2026-02-05 12:37:43,048 autoreload Watching for file changes with StatReloader
+INFO 2026-02-05 12:37:44,358 autoreload D:\project\api\serializers.py changed, reloading.
+INFO 2026-02-05 12:37:45,060 autoreload Watching for file changes with StatReloader
+INFO 2026-02-05 12:37:47,363 autoreload D:\project\api\serializers.py changed, reloading.
+INFO 2026-02-05 12:37:47,979 autoreload Watching for file changes with StatReloader
+INFO 2026-02-05 12:37:49,256 autoreload D:\project\api\serializers.py changed, reloading.
+INFO 2026-02-05 12:37:49,945 autoreload Watching for file changes with StatReloader
+INFO 2026-02-05 12:38:31,080 autoreload D:\project\api\serializers.py changed, reloading.
+INFO 2026-02-05 12:38:31,746 autoreload Watching for file changes with StatReloader
+INFO 2026-02-05 12:38:33,012 autoreload D:\project\api\serializers.py changed, reloading.
+INFO 2026-02-05 12:38:33,598 autoreload Watching for file changes with StatReloader
+INFO 2026-02-05 12:38:34,863 autoreload D:\project\api\serializers.py changed, reloading.
+INFO 2026-02-05 12:38:35,467 autoreload Watching for file changes with StatReloader
+INFO 2026-02-05 12:38:37,755 autoreload D:\project\api\serializers.py changed, reloading.
+INFO 2026-02-05 12:38:38,387 autoreload Watching for file changes with StatReloader
+INFO 2026-02-05 12:38:39,673 autoreload D:\project\api\serializers.py changed, reloading.
+INFO 2026-02-05 12:38:40,534 autoreload Watching for file changes with StatReloader
+INFO 2026-02-05 12:40:18,125 autoreload D:\project\api\serializers.py changed, reloading.
+INFO 2026-02-05 12:40:18,865 autoreload Watching for file changes with StatReloader
+INFO 2026-02-05 12:40:21,039 autoreload D:\project\api\serializers.py changed, reloading.
+INFO 2026-02-05 12:40:21,603 autoreload Watching for file changes with StatReloader
+INFO 2026-02-05 12:40:23,827 autoreload D:\project\api\serializers.py changed, reloading.
+INFO 2026-02-05 12:40:24,434 autoreload Watching for file changes with StatReloader
+INFO 2026-02-05 12:40:25,597 autoreload D:\project\api\serializers.py changed, reloading.
+INFO 2026-02-05 12:40:26,269 autoreload Watching for file changes with StatReloader
+INFO 2026-02-05 12:40:38,762 autoreload D:\project\api\serializers.py changed, reloading.
+INFO 2026-02-05 12:40:39,393 autoreload Watching for file changes with StatReloader
+INFO 2026-02-05 12:40:50,911 autoreload D:\project\api\serializers.py changed, reloading.
+INFO 2026-02-05 12:40:51,524 autoreload Watching for file changes with StatReloader
+INFO 2026-02-05 12:40:52,788 autoreload D:\project\api\serializers.py changed, reloading.
+INFO 2026-02-05 12:40:53,601 autoreload Watching for file changes with StatReloader
+INFO 2026-02-05 12:42:52,268 autoreload D:\project\api\serializers.py changed, reloading.
+INFO 2026-02-05 12:42:52,906 autoreload Watching for file changes with StatReloader
+INFO 2026-02-05 12:42:54,052 autoreload D:\project\api\serializers.py changed, reloading.
+INFO 2026-02-05 12:42:54,580 autoreload Watching for file changes with StatReloader
+INFO 2026-02-05 12:42:58,785 autoreload D:\project\api\serializers.py changed, reloading.
+INFO 2026-02-05 12:42:59,339 autoreload Watching for file changes with StatReloader
+INFO 2026-02-05 12:43:00,487 autoreload D:\project\api\serializers.py changed, reloading.
+INFO 2026-02-05 12:43:01,046 autoreload Watching for file changes with StatReloader
+INFO 2026-02-05 12:43:05,257 autoreload D:\project\api\serializers.py changed, reloading.
+INFO 2026-02-05 12:43:05,799 autoreload Watching for file changes with StatReloader
+INFO 2026-02-05 12:43:07,065 autoreload D:\project\api\serializers.py changed, reloading.
+INFO 2026-02-05 12:43:07,736 autoreload Watching for file changes with StatReloader
+ERROR 2026-02-05 12:43:09,511 log Internal Server Error: /api/articles/
+Traceback (most recent call last):
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\generic\base.py", line 106, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\rest_framework\decorators.py", line 50, in handler
+    return func(*args, **kwargs)
+  File "D:\project\api\views.py", line 102, in get_all_articles
+    return Response(serializer.data)
+                    ^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\serializers.py", line 797, in data
+    ret = super().data
+          ^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\serializers.py", line 251, in data
+    self._data = self.to_representation(self.instance)
+                 ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\serializers.py", line 716, in to_representation
+    self.child.to_representation(item) for item in iterable
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\serializers.py", line 540, in to_representation
+    ret[field.field_name] = field.to_representation(attribute)
+                            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\fields.py", line 1869, in to_representation
+    method = getattr(self.parent, self.method_name)
+AttributeError: 'ArticleSerializer' object has no attribute 'get_image_url'
+INFO 2026-02-05 12:43:30,480 autoreload D:\project\api\serializers.py changed, reloading.
+INFO 2026-02-05 12:43:31,082 autoreload Watching for file changes with StatReloader
+INFO 2026-02-05 12:43:32,376 autoreload D:\project\api\serializers.py changed, reloading.
+INFO 2026-02-05 12:43:33,036 autoreload Watching for file changes with StatReloader
+INFO 2026-02-05 12:44:50,801 autoreload D:\project\api\views.py changed, reloading.
+INFO 2026-02-05 12:44:51,526 autoreload Watching for file changes with StatReloader
+INFO 2026-02-05 12:44:59,922 autoreload D:\project\api\views.py changed, reloading.
+INFO 2026-02-05 12:45:00,597 autoreload Watching for file changes with StatReloader
+INFO 2026-02-05 12:49:03,433 autoreload D:\project\api\serializers.py changed, reloading.
+INFO 2026-02-05 12:49:04,022 autoreload Watching for file changes with StatReloader
+ERROR 2026-02-05 12:49:05,406 log Internal Server Error: /api/articles/
+Traceback (most recent call last):
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\generic\base.py", line 106, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\rest_framework\decorators.py", line 50, in handler
+    return func(*args, **kwargs)
+  File "D:\project\api\views.py", line 102, in get_all_articles
+    return Response(serializer.data)
+                    ^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\serializers.py", line 797, in data
+    ret = super().data
+          ^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\serializers.py", line 251, in data
+    self._data = self.to_representation(self.instance)
+                 ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\serializers.py", line 716, in to_representation
+    self.child.to_representation(item) for item in iterable
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\serializers.py", line 525, in to_representation
+    for field in fields:
+                 ^^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\serializers.py", line 386, in _readable_fields
+    for field in self.fields.values():
+                 ^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\utils\functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ~~~~~~~~~^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\serializers.py", line 374, in fields
+    for key, value in self.get_fields().items():
+                      ~~~~~~~~~~~~~~~^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\serializers.py", line 1081, in get_fields
+    field_names = self.get_field_names(declared_fields, info)
+  File "D:\project\venv\Lib\site-packages\rest_framework\serializers.py", line 1177, in get_field_names
+    assert field_name in fields, (
+           ^^^^^^^^^^^^^^^^^^^^
+AssertionError: The field 'image_url' was declared on serializer ArticleSerializer, but has not been included in the 'fields' option.
+INFO 2026-02-05 12:49:14,663 autoreload D:\project\api\serializers.py changed, reloading.
+INFO 2026-02-05 12:49:15,325 autoreload Watching for file changes with StatReloader
+INFO 2026-02-05 12:49:56,329 autoreload D:\project\api\serializers.py changed, reloading.
+INFO 2026-02-05 12:49:57,057 autoreload Watching for file changes with StatReloader
+INFO 2026-02-05 12:50:00,251 autoreload D:\project\api\serializers.py changed, reloading.
+INFO 2026-02-05 12:50:00,803 autoreload Watching for file changes with StatReloader
+INFO 2026-02-05 12:53:14,720 autoreload D:\project\api\serializers.py changed, reloading.
+INFO 2026-02-05 12:53:15,335 autoreload Watching for file changes with StatReloader

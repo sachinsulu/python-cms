@@ -25,8 +25,6 @@
             <td>{{ u.date_joined|date:"Y-m-d" }}</td>
             <td>{% if not u.is_superuser and u != request.user %}
                 <a href="{% url 'user_edit' u.id %}" class="edit">Edit</a> |
-
-
                 <button class="delete"
                     onclick="openDeleteModal('user', '{{ u.username }}', '{% url 'delete_object' 'user' u.id %}',false)"
                     style="background:none;border:none;color:#ef4444;cursor:pointer;padding:0;">

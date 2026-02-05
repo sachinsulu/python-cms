@@ -6,7 +6,7 @@ from articles.models import Article
 from blog.models import Blog    
 from .serializers import ArticleSerializer, BlogSerializer
 
-
+@login_required
 @api_view(['GET'])
 def get_article(request, slug):
     """
@@ -36,7 +36,7 @@ def get_article(request, slug):
     # Send the JSON response
     return Response(serializer.data)
 
-
+@login_required
 @api_view(['GET'])
 def get_blog(request, slug):
     """
@@ -66,7 +66,7 @@ def get_blog(request, slug):
     # Send the JSON response
     return Response(serializer.data)
 
-
+@login_required
 @api_view(['GET'])
 def get_all_blogs(request):
     """
@@ -84,7 +84,7 @@ def get_all_blogs(request):
     return Response(serializer.data)
 
 
-# ✅ BONUS: Get list of all articles
+@login_required
 @api_view(['GET'])
 def get_all_articles(request):
     """

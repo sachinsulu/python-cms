@@ -5306,3 +5306,14 @@ INFO 2026-02-05 15:40:02,143 autoreload Watching for file changes with StatReloa
 WARNING 2026-02-05 15:40:08,502 log Not Found: /favicon.ico
 WARNING 2026-02-05 15:40:15,963 log Not Found: /api/visitor-stats/
 WARNING 2026-02-05 15:40:20,963 log Not Found: /api/visitor-stats/
+INFO 2026-02-05 17:16:40,849 autoreload Watching for file changes with StatReloader
+WARNING 2026-02-05 17:16:57,713 log Not Found: /favicon.ico
+INFO 2026-02-05 17:21:07,721 autoreload D:\project\api\views.py changed, reloading.
+INFO 2026-02-05 17:21:08,356 autoreload Watching for file changes with StatReloader
+INFO 2026-02-05 17:21:09,600 autoreload D:\project\api\views.py changed, reloading.
+INFO 2026-02-05 17:21:10,180 autoreload Watching for file changes with StatReloader
+INFO 2026-02-05 17:21:11,429 autoreload D:\project\api\views.py changed, reloading.
+INFO 2026-02-05 17:21:12,031 autoreload Watching for file changes with StatReloader
+INFO 2026-02-05 17:21:44,157 autoreload Watching for file changes with StatReloader
+INFO 2026-02-05 17:23:38,735 autoreload D:\project\api\views.py changed, reloading.
+INFO 2026-02-05 17:23:39,477 autoreload Watching for file changes with StatReloader

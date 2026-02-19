@@ -5317,3 +5317,109 @@ INFO 2026-02-05 17:21:12,031 autoreload Watching for file changes with StatReloa
 INFO 2026-02-05 17:21:44,157 autoreload Watching for file changes with StatReloader
 INFO 2026-02-05 17:23:38,735 autoreload D:\project\api\views.py changed, reloading.
 INFO 2026-02-05 17:23:39,477 autoreload Watching for file changes with StatReloader
+WARNING 2026-02-05 17:23:41,280 log Forbidden: /api/articles/
+INFO 2026-02-19 10:12:03,267 autoreload Watching for file changes with StatReloader
+WARNING 2026-02-19 10:12:08,673 log Not Found: /favicon.ico
+WARNING 2026-02-19 10:12:28,929 log Not Found: /api/visitor-stats/
+WARNING 2026-02-19 10:12:33,950 log Not Found: /api/visitor-stats/
+WARNING 2026-02-19 10:12:39,313 log Not Found: /api/visitor-stats/
+WARNING 2026-02-19 10:12:44,302 log Not Found: /api/visitor-stats/
+WARNING 2026-02-19 10:12:49,298 log Not Found: /api/visitor-stats/
+WARNING 2026-02-19 10:12:54,304 log Not Found: /api/visitor-stats/
+WARNING 2026-02-19 10:12:59,306 log Not Found: /api/visitor-stats/
+WARNING 2026-02-19 10:13:04,295 log Not Found: /api/visitor-stats/
+WARNING 2026-02-19 10:13:09,301 log Not Found: /api/visitor-stats/
+WARNING 2026-02-19 10:13:14,302 log Not Found: /api/visitor-stats/
+WARNING 2026-02-19 10:13:19,297 log Not Found: /api/visitor-stats/
+WARNING 2026-02-19 10:13:24,299 log Not Found: /api/visitor-stats/
+WARNING 2026-02-19 10:13:29,288 log Not Found: /api/visitor-stats/
+WARNING 2026-02-19 10:13:34,290 log Not Found: /api/visitor-stats/
+WARNING 2026-02-19 10:14:13,292 log Not Found: /api/visitor-stats/
+WARNING 2026-02-19 10:14:39,329 log Not Found: /api/blog/
+WARNING 2026-02-19 10:14:41,296 log Not Found: /api/visitor-stats/
+WARNING 2026-02-19 10:14:44,285 log Not Found: /api/visitor-stats/
+WARNING 2026-02-19 10:14:49,283 log Not Found: /api/visitor-stats/
+WARNING 2026-02-19 10:14:54,300 log Not Found: /api/visitor-stats/
+WARNING 2026-02-19 10:14:59,293 log Not Found: /api/visitor-stats/
+WARNING 2026-02-19 10:15:04,291 log Not Found: /api/visitor-stats/
+WARNING 2026-02-19 10:15:08,928 log Not Found: /api/visitor-stats/
+WARNING 2026-02-19 10:15:13,916 log Not Found: /api/visitor-stats/
+WARNING 2026-02-19 10:27:16,742 log Not Found: /favicon.ico
+WARNING 2026-02-19 10:27:35,357 log Not Found: /api/visitor-stats/
+WARNING 2026-02-19 10:27:41,297 log Not Found: /api/visitor-stats/
+WARNING 2026-02-19 10:27:45,356 log Not Found: /api/visitor-stats/
+WARNING 2026-02-19 10:27:51,290 log Not Found: /api/visitor-stats/
+WARNING 2026-02-19 10:27:56,290 log Not Found: /api/visitor-stats/
+WARNING 2026-02-19 10:28:01,286 log Not Found: /api/visitor-stats/
+WARNING 2026-02-19 10:28:06,289 log Not Found: /api/visitor-stats/
+WARNING 2026-02-19 10:28:11,287 log Not Found: /api/visitor-stats/
+WARNING 2026-02-19 10:28:16,299 log Not Found: /api/visitor-stats/
+WARNING 2026-02-19 10:28:21,287 log Not Found: /api/visitor-stats/
+WARNING 2026-02-19 10:28:26,286 log Not Found: /api/visitor-stats/
+WARNING 2026-02-19 10:28:31,300 log Not Found: /api/visitor-stats/
+WARNING 2026-02-19 10:28:36,292 log Not Found: /api/visitor-stats/
+WARNING 2026-02-19 10:28:41,300 log Not Found: /api/visitor-stats/
+WARNING 2026-02-19 10:28:46,292 log Not Found: /api/visitor-stats/
+WARNING 2026-02-19 10:29:13,286 log Not Found: /api/visitor-stats/
+WARNING 2026-02-19 10:30:13,292 log Not Found: /api/visitor-stats/
+WARNING 2026-02-19 10:31:13,293 log Not Found: /api/visitor-stats/
+WARNING 2026-02-19 10:32:13,295 log Not Found: /api/visitor-stats/
+WARNING 2026-02-19 10:33:13,290 log Not Found: /api/visitor-stats/
+WARNING 2026-02-19 10:34:13,299 log Not Found: /api/visitor-stats/
+WARNING 2026-02-19 10:35:13,301 log Not Found: /api/visitor-stats/
+WARNING 2026-02-19 10:36:13,302 log Not Found: /api/visitor-stats/
+WARNING 2026-02-19 10:37:13,296 log Not Found: /api/visitor-stats/
+WARNING 2026-02-19 10:38:13,287 log Not Found: /api/visitor-stats/
+WARNING 2026-02-19 10:39:13,285 log Not Found: /api/visitor-stats/
+WARNING 2026-02-19 10:40:13,299 log Not Found: /api/visitor-stats/
+WARNING 2026-02-19 10:41:13,298 log Not Found: /api/visitor-stats/
+WARNING 2026-02-19 10:42:13,298 log Not Found: /api/visitor-stats/
+WARNING 2026-02-19 10:43:13,288 log Not Found: /api/visitor-stats/
+WARNING 2026-02-19 10:44:13,283 log Not Found: /api/visitor-stats/
+WARNING 2026-02-19 10:45:13,287 log Not Found: /api/visitor-stats/
+WARNING 2026-02-19 10:46:13,288 log Not Found: /api/visitor-stats/
+WARNING 2026-02-19 10:47:13,303 log Not Found: /api/visitor-stats/
+WARNING 2026-02-19 10:48:13,285 log Not Found: /api/visitor-stats/
+INFO 2026-02-19 11:11:05,073 autoreload Watching for file changes with StatReloader
+WARNING 2026-02-19 11:11:13,933 log Not Found: /api/visitor-stats/
+WARNING 2026-02-19 11:11:23,362 log Not Found: /api/visitor-stats/
+INFO 2026-02-19 13:22:59,728 autoreload Watching for file changes with StatReloader
+WARNING 2026-02-19 13:23:24,665 log Not Found: /api/visitor-stats/
+INFO 2026-02-19 13:59:23,344 autoreload D:\project\cms\settings.py changed, reloading.
+INFO 2026-02-19 13:59:24,113 autoreload Watching for file changes with StatReloader
+INFO 2026-02-19 13:59:25,476 autoreload D:\project\cms\settings.py changed, reloading.
+INFO 2026-02-19 13:59:26,160 autoreload Watching for file changes with StatReloader
+INFO 2026-02-19 13:59:28,511 autoreload D:\project\cms\settings.py changed, reloading.
+INFO 2026-02-19 13:59:29,301 autoreload Watching for file changes with StatReloader
+INFO 2026-02-19 13:59:31,635 autoreload D:\project\cms\settings.py changed, reloading.
+INFO 2026-02-19 13:59:32,313 autoreload Watching for file changes with StatReloader
+WARNING 2026-02-19 13:59:45,280 log Not Found: /api/visitor-stats/
+INFO 2026-02-19 14:56:59,283 autoreload D:\project\api\serializers.py changed, reloading.
+INFO 2026-02-19 14:57:00,183 autoreload Watching for file changes with StatReloader
+INFO 2026-02-19 14:57:03,587 autoreload D:\project\api\serializers.py changed, reloading.
+INFO 2026-02-19 14:57:04,565 autoreload Watching for file changes with StatReloader
+INFO 2026-02-19 14:57:05,983 autoreload D:\project\api\serializers.py changed, reloading.
+INFO 2026-02-19 14:57:06,801 autoreload Watching for file changes with StatReloader
+INFO 2026-02-19 14:57:08,131 autoreload D:\project\api\serializers.py changed, reloading.
+INFO 2026-02-19 14:57:08,785 autoreload Watching for file changes with StatReloader
+INFO 2026-02-19 14:57:10,104 autoreload D:\project\api\serializers.py changed, reloading.
+INFO 2026-02-19 14:57:10,756 autoreload Watching for file changes with StatReloader
+INFO 2026-02-19 14:57:13,076 autoreload D:\project\api\serializers.py changed, reloading.
+INFO 2026-02-19 14:57:13,968 autoreload Watching for file changes with StatReloader
+INFO 2026-02-19 14:57:45,938 autoreload D:\project\api\serializers.py changed, reloading.
+INFO 2026-02-19 14:57:46,814 autoreload Watching for file changes with StatReloader
+INFO 2026-02-19 14:57:48,138 autoreload D:\project\api\serializers.py changed, reloading.
+INFO 2026-02-19 14:57:48,894 autoreload Watching for file changes with StatReloader
+INFO 2026-02-19 14:58:15,836 autoreload D:\project\api\views.py changed, reloading.
+INFO 2026-02-19 14:58:16,596 autoreload Watching for file changes with StatReloader
+INFO 2026-02-19 14:58:17,900 autoreload D:\project\api\views.py changed, reloading.
+INFO 2026-02-19 14:58:18,594 autoreload Watching for file changes with StatReloader
+INFO 2026-02-19 14:58:19,926 autoreload D:\project\api\views.py changed, reloading.
+INFO 2026-02-19 14:58:20,812 autoreload Watching for file changes with StatReloader
+INFO 2026-02-19 14:58:22,137 autoreload D:\project\api\views.py changed, reloading.
+INFO 2026-02-19 14:58:22,839 autoreload Watching for file changes with StatReloader
+INFO 2026-02-19 14:58:30,334 autoreload D:\project\api\views.py changed, reloading.
+INFO 2026-02-19 14:58:31,407 autoreload Watching for file changes with StatReloader
+INFO 2026-02-19 14:58:45,087 autoreload D:\project\api\serializers.py changed, reloading.
+INFO 2026-02-19 14:58:45,928 autoreload Watching for file changes with StatReloader
+INFO 2026-02-19 15:02:37,634 autoreload Watching for file changes with StatReloader

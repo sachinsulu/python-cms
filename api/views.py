@@ -1,4 +1,4 @@
-from rest_framework.decorators import api_view, permission_classes
+from rest_framework.decorators import api_view
 from rest_framework.permissions import IsAdminUser
 from rest_framework.response import Response
 from rest_framework import status
@@ -9,7 +9,6 @@ from .serializers import ArticleSerializer, BlogSerializer
 
 
 @api_view(['GET'])  # ✅ This decorator goes FIRST
-@permission_classes([IsAdminUser])  # ✅ This goes SECOND
 def get_article(request, slug):
     """
     Get a single article by its slug.
@@ -28,7 +27,6 @@ def get_article(request, slug):
 
 
 @api_view(['GET'])  # ✅ First
-@permission_classes([IsAdminUser])  # ✅ Second
 def get_blog(request, slug):
     """
     Get a single blog by its slug.
@@ -47,7 +45,7 @@ def get_blog(request, slug):
 
 
 @api_view(['GET'])  # ✅ First
-@permission_classes([IsAdminUser])  # ✅ Second
+
 def get_all_blogs(request):
     """
     Get a list of all active blogs.
@@ -59,12 +57,11 @@ def get_all_blogs(request):
 
 
 @api_view(['GET'])  # ✅ First
-@permission_classes([IsAdminUser])  # ✅ Second
 def get_all_articles(request):
     """
     Get a list of all active articles.
     Only accessible by admin users.
     """
-    articles = Article.objects.filter(is_active=True)
+    articles = Article.objects.filter(is_active=True, show_on_homepage=False)
     serializer = ArticleSerializer(articles, many=True, context={'request': request})
     return Response(serializer.data)

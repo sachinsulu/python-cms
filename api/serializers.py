@@ -16,6 +16,7 @@ class ArticleSerializer(serializers.ModelSerializer):
             'content',
             'image',
             
+            
         ]
     
 

@@ -22,10 +22,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-vt2w5of505@2iq_u49(kahiyy$y!q8#+re3un4fk_rsci1d$_c'
+SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-dev-only-key-change-in-production')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DEBUG', 'True').lower() == 'true'
 
 ALLOWED_HOSTS = [
     'localhost',
@@ -100,18 +100,6 @@ DATABASES = {
 }
 
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'test_db',
-#         'USER': 'zephyrion08',
-#         'PASSWORD': '1234',
-#         'HOST': 'localhost',
-#         'PORT': '5432',
-#     }
-# }
-
-
 # Password validation
 # https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators
 
@@ -162,7 +150,12 @@ LOGGING = {
 
 # Internationalization
 # https://docs.djangoproject.com/en/6.0/topics/i18n/
-CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_ALL_ORIGINS = False
+CORS_ALLOWED_ORIGINS = [
+    'https://python-cms-production.up.railway.app',
+    'http://localhost:8000',
+    'http://127.0.0.1:8000',
+]
 
 
 LANGUAGE_CODE = 'en-us'
@@ -191,7 +184,7 @@ FILE_UPLOAD_MAX_MEMORY_SIZE = 5242880  # 5MB in bytes
 DATA_UPLOAD_MAX_MEMORY_SIZE = 5242880  # 5MB in bytes
 
 # Custom settings for image validation
-IMAGE_MAX_FILE_SIZE = 2 * 1024 * 1024  # 5MB
+IMAGE_MAX_FILE_SIZE = 2 * 1024 * 1024  # 2MB
 IMAGE_MAX_DIMENSIONS = (1920, 1280)  # width, height
 IMAGE_ALLOWED_EXTENSIONS = ['jpg', 'jpeg', 'png', 'gif', 'webp','heic']
 IMAGE_ALLOWED_MIMETYPES = [
@@ -230,7 +223,8 @@ CKEDITOR_CONFIGS = {
         'toolbar': 'full',
         'height': 400,
         'width': '100%',
-        'allowedContent': True,  # allow all HTML tags/attributes
+        'allowedContent': False,
+        'removePlugins': 'sourcearea',
         'extraPlugins': 'uploadimage,image2',  # advanced image support
     }
 }

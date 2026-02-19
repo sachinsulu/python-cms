@@ -26,29 +26,16 @@ urlpatterns = [
     path('users/', include('users.urls')),
     path('articles/', include('articles.urls')),
     path('blog/', include('blog.urls')),
-     path('api/', include('api.urls')),
-
-
-    path('ckeditor/', include('ckeditor_uploader.urls')), 
-
-
+    path('api/', include('api.urls')),
+    path('ckeditor/', include('ckeditor_uploader.urls')),
     path('admin/', admin.site.urls),
     path("login/", login_view, name="login"),
     path("logout/", logout_view, name="logout"),
-
-
-
-
-
     path('toggle-status/<str:model_name>/<int:pk>/', toggle_status, name='toggle_status'),
     path("delete_object/<str:model_name>/<int:pk>/", delete_object, name="delete_object"),
     path('bulk/<str:model_name>/', bulk_action, name='bulk_action'),
     path('sort/<str:model_name>/', update_order, name='sort'),
-     path('ajax/check-slug/<str:model_name>/', ajax_check_slug, name='ajax_check_slug'),
-    
-
-
-
+    path('ajax/check-slug/<str:model_name>/', ajax_check_slug, name='ajax_check_slug'),
 ]
 
 

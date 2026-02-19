@@ -3,15 +3,15 @@
  */
 const CONFIG = {
     images: {
-        maxSize: 2 * 1024 * 1024, // 5MB
+        maxSize: 2 * 1024 * 1024, // 2MB
         allowedTypes: ['image/jpeg', 'image/png', 'image/gif', 'image/webp','image/heic'],
-        allowedExtensions: ['jpg', 'jpeg', 'png', 'webp','heic']
+        allowedExtensions: ['jpg', 'jpeg', 'png', 'gif', 'webp','heic']
     },
     limits: {
         'id_title': 100,
         'id_meta_title': 60,
         'id_meta_description': 160,
-        'id_meta_keywords': 250
+        'id_meta_keywords': 205
     }
 };
 
@@ -68,20 +68,9 @@ function showFlashMessage(text, type = 'info') {
     }, 3000);
 }
 
-function slugify(text) {
-    return text.toString().toLowerCase().trim()
-        .replace(/\s+/g, '-')
-        .replace(/[^\w\-]+/g, '')
-        .replace(/\-\-+/g, '-');
-}
-
 /* ==========================================================================
    GLOBAL ACTIONS (Functions called via onclick="" in HTML)
    ========================================================================== */
-
-/**
- * Toggle Status via AJAX
- */
 function toggleStatus(el) {
     const url = el.dataset.url;
     const targetId = el.dataset.target;
@@ -268,7 +257,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
             if (!CONFIG.images.allowedTypes.includes(file.type)) {
-                alert('Invalid file type! Allowed: JPG, PNG, GIF, WebP','heic');
+                alert('Invalid file type! Allowed: JPG, PNG, GIF, WebP, HEIC');
                 this.value = '';
                 return;
             }

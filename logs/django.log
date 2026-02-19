@@ -5530,3 +5530,22 @@ Traceback (most recent call last):
   File "D:\project\venv\Lib\site-packages\django\urls\resolvers.py", line 842, in _reverse_with_prefix
     raise NoReverseMatch(msg)
 django.urls.exceptions.NoReverseMatch: Reverse for '' not found. '' is not a valid view function or pattern name.
+INFO 2026-02-19 16:02:44,454 autoreload Watching for file changes with StatReloader
+WARNING 2026-02-19 16:02:49,734 base Session data corrupted
+WARNING 2026-02-19 16:03:03,041 base Session data corrupted
+WARNING 2026-02-19 16:03:03,184 log Not Found: /api/visitor-stats/
+INFO 2026-02-19 16:11:46,371 autoreload Watching for file changes with StatReloader
+WARNING 2026-02-19 16:13:11,160 log Not Found: /api/articles/about-us/
+WARNING 2026-02-19 16:13:19,725 log Not Found: /api/articles/about-us/
+WARNING 2026-02-19 16:13:36,332 log Not Found: /api/articles/about-us/
+INFO 2026-02-19 16:14:05,550 autoreload D:\project\cms\settings.py changed, reloading.
+INFO 2026-02-19 16:14:06,712 autoreload Watching for file changes with StatReloader
+INFO 2026-02-19 16:14:09,309 autoreload D:\project\cms\settings.py changed, reloading.
+INFO 2026-02-19 16:14:10,323 autoreload Watching for file changes with StatReloader
+INFO 2026-02-19 16:14:11,785 autoreload D:\project\cms\settings.py changed, reloading.
+INFO 2026-02-19 16:14:12,746 autoreload Watching for file changes with StatReloader
+INFO 2026-02-19 16:14:14,168 autoreload D:\project\cms\settings.py changed, reloading.
+INFO 2026-02-19 16:14:14,939 autoreload Watching for file changes with StatReloader
+INFO 2026-02-19 16:14:23,477 autoreload D:\project\cms\settings.py changed, reloading.
+INFO 2026-02-19 16:14:24,237 autoreload Watching for file changes with StatReloader
+WARNING 2026-02-19 16:14:26,675 log Not Found: /api/articles/about-us/

@@ -1,1 +1,1 @@
-default_app_config = 'cms.apps.CmsConfig'
+# App config is auto-discovered in Django 3.2+

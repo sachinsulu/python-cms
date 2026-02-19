@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from django import forms
 from django.shortcuts import get_object_or_404
+from django.contrib import messages
 
 
 class UserCreateForm(forms.ModelForm):
@@ -22,12 +23,18 @@ class UserCreateForm(forms.ModelForm):
 
 @login_required
 def user_list(request):
+    if not request.user.is_superuser:
+        messages.error(request, "You do not have permission to manage users.")
+        return redirect('dashboard')
     users = User.objects.all()
     return render(request, 'users/list.html', {'users': users})
 
 
 @login_required
 def user_create(request):
+    if not request.user.is_superuser:
+        messages.error(request, "You do not have permission to manage users.")
+        return redirect('dashboard')
     form = UserCreateForm(request.POST or None)
     if form.is_valid():
         form.save()
@@ -37,6 +44,9 @@ def user_create(request):
 
 @login_required
 def user_edit(request, id):
+    if not request.user.is_superuser:
+        messages.error(request, "You do not have permission to manage users.")
+        return redirect('dashboard')
     user = get_object_or_404(User, id=id)
     form = UserCreateForm(request.POST or None, instance=user)
 

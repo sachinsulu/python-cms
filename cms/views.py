@@ -1,5 +1,6 @@
 import json
 import logging
+from urllib.parse import urlparse
 
 from django.shortcuts import render, get_object_or_404, redirect
 from django.db.models import Case, When, Value, BooleanField
@@ -32,7 +33,11 @@ ACTIVE_FIELD_MAP = {
 
 def redirect_back(request, default='/'):
     """Redirect to previous page or default"""
-    return redirect(request.META.get('HTTP_REFERER', default))
+    referer = request.META.get('HTTP_REFERER', default)
+    parsed = urlparse(referer)
+    if parsed.netloc and parsed.netloc != request.get_host():
+        return redirect(default)
+    return redirect(referer)
 
 def get_obj_name(obj):
     """Return a display name for object"""
@@ -44,6 +49,7 @@ def check_user_permission(request, model_class, action="change"):
     - Superuser: Can do anything
     - User model: Superuser only
     - Article model: All logged-in users
+    - Blog model: All logged-in users
     """
     # Superuser can do anything
     if request.user.is_superuser:
@@ -55,6 +61,10 @@ def check_user_permission(request, model_class, action="change"):
     
     # Article model - all logged-in users can manage
     if model_class is Article:
+        return True
+    
+    # Blog model - all logged-in users can manage
+    if model_class is Blog:
         return True
     
     # Default: deny

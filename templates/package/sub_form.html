@@ -1,0 +1,137 @@
+{% extends "base.html" %}
+{% block title %}{% if is_edit %}Edit{% else %}Create{% endif %} Sub-Package - {{ package.title }}{% endblock %}
+
+{% block content %}
+<div class="content-header">
+    <div style="display:flex; align-items:center; gap:12px;">
+        <h2>{% if is_edit %}Edit{% else %}Create{% endif %} Sub-Package</h2>
+        <small style="color: #6b7280;">under <strong>{{ package.title }}</strong></small>
+    </div>
+    <a href="{% url 'subpackage_list' package.slug %}" class="btn btn-secondary">← Back to List</a>
+</div>
+
+{% if messages %}
+<div id="messages-container">
+    {% for message in messages %}
+        <div class="message {{ message.tags }}">{{ message }}</div>
+    {% endfor %}
+</div>
+{% endif %}
+
+<form method="post" enctype="multipart/form-data" class="cms-form">
+    {% csrf_token %}
+
+    {% if form.non_field_errors %}
+        <div class="error">{{ form.non_field_errors }}</div>
+    {% endif %}
+
+    <input type="hidden" id="model-name" value="subpackage">
+    {% if is_edit %}
+        <input type="hidden" id="article-id" value="{{ sub.id }}">
+    {% endif %}
+
+    <div class="form-group">
+        <label for="{{ form.title.id_for_label }}">
+            Title <span style="color: red;">*</span>
+        </label>
+        {{ form.title }}
+        {% if form.title.errors %}
+            <div class="error">{{ form.title.errors }}</div>
+        {% endif %}
+    </div>
+
+    <div class="form-group">
+        <label for="{{ form.slug.id_for_label }}">
+            Slug <span style="color: red;">*</span>
+        </label>
+        {{ form.slug }}
+        <small id="slug-message"></small>
+        {% if form.slug.errors %}
+            <div class="error">{{ form.slug.errors }}</div>
+        {% endif %}
+    </div>
+
+    <div class="form-group">
+        <label for="{{ form.description.id_for_label }}">Description</label>
+        {{ form.description }}
+        {% if form.description.errors %}
+            <div class="error">{{ form.description.errors }}</div>
+        {% endif %}
+    </div>
+
+    {% if package.is_room %}
+    <fieldset style="border: 2px solid #dbeafe; border-radius: 8px; padding: 20px; margin: 20px 0;">
+        <legend style="color: #1d4ed8; font-weight: 600; padding: 0 10px;">🛏 Room Details</legend>
+
+        <div class="form-group">
+            <label for="{{ form.price.id_for_label }}">Price (₹)</label>
+            {{ form.price }}
+            {% if form.price.errors %}
+                <div class="error">{{ form.price.errors }}</div>
+            {% endif %}
+        </div>
+
+        <div style="display: flex; gap: 20px;">
+            <div class="form-group" style="flex:1;">
+                <label for="{{ form.capacity.id_for_label }}">Capacity (Guests)</label>
+                {{ form.capacity }}
+                {% if form.capacity.errors %}
+                    <div class="error">{{ form.capacity.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="form-group" style="flex:1;">
+                <label for="{{ form.beds.id_for_label }}">Beds</label>
+                {{ form.beds }}
+                {% if form.beds.errors %}
+                    <div class="error">{{ form.beds.errors }}</div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="{{ form.amenities.id_for_label }}">Amenities</label>
+            {{ form.amenities }}
+            <small style="color: #6b7280;">Comma separated: AC, WiFi, Mini Bar, TV</small>
+            {% if form.amenities.errors %}
+                <div class="error">{{ form.amenities.errors }}</div>
+            {% endif %}
+        </div>
+    </fieldset>
+    {% endif %}
+
+    <div class="form-group">
+        <label>Image</label>
+        <input type="hidden" id="remove_image" name="remove_image" value="0">
+        {{ form.image }}
+        <div id="imagePreview">
+            {% if is_edit and sub.image %}
+                <div class="preview-wrapper" style="position:relative; display:inline-block; margin-top: 10px;">
+                    <img src="{{ sub.image.url }}" style="max-width:300px; max-height:200px; border:1px solid #e5e7eb; border-radius:4px; display: block;">
+                    <span class="remove-image" style="position:absolute; top:-8px; right:-8px; background:#ef4444; color:white; border-radius:50%; width:24px; height:24px; text-align:center; line-height:24px; cursor:pointer; font-weight:bold; font-size: 16px;">×</span>
+                    <p style="margin-top: 5px; font-size: 12px; color: #666;">Current image</p>
+                </div>
+            {% else %}
+                <p class="no-image text-muted">No image selected</p>
+            {% endif %}
+        </div>
+        {% if form.image.errors %}
+            <div class="error">{{ form.image.errors }}</div>
+        {% endif %}
+    </div>
+
+    <div class="form-group">
+        <label>
+            <input type="checkbox" name="is_active" {% if form.is_active.value %}checked{% endif %}>
+            Active
+        </label>
+    </div>
+
+    <div class="form-actions">
+        <button type="submit" class="btn btn-primary">
+            {% if is_edit %}Update{% else %}Create{% endif %} Sub-Package
+        </button>
+        <a href="{% url 'subpackage_list' package.slug %}" class="btn btn-secondary">Cancel</a>
+    </div>
+</form>
+{% endblock %}

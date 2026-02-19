@@ -5670,3 +5670,32 @@ Traceback (most recent call last):
     )
 django.template.exceptions.TemplateSyntaxError: Template: D:\project\templates\package\list.html, Could not parse the remainder: '=='1'' from 'current_filter=='1''
 INFO 2026-02-19 16:52:29,108 autoreload Watching for file changes with StatReloader
+INFO 2026-02-19 16:56:30,170 autoreload Watching for file changes with StatReloader
+INFO 2026-02-19 17:04:31,851 autoreload D:\project\package\models.py changed, reloading.
+INFO 2026-02-19 17:04:32,882 autoreload Watching for file changes with StatReloader
+INFO 2026-02-19 17:04:38,572 autoreload D:\project\package\models.py changed, reloading.
+INFO 2026-02-19 17:04:39,506 autoreload Watching for file changes with StatReloader
+INFO 2026-02-19 17:04:46,160 autoreload D:\project\package\models.py changed, reloading.
+INFO 2026-02-19 17:04:47,076 autoreload Watching for file changes with StatReloader
+INFO 2026-02-19 17:05:07,032 autoreload D:\project\package\forms.py changed, reloading.
+INFO 2026-02-19 17:05:07,957 autoreload Watching for file changes with StatReloader
+INFO 2026-02-19 17:05:22,862 autoreload D:\project\package\views.py changed, reloading.
+INFO 2026-02-19 17:05:23,727 autoreload Watching for file changes with StatReloader
+INFO 2026-02-19 17:05:40,505 autoreload D:\project\package\urls.py changed, reloading.
+INFO 2026-02-19 17:05:41,216 autoreload Watching for file changes with StatReloader
+INFO 2026-02-19 17:07:05,289 autoreload D:\project\package\admin.py changed, reloading.
+INFO 2026-02-19 17:07:06,041 autoreload Watching for file changes with StatReloader
+INFO 2026-02-19 17:07:32,897 autoreload Watching for file changes with StatReloader
+WARNING 2026-02-19 17:07:50,616 log Bad Request: /ajax/check-slug/subpackage/
+WARNING 2026-02-19 17:07:54,137 log Bad Request: /ajax/check-slug/subpackage/
+WARNING 2026-02-19 17:07:55,524 log Bad Request: /ajax/check-slug/subpackage/
+WARNING 2026-02-19 17:07:56,728 log Bad Request: /ajax/check-slug/subpackage/
+WARNING 2026-02-19 17:07:57,191 log Bad Request: /ajax/check-slug/subpackage/
+WARNING 2026-02-19 17:07:58,800 log Bad Request: /ajax/check-slug/subpackage/
+WARNING 2026-02-19 17:07:59,576 log Bad Request: /ajax/check-slug/subpackage/
+WARNING 2026-02-19 17:08:39,615 log Bad Request: /ajax/check-slug/subpackage/
+WARNING 2026-02-19 17:08:42,772 log Bad Request: /ajax/check-slug/subpackage/
+WARNING 2026-02-19 17:09:02,272 log Bad Request: /ajax/check-slug/subpackage/
+WARNING 2026-02-19 17:09:03,451 log Bad Request: /ajax/check-slug/subpackage/
+WARNING 2026-02-19 17:09:39,163 log Bad Request: /ajax/check-slug/subpackage/
+WARNING 2026-02-19 17:09:40,019 log Bad Request: /ajax/check-slug/subpackage/

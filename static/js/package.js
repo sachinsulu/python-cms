@@ -1,17 +1,14 @@
 $(document).ready(function () {
 
-    // ========================
-    // 1. Initialize DataTable
-    // ========================
     var table = $('#packageTable').DataTable({
         paging: true,
         pageLength: 10,
         lengthMenu: [10, 20, 50, 100],
         ordering: true,
-        order: [[2, 'asc']],  // Sort by Title column
+        order: [[2, 'asc']],
         columnDefs: [
-            { orderable: false, targets: [0, 1, 5] },    // Drag, checkbox, actions
-            { searchable: false, targets: [0, 1, 4, 5] } // Only search title & type
+            { orderable: false, targets: [0, 1, 4, 6] },
+            { searchable: false, targets: [0, 1, 4, 5, 6] }
         ],
         language: {
             emptyTable: "No packages found. Create one!",
@@ -19,9 +16,6 @@ $(document).ready(function () {
         }
     });
 
-    // ========================
-    // 2. Initialize SortableJS
-    // ========================
     var tbody = document.querySelector('#packageTable tbody');
     if (tbody) {
         Sortable.create(tbody, {
@@ -53,22 +47,15 @@ $(document).ready(function () {
                         var msg = document.getElementById('saveMsg');
                         if (msg) {
                             msg.style.display = 'block';
-                            setTimeout(function () {
-                                msg.style.display = 'none';
-                            }, 2000);
+                            setTimeout(function () { msg.style.display = 'none'; }, 2000);
                         }
                     }
                 })
-                .catch(function (err) {
-                    console.error('Sort failed:', err);
-                });
+                .catch(function (err) { console.error('Sort failed:', err); });
             }
         });
     }
 
-    // ========================
-    // 3. Select All Checkbox
-    // ========================
     $('#select-all').on('change', function () {
         var checked = this.checked;
         table.rows({ search: 'applied' }).nodes().each(function (row) {
@@ -80,7 +67,6 @@ $(document).ready(function () {
         var allBoxes = table.rows({ search: 'applied' }).nodes().to$().find('.row-checkbox');
         var checkedBoxes = allBoxes.filter(':checked');
         var selectAll = $('#select-all');
-
         selectAll.prop('checked', allBoxes.length === checkedBoxes.length);
         selectAll.prop('indeterminate', checkedBoxes.length > 0 && checkedBoxes.length < allBoxes.length);
     });

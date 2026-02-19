@@ -14,7 +14,7 @@ from django_ratelimit.decorators import ratelimit
 
 from articles.models import Article
 from blog.models import Blog
-from package.models import Package
+from package.models import Package, SubPackage
 
 User = get_user_model()
 logger = logging.getLogger(__name__)
@@ -27,12 +27,15 @@ MODEL_MAP = {
     "user": User,
     "blog": Blog,
     "package": Package,
-
+    "subpackage": SubPackage,
 }
+
+
 ACTIVE_FIELD_MAP = {
     "article": "is_active",
     "blog": "active",
     "package": "is_active",
+    "subpackage": "is_active",
 }
 
 def redirect_back(request, default='/'):
@@ -48,32 +51,19 @@ def get_obj_name(obj):
     return getattr(obj, 'title', getattr(obj, 'username', str(obj)))
 
 def check_user_permission(request, model_class, action="change"):
-    """
-    Simple permission check:
-    - Superuser: Can do anything
-    - User model: Superuser only
-    - Article model: All logged-in users
-    - Blog model: All logged-in users
-    """
-    # Superuser can do anything
     if request.user.is_superuser:
         return True
-    
-    # User model operations - superuser only
     if model_class is User:
         return False
-    
-    # Article model - all logged-in users can manage
     if model_class is Article:
         return True
-    
-    # Blog model - all logged-in users can manage
     if model_class is Blog:
         return True
-    
-    # Default: deny
+    if model_class is Package:
+        return True
+    if model_class is SubPackage:
+        return True
     return False
-
 # -------------------------
 # Views
 # -------------------------

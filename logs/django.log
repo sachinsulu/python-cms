@@ -5699,3 +5699,16 @@ WARNING 2026-02-19 17:09:02,272 log Bad Request: /ajax/check-slug/subpackage/
 WARNING 2026-02-19 17:09:03,451 log Bad Request: /ajax/check-slug/subpackage/
 WARNING 2026-02-19 17:09:39,163 log Bad Request: /ajax/check-slug/subpackage/
 WARNING 2026-02-19 17:09:40,019 log Bad Request: /ajax/check-slug/subpackage/
+INFO 2026-02-19 17:10:30,945 autoreload Watching for file changes with StatReloader
+INFO 2026-02-19 17:11:06,018 autoreload D:\project\cms\views.py changed, reloading.
+INFO 2026-02-19 17:11:06,839 autoreload Watching for file changes with StatReloader
+INFO 2026-02-19 17:11:18,532 autoreload D:\project\cms\views.py changed, reloading.
+INFO 2026-02-19 17:11:19,446 autoreload Watching for file changes with StatReloader
+INFO 2026-02-19 17:11:21,913 autoreload D:\project\cms\views.py changed, reloading.
+INFO 2026-02-19 17:11:22,852 autoreload Watching for file changes with StatReloader
+INFO 2026-02-19 17:11:32,450 autoreload D:\project\cms\views.py changed, reloading.
+INFO 2026-02-19 17:11:33,376 autoreload Watching for file changes with StatReloader
+INFO 2026-02-19 17:11:48,060 autoreload D:\project\cms\views.py changed, reloading.
+INFO 2026-02-19 17:11:48,981 autoreload Watching for file changes with StatReloader
+INFO 2026-02-19 17:11:52,435 autoreload D:\project\cms\views.py changed, reloading.
+INFO 2026-02-19 17:11:53,220 autoreload Watching for file changes with StatReloader

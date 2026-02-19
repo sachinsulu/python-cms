@@ -14,6 +14,7 @@ from django_ratelimit.decorators import ratelimit
 
 from articles.models import Article
 from blog.models import Blog
+from package.models import Package
 
 User = get_user_model()
 logger = logging.getLogger(__name__)
@@ -25,10 +26,13 @@ MODEL_MAP = {
     "article": Article,
     "user": User,
     "blog": Blog,
+    "package": Package,
+
 }
 ACTIVE_FIELD_MAP = {
     "article": "is_active",
     "blog": "active",
+    "package": "is_active",
 }
 
 def redirect_back(request, default='/'):

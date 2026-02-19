@@ -52,7 +52,7 @@
         <i class="fa-solid fa-newspaper"></i>
         <span>Blog</span>
       </a>
-      <a href="{% url 'blog_list' %}" class="{% if 'package' in request.resolver_match.url_name %}active{% endif %}">
+      <a href="{% url 'package_list' %}" class="{% if 'package' in request.resolver_match.url_name %}active{% endif %}">
         <i class="fa-solid fa-box"></i>
         <span>Packages</span>
       </a>

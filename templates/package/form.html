@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+
+{% block title %}{% if is_edit %}Edit{% else %}Create{% endif %} Package{% endblock %}
+
+{% block content %}
+<div class="content-header">
+    <h2>{% if is_edit %}Edit Package{% else %}Create Package{% endif %}</h2>
+    <a href="{% url 'package_list' %}" class="btn btn-secondary">← Back to List</a>
+</div>
+
+{% if messages %}
+<div id="messages-container">
+    {% for message in messages %}
+    <div class="message {{ message.tags }}">{{ message }}</div>
+    {% endfor %}
+</div>
+{% endif %}
+
+<form method="post" enctype="multipart/form-data" class="cms-form">
+    {% csrf_token %}
+
+    {% if form.non_field_errors %}
+    <div class="error">{{ form.non_field_errors }}</div>
+    {% endif %}
+
+    <input type="hidden" id="model-name" value="package">
+    {% if is_edit %}
+    <input type="hidden" id="article-id" value="{{ package.id }}">
+    {% endif %}
+
+    <div class="form-group">
+        <label for="{{ form.title.id_for_label }}">
+            Title <span style="color: red;">*</span>
+        </label>
+        {{ form.title }}
+        {% if form.title.errors %}
+        <div class="error">{{ form.title.errors }}</div>
+        {% endif %}
+    </div>
+
+    <div class="form-group">
+        <label for="{{ form.slug.id_for_label }}">
+            Slug <span style="color: red;">*</span>
+        </label>
+        {{ form.slug }}
+        <small id="slug-message"></small>
+        {% if form.slug.errors %}
+        <div class="error">{{ form.slug.errors }}</div>
+        {% endif %}
+    </div>
+
+    <div class="form-group">
+        <label for="{{ form.description.id_for_label }}">Description</label>
+        {{ form.description }}
+        {% if form.description.errors %}
+        <div class="error">{{ form.description.errors }}</div>
+        {% endif %}
+    </div>
+
+    <div class="form-group">
+        <label>Package Type <span style="color: red;">*</span></label>
+        <div style="display: flex; gap: 20px; margin-top: 8px;">
+            {% for radio in form.package_type %}
+            <label
+                style="display: flex; align-items: center; gap: 6px; cursor: pointer; padding: 10px 20px; border: 2px solid #e5e7eb; border-radius: 8px; transition: all 0.2s;">
+                {{ radio.tag }}
+                {{ radio.choice_label }}
+            </label>
+            {% endfor %}
+        </div>
+        <small style="color: #6b7280; margin-top: 4px; display: block;">
+            Select "Room" if sub-packages need room-specific fields (price, beds, capacity, etc.)
+        </small>
+        {% if form.package_type.errors %}
+        <div class="error">{{ form.package_type.errors }}</div>
+        {% endif %}
+    </div>
+
+    <div class="form-group">
+        <label>Image</label>
+        <input type="hidden" id="remove_image" name="remove_image" value="0">
+        {{ form.image }}
+        <div id="imagePreview">
+            {% if is_edit and package.image %}
+            <div class="preview-wrapper" style="position:relative; display:inline-block; margin-top: 10px;">
+                <img src="{{ package.image.url }}"
+                    style="max-width:300px; max-height:200px; border:1px solid #e5e7eb; border-radius:4px; display: block;">
+                <span class="remove-image"
+                    style="position:absolute; top:-8px; right:-8px; background:#ef4444; color:white; border-radius:50%; width:24px; height:24px; text-align:center; line-height:24px; cursor:pointer; font-weight:bold; font-size: 16px;">×</span>
+                <p style="margin-top: 5px; font-size: 12px; color: #666;">Current image</p>
+            </div>
+            {% else %}
+            <p class="no-image text-muted">No image selected</p>
+            {% endif %}
+        </div>
+        {% if form.image.errors %}
+        <div class="error">{{ form.image.errors }}</div>
+        {% endif %}
+    </div>
+
+    <div class="form-group">
+        <label for="{{ form.is_active.id_for_label }}">
+            <input type="checkbox" name="is_active" {% if form.is_active.value %}checked{% endif %}>
+            Active
+        </label>
+    </div>
+
+    <div class="form-actions">
+        <button type="submit" class="btn btn-primary">
+            {% if is_edit %}Update{% else %}Create{% endif %} Package
+        </button>
+        <a href="{% url 'package_list' %}" class="btn btn-secondary">Cancel</a>
+    </div>
+</form>
+{% endblock %}

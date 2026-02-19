@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'users',
     'articles',
     'blog',
+    'package',
     'api',
     'rest_framework',
     'corsheaders',

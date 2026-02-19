@@ -8,10 +8,10 @@ $(document).ready(function () {
         pageLength: 10,
         lengthMenu: [10, 20, 50, 100],
         ordering: true,
-        order: [[0, 'asc']],  // Sort by position (ID column)
+        order: [[2, 'asc']],  // Sort by Title column
         columnDefs: [
-            { orderable: false, targets: [1, 2, 5, 7] },  // Disable sort on drag, checkbox, image, actions
-            { searchable: false, targets: [0, 1, 2, 5, 6, 7] }  // Only search title & type
+            { orderable: false, targets: [0, 1, 5] },    // Drag, checkbox, actions
+            { searchable: false, targets: [0, 1, 4, 5] } // Only search title & type
         ],
         language: {
             emptyTable: "No packages found. Create one!",
@@ -29,18 +29,15 @@ $(document).ready(function () {
             animation: 150,
             ghostClass: 'sortable-ghost',
             onEnd: function () {
-                var tableNode = document.getElementById('packageTable');
-                var sortUrl = tableNode ? tableNode.dataset.sortUrl : null;
+                var sortUrl = tbody.dataset.sortUrl;
                 if (!sortUrl) return;
 
-                // Get order from current visible rows
                 var order = [];
                 tbody.querySelectorAll('tr').forEach(function (row) {
                     var id = row.getAttribute('data-id');
                     if (id) order.push(parseInt(id));
                 });
 
-                // Send to server
                 fetch(sortUrl, {
                     method: 'POST',
                     headers: {
@@ -74,13 +71,11 @@ $(document).ready(function () {
     // ========================
     $('#select-all').on('change', function () {
         var checked = this.checked;
-        // Only check visible (filtered) rows
         table.rows({ search: 'applied' }).nodes().each(function (row) {
             $(row).find('.row-checkbox').prop('checked', checked);
         });
     });
 
-    // Keep select-all in sync when individual checkboxes change
     $('#packageTable').on('change', '.row-checkbox', function () {
         var allBoxes = table.rows({ search: 'applied' }).nodes().to$().find('.row-checkbox');
         var checkedBoxes = allBoxes.filter(':checked');

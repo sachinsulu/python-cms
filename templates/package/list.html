@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% block title %}Packages{% endblock %}
 {% block content %}
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
@@ -37,7 +38,7 @@
     <a href="{% url 'package_create' %}" class="btn">+ Add Package</a>
 </header>
 
-<div style="display:flex; align-items:center; gap:8px;">
+<div style="display:flex; align-items:center; gap:8px; margin-bottom:12px;">
     <button type="button" class="btn btn-warning"
         onclick="document.getElementById('bulk-form').querySelector('button[name=action][value=toggle]').click()">
         Status
@@ -51,18 +52,19 @@
 
 <form method="post" action="{% url 'bulk_action' 'package' %}" id="bulk-form">
     {% csrf_token %}
-    <table id="packageTable" class="display" style="width:100%" data-sort-url="{% url 'sort' 'package' %}">
+
+    <table id="packageTable" class="display" style="width:100%">
         <thead>
             <tr>
-                <th style="width: 30px;"></th>
-                <th><input type="checkbox" id="select-all"></th>
+                <th style="width:30px;"></th>
+                <th style="width:30px;"><input type="checkbox" id="select-all"></th>
                 <th>Title</th>
                 <th>Type</th>
                 <th>Status</th>
                 <th>Actions</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody data-sort-url="{% url 'sort' 'package' %}">
             {% for p in packages %}
             <tr data-id="{{ p.id }}">
                 <td class="drag-handle" style="cursor: grab; color: #9ca3af;">
@@ -101,6 +103,7 @@
             {% endfor %}
         </tbody>
     </table>
+
     <button type="submit" name="action" value="toggle" style="display:none;"></button>
 </form>
 

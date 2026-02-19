@@ -5669,3 +5669,4 @@ Traceback (most recent call last):
     ...<2 lines>...
     )
 django.template.exceptions.TemplateSyntaxError: Template: D:\project\templates\package\list.html, Could not parse the remainder: '=='1'' from 'current_filter=='1''
+INFO 2026-02-19 16:52:29,108 autoreload Watching for file changes with StatReloader

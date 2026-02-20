@@ -1,36 +1,60 @@
 from rest_framework import serializers
 from articles.models import Article
 from blog.models import Blog
+from package.models import Package, SubPackage
 
 
 class ArticleSerializer(serializers.ModelSerializer):
-    """
-    This converts an Article object into JSON format.
-    We only include the fields we need.
-    """
-    
     class Meta:
         model = Article
         fields = [
             'title',
             'content',
             'image',
-            
-            
         ]
-    
-
 
 
 class BlogSerializer(serializers.ModelSerializer):
-    """
-    This converts a Blog object into JSON format.
-    We only include the fields we need.
-    """
     class Meta:
         model = Blog
         fields = [
             'title',
             'subtitle',
             'content',
+        ]
+
+
+class SubPackageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SubPackage
+        fields = [
+            'title',
+            'slug',
+            'description',
+            'image',
+            'price',
+            'capacity',
+            'beds',
+            'amenities',
+            'is_active',
+            'position',
+        ]
+
+
+class PackageSerializer(serializers.ModelSerializer):
+    sub_packages = SubPackageSerializer(many=True, read_only=True)
+    package_type_display = serializers.CharField(source='get_package_type_display', read_only=True)
+
+    class Meta:
+        model = Package
+        fields = [
+            'title',
+            'slug',
+            'description',
+            'image',
+            'package_type',
+            'package_type_display',
+            'is_active',
+            'position',
+            'sub_packages',
         ]

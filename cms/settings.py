@@ -39,6 +39,7 @@ CSRF_TRUSTED_ORIGINS = [
 # Application definition
 
 INSTALLED_APPS = [
+    'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -68,6 +69,19 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+JAZZMIN_SETTINGS = {
+    "site_title":  "Aurea Hotel",
+    "site_header": "Aurea Hotel Admin",
+    "site_brand":  "Aurea Hotel",
+    "theme":       "darkly",        # bootstrap themes available
+    "dark_mode_theme": "darkly",
+}
+
+JAZZMIN_UI_TWEAKS = {
+    "theme": "darkly",
+    "dark_mode_theme": "darkly",
+}
 
 ROOT_URLCONF = 'cms.urls'
 

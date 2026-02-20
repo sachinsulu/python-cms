@@ -129,7 +129,7 @@ $(document).ready(function () {
         pageLength: 10,
         lengthMenu: [10, 20, 50, 100],
         ordering: true,
-        order: [[2, 'asc']],
+        order: [], // Default to no sorting, respecting server-side order
         columnDefs: [
             { orderable: false, targets: nonSortTargets },
             { searchable: false, targets: nonSearchTargets }

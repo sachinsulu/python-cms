@@ -5712,3 +5712,157 @@ INFO 2026-02-19 17:11:48,060 autoreload D:\project\cms\views.py changed, reloadi
 INFO 2026-02-19 17:11:48,981 autoreload Watching for file changes with StatReloader
 INFO 2026-02-19 17:11:52,435 autoreload D:\project\cms\views.py changed, reloading.
 INFO 2026-02-19 17:11:53,220 autoreload Watching for file changes with StatReloader
+INFO 2026-02-19 17:15:42,146 autoreload Watching for file changes with StatReloader
+INFO 2026-02-19 17:19:05,534 autoreload D:\project\api\serializers.py changed, reloading.
+INFO 2026-02-19 17:19:06,857 autoreload Watching for file changes with StatReloader
+INFO 2026-02-19 17:19:17,533 autoreload D:\project\api\views.py changed, reloading.
+INFO 2026-02-19 17:19:18,311 autoreload Watching for file changes with StatReloader
+INFO 2026-02-19 17:19:28,965 autoreload D:\project\api\urls.py changed, reloading.
+INFO 2026-02-19 17:19:29,637 autoreload Watching for file changes with StatReloader
+WARNING 2026-02-19 17:19:54,903 log Not Found: /api/package/subpackage/
+WARNING 2026-02-19 17:20:10,670 log Not Found: /api/package/
+INFO 2026-02-19 17:22:35,630 autoreload D:\project\api\views.py changed, reloading.
+INFO 2026-02-19 17:22:36,753 autoreload Watching for file changes with StatReloader
+INFO 2026-02-19 17:22:41,233 autoreload D:\project\api\views.py changed, reloading.
+INFO 2026-02-19 17:22:42,084 autoreload Watching for file changes with StatReloader
+INFO 2026-02-19 17:22:43,580 autoreload D:\project\api\views.py changed, reloading.
+INFO 2026-02-19 17:22:44,459 autoreload Watching for file changes with StatReloader
+INFO 2026-02-19 17:22:55,117 autoreload D:\project\api\urls.py changed, reloading.
+INFO 2026-02-19 17:22:55,945 autoreload Watching for file changes with StatReloader
+INFO 2026-02-19 17:23:00,440 autoreload D:\project\api\urls.py changed, reloading.
+INFO 2026-02-19 17:23:01,176 autoreload Watching for file changes with StatReloader
+INFO 2026-02-19 17:23:03,595 autoreload D:\project\api\urls.py changed, reloading.
+INFO 2026-02-19 17:23:04,297 autoreload Watching for file changes with StatReloader
+INFO 2026-02-19 17:23:10,806 autoreload D:\project\api\urls.py changed, reloading.
+INFO 2026-02-19 17:23:11,600 autoreload Watching for file changes with StatReloader
+ERROR 2026-02-19 17:23:19,558 log Internal Server Error: /api/sub/
+Traceback (most recent call last):
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\generic\base.py", line 106, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\rest_framework\decorators.py", line 50, in handler
+    return func(*args, **kwargs)
+TypeError: get_all_subpackages() missing 1 required positional argument: 'package_slug'
+INFO 2026-02-19 17:23:32,689 autoreload D:\project\api\views.py changed, reloading.
+INFO 2026-02-19 17:23:33,546 autoreload Watching for file changes with StatReloader
+INFO 2026-02-19 17:23:44,150 autoreload D:\project\api\views.py changed, reloading.
+INFO 2026-02-19 17:23:44,906 autoreload Watching for file changes with StatReloader
+ERROR 2026-02-19 17:25:38,575 log Internal Server Error: /api/sub/
+Traceback (most recent call last):
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\generic\base.py", line 106, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\rest_framework\decorators.py", line 50, in handler
+    return func(*args, **kwargs)
+  File "D:\project\api\views.py", line 81, in get_all_subpackages
+    package = Package.objects.get(is_active=True)
+  File "D:\project\venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 642, in get
+    raise self.model.MultipleObjectsReturned(
+    ...<5 lines>...
+    )
+package.models.Package.MultipleObjectsReturned: get() returned more than one Package -- it returned 2!
+INFO 2026-02-19 17:27:44,267 autoreload D:\project\api\views.py changed, reloading.
+INFO 2026-02-19 17:27:45,250 autoreload Watching for file changes with StatReloader
+INFO 2026-02-20 10:22:29,220 autoreload Watching for file changes with StatReloader
+WARNING 2026-02-20 10:23:33,657 log Not Found: /favicon.ico
+WARNING 2026-02-20 10:59:01,248 log Not Found: /api/visitor-stats/
+WARNING 2026-02-20 11:06:36,570 log Not Found: /api/packages/room-suites/
+INFO 2026-02-20 11:08:16,865 autoreload D:\project\api\views.py changed, reloading.
+INFO 2026-02-20 11:08:18,795 autoreload Watching for file changes with StatReloader
+INFO 2026-02-20 11:08:48,910 autoreload D:\project\api\views.py changed, reloading.
+INFO 2026-02-20 11:08:49,580 autoreload Watching for file changes with StatReloader
+INFO 2026-02-20 11:09:02,147 autoreload D:\project\api\views.py changed, reloading.
+INFO 2026-02-20 11:09:02,840 autoreload Watching for file changes with StatReloader
+INFO 2026-02-20 11:09:11,255 autoreload D:\project\api\views.py changed, reloading.
+INFO 2026-02-20 11:09:11,912 autoreload Watching for file changes with StatReloader
+INFO 2026-02-20 11:10:32,715 autoreload D:\project\api\views.py changed, reloading.
+INFO 2026-02-20 11:10:33,403 autoreload Watching for file changes with StatReloader
+WARNING 2026-02-20 11:11:26,756 log Not Found: /api/sub/delux-room/
+INFO 2026-02-20 11:13:14,727 autoreload D:\project\api\views.py changed, reloading.
+INFO 2026-02-20 11:13:15,422 autoreload Watching for file changes with StatReloader
+INFO 2026-02-20 11:15:11,056 autoreload D:\project\blog\admin.py changed, reloading.
+INFO 2026-02-20 11:15:11,754 autoreload Watching for file changes with StatReloader
+INFO 2026-02-20 11:15:13,121 autoreload D:\project\blog\admin.py changed, reloading.
+INFO 2026-02-20 11:15:13,776 autoreload Watching for file changes with StatReloader
+WARNING 2026-02-20 11:26:38,628 log Not Found: /api/packages/room-suites/
+WARNING 2026-02-20 11:41:08,787 log Not Found: /api/packages/room-/
+WARNING 2026-02-20 11:41:12,563 log Not Found: /api/packages/room/
+WARNING 2026-02-20 11:41:12,872 log Not Found: /api/packages/ro/
+WARNING 2026-02-20 11:41:13,328 log Not Found: /api/packages/r/
+WARNING 2026-02-20 11:41:13,722 log Not Found: /api/packages//
+WARNING 2026-02-20 12:32:22,646 log Forbidden (Permission denied): /admin/auth/user/
+Traceback (most recent call last):
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\project\venv\Lib\site-packages\django\contrib\admin\options.py", line 710, in wrapper
+    return self.admin_site.admin_view(view)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\utils\decorators.py", line 192, in _view_wrapper
+    result = _process_exception(request, e)
+  File "D:\project\venv\Lib\site-packages\django\utils\decorators.py", line 190, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\decorators\cache.py", line 80, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\django\contrib\admin\sites.py", line 247, in inner
+    return view(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\django\utils\decorators.py", line 48, in _wrapper
+    return bound_method(*args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\django\utils\decorators.py", line 192, in _view_wrapper
+    result = _process_exception(request, e)
+  File "D:\project\venv\Lib\site-packages\django\utils\decorators.py", line 190, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\django\contrib\admin\options.py", line 1979, in changelist_view
+    raise PermissionDenied
+django.core.exceptions.PermissionDenied
+WARNING 2026-02-20 12:32:34,651 log Not Found: /admin/auth/user/add/
+WARNING 2026-02-20 12:51:21,819 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-20 12:51:43,976 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-20 12:55:52,545 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-20 12:56:01,378 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+INFO 2026-02-20 12:58:27,695 autoreload D:\project\cms\settings.py changed, reloading.
+INFO 2026-02-20 12:58:29,009 autoreload Watching for file changes with StatReloader
+INFO 2026-02-20 12:58:30,628 autoreload D:\project\cms\settings.py changed, reloading.
+INFO 2026-02-20 12:58:31,324 autoreload Watching for file changes with StatReloader
+INFO 2026-02-20 12:58:40,022 autoreload D:\project\cms\settings.py changed, reloading.
+INFO 2026-02-20 12:58:40,712 autoreload Watching for file changes with StatReloader
+INFO 2026-02-20 12:58:42,134 autoreload D:\project\cms\settings.py changed, reloading.
+INFO 2026-02-20 12:58:42,975 autoreload Watching for file changes with StatReloader
+INFO 2026-02-20 12:59:39,004 autoreload D:\project\cms\settings.py changed, reloading.
+INFO 2026-02-20 13:00:07,460 autoreload Watching for file changes with StatReloader
+INFO 2026-02-20 13:00:38,503 autoreload D:\project\cms\settings.py changed, reloading.
+INFO 2026-02-20 13:00:39,416 autoreload Watching for file changes with StatReloader

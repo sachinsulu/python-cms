@@ -22,22 +22,13 @@ $(document).ready(function() {
         paging: true,
         ordering: false,
         pageLength: 10,
-        columnDefs: [
-            { targets: 0, visible: false } // Hide the ID/Position column
-        ],
         lengthMenu: [
         [10, 25, 50, -1],  // -1 tells DataTables to show all rows
         [10, 25, 50, "All"] // The labels displayed in the dropdown
     ]
     });
 
-    $('#listTable_filter input').off().on('keyup', function() {
-        // Filter only the Title column (index 3)
-        table
-            .column(3)
-            .search(this.value)
-            .draw();
-    });
+
 
 
 
@@ -72,5 +63,21 @@ $(document).ready(function() {
                 }
             });
         }
+    });
+
+    // 4. Select All Checkbox Logic
+    $('#select-all').on('change', function () {
+        const checked = this.checked;
+        table.rows({ search: 'applied' }).nodes().each(function (row) {
+            $(row).find('.row-checkbox').prop('checked', checked);
+        });
+    });
+
+    $('#listTable').on('change', '.row-checkbox', function () {
+        const allBoxes = table.rows({ search: 'applied' }).nodes().to$().find('.row-checkbox');
+        const checkedBoxes = allBoxes.filter(':checked');
+        const selectAll = $('#select-all');
+        selectAll.prop('checked', allBoxes.length === checkedBoxes.length);
+        selectAll.prop('indeterminate', checkedBoxes.length > 0 && checkedBoxes.length < allBoxes.length);
     });
 });

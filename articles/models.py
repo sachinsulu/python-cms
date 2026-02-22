@@ -14,8 +14,8 @@ class Article(models.Model):
 
     image = models.ImageField(upload_to='articles/', blank=True, null=True)
     content = RichTextUploadingField(blank=False)
-    show_on_homepage = models.BooleanField(default=False)
-    is_active = models.BooleanField(default=True)
+    homepage = models.BooleanField(default=False)
+    active = models.BooleanField(default=True)
    
     author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)

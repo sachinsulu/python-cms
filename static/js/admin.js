@@ -395,72 +395,6 @@ function setFormAction(action) {
     
 
 
-/* 7. Sortable (Drag & Drop) */
-        window.initSortable = function() {
-            const el = document.getElementById('sortable-tbody');
-            if (!el || typeof Sortable === 'undefined') return;
-
-            // Destroy existing instance if it exists
-            if (el.sortableInstance) {
-                el.sortableInstance.destroy();
-            }
-
-            const updateUrl = el.dataset.updateUrl;
-            
-            el.sortableInstance = Sortable.create(el, {
-                handle: '.drag-handle',
-                animation: 150,
-                onEnd: function() {
-                    if (!updateUrl) return;
-                    const order = Array.from(el.querySelectorAll('tr'))
-                        .map(row => parseInt(row.getAttribute('data-id')))
-                        .filter(n => !isNaN(n));
-
-                    fetch(updateUrl, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRFToken': getCSRFToken(),
-                            'X-Requested-With': 'XMLHttpRequest'
-                        },
-                        body: JSON.stringify({ order: order })
-                    }).then(res => res.json())
-                    .then(data => console.log('Order update:', data.status));
-                }
-            });
-        };
-
-        // Initialize on page load
-        window.initSortable();
-
-    /* 8. Search & Pagination Handling */
-    (function initSearch() {
-        const searchInput = document.getElementById('article-search');
-        if (!searchInput) return;
-
-        const homepageSelect = document.querySelector('select[name="homepage"]');
-        let debounceTimer;
-
-        searchInput.addEventListener('input', function() {
-            clearTimeout(debounceTimer);
-            const query = this.value.trim();
-
-            debounceTimer = setTimeout(() => {
-                const url = new URL(window.location);
-                const homepageValue = homepageSelect ? homepageSelect.value : 'no';
-                const perPage = url.searchParams.get('per_page') || '10';
-
-                // Update Params and Reload
-                if (query) url.searchParams.set('q', query);
-                else url.searchParams.delete('q');
-
-                url.searchParams.set('homepage', homepageValue);
-                url.searchParams.set('per_page', perPage);
-                
-                window.location.href = url.toString();
-            }, 500);
-        });
-    })();
 
     /* 9. CKEditor "Read More" Button */
     const readMoreBtn = document.getElementById('readMore');
@@ -601,52 +535,5 @@ function setFormAction(action) {
 
 
 
-    /* 12. URL Parameter Cleanup */
-    (function cleanupURL() {
-        const isArticleListPage = document.getElementById('article-search');
-        if (!isArticleListPage) return;
 
-        const url = new URL(window.location);
-        let changed = false;
-
-        // Set default homepage to 'no' ONLY if completely missing
-        const homepageParam = url.searchParams.get("homepage");
-        if (!homepageParam || homepageParam === "") {
-            url.searchParams.set("homepage", "no");
-            changed = true;
-        }
-        
-        // Remove empty search query
-        if (url.searchParams.get("q") === "") {
-            url.searchParams.delete("q");
-            changed = true;
-        }
-
-        if (changed) {
-            window.history.replaceState({}, "", url);
-        }
-    })();
-});
-
-document.addEventListener('change', function (e) {
-
-    // Select-all checkbox
-    if (e.target && e.target.id === 'select-all') {
-        const checked = e.target.checked;
-        document.querySelectorAll('.row-checkbox').forEach(cb => {
-            cb.checked = checked;
-        });
-    }
-
-    // Individual row checkbox (keeps select-all in sync)
-    if (e.target && e.target.classList.contains('row-checkbox')) {
-        const all = document.querySelectorAll('.row-checkbox');
-        const checked = document.querySelectorAll('.row-checkbox:checked');
-        const selectAll = document.getElementById('select-all');
-
-        if (!selectAll) return;
-
-        selectAll.checked = all.length === checked.length;
-        selectAll.indeterminate = checked.length > 0 && checked.length < all.length;
-    }
 });

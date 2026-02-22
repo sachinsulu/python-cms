@@ -1,78 +1,52 @@
 {% extends "base.html" %}
 {% block content %}
 
-{# ===================== PAGE HEADER ===================== #}
-<header style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.8/css/jquery.dataTables.min.css">
+<script src="https://cdn.datatables.net/1.13.8/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
 
+<style>
+
+    /* Ghosting effect (the row left behind) */
+    .sortable-ghost {
+        opacity: 0.3;
+        background-color: #f0f0f0 !important;
+    }
+
+    /* Success message badge */
+    .success-badge { 
+        display: none; position: fixed; top: 20px; right: 20px; 
+        background: #28a745; color: white; padding: 12px 24px; 
+        border-radius: 4px; z-index: 9999; font-weight: bold;
+    }
+    a{
+        text-decoration: none;
+    }
+</style>
+
+
+<header style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
     <div style="display:flex; align-items:center; gap:12px;">
         <h2 style="margin:0;">Articles</h2>
-
-        {# Homepage filter #}
+        
         <form method="get" id="homepage-filter-form" style="margin:0;">
-            {% if request.GET.q %}
-                <input type="hidden" name="q" value="{{ request.GET.q }}">
-            {% endif %}
-            {% if request.GET.per_page %}
-                <input type="hidden" name="per_page" value="{{ request.GET.per_page }}">
-            {% endif %}
-
-            <select name="homepage" style="padding:5px 10px;">
-                <option value="no"
-                        {% if request.GET.homepage == 'no' or not request.GET.homepage %}selected{% endif %}>
-                    Inner Page
-                </option>
-                <option value="yes"
-                        {% if request.GET.homepage == 'yes' %}selected{% endif %}>
+            <select name="homepage" onchange="this.form.submit()" style="padding:5px 10px;">
+                <option value="1" {% if current_filter == '1' %}selected{% endif %}>
                     Homepage
                 </option>
+                <option value="0" {% if current_filter == '0' %}selected{% endif %}>
+                    Inner Page
+                </option>
             </select>
         </form>
     </div>
 
-    {# Primary action #}
-    <a href="{% url 'article_create' %}?from_homepage={% if request.GET.homepage == 'yes' %}yes{% else %}no{% endif %}"
-       class="btn">
-        + Add Article
-    </a>
+<a href="{% url 'article_create' %}" class="btn">
+    + Add Article
+</a>
 
 </header>
-
-
-{# ===================== TOOLBAR ===================== #}
-<section style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-
-    {# Left tools: search + pagination size #}
-    <div style="display:flex; align-items:center; gap:10px;">
-
-        <input type="text"
-               id="article-search"
-               placeholder="Search"
-               value="{{ request.GET.q|default:'' }}"
-               style="padding:5px 10px; width:250px;">
-
-        <form method="get" id="per-page-form" style="margin:0;">
-            {% if request.GET.q %}
-                <input type="hidden" name="q" value="{{ request.GET.q }}">
-            {% endif %}
-            {% if request.GET.homepage %}
-                <input type="hidden" name="homepage" value="{{ request.GET.homepage }}">
-            {% endif %}
-
-            Show
-            <select name="per_page" style="padding:5px 10px;">
-                <option value="10"
-                        {% if request.GET.per_page == '10' or not request.GET.per_page %}selected{% endif %}>
-                    10
-                </option>
-                <option value="20" {% if request.GET.per_page == '20' %}selected{% endif %}>20</option>
-                <option value="50" {% if request.GET.per_page == '50' %}selected{% endif %}>50</option>
-                <option value="all" {% if request.GET.per_page == 'all' %}selected{% endif %}>ALL</option>
-            </select>
-            Items
-        </form>
-    </div>
-
-    {# Right tools: bulk actions #}
     <div style="display:flex; align-items:center; gap:8px;">
         <button type="button"
                 class="btn btn-warning"
@@ -82,30 +56,56 @@
 
         <button type="button"
                 class="btn btn-danger"
-                onclick="openDeleteModal('article', null, '/bulk/article/', true)">
+                onclick="openDeleteModal('article', null, '/bulk/blog/', true)">
             Delete
         </button>
     </div>
+<div id="saveMsg" class="success-badge">Order Saved!</div>
+<form method="post" action="{% url 'bulk_action' 'article' %}" id="bulk-form">
+    {% csrf_token %}
+<table id="listTable" class="display" style="width:100%" data-sort-url="{% url 'sort' 'article' %}">
+    <thead>
+        <tr>
+            <th style="width: 30px;"></th> 
+            <th><input type="checkbox" id="select-all"></th>
+            <th>Title</th>
+            <th>Status</th>
+            <th>Actions</th>
+            
+        </tr>
+    </thead>
+    <tbody>
+        {% for b in list %}
+        <tr data-id="{{ b.id }}">
+            <td class="drag-handle" style="cursor: grab; color: #9ca3af;">
+                    <i class="fa-solid fa-grip-vertical"></i>
+                </td>
+            <td><input type="checkbox" name="selected_ids" value="{{ b.id }}" class="row-checkbox"> </td>
+            <td><a href="{% url 'article_edit' b.slug %}">{{ b.title }}</a><br> <small>{{b.slug}}</small></td>
+            <td id="status-{{ b.id }}" class="{% if b.active %}status-active{% else %}status-inactive{% endif %}">
+                    {{ b.active|yesno:"Active,Inactive" }}
+            </td>
+            <td class="actions">
+                    <span class="status-toggle"
+                          data-url="{% url 'toggle_status' 'article' b.id %}"
+                          data-target="status-{{ b.id }}"
+                          onclick="event.preventDefault(); toggleStatus(this)">
+                        <i class="fa-solid {% if b.active %}fa-toggle-on{% else %}fa-toggle-off{% endif %}"></i>
+                    </span>
+                    <a href="{% url 'article_edit' b.slug %}" class="icon edit"><i class="fa-solid fa-pen-to-square"></i></a>
+                    <span class="icon delete"
+                        onclick="openDeleteModal('article', '{{ b.title }}', '{% url 'delete_object' 'article' b.id %}', false)">
+                        <i class="fa-solid fa-trash"></i>
+                    </span>
+                </td>
+            
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+    <button type="submit" name="action" value="toggle" style="display:none;"></button>
+</form>
 
-</section>
-
-
-{# ===================== CONTENT ===================== #}
-<section>
-
-    <div id="ajax-loader"
-         style="display:none; text-align:center; margin-bottom:8px;">
-    </div>
-
-    <div id="articles-list-container">
-        {% include 'articles/_list_partial.html' %}
-    </div>
-
-</section>
-
-
-{# ===================== SCRIPTS ===================== #}
 {% load static %}
-<script src="{% static 'js/articles-ajax.js' %}"></script>
-
+<script src="{% static 'js/data_tables.js' %}"></script>
 {% endblock %}

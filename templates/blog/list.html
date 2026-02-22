@@ -28,7 +28,7 @@
 
 <header style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
     <div style="display:flex; align-items:center; gap:12px;">
-        <h2 style="margin:0;">Articles</h2>
+        <h2 style="margin:0;">Blog</h2>
         
         <form method="get" id="homepage-filter-form" style="margin:0;">
             <select name="homepage" onchange="this.form.submit()" style="padding:5px 10px;">
@@ -66,7 +66,6 @@
 <table id="listTable" class="display" style="width:100%" data-sort-url="{% url 'sort' 'blog' %}">
     <thead>
         <tr>
-            <th>ID</th>
             <th style="width: 30px;"></th> 
             <th><input type="checkbox" id="select-all"></th>
             <th>Title</th>
@@ -78,7 +77,6 @@
     <tbody>
         {% for b in list %}
         <tr data-id="{{ b.id }}">
-            <td>{{ b.position }}</td>
             <td class="drag-handle" style="cursor: grab; color: #9ca3af;">
                     <i class="fa-solid fa-grip-vertical"></i>
                 </td>
@@ -109,5 +107,5 @@
 </form>
 
 {% load static %}
-<script src="{% static 'js/blog.js' %}"></script>
+<script src="{% static 'js/data_tables.js' %}"></script>
 {% endblock %}

@@ -5866,3 +5866,1166 @@ INFO 2026-02-20 12:59:39,004 autoreload D:\project\cms\settings.py changed, relo
 INFO 2026-02-20 13:00:07,460 autoreload Watching for file changes with StatReloader
 INFO 2026-02-20 13:00:38,503 autoreload D:\project\cms\settings.py changed, reloading.
 INFO 2026-02-20 13:00:39,416 autoreload Watching for file changes with StatReloader
+INFO 2026-02-22 11:22:45,859 autoreload Watching for file changes with StatReloader
+WARNING 2026-02-22 11:22:46,234 log Not Found: /__reload__/events/
+WARNING 2026-02-22 11:22:49,253 log Not Found: /__reload__/events/
+WARNING 2026-02-22 11:22:51,440 log Not Found: /apanel/article/
+WARNING 2026-02-22 11:23:05,920 log Not Found: /api/visitor-stats/
+INFO 2026-02-22 11:29:12,153 autoreload D:\project\blog\views.py changed, reloading.
+INFO 2026-02-22 11:29:13,096 autoreload Watching for file changes with StatReloader
+INFO 2026-02-22 11:29:27,302 autoreload D:\project\articles\views.py changed, reloading.
+INFO 2026-02-22 11:29:28,188 autoreload Watching for file changes with StatReloader
+INFO 2026-02-22 11:29:30,769 autoreload D:\project\articles\views.py changed, reloading.
+INFO 2026-02-22 11:29:31,679 autoreload Watching for file changes with StatReloader
+INFO 2026-02-22 11:29:33,253 autoreload D:\project\articles\views.py changed, reloading.
+INFO 2026-02-22 11:29:34,127 autoreload Watching for file changes with StatReloader
+INFO 2026-02-22 11:29:35,789 autoreload D:\project\articles\views.py changed, reloading.
+INFO 2026-02-22 11:29:36,714 autoreload Watching for file changes with StatReloader
+INFO 2026-02-22 11:29:39,425 autoreload D:\project\articles\views.py changed, reloading.
+INFO 2026-02-22 11:29:40,156 autoreload Watching for file changes with StatReloader
+INFO 2026-02-22 11:29:44,741 autoreload D:\project\articles\views.py changed, reloading.
+INFO 2026-02-22 11:29:45,605 autoreload Watching for file changes with StatReloader
+ERROR 2026-02-22 11:29:47,544 log Internal Server Error: /articles/
+Traceback (most recent call last):
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\project\venv\Lib\site-packages\django\utils\decorators.py", line 192, in _view_wrapper
+    result = _process_exception(request, e)
+  File "D:\project\venv\Lib\site-packages\django\utils\decorators.py", line 190, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\project\articles\views.py", line 30, in article_list
+    articles = Article.objects.filter(homepage=current_filter).order_by('position')
+               ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 1542, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 1560, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 1570, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1671, in add_q
+    clause, _ = self._add_q(q_object, can_reuse)
+                ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1703, in _add_q
+    child_clause, needed_inner = self.build_filter(
+                                 ~~~~~~~~~~~~~~~~~^
+        child,
+        ^^^^^^
+    ...<7 lines>...
+        update_join_types=update_join_types,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1551, in build_filter
+    lookups, parts, reffed_expression = self.solve_lookup_type(arg, summarize)
+                                        ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1358, in solve_lookup_type
+    _, field, _, lookup_parts = self.names_to_path(lookup_splitted, self.get_meta())
+                                ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1832, in names_to_path
+    raise FieldError(
+    ...<2 lines>...
+    )
+django.core.exceptions.FieldError: Cannot resolve keyword 'homepage' into field. Choices are: author, author_id, content, created_at, id, image, is_active, meta_description, meta_keywords, meta_title, position, show_on_homepage, slug, subtitle, title, updated_at
+INFO 2026-02-22 11:30:15,031 autoreload D:\project\articles\views.py changed, reloading.
+INFO 2026-02-22 11:30:15,855 autoreload Watching for file changes with StatReloader
+INFO 2026-02-22 11:30:19,626 autoreload D:\project\articles\views.py changed, reloading.
+INFO 2026-02-22 11:30:20,451 autoreload Watching for file changes with StatReloader
+ERROR 2026-02-22 11:30:22,349 log Internal Server Error: /articles/
+Traceback (most recent call last):
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\project\venv\Lib\site-packages\django\utils\decorators.py", line 192, in _view_wrapper
+    result = _process_exception(request, e)
+  File "D:\project\venv\Lib\site-packages\django\utils\decorators.py", line 190, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\project\articles\views.py", line 30, in article_list
+    articles = Article.objects.filter(show_on_homepage=current_filter).order_by('position')
+               ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 1542, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 1560, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 1570, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1671, in add_q
+    clause, _ = self._add_q(q_object, can_reuse)
+                ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1703, in _add_q
+    child_clause, needed_inner = self.build_filter(
+                                 ~~~~~~~~~~~~~~~~~^
+        child,
+        ^^^^^^
+    ...<7 lines>...
+        update_join_types=update_join_types,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1613, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1440, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+  File "D:\project\venv\Lib\site-packages\django\db\models\lookups.py", line 35, in __init__
+    self.rhs = self.get_prep_lookup()
+               ~~~~~~~~~~~~~~~~~~~~^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\lookups.py", line 391, in get_prep_lookup
+    return super().get_prep_lookup()
+           ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\lookups.py", line 93, in get_prep_lookup
+    return self.lhs.output_field.get_prep_value(self.rhs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\fields\__init__.py", line 1189, in get_prep_value
+    return self.to_python(value)
+           ~~~~~~~~~~~~~~^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\fields\__init__.py", line 1179, in to_python
+    raise exceptions.ValidationError(
+    ...<3 lines>...
+    )
+django.core.exceptions.ValidationError: ['“no” value must be either True or False.']
+INFO 2026-02-22 11:32:35,599 autoreload D:\project\articles\models.py changed, reloading.
+INFO 2026-02-22 11:32:36,384 autoreload Watching for file changes with StatReloader
+WARNING 2026-02-22 11:32:39,575 log Not Found: /favicon.ico
+WARNING 2026-02-22 11:32:49,643 log Not Found: /api/visitor-stats/
+INFO 2026-02-22 11:33:30,559 autoreload D:\project\articles\models.py changed, reloading.
+INFO 2026-02-22 11:33:31,450 autoreload Watching for file changes with StatReloader
+INFO 2026-02-22 11:33:32,863 autoreload D:\project\articles\models.py changed, reloading.
+INFO 2026-02-22 11:33:33,742 autoreload Watching for file changes with StatReloader
+INFO 2026-02-22 11:33:36,184 autoreload D:\project\articles\models.py changed, reloading.
+INFO 2026-02-22 11:33:37,070 autoreload Watching for file changes with StatReloader
+INFO 2026-02-22 11:33:39,488 autoreload D:\project\articles\models.py changed, reloading.
+INFO 2026-02-22 11:33:40,616 autoreload Watching for file changes with StatReloader
+INFO 2026-02-22 11:37:23,791 autoreload Watching for file changes with StatReloader
+ERROR 2026-02-22 11:37:24,557 log Internal Server Error: /articles/
+Traceback (most recent call last):
+  File "D:\project\venv\Lib\site-packages\django\db\backends\utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\backends\sqlite3\base.py", line 359, in execute
+    return super().execute(query, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+sqlite3.OperationalError: no such column: articles_article.homepage
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\project\venv\Lib\site-packages\django\utils\decorators.py", line 192, in _view_wrapper
+    result = _process_exception(request, e)
+  File "D:\project\venv\Lib\site-packages\django\utils\decorators.py", line 190, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\project\articles\views.py", line 32, in article_list
+    return render(request, 'articles/list.html', {
+        'list': articles,
+        'current_filter': current_filter
+    })
+  File "D:\project\venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "D:\project\venv\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\backends\django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\base.py", line 174, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\base.py", line 1091, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\base.py", line 1052, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\loader_tags.py", line 160, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\base.py", line 1091, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\base.py", line 1052, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\loader_tags.py", line 66, in render
+    result = block.nodelist.render(context)
+  File "D:\project\venv\Lib\site-packages\django\template\base.py", line 1091, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\base.py", line 1052, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\defaulttags.py", line 202, in render
+    len_values = len(values)
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 372, in __len__
+    self._fetch_all()
+    ~~~~~~~~~~~~~~~^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 2000, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+                         ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 95, in __iter__
+    results = compiler.execute_sql(
+        chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size
+    )
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1624, in execute_sql
+    cursor.execute(sql, params)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\backends\utils.py", line 122, in execute
+    return super().execute(sql, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\backends\utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        sql, params, many=False, executor=self._execute
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\project\venv\Lib\site-packages\django\db\backends\utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "D:\project\venv\Lib\site-packages\django\db\backends\utils.py", line 100, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\utils.py", line 94, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "D:\project\venv\Lib\site-packages\django\db\backends\utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\backends\sqlite3\base.py", line 359, in execute
+    return super().execute(query, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+django.db.utils.OperationalError: no such column: articles_article.homepage
+ERROR 2026-02-22 11:38:44,697 log Internal Server Error: /admin/articles/article/
+Traceback (most recent call last):
+  File "D:\project\venv\Lib\site-packages\django\db\backends\utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\backends\sqlite3\base.py", line 359, in execute
+    return super().execute(query, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+sqlite3.OperationalError: no such column: articles_article.homepage
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\project\venv\Lib\site-packages\django\contrib\admin\options.py", line 710, in wrapper
+    return self.admin_site.admin_view(view)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\utils\decorators.py", line 192, in _view_wrapper
+    result = _process_exception(request, e)
+  File "D:\project\venv\Lib\site-packages\django\utils\decorators.py", line 190, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\decorators\cache.py", line 80, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\django\contrib\admin\sites.py", line 247, in inner
+    return view(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\django\utils\decorators.py", line 48, in _wrapper
+    return bound_method(*args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\django\utils\decorators.py", line 192, in _view_wrapper
+    result = _process_exception(request, e)
+  File "D:\project\venv\Lib\site-packages\django\utils\decorators.py", line 190, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\django\contrib\admin\options.py", line 2121, in changelist_view
+    "selection_note": _("0 of %(cnt)s selected") % {"cnt": len(cl.result_list)},
+                                                           ~~~^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 372, in __len__
+    self._fetch_all()
+    ~~~~~~~~~~~~~~~^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 2000, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+                         ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 95, in __iter__
+    results = compiler.execute_sql(
+        chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size
+    )
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1624, in execute_sql
+    cursor.execute(sql, params)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\backends\utils.py", line 122, in execute
+    return super().execute(sql, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\backends\utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        sql, params, many=False, executor=self._execute
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\project\venv\Lib\site-packages\django\db\backends\utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "D:\project\venv\Lib\site-packages\django\db\backends\utils.py", line 100, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\utils.py", line 94, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "D:\project\venv\Lib\site-packages\django\db\backends\utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\backends\sqlite3\base.py", line 359, in execute
+    return super().execute(query, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+django.db.utils.OperationalError: no such column: articles_article.homepage
+INFO 2026-02-22 11:43:01,959 autoreload Watching for file changes with StatReloader
+WARNING 2026-02-22 11:43:08,173 log Not Found: /favicon.ico
+WARNING 2026-02-22 11:43:15,594 log Not Found: /api/visitor-stats/
+ERROR 2026-02-22 11:43:16,899 log Internal Server Error: /articles/
+Traceback (most recent call last):
+  File "D:\project\venv\Lib\site-packages\django\db\backends\utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\backends\sqlite3\base.py", line 359, in execute
+    return super().execute(query, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+sqlite3.OperationalError: no such table: articles_article
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\project\venv\Lib\site-packages\django\utils\decorators.py", line 192, in _view_wrapper
+    result = _process_exception(request, e)
+  File "D:\project\venv\Lib\site-packages\django\utils\decorators.py", line 190, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\project\articles\views.py", line 32, in article_list
+    return render(request, 'articles/list.html', {
+        'list': articles,
+        'current_filter': current_filter
+    })
+  File "D:\project\venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "D:\project\venv\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\backends\django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\base.py", line 174, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\base.py", line 1091, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\base.py", line 1052, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\loader_tags.py", line 160, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\base.py", line 1091, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\base.py", line 1052, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\loader_tags.py", line 66, in render
+    result = block.nodelist.render(context)
+  File "D:\project\venv\Lib\site-packages\django\template\base.py", line 1091, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\base.py", line 1052, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\defaulttags.py", line 202, in render
+    len_values = len(values)
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 372, in __len__
+    self._fetch_all()
+    ~~~~~~~~~~~~~~~^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 2000, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+                         ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 95, in __iter__
+    results = compiler.execute_sql(
+        chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size
+    )
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1624, in execute_sql
+    cursor.execute(sql, params)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\backends\utils.py", line 122, in execute
+    return super().execute(sql, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\backends\utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        sql, params, many=False, executor=self._execute
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\project\venv\Lib\site-packages\django\db\backends\utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "D:\project\venv\Lib\site-packages\django\db\backends\utils.py", line 100, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\utils.py", line 94, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "D:\project\venv\Lib\site-packages\django\db\backends\utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\backends\sqlite3\base.py", line 359, in execute
+    return super().execute(query, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+django.db.utils.OperationalError: no such table: articles_article
+INFO 2026-02-22 11:44:53,438 autoreload Watching for file changes with StatReloader
+WARNING 2026-02-22 11:45:06,524 log Not Found: /api/visitor-stats/
+ERROR 2026-02-22 11:45:08,197 log Internal Server Error: /blog/
+Traceback (most recent call last):
+  File "D:\project\venv\Lib\site-packages\django\db\backends\utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\backends\sqlite3\base.py", line 359, in execute
+    return super().execute(query, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+sqlite3.OperationalError: no such table: blog_blog
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\project\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\project\blog\views.py", line 26, in blog_list
+    return render(request, 'blog/list.html', {
+        'list': blog,
+        'current_filter': current_filter
+    })
+  File "D:\project\venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "D:\project\venv\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\backends\django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\base.py", line 174, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\base.py", line 1091, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\base.py", line 1052, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\loader_tags.py", line 160, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\base.py", line 1091, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\base.py", line 1052, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\loader_tags.py", line 66, in render
+    result = block.nodelist.render(context)
+  File "D:\project\venv\Lib\site-packages\django\template\base.py", line 1091, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\base.py", line 1052, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\defaulttags.py", line 202, in render
+    len_values = len(values)
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 372, in __len__
+    self._fetch_all()
+    ~~~~~~~~~~~~~~~^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 2000, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+                         ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 95, in __iter__
+    results = compiler.execute_sql(
+        chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size
+    )
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1624, in execute_sql
+    cursor.execute(sql, params)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\backends\utils.py", line 122, in execute
+    return super().execute(sql, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\backends\utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        sql, params, many=False, executor=self._execute
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\project\venv\Lib\site-packages\django\db\backends\utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "D:\project\venv\Lib\site-packages\django\db\backends\utils.py", line 100, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\utils.py", line 94, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "D:\project\venv\Lib\site-packages\django\db\backends\utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\backends\sqlite3\base.py", line 359, in execute
+    return super().execute(query, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+django.db.utils.OperationalError: no such table: blog_blog
+INFO 2026-02-22 11:53:19,095 autoreload Watching for file changes with StatReloader
+WARNING 2026-02-22 11:53:28,331 log Not Found: /favicon.ico
+WARNING 2026-02-22 11:53:28,814 log Not Found: /favicon.ico
+WARNING 2026-02-22 11:53:28,996 log Not Found: /favicon.ico
+WARNING 2026-02-22 11:53:30,020 log Not Found: /favicon.ico
+WARNING 2026-02-22 11:53:30,284 log Not Found: /favicon.ico
+WARNING 2026-02-22 11:53:37,794 log Not Found: /api/visitor-stats/
+INFO 2026-02-22 11:55:14,761 autoreload D:\project\articles\views.py changed, reloading.
+INFO 2026-02-22 11:55:15,932 autoreload Watching for file changes with StatReloader
+INFO 2026-02-22 11:55:20,544 autoreload D:\project\articles\views.py changed, reloading.
+INFO 2026-02-22 11:55:21,360 autoreload Watching for file changes with StatReloader
+INFO 2026-02-22 11:55:28,043 autoreload D:\project\articles\views.py changed, reloading.
+INFO 2026-02-22 11:55:28,741 autoreload Watching for file changes with StatReloader
+INFO 2026-02-22 11:55:36,406 autoreload D:\project\articles\views.py changed, reloading.
+INFO 2026-02-22 11:55:37,205 autoreload Watching for file changes with StatReloader
+INFO 2026-02-22 11:55:42,900 autoreload D:\project\articles\views.py changed, reloading.
+INFO 2026-02-22 11:55:43,627 autoreload Watching for file changes with StatReloader
+INFO 2026-02-22 11:55:46,240 autoreload D:\project\articles\views.py changed, reloading.
+INFO 2026-02-22 11:55:46,899 autoreload Watching for file changes with StatReloader
+INFO 2026-02-22 11:56:08,927 autoreload D:\project\articles\views.py changed, reloading.
+INFO 2026-02-22 11:56:09,813 autoreload Watching for file changes with StatReloader
+INFO 2026-02-22 11:56:17,461 autoreload D:\project\articles\views.py changed, reloading.
+INFO 2026-02-22 11:56:18,134 autoreload Watching for file changes with StatReloader
+INFO 2026-02-22 11:56:23,845 autoreload D:\project\articles\views.py changed, reloading.
+INFO 2026-02-22 11:56:24,603 autoreload Watching for file changes with StatReloader
+INFO 2026-02-22 11:56:42,557 autoreload D:\project\articles\views.py changed, reloading.
+INFO 2026-02-22 11:56:43,348 autoreload Watching for file changes with StatReloader
+INFO 2026-02-22 11:56:46,976 autoreload D:\project\articles\views.py changed, reloading.
+INFO 2026-02-22 11:56:47,965 autoreload Watching for file changes with StatReloader
+INFO 2026-02-22 11:56:49,585 autoreload D:\project\articles\views.py changed, reloading.
+INFO 2026-02-22 11:56:50,363 autoreload Watching for file changes with StatReloader
+ERROR 2026-02-22 11:58:39,855 log Internal Server Error: /articles/
+Traceback (most recent call last):
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\project\venv\Lib\site-packages\django\utils\decorators.py", line 192, in _view_wrapper
+    result = _process_exception(request, e)
+  File "D:\project\venv\Lib\site-packages\django\utils\decorators.py", line 190, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\project\articles\views.py", line 30, in article_list
+    articles = Article.objects.filter(homepage=current_filter).order_by('position')
+               ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 1542, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 1560, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 1570, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1671, in add_q
+    clause, _ = self._add_q(q_object, can_reuse)
+                ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1703, in _add_q
+    child_clause, needed_inner = self.build_filter(
+                                 ~~~~~~~~~~~~~~~~~^
+        child,
+        ^^^^^^
+    ...<7 lines>...
+        update_join_types=update_join_types,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1613, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1440, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+  File "D:\project\venv\Lib\site-packages\django\db\models\lookups.py", line 35, in __init__
+    self.rhs = self.get_prep_lookup()
+               ~~~~~~~~~~~~~~~~~~~~^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\lookups.py", line 391, in get_prep_lookup
+    return super().get_prep_lookup()
+           ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\lookups.py", line 93, in get_prep_lookup
+    return self.lhs.output_field.get_prep_value(self.rhs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\fields\__init__.py", line 1189, in get_prep_value
+    return self.to_python(value)
+           ~~~~~~~~~~~~~~^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\fields\__init__.py", line 1179, in to_python
+    raise exceptions.ValidationError(
+    ...<3 lines>...
+    )
+django.core.exceptions.ValidationError: ['“no” value must be either True or False.']
+ERROR 2026-02-22 12:00:24,106 log Internal Server Error: /articles/
+Traceback (most recent call last):
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\project\venv\Lib\site-packages\django\utils\decorators.py", line 192, in _view_wrapper
+    result = _process_exception(request, e)
+  File "D:\project\venv\Lib\site-packages\django\utils\decorators.py", line 190, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\project\articles\views.py", line 30, in article_list
+    articles = Article.objects.filter(homepage=current_filter).order_by('position')
+               ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 1542, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 1560, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 1570, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1671, in add_q
+    clause, _ = self._add_q(q_object, can_reuse)
+                ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1703, in _add_q
+    child_clause, needed_inner = self.build_filter(
+                                 ~~~~~~~~~~~~~~~~~^
+        child,
+        ^^^^^^
+    ...<7 lines>...
+        update_join_types=update_join_types,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1613, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1440, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+  File "D:\project\venv\Lib\site-packages\django\db\models\lookups.py", line 35, in __init__
+    self.rhs = self.get_prep_lookup()
+               ~~~~~~~~~~~~~~~~~~~~^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\lookups.py", line 391, in get_prep_lookup
+    return super().get_prep_lookup()
+           ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\lookups.py", line 93, in get_prep_lookup
+    return self.lhs.output_field.get_prep_value(self.rhs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\fields\__init__.py", line 1189, in get_prep_value
+    return self.to_python(value)
+           ~~~~~~~~~~~~~~^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\fields\__init__.py", line 1179, in to_python
+    raise exceptions.ValidationError(
+    ...<3 lines>...
+    )
+django.core.exceptions.ValidationError: ['“no” value must be either True or False.']
+ERROR 2026-02-22 12:00:27,338 log Internal Server Error: /blog/
+Traceback (most recent call last):
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\project\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\project\blog\views.py", line 24, in blog_list
+    blog = Blog.objects.filter(homepage=current_filter).order_by('position')
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 1542, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 1560, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 1570, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1671, in add_q
+    clause, _ = self._add_q(q_object, can_reuse)
+                ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1703, in _add_q
+    child_clause, needed_inner = self.build_filter(
+                                 ~~~~~~~~~~~~~~~~~^
+        child,
+        ^^^^^^
+    ...<7 lines>...
+        update_join_types=update_join_types,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1613, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 1440, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+  File "D:\project\venv\Lib\site-packages\django\db\models\lookups.py", line 35, in __init__
+    self.rhs = self.get_prep_lookup()
+               ~~~~~~~~~~~~~~~~~~~~^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\lookups.py", line 391, in get_prep_lookup
+    return super().get_prep_lookup()
+           ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\lookups.py", line 93, in get_prep_lookup
+    return self.lhs.output_field.get_prep_value(self.rhs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\fields\__init__.py", line 1189, in get_prep_value
+    return self.to_python(value)
+           ~~~~~~~~~~~~~~^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\fields\__init__.py", line 1179, in to_python
+    raise exceptions.ValidationError(
+    ...<3 lines>...
+    )
+django.core.exceptions.ValidationError: ['“no” value must be either True or False.']
+INFO 2026-02-22 12:02:11,932 autoreload Watching for file changes with StatReloader
+WARNING 2026-02-22 12:02:16,447 log Not Found: /favicon.ico
+WARNING 2026-02-22 12:02:23,987 log Not Found: /api/visitor-stats/
+WARNING 2026-02-22 12:03:10,213 log Not Found: /blog/edit/3/
+WARNING 2026-02-22 12:03:42,336 log Not Found: /favicon.ico
+ERROR 2026-02-22 12:04:36,854 log Internal Server Error: /toggle-status/article/2/
+Traceback (most recent call last):
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\project\venv\Lib\site-packages\django_ratelimit\decorators.py", line 27, in _wrapped
+    return fn(request, *args, **kw)
+  File "D:\project\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\decorators\http.py", line 64, in inner
+    return func(request, *args, **kwargs)
+  File "D:\project\cms\views.py", line 97, in toggle_status
+    current_status = getattr(obj, active_field)
+AttributeError: 'Article' object has no attribute 'is_active'. Did you mean: 'active'?
+ERROR 2026-02-22 12:04:38,117 log Internal Server Error: /toggle-status/article/2/
+Traceback (most recent call last):
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\project\venv\Lib\site-packages\django_ratelimit\decorators.py", line 27, in _wrapped
+    return fn(request, *args, **kw)
+  File "D:\project\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\decorators\http.py", line 64, in inner
+    return func(request, *args, **kwargs)
+  File "D:\project\cms\views.py", line 97, in toggle_status
+    current_status = getattr(obj, active_field)
+AttributeError: 'Article' object has no attribute 'is_active'. Did you mean: 'active'?
+ERROR 2026-02-22 12:04:39,054 log Internal Server Error: /toggle-status/article/2/
+Traceback (most recent call last):
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\project\venv\Lib\site-packages\django_ratelimit\decorators.py", line 27, in _wrapped
+    return fn(request, *args, **kw)
+  File "D:\project\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\decorators\http.py", line 64, in inner
+    return func(request, *args, **kwargs)
+  File "D:\project\cms\views.py", line 97, in toggle_status
+    current_status = getattr(obj, active_field)
+AttributeError: 'Article' object has no attribute 'is_active'. Did you mean: 'active'?
+ERROR 2026-02-22 12:04:39,504 log Internal Server Error: /toggle-status/article/2/
+Traceback (most recent call last):
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\project\venv\Lib\site-packages\django_ratelimit\decorators.py", line 27, in _wrapped
+    return fn(request, *args, **kw)
+  File "D:\project\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\decorators\http.py", line 64, in inner
+    return func(request, *args, **kwargs)
+  File "D:\project\cms\views.py", line 97, in toggle_status
+    current_status = getattr(obj, active_field)
+AttributeError: 'Article' object has no attribute 'is_active'. Did you mean: 'active'?
+ERROR 2026-02-22 12:04:39,652 log Internal Server Error: /toggle-status/article/2/
+Traceback (most recent call last):
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\project\venv\Lib\site-packages\django_ratelimit\decorators.py", line 27, in _wrapped
+    return fn(request, *args, **kw)
+  File "D:\project\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\decorators\http.py", line 64, in inner
+    return func(request, *args, **kwargs)
+  File "D:\project\cms\views.py", line 97, in toggle_status
+    current_status = getattr(obj, active_field)
+AttributeError: 'Article' object has no attribute 'is_active'. Did you mean: 'active'?
+ERROR 2026-02-22 12:04:39,822 log Internal Server Error: /toggle-status/article/2/
+Traceback (most recent call last):
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\project\venv\Lib\site-packages\django_ratelimit\decorators.py", line 27, in _wrapped
+    return fn(request, *args, **kw)
+  File "D:\project\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\decorators\http.py", line 64, in inner
+    return func(request, *args, **kwargs)
+  File "D:\project\cms\views.py", line 97, in toggle_status
+    current_status = getattr(obj, active_field)
+AttributeError: 'Article' object has no attribute 'is_active'. Did you mean: 'active'?
+ERROR 2026-02-22 12:04:39,971 log Internal Server Error: /toggle-status/article/2/
+Traceback (most recent call last):
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\project\venv\Lib\site-packages\django_ratelimit\decorators.py", line 27, in _wrapped
+    return fn(request, *args, **kw)
+  File "D:\project\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\decorators\http.py", line 64, in inner
+    return func(request, *args, **kwargs)
+  File "D:\project\cms\views.py", line 97, in toggle_status
+    current_status = getattr(obj, active_field)
+AttributeError: 'Article' object has no attribute 'is_active'. Did you mean: 'active'?
+ERROR 2026-02-22 12:04:40,130 log Internal Server Error: /toggle-status/article/2/
+Traceback (most recent call last):
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\project\venv\Lib\site-packages\django_ratelimit\decorators.py", line 27, in _wrapped
+    return fn(request, *args, **kw)
+  File "D:\project\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\decorators\http.py", line 64, in inner
+    return func(request, *args, **kwargs)
+  File "D:\project\cms\views.py", line 97, in toggle_status
+    current_status = getattr(obj, active_field)
+AttributeError: 'Article' object has no attribute 'is_active'. Did you mean: 'active'?
+ERROR 2026-02-22 12:04:40,267 log Internal Server Error: /toggle-status/article/2/
+Traceback (most recent call last):
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\project\venv\Lib\site-packages\django_ratelimit\decorators.py", line 27, in _wrapped
+    return fn(request, *args, **kw)
+  File "D:\project\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\decorators\http.py", line 64, in inner
+    return func(request, *args, **kwargs)
+  File "D:\project\cms\views.py", line 97, in toggle_status
+    current_status = getattr(obj, active_field)
+AttributeError: 'Article' object has no attribute 'is_active'. Did you mean: 'active'?
+ERROR 2026-02-22 12:04:40,433 log Internal Server Error: /toggle-status/article/2/
+Traceback (most recent call last):
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\project\venv\Lib\site-packages\django_ratelimit\decorators.py", line 27, in _wrapped
+    return fn(request, *args, **kw)
+  File "D:\project\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\decorators\http.py", line 64, in inner
+    return func(request, *args, **kwargs)
+  File "D:\project\cms\views.py", line 97, in toggle_status
+    current_status = getattr(obj, active_field)
+AttributeError: 'Article' object has no attribute 'is_active'. Did you mean: 'active'?
+ERROR 2026-02-22 12:04:40,661 log Internal Server Error: /toggle-status/article/2/
+Traceback (most recent call last):
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\project\venv\Lib\site-packages\django_ratelimit\decorators.py", line 27, in _wrapped
+    return fn(request, *args, **kw)
+  File "D:\project\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\decorators\http.py", line 64, in inner
+    return func(request, *args, **kwargs)
+  File "D:\project\cms\views.py", line 97, in toggle_status
+    current_status = getattr(obj, active_field)
+AttributeError: 'Article' object has no attribute 'is_active'. Did you mean: 'active'?
+ERROR 2026-02-22 12:04:40,830 log Internal Server Error: /toggle-status/article/2/
+Traceback (most recent call last):
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\project\venv\Lib\site-packages\django_ratelimit\decorators.py", line 27, in _wrapped
+    return fn(request, *args, **kw)
+  File "D:\project\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\decorators\http.py", line 64, in inner
+    return func(request, *args, **kwargs)
+  File "D:\project\cms\views.py", line 97, in toggle_status
+    current_status = getattr(obj, active_field)
+AttributeError: 'Article' object has no attribute 'is_active'. Did you mean: 'active'?
+ERROR 2026-02-22 12:04:40,980 log Internal Server Error: /toggle-status/article/2/
+Traceback (most recent call last):
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\project\venv\Lib\site-packages\django_ratelimit\decorators.py", line 27, in _wrapped
+    return fn(request, *args, **kw)
+  File "D:\project\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\decorators\http.py", line 64, in inner
+    return func(request, *args, **kwargs)
+  File "D:\project\cms\views.py", line 97, in toggle_status
+    current_status = getattr(obj, active_field)
+AttributeError: 'Article' object has no attribute 'is_active'. Did you mean: 'active'?
+ERROR 2026-02-22 12:04:41,137 log Internal Server Error: /toggle-status/article/2/
+Traceback (most recent call last):
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\project\venv\Lib\site-packages\django_ratelimit\decorators.py", line 27, in _wrapped
+    return fn(request, *args, **kw)
+  File "D:\project\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\decorators\http.py", line 64, in inner
+    return func(request, *args, **kwargs)
+  File "D:\project\cms\views.py", line 97, in toggle_status
+    current_status = getattr(obj, active_field)
+AttributeError: 'Article' object has no attribute 'is_active'. Did you mean: 'active'?
+ERROR 2026-02-22 12:04:41,301 log Internal Server Error: /toggle-status/article/2/
+Traceback (most recent call last):
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\project\venv\Lib\site-packages\django_ratelimit\decorators.py", line 27, in _wrapped
+    return fn(request, *args, **kw)
+  File "D:\project\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\decorators\http.py", line 64, in inner
+    return func(request, *args, **kwargs)
+  File "D:\project\cms\views.py", line 97, in toggle_status
+    current_status = getattr(obj, active_field)
+AttributeError: 'Article' object has no attribute 'is_active'. Did you mean: 'active'?
+ERROR 2026-02-22 12:04:41,458 log Internal Server Error: /toggle-status/article/2/
+Traceback (most recent call last):
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\project\venv\Lib\site-packages\django_ratelimit\decorators.py", line 27, in _wrapped
+    return fn(request, *args, **kw)
+  File "D:\project\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\decorators\http.py", line 64, in inner
+    return func(request, *args, **kwargs)
+  File "D:\project\cms\views.py", line 97, in toggle_status
+    current_status = getattr(obj, active_field)
+AttributeError: 'Article' object has no attribute 'is_active'. Did you mean: 'active'?
+ERROR 2026-02-22 12:04:41,707 log Internal Server Error: /toggle-status/article/2/
+Traceback (most recent call last):
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\project\venv\Lib\site-packages\django_ratelimit\decorators.py", line 27, in _wrapped
+    return fn(request, *args, **kw)
+  File "D:\project\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\decorators\http.py", line 64, in inner
+    return func(request, *args, **kwargs)
+  File "D:\project\cms\views.py", line 97, in toggle_status
+    current_status = getattr(obj, active_field)
+AttributeError: 'Article' object has no attribute 'is_active'. Did you mean: 'active'?
+ERROR 2026-02-22 12:04:41,905 log Internal Server Error: /toggle-status/article/2/
+Traceback (most recent call last):
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\project\venv\Lib\site-packages\django_ratelimit\decorators.py", line 27, in _wrapped
+    return fn(request, *args, **kw)
+  File "D:\project\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\decorators\http.py", line 64, in inner
+    return func(request, *args, **kwargs)
+  File "D:\project\cms\views.py", line 97, in toggle_status
+    current_status = getattr(obj, active_field)
+AttributeError: 'Article' object has no attribute 'is_active'. Did you mean: 'active'?
+ERROR 2026-02-22 12:04:42,077 log Internal Server Error: /toggle-status/article/2/
+Traceback (most recent call last):
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\project\venv\Lib\site-packages\django_ratelimit\decorators.py", line 27, in _wrapped
+    return fn(request, *args, **kw)
+  File "D:\project\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\decorators\http.py", line 64, in inner
+    return func(request, *args, **kwargs)
+  File "D:\project\cms\views.py", line 97, in toggle_status
+    current_status = getattr(obj, active_field)
+AttributeError: 'Article' object has no attribute 'is_active'. Did you mean: 'active'?
+ERROR 2026-02-22 12:04:42,230 log Internal Server Error: /toggle-status/article/2/
+Traceback (most recent call last):
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\project\venv\Lib\site-packages\django_ratelimit\decorators.py", line 27, in _wrapped
+    return fn(request, *args, **kw)
+  File "D:\project\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\decorators\http.py", line 64, in inner
+    return func(request, *args, **kwargs)
+  File "D:\project\cms\views.py", line 97, in toggle_status
+    current_status = getattr(obj, active_field)
+AttributeError: 'Article' object has no attribute 'is_active'. Did you mean: 'active'?
+WARNING 2026-02-22 12:04:51,384 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+ERROR 2026-02-22 12:04:54,476 log Internal Server Error: /toggle-status/article/2/
+Traceback (most recent call last):
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\project\venv\Lib\site-packages\django_ratelimit\decorators.py", line 27, in _wrapped
+    return fn(request, *args, **kw)
+  File "D:\project\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\decorators\http.py", line 64, in inner
+    return func(request, *args, **kwargs)
+  File "D:\project\cms\views.py", line 97, in toggle_status
+    current_status = getattr(obj, active_field)
+AttributeError: 'Article' object has no attribute 'is_active'. Did you mean: 'active'?
+INFO 2026-02-22 12:05:21,700 autoreload D:\project\cms\views.py changed, reloading.
+INFO 2026-02-22 12:05:22,546 autoreload Watching for file changes with StatReloader
+WARNING 2026-02-22 12:05:24,468 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-22 12:05:30,940 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-22 12:07:38,630 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-22 12:07:43,605 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-22 12:07:46,076 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-22 12:07:47,663 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-22 12:07:53,862 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-22 12:07:55,876 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-22 12:07:58,145 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-22 12:08:03,281 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-22 12:08:11,656 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-22 12:08:14,903 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+INFO 2026-02-22 12:11:42,049 autoreload D:\project\articles\views.py changed, reloading.
+INFO 2026-02-22 12:11:43,083 autoreload Watching for file changes with StatReloader
+INFO 2026-02-22 12:11:48,110 autoreload D:\project\articles\views.py changed, reloading.
+INFO 2026-02-22 12:11:49,096 autoreload Watching for file changes with StatReloader
+INFO 2026-02-22 12:12:42,280 autoreload D:\project\blog\views.py changed, reloading.
+INFO 2026-02-22 12:12:43,337 autoreload Watching for file changes with StatReloader
+INFO 2026-02-22 12:13:57,089 autoreload Watching for file changes with StatReloader
+WARNING 2026-02-22 12:13:59,845 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-22 12:14:00,057 log Not Found: /favicon.ico
+WARNING 2026-02-22 12:14:07,511 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-22 12:14:07,738 log Not Found: /api/visitor-stats/
+WARNING 2026-02-22 12:14:08,982 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-22 12:14:10,788 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-22 12:14:12,330 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-22 12:14:13,420 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-22 12:14:23,965 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-22 12:16:54,174 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-22 12:16:55,695 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-22 12:16:56,783 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-22 12:17:03,978 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-22 12:17:10,253 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-22 12:17:29,337 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-22 12:17:32,707 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-22 12:17:52,459 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+INFO 2026-02-22 12:20:14,238 autoreload D:\project\articles\views.py changed, reloading.
+INFO 2026-02-22 12:20:15,249 autoreload Watching for file changes with StatReloader
+INFO 2026-02-22 12:20:45,714 autoreload D:\project\articles\views.py changed, reloading.
+INFO 2026-02-22 12:20:46,640 autoreload Watching for file changes with StatReloader
+INFO 2026-02-22 12:20:48,142 autoreload D:\project\articles\views.py changed, reloading.
+INFO 2026-02-22 12:20:48,910 autoreload Watching for file changes with StatReloader
+WARNING 2026-02-22 12:20:55,491 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-22 12:20:58,753 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-22 12:21:04,378 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-22 12:21:23,113 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-22 12:22:04,747 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-22 12:22:05,775 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+INFO 2026-02-22 12:23:31,254 autoreload D:\project\articles\views.py changed, reloading.
+INFO 2026-02-22 12:23:32,199 autoreload Watching for file changes with StatReloader
+WARNING 2026-02-22 12:23:59,339 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-22 12:24:00,655 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-22 12:24:10,414 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+INFO 2026-02-22 12:25:17,484 autoreload D:\project\articles\views.py changed, reloading.
+INFO 2026-02-22 12:25:18,293 autoreload Watching for file changes with StatReloader
+WARNING 2026-02-22 12:26:03,872 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-22 12:26:10,340 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-22 12:26:11,678 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-22 12:26:16,548 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-22 12:26:32,151 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+INFO 2026-02-22 12:27:22,075 autoreload D:\project\articles\views.py changed, reloading.
+INFO 2026-02-22 12:27:22,862 autoreload Watching for file changes with StatReloader
+INFO 2026-02-22 12:27:48,208 autoreload D:\project\articles\views.py changed, reloading.
+INFO 2026-02-22 12:27:49,170 autoreload Watching for file changes with StatReloader
+WARNING 2026-02-22 12:30:43,460 log Not Found: /media/articles/book_CtG6Nqb.png
+WARNING 2026-02-22 12:30:43,466 log Not Found: /media/articles/book_bxbU80b.png
+INFO 2026-02-22 12:31:52,342 autoreload D:\project\articles\views.py changed, reloading.
+INFO 2026-02-22 12:31:53,307 autoreload Watching for file changes with StatReloader
+INFO 2026-02-22 12:31:54,680 autoreload D:\project\articles\views.py changed, reloading.
+INFO 2026-02-22 12:31:55,552 autoreload Watching for file changes with StatReloader
+INFO 2026-02-22 12:33:01,459 autoreload D:\project\articles\views.py changed, reloading.
+INFO 2026-02-22 12:33:02,228 autoreload Watching for file changes with StatReloader
+WARNING 2026-02-22 12:33:04,143 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-22 12:33:07,473 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-22 12:33:09,412 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-22 12:33:39,061 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-22 12:33:45,469 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-22 12:33:47,515 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-22 12:34:11,183 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-22 12:34:20,332 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-22 12:50:36,483 log Not Found: /favicon.ico
+WARNING 2026-02-22 12:51:04,931 log Not Found: /apanel/articles/
+WARNING 2026-02-22 12:53:38,838 log Not Found: /api/visitor-stats/
+WARNING 2026-02-22 12:53:43,863 log Not Found: /api/visitor-stats/
+WARNING 2026-02-22 12:59:25,759 log Not Found: /api/visitor-stats/
+WARNING 2026-02-22 12:59:30,755 log Not Found: /api/visitor-stats/

@@ -21,7 +21,7 @@ class ArticleForm(forms.ModelForm):
         model = Article
         fields = [
             'title', 'subtitle', 'slug', 'image', 'content',
-            'is_active', 'meta_title', 'meta_description', 'meta_keywords'
+            'active', 'meta_title', 'meta_description', 'meta_keywords'
         ] 
         widgets = {
             'image': forms.FileInput(),

@@ -9,8 +9,8 @@ class ArticleAdmin(admin.ModelAdmin):
     list_display = (
         'title',
         'slug',
-        'show_on_homepage_icon',
-        'is_active_icon',
+        'homepage_icon',
+        'active_icon',
         'image_thumb',
         'created_at',
         'updated_at'
@@ -25,7 +25,7 @@ class ArticleAdmin(admin.ModelAdmin):
             "description": "These fields are saved in the DB and used for frontend <meta> tags."
         }),
         ("Display Settings", {
-            "fields": ("show_on_homepage", "is_active", "position")
+            "fields": ("homepage", "active", "position")
         }),
     )
     
@@ -33,7 +33,7 @@ class ArticleAdmin(admin.ModelAdmin):
     list_display_links = ('title', 'slug')
     
     # Filters on the right sidebar
-    list_filter = ('show_on_homepage', 'is_active', 'created_at')
+    list_filter = ('homepage', 'active', 'created_at')
     
     # Searchable fields
     search_fields = ('title', 'subtitle', 'content')
@@ -52,12 +52,12 @@ class ArticleAdmin(admin.ModelAdmin):
     image_thumb.short_description = "Image"
     
     # Show homepage flag as icon
-    def show_on_homepage_icon(self, obj):
-        if obj.show_on_homepage:
+    def homepage_icon(self, obj):
+        if obj.homepage:
             return mark_safe('<span style="color: green;">✔</span>')
         return mark_safe('<span style="color: red;">✖</span>')
 
-    def is_active_icon(self, obj):
-        if obj.is_active:
+    def active_icon(self, obj):
+        if obj.active:
             return mark_safe('<span style="color: green;">✔</span>')
         return mark_safe('<span style="color: red;">✖</span>')

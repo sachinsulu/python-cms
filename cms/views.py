@@ -32,7 +32,7 @@ MODEL_MAP = {
 
 
 ACTIVE_FIELD_MAP = {
-    "article": "is_active",
+    "article": "active",
     "blog": "active",
     "package": "is_active",
     "subpackage": "is_active",

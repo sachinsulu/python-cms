@@ -19,7 +19,7 @@
 </h2>
 
 
-<a href="{% url 'article_list' %}{% if is_edit %}{% if article.show_on_homepage %}?homepage=yes{% else %}?homepage=no{% endif %}{% else %}{% if force_homepage %}?homepage=yes{% else %}?homepage=no{% endif %}{% endif %}" class="btn">← Back to Article</a>
+<a href="{% url 'article_list' %}" class="btn">← Back to Article</a>
 
 <div class="form-container">
 
@@ -110,8 +110,8 @@
     </div>
 
     <div class="form-group checkbox-group">
-        <label for="{{ form.is_active.id_for_label }}">
-            {{ form.is_active }} {{ form.is_active.label }}
+        <label for="{{ form.active.id_for_label }}">
+            {{ form.active }} {{ form.active.label }}
         </label>
     </div>
 
@@ -177,7 +177,7 @@
       <button type="submit" class="btn" onclick="setFormAction('save_and_quit')" style="background: #3b82f6;">
           Save & Quit
       </button>
-      <a href="{% url 'article_list' %}{% if is_edit %}{% if article.show_on_homepage %}?homepage=yes{% else %}?homepage=no{% endif %}{% else %}{% if force_homepage %}?homepage=yes{% else %}?homepage=no{% endif %}{% endif %}" class="btn-cancel">Cancel</a>
+      <a href="{% url 'article_list' %}" class="btn-cancel">Cancel</a>
     </div>
   </form>
 </div>

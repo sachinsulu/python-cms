@@ -1,0 +1,82 @@
+{# Partial: articles list table + pagination (used for AJAX replacement) #}
+{% load static %}
+
+<form method="post" action="{% url 'bulk_action' 'article' %}" id="bulk-form">
+    {% csrf_token %}
+
+    <input type="hidden" name="action" id="bulk-action">
+    
+    <table class="log-table">
+        <thead>
+            <tr>
+                <th style="width: 30px;"></th>
+                <th><input type="checkbox" id="select-all"></th>
+                <th>Title</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="sortable-tbody" data-update-url="{% url 'sort' 'article' %}">
+            {% for a in articles %}
+            <tr data-id="{{ a.id }}">
+                <td class="drag-handle" style="cursor: grab; color: #9ca3af;">
+                    <i class="fa-solid fa-grip-vertical"></i>
+                </td>
+
+                <td><input type="checkbox" name="selected_ids" value="{{ a.id }}" class="row-checkbox"> </td>
+
+                <td><a href="{% url 'article_edit' a.slug %}">{{ a.title }}</a><br><small>{{ a.slug }}</small></td>
+
+                <td id="status-{{ a.id }}" class="{% if a.is_active %}status-active{% else %}status-inactive{% endif %}">
+                    {{ a.is_active|yesno:"Active,Inactive" }}
+                </td>
+
+
+                <td class="actions">
+                    <span class="status-toggle"
+                          data-url="{% url 'toggle_status' 'article' a.id %}"
+                          data-target="status-{{ a.id }}"
+                          onclick="event.preventDefault(); toggleStatus(this)">
+                        <i class="fa-solid {% if a.is_active %}fa-toggle-on{% else %}fa-toggle-off{% endif %}"></i>
+                    </span>
+                    <a href="{% url 'article_edit' a.slug %}" class="icon edit"><i class="fa-solid fa-pen-to-square"></i></a>
+                    <span class="icon delete"
+                        onclick="openDeleteModal('article', '{{ a.title }}', '{% url 'delete_object' 'article' a.id %}', false)">
+                        <i class="fa-solid fa-trash"></i>
+                    </span>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="6" style="text-align:center;">No articles found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    {# Hidden submit buttons for bulk actions #}
+    <button type="submit" name="action" value="toggle" style="display:none;"></button>
+</form>
+
+{# Pagination outside the form - ALWAYS SHOW #}
+{% if page_obj %}
+<div class="pagination" style="margin-top:20px; display:flex; justify-content:center; gap:8px;">
+
+    {% if page_obj.has_previous %}
+        <a href="?{{ query_params }}&page={{ page_obj.previous_page_number }}"
+           class="btn ajax-page">Prev</a>
+    {% endif %}
+
+    <span style="color:#6b7280;">
+        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+        <small>({{ page_obj.paginator.count }} total)</small>
+    </span>
+
+    {% if page_obj.has_next %}
+        <a href="?{{ query_params }}&page={{ page_obj.next_page_number }}"
+           class="btn ajax-page">Next</a>
+    {% endif %}
+
+</div>
+{% endif %}
+

@@ -50,20 +50,23 @@ function getCSRFToken() {
  * Displays a toast message in the container
  */
 function showFlashMessage(text, type = 'info') {
-    const container = document.getElementById('messages-container');
+    let container = document.getElementById('messages-container');
+
     if (!container) {
-        // Fallback if container doesn't exist
-        return alert(text);
+        container = document.createElement('div');
+        container.id = 'messages-container';
+        container.style.cssText = 'position:fixed;top:20px;right:20px;z-index:9999;min-width:280px;';
+        document.body.appendChild(container);
     }
 
-    const msgDiv = document.createElement("div");
+    const msgDiv = document.createElement('div');
     msgDiv.className = `message ${type}`;
     msgDiv.innerText = text;
     container.appendChild(msgDiv);
 
-    // Auto-dismiss logic
     setTimeout(() => {
         msgDiv.style.opacity = '0';
+        msgDiv.style.transition = 'opacity 0.6s';
         setTimeout(() => msgDiv.remove(), 600);
     }, 3000);
 }
@@ -536,4 +539,16 @@ function setFormAction(action) {
 
 
 
+});
+
+document.querySelectorAll('.submenu-toggle').forEach(function(toggle) {
+    toggle.addEventListener('click', function(e) {
+        e.preventDefault();
+        const submenu = this.parentElement.nextElementSibling;
+        if (submenu.style.display === 'block') {
+            submenu.style.display = 'none';
+        } else {
+            submenu.style.display = 'block';
+        }
+    });
 });

@@ -2,9 +2,11 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import Blog
 from .forms import BlogForm
 from django.contrib.auth.decorators import login_required
+from users.decorators import requires_perm
 
 
 @login_required
+@requires_perm('blog.view_post')
 def blog_list(request):
     homepage_param = request.GET.get('homepage')
     
@@ -26,6 +28,7 @@ def blog_list(request):
 
 
 @login_required
+@requires_perm('blog.add_post')
 def create_blog(request):
     session_filter = request.session.get('blog_homepage_filter', '0')
     homepage = (session_filter == '1')
@@ -47,6 +50,7 @@ def create_blog(request):
 
 
 @login_required
+@requires_perm('blog.change_post')
 def edit_blog(request, slug):
     blog = get_object_or_404(Blog, slug=slug)
     session_filter = request.session.get('blog_homepage_filter', '0')

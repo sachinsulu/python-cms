@@ -5,6 +5,8 @@
 <head>
   <title>{% block title %}Admin Panel{% endblock %}</title>
 
+  <link rel="shortcut icon" type="image/x-icon" href="{% static 'favicon.ico' %}" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="askjdajk">
 
@@ -29,7 +31,10 @@
     <div class="topbar-right">
       <i class="fa-solid fa-user"></i>
       {{ request.user.username }}
-      <a href="{% url 'logout' %}" class="logout">Logout</a>
+      <form id="logout-form" action="{% url 'logout' %}" method="post" style="display: none;">
+        {% csrf_token %}
+      </form>
+      <a href="#" class="logout" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
     </div>
   </header>
 
@@ -40,22 +45,45 @@
         <i class="fa-solid fa-gauge"></i>
         <span>Dashboard</span>
       </a>
-      <a href="{% url 'user_list' %}" class="{% if 'user' in request.resolver_match.url_name %}active{% endif %}">
+
+      {% if request.user.is_superuser %}
+      <a href="#" class="sidebar-parent {% if 'user' in request.resolver_match.url_name or 'group' in request.resolver_match.url_name %}active{% endif %}">
         <i class="fa-solid fa-user"></i>
         <span>Users</span>
+        <i class="fa-solid fa-chevron-down submenu-toggle"></i>
       </a>
+      <div class="sidebar-submenu" style="{% if 'user' in request.resolver_match.url_name or 'group' in request.resolver_match.url_name %}display:block;{% else %}display:none;{% endif %}">
+        <a href="{% url 'user_list' %}" class="{% if 'user_list' == request.resolver_match.url_name %}active{% endif %}">
+          <i class="fa-solid fa-user"></i>
+          User List
+        </a>
+        <a href="{% url 'group_list' %}" class="{% if 'group_list' == request.resolver_match.url_name %}active{% endif %}">
+          <i class="fa-solid fa-users-gear"></i>
+          Groups
+        </a>
+      </div>
+      {% endif %}
+
+      {% if request.user.is_superuser or perms.articles %}
       <a href="{% url 'article_list' %}" class="{% if 'article' in request.resolver_match.url_name %}active{% endif %}">
         <i class="fa-solid fa-newspaper"></i>
         <span>Articles</span>
       </a>
+      {% endif %}
+
+      {% if request.user.is_superuser or perms.blog %}
       <a href="{% url 'blog_list' %}" class="{% if 'blog' in request.resolver_match.url_name %}active{% endif %}">
         <i class="fa-solid fa-newspaper"></i>
         <span>Blog</span>
       </a>
+      {% endif %}
+
+      {% if request.user.is_superuser or perms.package %}
       <a href="{% url 'package_list' %}" class="{% if 'package' in request.resolver_match.url_name %}active{% endif %}">
         <i class="fa-solid fa-box"></i>
         <span>Packages</span>
       </a>
+      {% endif %}
     </nav>
   </aside>
 

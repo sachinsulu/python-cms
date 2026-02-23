@@ -1,48 +1,348 @@
 {% extends "base.html" %}
 {% block content %}
-<h2>Users</h2>
 
-<a href="{% url 'user_create' %}" class="btn">+ Add User</a>
+<style>
+  .page-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+  }
 
-<table class="log-table">
+  .page-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #0f172a;
+    letter-spacing: -0.02em;
+  }
+
+  .page-title span {
+    color: #94a3b8;
+    font-weight: 400;
+    font-size: 0.9rem;
+    margin-left: 0.75rem;
+  }
+
+  .btn-add {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.55rem 1.2rem;
+    background: #3b82f6;
+    color: #fff;
+    border-radius: 8px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.1s;
+    border: none;
+    cursor: pointer;
+  }
+
+  .btn-add:hover {
+    background: #2563eb;
+    transform: translateY(-1px);
+  }
+
+  .users-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  }
+
+  .users-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .users-table thead {
+    background: #f8fafc;
+  }
+
+  .users-table thead th {
+    padding: 0.85rem 1.25rem;
+    text-align: left;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #94a3b8;
+    border-bottom: 1px solid #e2e8f0;
+  }
+
+  .users-table tbody tr {
+    border-bottom: 1px solid #f1f5f9;
+    transition: background 0.15s;
+  }
+
+  .users-table tbody tr:last-child {
+    border-bottom: none;
+  }
+
+  .users-table tbody tr:hover {
+    background: #f8fafc;
+  }
+
+  .users-table td {
+    padding: 1rem 1.25rem;
+    font-size: 0.875rem;
+    color: #475569;
+    vertical-align: middle;
+  }
+
+  .user-info {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .user-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #fff;
+    flex-shrink: 0;
+    text-transform: uppercase;
+  }
+
+  .user-name {
+    font-weight: 600;
+    color: #0f172a;
+  }
+
+  .user-email {
+    font-size: 0.75rem;
+    color: #94a3b8;
+    margin-top: 1px;
+  }
+
+  /* Status badge */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.25rem 0.65rem;
+    border-radius: 999px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+  }
+
+  .badge::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+  }
+
+  .badge-active {
+    background: #f0fdf4;
+    color: #16a34a;
+    border: 1px solid #bbf7d0;
+  }
+
+  .badge-inactive {
+    background: #fef2f2;
+    color: #dc2626;
+    border: 1px solid #fecaca;
+  }
+
+  /* Group tags */
+  .group-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+  }
+
+  .group-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.2rem 0.55rem;
+    background: #eff6ff;
+    color: #2563eb;
+    border: 1px solid #bfdbfe;
+    border-radius: 6px;
+    font-size: 0.7rem;
+    font-weight: 600;
+  }
+
+  .group-tag i {
+    font-size: 0.6rem;
+  }
+
+  .no-groups {
+    color: #cbd5e1;
+    font-size: 0.8rem;
+  }
+
+  /* Actions */
+  .actions-cell {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .btn-edit {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.35rem 0.75rem;
+    background: #eff6ff;
+    color: #2563eb;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-decoration: none;
+    border: 1px solid #bfdbfe;
+    transition: background 0.15s;
+  }
+
+  .btn-edit:hover {
+    background: #dbeafe;
+  }
+
+  .btn-delete {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.35rem 0.75rem;
+    background: #fef2f2;
+    color: #dc2626;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    border: 1px solid #fecaca;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+
+  .btn-delete:hover {
+    background: #fee2e2;
+  }
+
+  .btn-disabled {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.35rem 0.75rem;
+    color: #cbd5e1;
+    font-size: 0.75rem;
+    font-weight: 600;
+    border-radius: 6px;
+    border: 1px solid #e2e8f0;
+    cursor: not-allowed;
+    user-select: none;
+    background: #f8fafc;
+  }
+
+  /* Empty state */
+  .empty-state {
+    text-align: center;
+    padding: 4rem 2rem;
+    color: #94a3b8;
+  }
+
+  .empty-state i {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    display: block;
+    color: #cbd5e1;
+  }
+
+  .empty-state p {
+    font-size: 0.9rem;
+  }
+</style>
+
+<div class="page-header">
+  <div class="page-title">
+    Users
+    <span>{{ users|length }} total</span>
+  </div>
+  <a href="{% url 'user_create' %}" class="btn-add">
+    <i class="fa-solid fa-plus"></i> Add User
+  </a>
+</div>
+
+<div class="users-card">
+  <table class="users-table">
     <thead>
-        <tr>
-            <th>Username</th>
-            <th>Email</th>
-            <th>Status</th>
-            <th>Joined</th>
-            <th>Actions</th>
-        </tr>
+      <tr>
+        <th>User</th>
+        <th>Groups</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
     </thead>
     <tbody>
-        {% for u in users %}
-        <tr>
-            <td>{{ u.username }}</td>
-            <td>{{ u.email }}</td>
-            <td class="{% if u.is_active %}status-active{% else %}status-inactive{% endif %}">
-                {% if u.is_active %}Active{% else %}Inactive{% endif %}
-            </td>
-            <td>{{ u.date_joined|date:"Y-m-d" }}</td>
-            <td>{% if not u.is_superuser and u != request.user %}
-                <a href="{% url 'user_edit' u.id %}" class="edit">Edit</a> |
-                <button class="delete"
-                    onclick="openDeleteModal('user', '{{ u.username }}', '{% url 'delete_object' 'user' u.id %}',false)"
-                    style="background:none;border:none;color:#ef4444;cursor:pointer;padding:0;">
-                    Delete
-                </button>
-                {% else %}
-                <span style="color:#9ca3af;">Delete</span>
-                {% endif %}
-
-            </td>
-        </tr>
-        {% empty %}
-        <tr>
-            <td colspan="5" style="text-align:center;color:#6b7280;">No users found.</td>
-        </tr>
-        {% endfor %}
+      {% for u in users %}
+      <tr>
+        <td>
+          <div class="user-info">
+            <div class="user-avatar">{{ u.username|slice:":2" }}</div>
+            <div>
+              <div class="user-name">{{ u.username }}</div>
+              <div class="user-email">{{ u.email|default:"No email" }}</div>
+            </div>
+          </div>
+        </td>
+        <td>
+          <div class="group-tags">
+            {% for group in u.groups.all %}
+              <span class="group-tag">
+                <i class="fa-solid fa-users-gear"></i>
+                {{ group.name }}
+              </span>
+            {% empty %}
+              <span class="no-groups">—</span>
+            {% endfor %}
+          </div>
+        </td>
+        <td>
+          {% if u.is_active %}
+            <span class="badge badge-active">Active</span>
+          {% else %}
+            <span class="badge badge-inactive">Inactive</span>
+          {% endif %}
+        </td>
+        <td>
+          <div class="actions-cell">
+            {% if not u.is_superuser and u != request.user %}
+              <a href="{% url 'user_edit' u.id %}" class="btn-edit">
+                <i class="fa-solid fa-pen-to-square"></i> Edit
+              </a>
+              <button class="btn-delete"
+                onclick="openDeleteModal('{% url 'delete_object' 'user' u.id %}', 'Are you sure you want to delete &quot;{{ u.username }}&quot;?')">
+                <i class="fa-solid fa-trash"></i> Delete
+              </button>
+            {% else %}
+              <span class="btn-disabled"><i class="fa-solid fa-lock"></i> Protected</span>
+            {% endif %}
+          </div>
+        </td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="4">
+          <div class="empty-state">
+            <i class="fa-solid fa-users-slash"></i>
+            <p>No users found.</p>
+          </div>
+        </td>
+      </tr>
+      {% endfor %}
     </tbody>
-</table>
-
+  </table>
+</div>
 
 {% endblock %}

@@ -9781,3 +9781,14 @@ WARNING 2026-02-23 12:00:40,899 log Not Found: /api/visitor-stats/
 WARNING 2026-02-23 12:00:45,901 log Not Found: /api/visitor-stats/
 WARNING 2026-02-23 12:01:24,699 log Not Found: /favicon.ico
 WARNING 2026-02-23 12:01:29,313 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 12:25:20,385 log Not Found: /favicon.ico
+WARNING 2026-02-23 12:25:28,327 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 12:25:33,345 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 12:25:39,744 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 12:27:12,581 log Not Found: /api/visitor-stats/
+INFO 2026-02-23 12:37:51,299 autoreload D:\project\users\decorators.py changed, reloading.
+INFO 2026-02-23 12:37:52,119 autoreload Watching for file changes with StatReloader
+INFO 2026-02-23 12:37:54,862 autoreload D:\project\users\decorators.py changed, reloading.
+INFO 2026-02-23 12:37:55,794 autoreload Watching for file changes with StatReloader
+INFO 2026-02-23 12:37:57,443 autoreload D:\project\users\decorators.py changed, reloading.
+INFO 2026-02-23 12:37:58,198 autoreload Watching for file changes with StatReloader

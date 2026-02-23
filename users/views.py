@@ -34,7 +34,9 @@ class UserCreateForm(forms.ModelForm):
 # ------------------------------
 class GroupForm(forms.ModelForm):
     permissions = forms.ModelMultipleChoiceField(
-        queryset=Permission.objects.all(),
+        queryset=Permission.objects.filter(
+            content_type__app_label__in=['articles', 'auth', 'package', 'blog']
+        ).select_related('content_type'),
         widget=forms.CheckboxSelectMultiple,
         required=False
     )
@@ -42,7 +44,6 @@ class GroupForm(forms.ModelForm):
     class Meta:
         model = Group
         fields = ['name', 'permissions']
-
 
 # ------------------------------
 # USER VIEWS

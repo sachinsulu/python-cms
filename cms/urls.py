@@ -24,6 +24,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('', dashboard, name='dashboard'),
     path('users/', include('users.urls')),
+    path('module/', include('core.urls')),
     path('articles/', include('articles.urls')),
     path('blog/', include('blog.urls')),
     path('api/', include('api.urls')),
@@ -37,6 +38,7 @@ urlpatterns = [
     path('bulk/<str:model_name>/', bulk_action, name='bulk_action'),
     path('sort/<str:model_name>/', update_order, name='sort'),
     path('ajax/check-slug/<str:model_name>/', ajax_check_slug, name='ajax_check_slug'),
+    path("__reload__/", include("django_browser_reload.urls")),
 ]
 
 

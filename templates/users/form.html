@@ -1,33 +1,321 @@
 {% extends "base.html" %}
 {% block content %}
-<h2>Users</h2>
 
-<a href="{% url 'user_list' %}" class="btn">← Back to Users</a>
+<style>
+  .uf-page-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 1.75rem;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
 
-<div class="form-container">
-    <h2 class="form-title">{% if edit %}Edit User{% else %}Create User{% endif %}</h2>
+  .uf-breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.82rem;
+    color: var(--text-muted, #888);
+    margin-bottom: 0.3rem;
+  }
 
-    <form method="post" class="form">
-        {% csrf_token %}
+  .uf-breadcrumb a {
+    color: var(--accent, #4f7cff);
+    text-decoration: none;
+  }
 
-        {% for field in form %}
-        <div class="form-group">
-            {{ field.label_tag }}
-            {{ field }}
-            {% if field.help_text %}
-            <small class="help-text">{{ field.help_text }}</small>
-            {% endif %}
-            {% for error in field.errors %}
-            <p class="error">{{ error }}</p>
-            {% endfor %}
-        </div>
-        {% endfor %}
+  .uf-breadcrumb a:hover { text-decoration: underline; }
 
-        <div class="form-actions">
-            <button class="btn">{% if edit %}Update{% else %}Create{% endif %}</button>
-            <a href="{% url 'user_list' %}" class="btn-cancel">Cancel</a>
-        </div>
-    </form>
+  .uf-breadcrumb .fa-chevron-right { font-size: 0.6rem; }
+
+  .uf-page-title {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--text, #1a1a1a);
+    margin: 0;
+  }
+
+  /* ── Card ── */
+  .uf-card {
+    background: var(--card-bg, #fff);
+    border: 1px solid var(--border, #e5e7eb);
+    border-radius: 10px;
+    overflow: hidden;
+    max-width: 700px;
+  }
+
+  .uf-card-header {
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid var(--border, #e5e7eb);
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: var(--card-header-bg, #fafafa);
+  }
+
+  .uf-card-header i { color: var(--accent, #4f7cff); font-size: 0.95rem; }
+
+  .uf-card-header h2 {
+    font-size: 0.92rem;
+    font-weight: 600;
+    margin: 0;
+    color: var(--text, #1a1a1a);
+  }
+
+  .uf-card-body { padding: 1.5rem; }
+
+  /* ── Grid ── */
+  .uf-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.1rem;
+  }
+
+  .uf-field { display: flex; flex-direction: column; gap: 0.35rem; }
+  .uf-field.full { grid-column: 1 / -1; }
+
+  .uf-field label {
+    font-size: 0.79rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-muted, #666);
+  }
+
+  /* ── Inputs ── */
+  .uf-field input[type="text"],
+  .uf-field input[type="email"],
+  .uf-field input[type="password"],
+  .uf-field input[type="number"],
+  .uf-field select,
+  .uf-field textarea {
+    width: 100%;
+    padding: 0.58rem 0.85rem;
+    font-size: 0.9rem;
+    font-family: inherit;
+    border: 1px solid var(--border, #d1d5db);
+    border-radius: 7px;
+    background: var(--input-bg, #f9fafb);
+    color: var(--text, #1a1a1a);
+    outline: none;
+    transition: border-color 0.18s, box-shadow 0.18s;
+  }
+
+  .uf-field input:focus,
+  .uf-field select:focus,
+  .uf-field textarea:focus {
+    border-color: var(--accent, #4f7cff);
+    box-shadow: 0 0 0 3px rgba(79,124,255,0.12);
+    background: #fff;
+  }
+
+  .uf-field textarea { min-height: 90px; resize: vertical; }
+
+  /* ── Checkbox ── */
+  .uf-field.is-checkbox {
+    flex-direction: row;
+    align-items: center;
+    gap: 0.65rem;
+    padding: 0.62rem 0.85rem;
+    border: 1px solid var(--border, #d1d5db);
+    border-radius: 7px;
+    background: var(--input-bg, #f9fafb);
+    cursor: pointer;
+  }
+
+  .uf-field.is-checkbox input[type="checkbox"] {
+    width: 15px;
+    height: 15px;
+    flex-shrink: 0;
+    accent-color: var(--accent, #4f7cff);
+    cursor: pointer;
+  }
+
+  .uf-field.is-checkbox label {
+    text-transform: none;
+    letter-spacing: 0;
+    font-size: 0.88rem;
+    color: var(--text, #1a1a1a);
+    cursor: pointer;
+    margin: 0;
+  }
+
+  /* ── Custom dropdown (groups) ── */
+  .uf-select-wrap { position: relative; }
+
+  .uf-select-wrap select {
+    appearance: none;
+    -webkit-appearance: none;
+    padding-right: 2.4rem;
+  }
+
+  .uf-select-wrap::after {
+    content: "\f078";
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    font-size: 0.68rem;
+    color: var(--text-muted, #999);
+    position: absolute;
+    right: 0.9rem;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+  }
+
+  /* ── Help & errors ── */
+  .uf-help {
+    font-size: 0.76rem;
+    color: var(--text-muted, #888);
+    line-height: 1.4;
+  }
+
+  .uf-error {
+    font-size: 0.76rem;
+    color: #e53e3e;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+  }
+
+  .uf-error i { font-size: 0.7rem; }
+
+  /* ── Divider ── */
+  .uf-divider {
+    height: 1px;
+    background: var(--border, #e5e7eb);
+    margin: 1.4rem 0 1.2rem;
+  }
+
+  /* ── Actions ── */
+  .uf-actions { display: flex; align-items: center; gap: 0.75rem; }
+
+  .btn { display: inline-flex; align-items: center; gap: 0.45rem; padding: 0.58rem 1.2rem;
+         font-size: 0.88rem; font-weight: 500; border-radius: 7px; border: none;
+         cursor: pointer; font-family: inherit; text-decoration: none;
+         transition: background 0.18s, transform 0.12s; }
+
+  .btn:active { transform: translateY(0); }
+
+  .btn-primary { background: var(--accent, #4f7cff); color: #fff; }
+  .btn-primary:hover { background: #3b6af0; transform: translateY(-1px); }
+
+  .btn-cancel {
+    background: transparent;
+    color: var(--text-muted, #666);
+    border: 1px solid var(--border, #d1d5db);
+  }
+  .btn-cancel:hover { background: var(--input-bg, #f3f4f6); color: var(--text, #1a1a1a); }
+
+  @media (max-width: 560px) {
+    .uf-grid { grid-template-columns: 1fr; }
+    .uf-field.full { grid-column: 1; }
+  }
+</style>
+
+<!-- Page Header -->
+<div class="uf-page-header">
+  <div>
+    <div class="uf-breadcrumb">
+      <a href="{% url 'user_list' %}"><i class="fa-solid fa-users"></i>&nbsp;Users</a>
+      <i class="fa-solid fa-chevron-right"></i>
+      <span>{% if edit %}Edit User{% else %}Create User{% endif %}</span>
+    </div>
+    <h1 class="uf-page-title">{% if edit %}Edit User{% else %}New User{% endif %}</h1>
+  </div>
 </div>
+
+<!-- Card -->
+<div class="uf-card">
+  <div class="uf-card-header">
+    <i class="fa-solid fa-{% if edit %}user-pen{% else %}user-plus{% endif %}"></i>
+    <h2>{% if edit %}Update account details{% else %}Fill in account details{% endif %}</h2>
+  </div>
+
+  <div class="uf-card-body">
+    <form method="post" novalidate>
+      {% csrf_token %}
+
+      <div class="uf-grid">
+        {% for field in form %}
+
+          {% if field.name == 'groups' %}
+            <!-- Groups → single dropdown -->
+            <div class="uf-field full">
+              <label for="{{ field.id_for_label }}">Group</label>
+              <div class="uf-select-wrap">
+                <select name="{{ field.html_name }}" id="{{ field.id_for_label }}"
+                        onchange="handleGroupSelect(this)">
+                  <option value="" disabled
+                    {% if not field.value %}selected{% endif %}>— No group —</option>
+                  {% for choice_val, choice_label in field.field.choices %}
+                    {% if choice_val %}
+                      <option value="{{ choice_val }}"
+                        {% if choice_val|stringformat:"s" in field.value|stringformat:"s" %}selected{% endif %}>
+                        {{ choice_label }}
+                      </option>
+                    {% endif %}
+                  {% endfor %}
+                </select>
+              </div>
+              {% if field.help_text %}<span class="uf-help">{{ field.help_text }}</span>{% endif %}
+              {% for error in field.errors %}
+                <span class="uf-error"><i class="fa-solid fa-circle-xmark"></i>{{ error }}</span>
+              {% endfor %}
+            </div>
+
+          {% elif field.field.widget.input_type == 'checkbox' %}
+            <div class="uf-field is-checkbox full">
+              {{ field }}
+              {{ field.label_tag }}
+            </div>
+
+          {% else %}
+            <div class="uf-field {% if field.name == 'email' or 'password' in field.name %}full{% endif %}">
+              {{ field.label_tag }}
+              {{ field }}
+              {% if field.help_text %}<span class="uf-help">{{ field.help_text }}</span>{% endif %}
+              {% for error in field.errors %}
+                <span class="uf-error"><i class="fa-solid fa-circle-xmark"></i>{{ error }}</span>
+              {% endfor %}
+            </div>
+          {% endif %}
+
+        {% endfor %}
+      </div>
+
+      <div class="uf-divider"></div>
+
+      <div class="uf-actions">
+        <button type="submit" class="btn btn-primary">
+          <i class="fa-solid fa-{% if edit %}floppy-disk{% else %}plus{% endif %}"></i>
+          {% if edit %}Update User{% else %}Create User{% endif %}
+        </button>
+        <a href="{% url 'user_list' %}" class="btn btn-cancel">
+          <i class="fa-solid fa-xmark"></i>
+          Cancel
+        </a>
+      </div>
+
+    </form>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    var groupSel = document.getElementById("id_groups");
+    if (!groupSel) return;
+    var originalName = groupSel.name;
+    function syncName() {
+      if (groupSel.value) {
+        groupSel.name = originalName;
+      } else {
+        groupSel.removeAttribute("name");
+      }
+    }
+    syncName();
+    groupSel.addEventListener("change", syncName);
+  });
+</script>
 
 {% endblock %}

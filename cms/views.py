@@ -15,7 +15,7 @@ from django_ratelimit.decorators import ratelimit
 from articles.models import Article
 from blog.models import Blog
 from package.models import Package, SubPackage
-
+from django.contrib.auth.models import Group  
 User = get_user_model()
 logger = logging.getLogger(__name__)
 
@@ -25,6 +25,7 @@ logger = logging.getLogger(__name__)
 MODEL_MAP = {
     "article": Article,
     "user": User,
+    "group": Group,
     "blog": Blog,
     "package": Package,
     "subpackage": SubPackage,

@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block title %}Menu Items{% endblock %}
+
+{% block content %}
+<div class="content-header">
+  <h2>Menu Items</h2>
+  <a href="{% url 'module_create' %}" class="btn btn-primary">
+    <i class="fa-solid fa-plus"></i> Add Item
+  </a>
+</div>
+
+<div class="card">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Order</th>
+        <th>Label</th>
+        <th>Icon</th>
+        <th>URL Name</th>
+        <th>Permission App</th>
+        <th>Superuser Only</th>
+        <th>Active</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in items %}
+      <tr>
+        <td>{{ item.order }}</td>
+        <td><i class="{{ item.icon }}"></i> {{ item.label }}</td>
+        <td><code>{{ item.icon }}</code></td>
+        <td><code>{{ item.url_name }}</code></td>
+        <td>{{ item.permission_app|default:"-" }}</td>
+        <td>{% if item.superuser_only %}<span class="badge badge-warning">Yes</span>{% else %}-{% endif %}</td>
+        <td>{% if item.is_active %}<span class="badge badge-success">Yes</span>{% else %}<span class="badge badge-danger">No</span>{% endif %}</td>
+        <td>
+          <a href="{% url 'module_edit' item.pk %}" class="btn btn-sm btn-secondary">
+            <i class="fa-solid fa-pen"></i>
+          </a>
+          <button class="btn btn-sm btn-danger"
+            onclick="openDeleteModal('{% url 'module_delete' item.pk %}', 'Are you sure you want to delete &quot;{{ item.label }}&quot;?')">
+            <i class="fa-solid fa-trash"></i>
+          </button>
+        </td>
+      </tr>
+      {% empty %}
+      <tr><td colspan="8">No menu items found.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

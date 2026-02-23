@@ -1,4 +1,5 @@
 {% load static %}
+{% load custom_filters %}
 <!DOCTYPE html>
 <html>
 
@@ -39,53 +40,47 @@
   </header>
 
   <!-- SIDEBAR -->
-  <aside class="sidebar" id="sidebar">
-    <nav>
-      <a href="{% url 'dashboard' %}" class="{% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">
-        <i class="fa-solid fa-gauge"></i>
-        <span>Dashboard</span>
-      </a>
+<aside class="sidebar" id="sidebar">
+  <nav>
+    <a href="{% url 'dashboard' %}" class="{% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">
+      <i class="fa-solid fa-gauge"></i>
+      <span>Dashboard</span>
+    </a>
 
-      {% if request.user.is_superuser %}
-      <a href="#" class="sidebar-parent {% if 'user' in request.resolver_match.url_name or 'group' in request.resolver_match.url_name %}active{% endif %}">
+    {% if request.user.is_superuser %}
+      {% with url_name=request.resolver_match.url_name %}
+        <a href="{% url 'module_list' %}" class="{% if 'module' in request.resolver_match.url_name %}active{% endif %}">
+        <i class="fa-solid fa-cubes"></i>
+        <span>Modules</span>
+        </a>
+      <a href="#" class="sidebar-parent {% if 'user' in url_name or 'group' in url_name %}active{% endif %}">
         <i class="fa-solid fa-user"></i>
         <span>Users</span>
         <i class="fa-solid fa-chevron-down submenu-toggle"></i>
       </a>
-      <div class="sidebar-submenu" style="{% if 'user' in request.resolver_match.url_name or 'group' in request.resolver_match.url_name %}display:block;{% else %}display:none;{% endif %}">
-        <a href="{% url 'user_list' %}" class="{% if 'user_list' == request.resolver_match.url_name %}active{% endif %}">
-          <i class="fa-solid fa-user"></i>
-          User List
+      <div class="sidebar-submenu" style="{% if 'user' in url_name or 'group' in url_name %}display:block;{% else %}display:none;{% endif %}">
+        <a href="{% url 'user_list' %}" class="{% if url_name == 'user_list' or url_name == 'user_create' or url_name == 'user_edit' %}active{% endif %}">
+          <i class="fa-solid fa-user"></i> User List
         </a>
-        <a href="{% url 'group_list' %}" class="{% if 'group_list' == request.resolver_match.url_name %}active{% endif %}">
-          <i class="fa-solid fa-users-gear"></i>
-          Groups
+        <a href="{% url 'group_list' %}" class="{% if url_name == 'group_list' or url_name == 'group_create' or url_name == 'group_edit' %}active{% endif %}">
+          <i class="fa-solid fa-users-gear"></i> Groups
         </a>
       </div>
-      {% endif %}
+      {% endwith %}
+    {% endif %}
 
-      {% if request.user.is_superuser or perms.articles %}
-      <a href="{% url 'article_list' %}" class="{% if 'article' in request.resolver_match.url_name %}active{% endif %}">
-        <i class="fa-solid fa-newspaper"></i>
-        <span>Articles</span>
+    {% for item in sidebar_menu %}
+      {% with keywords=item.url_name_match|split:"," %}
+      <a href="{% url item.url_name %}"
+         class="{% for kw in keywords %}{% if kw in request.resolver_match.url_name %}active{% endif %}{% endfor %}">
+        <i class="{{ item.icon }}"></i>
+        <span>{{ item.label }}</span>
       </a>
-      {% endif %}
+      {% endwith %}
+    {% endfor %}
 
-      {% if request.user.is_superuser or perms.blog %}
-      <a href="{% url 'blog_list' %}" class="{% if 'blog' in request.resolver_match.url_name %}active{% endif %}">
-        <i class="fa-solid fa-newspaper"></i>
-        <span>Blog</span>
-      </a>
-      {% endif %}
-
-      {% if request.user.is_superuser or perms.package %}
-      <a href="{% url 'package_list' %}" class="{% if 'package' in request.resolver_match.url_name %}active{% endif %}">
-        <i class="fa-solid fa-box"></i>
-        <span>Packages</span>
-      </a>
-      {% endif %}
-    </nav>
-  </aside>
+  </nav>
+</aside>
 
 
 

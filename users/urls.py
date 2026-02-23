@@ -4,9 +4,9 @@ from . import views
 urlpatterns = [
     # ------------------ Users ------------------
     path('', views.user_list, name='user_list'),
-    path('users/create/', views.user_create, name='user_create'),
-    path('users/edit/<int:id>/', views.user_edit, name='user_edit'),
-    path('users/delete/<int:id>/', views.user_delete, name='user_delete'),
+    path('create/', views.user_create, name='user_create'),
+    path('edit/<int:id>/', views.user_edit, name='user_edit'),
+    path('delete/<int:id>/', views.user_delete, name='user_delete'),
 
     # ------------------ Groups ------------------
     path('groups/', views.group_list, name='group_list'),

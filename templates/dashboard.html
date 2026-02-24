@@ -96,8 +96,8 @@
       document.getElementById('totalVisitors').innerText = data.total_visitors;
       document.getElementById('liveVisitors').innerText = data.live_visitors;
     }
-    setInterval(updateVisitorStats, 5000);
-    updateVisitorStats();
+    {% comment %} setInterval(updateVisitorStats, 5000);
+    updateVisitorStats(); {% endcomment %}
 
     // Example chart (Visitor Trends)
     const ctx = document.getElementById('visitorChart').getContext('2d');

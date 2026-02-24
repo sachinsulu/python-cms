@@ -9792,3 +9792,367 @@ INFO 2026-02-23 12:37:54,862 autoreload D:\project\users\decorators.py changed, 
 INFO 2026-02-23 12:37:55,794 autoreload Watching for file changes with StatReloader
 INFO 2026-02-23 12:37:57,443 autoreload D:\project\users\decorators.py changed, reloading.
 INFO 2026-02-23 12:37:58,198 autoreload Watching for file changes with StatReloader
+WARNING 2026-02-23 12:38:20,872 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 12:38:25,886 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 12:38:40,568 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:13:07,475 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:18:11,247 log Forbidden (CSRF token from POST incorrect.): /admin/login/
+WARNING 2026-02-23 13:18:11,286 log Not Found: /favicon.ico
+WARNING 2026-02-23 13:25:19,582 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:25:21,761 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:30:54,712 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:30:59,722 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:31:04,711 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:31:09,711 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:31:14,712 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:31:20,288 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:31:25,289 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:31:30,283 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:31:35,288 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:31:40,293 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:31:45,300 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:31:50,290 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:31:55,291 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:32:00,299 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:32:05,293 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:32:10,296 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:32:15,296 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:33:08,290 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:34:08,287 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:35:08,284 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:36:08,302 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:37:08,298 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:38:08,296 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:51:18,122 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:51:19,716 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:51:20,064 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:51:25,064 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:51:30,079 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:51:35,071 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:51:40,077 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:51:45,078 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:51:50,068 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:51:55,073 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:52:00,076 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:52:05,080 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:52:10,071 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:52:15,063 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:52:20,067 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:52:25,080 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:52:30,071 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:52:35,066 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:52:40,066 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:52:45,064 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:52:50,067 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:52:55,066 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:53:00,068 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:53:05,063 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:53:10,069 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:53:15,069 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:53:20,067 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:53:25,068 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:53:30,072 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:53:35,067 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:53:40,074 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:53:45,072 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:53:50,078 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:53:55,082 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:54:00,074 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:54:05,072 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:54:10,083 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:54:15,082 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:54:20,084 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:54:25,087 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:54:30,080 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:54:35,084 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:54:40,073 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:54:45,075 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:54:50,074 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:54:55,080 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:55:00,083 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:55:05,072 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:55:10,066 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:55:15,066 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:55:20,070 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:55:25,068 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:55:30,064 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:55:35,076 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:55:40,076 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:55:45,072 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:55:50,075 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:55:55,073 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:56:00,070 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:56:05,069 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:56:10,066 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:56:15,072 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:56:20,079 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:56:25,080 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:56:30,077 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:56:35,079 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:56:40,080 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:56:45,062 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:56:50,078 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:56:55,066 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:57:00,065 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:57:05,080 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:57:10,066 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:57:15,068 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:57:20,067 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:57:25,072 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:57:30,073 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:57:35,072 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:57:40,071 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:57:45,068 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:57:50,072 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:57:55,068 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:58:00,079 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:58:05,075 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:58:10,080 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:58:15,066 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:58:20,071 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:58:25,071 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:58:30,072 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:58:35,070 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:58:40,073 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:58:45,071 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:58:50,069 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:58:55,301 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:59:00,284 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:59:05,287 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:59:10,284 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:59:15,291 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:59:20,296 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:59:25,286 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:59:30,285 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:59:35,284 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:59:40,290 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:59:45,298 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 13:59:50,290 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 14:00:08,297 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 14:01:08,292 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 14:02:08,293 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 14:03:08,293 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 14:04:08,292 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 14:05:08,310 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 14:06:08,296 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 14:07:08,290 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 14:08:08,290 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 15:06:03,710 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 15:54:29,423 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 15:54:30,071 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 15:54:35,080 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 15:54:40,073 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 15:57:08,255 log Not Found: /api/visitor-stats/
+INFO 2026-02-23 17:04:51,278 autoreload D:\project\articles\views.py changed, reloading.
+INFO 2026-02-23 17:04:53,468 autoreload Watching for file changes with StatReloader
+INFO 2026-02-23 17:06:45,645 autoreload D:\project\package\views.py changed, reloading.
+INFO 2026-02-23 17:06:46,440 autoreload Watching for file changes with StatReloader
+WARNING 2026-02-23 17:07:36,776 log Not Found: /favicon.ico
+WARNING 2026-02-23 17:07:47,959 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 17:08:13,184 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 17:08:20,202 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 17:08:25,211 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 17:08:30,213 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 17:08:35,202 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 17:08:40,204 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 17:08:45,210 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 17:08:50,205 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 17:08:55,202 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 17:09:00,207 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 17:09:05,207 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 17:09:10,206 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 17:09:15,207 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 17:09:22,912 log Not Found: /api/visitor-stats/
+INFO 2026-02-23 17:12:57,850 autoreload D:\project\cms\views.py changed, reloading.
+INFO 2026-02-23 17:12:58,671 autoreload Watching for file changes with StatReloader
+INFO 2026-02-23 17:19:25,324 autoreload D:\project\cms\views.py changed, reloading.
+INFO 2026-02-23 17:19:26,175 autoreload Watching for file changes with StatReloader
+INFO 2026-02-23 17:19:28,938 autoreload D:\project\cms\views.py changed, reloading.
+INFO 2026-02-23 17:19:29,894 autoreload Watching for file changes with StatReloader
+INFO 2026-02-23 17:19:32,826 autoreload D:\project\cms\views.py changed, reloading.
+INFO 2026-02-23 17:19:33,797 autoreload Watching for file changes with StatReloader
+INFO 2026-02-23 17:19:42,130 autoreload D:\project\cms\views.py changed, reloading.
+INFO 2026-02-23 17:19:43,079 autoreload Watching for file changes with StatReloader
+INFO 2026-02-23 17:19:49,177 autoreload D:\project\cms\views.py changed, reloading.
+INFO 2026-02-23 17:19:50,130 autoreload Watching for file changes with StatReloader
+WARNING 2026-02-23 17:20:36,572 log Not Found: /favicon.ico
+WARNING 2026-02-23 17:20:41,341 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 17:20:42,687 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 17:20:47,687 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 17:20:55,909 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 17:21:23,591 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 17:21:32,942 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 17:21:34,066 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 17:21:38,591 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 17:21:42,228 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 17:21:47,295 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 17:21:52,299 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 17:22:02,125 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 17:22:07,291 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 17:22:12,289 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 17:25:39,343 log Not Found: /favicon.ico
+WARNING 2026-02-23 17:25:44,647 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 17:25:45,771 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 17:25:48,434 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 17:25:51,856 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 17:25:53,122 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 17:25:53,266 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 17:25:53,555 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 17:25:53,841 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 17:25:54,922 log Not Found: /api/visitor-stats/
+INFO 2026-02-23 17:26:00,221 autoreload D:\project\cms\views.py changed, reloading.
+INFO 2026-02-23 17:26:01,029 autoreload Watching for file changes with StatReloader
+WARNING 2026-02-23 17:26:01,937 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 17:26:02,010 log Not Found: /api/visitor-stats/
+INFO 2026-02-23 17:26:02,803 autoreload D:\project\cms\views.py changed, reloading.
+INFO 2026-02-23 17:26:03,713 autoreload Watching for file changes with StatReloader
+WARNING 2026-02-23 17:26:04,415 log Not Found: /api/visitor-stats/
+INFO 2026-02-23 17:26:05,433 autoreload D:\project\cms\views.py changed, reloading.
+INFO 2026-02-23 17:26:06,442 autoreload Watching for file changes with StatReloader
+WARNING 2026-02-23 17:26:07,044 log Not Found: /api/visitor-stats/
+INFO 2026-02-23 17:26:08,079 autoreload D:\project\cms\views.py changed, reloading.
+INFO 2026-02-23 17:26:08,813 autoreload Watching for file changes with StatReloader
+WARNING 2026-02-23 17:26:09,410 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 17:26:11,070 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 17:26:12,036 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 17:26:12,311 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 17:26:12,440 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 17:26:12,644 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 17:26:18,291 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 17:26:23,297 log Not Found: /api/visitor-stats/
+INFO 2026-02-23 17:26:26,306 autoreload D:\project\cms\views.py changed, reloading.
+INFO 2026-02-23 17:26:27,359 autoreload Watching for file changes with StatReloader
+WARNING 2026-02-23 17:26:27,909 log Not Found: /api/visitor-stats/
+INFO 2026-02-23 17:26:29,147 autoreload D:\project\cms\views.py changed, reloading.
+INFO 2026-02-23 17:26:30,038 autoreload Watching for file changes with StatReloader
+WARNING 2026-02-23 17:26:30,759 log Not Found: /api/visitor-stats/
+INFO 2026-02-23 17:26:31,717 autoreload D:\project\cms\views.py changed, reloading.
+INFO 2026-02-23 17:26:32,635 autoreload Watching for file changes with StatReloader
+INFO 2026-02-23 17:26:34,213 autoreload D:\project\cms\views.py changed, reloading.
+INFO 2026-02-23 17:26:35,049 autoreload Watching for file changes with StatReloader
+WARNING 2026-02-23 17:26:35,696 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 17:26:41,290 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 17:26:46,299 log Not Found: /api/visitor-stats/
+INFO 2026-02-23 17:26:49,555 autoreload D:\project\cms\views.py changed, reloading.
+INFO 2026-02-23 17:26:50,390 autoreload Watching for file changes with StatReloader
+WARNING 2026-02-23 17:26:50,996 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 17:26:56,293 log Not Found: /api/visitor-stats/
+INFO 2026-02-23 17:26:57,688 autoreload D:\project\cms\views.py changed, reloading.
+INFO 2026-02-23 17:26:58,441 autoreload Watching for file changes with StatReloader
+WARNING 2026-02-23 17:26:59,017 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 17:26:59,888 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 17:27:01,727 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 17:27:06,525 log Not Found: /favicon.ico
+WARNING 2026-02-23 17:27:13,440 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 17:27:18,448 log Not Found: /api/visitor-stats/
+INFO 2026-02-23 17:27:43,798 autoreload D:\project\cms\views.py changed, reloading.
+INFO 2026-02-23 17:27:44,426 autoreload Watching for file changes with StatReloader
+INFO 2026-02-23 17:27:47,890 autoreload D:\project\cms\views.py changed, reloading.
+INFO 2026-02-23 17:27:48,655 autoreload Watching for file changes with StatReloader
+INFO 2026-02-23 17:27:51,469 autoreload D:\project\cms\views.py changed, reloading.
+INFO 2026-02-23 17:27:52,129 autoreload Watching for file changes with StatReloader
+WARNING 2026-02-23 17:28:41,464 log Not Found: /favicon.ico
+WARNING 2026-02-23 17:28:46,371 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 17:28:48,820 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 17:29:07,434 log Not Found: /favicon.ico
+WARNING 2026-02-23 17:29:17,096 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 17:29:46,288 log Not Found: /api/visitor-stats/
+INFO 2026-02-23 17:30:18,529 autoreload D:\project\cms\views.py changed, reloading.
+INFO 2026-02-23 17:30:20,266 autoreload Watching for file changes with StatReloader
+WARNING 2026-02-23 17:30:35,914 log Not Found: /api/visitor-stats/
+WARNING 2026-02-23 17:30:37,507 log Not Found: /api/visitor-stats/
+INFO 2026-02-23 17:31:15,909 autoreload D:\project\cms\views.py changed, reloading.
+INFO 2026-02-23 17:31:17,142 autoreload Watching for file changes with StatReloader
+INFO 2026-02-23 17:31:18,818 autoreload D:\project\cms\views.py changed, reloading.
+INFO 2026-02-23 17:31:20,118 autoreload Watching for file changes with StatReloader
+INFO 2026-02-24 10:39:56,643 autoreload Watching for file changes with StatReloader
+WARNING 2026-02-24 10:40:05,662 log Not Found: /api/visitor-stats/
+WARNING 2026-02-24 10:40:39,057 log Not Found: /favicon.ico
+WARNING 2026-02-24 10:40:48,328 log Not Found: /api/visitor-stats/
+WARNING 2026-02-24 10:41:06,792 log Not Found: /api/visitor-stats/
+INFO 2026-02-24 10:53:51,884 autoreload D:\project\users\decorators.py changed, reloading.
+INFO 2026-02-24 10:53:54,188 autoreload Watching for file changes with StatReloader
+WARNING 2026-02-24 10:54:09,659 log Not Found: /api/visitor-stats/
+WARNING 2026-02-24 10:54:15,513 log Not Found: /favicon.ico
+WARNING 2026-02-24 10:54:21,418 log Not Found: /api/visitor-stats/
+WARNING 2026-02-24 10:54:43,727 log Not Found: /api/visitor-stats/
+INFO 2026-02-24 10:55:06,315 autoreload D:\project\users\decorators.py changed, reloading.
+INFO 2026-02-24 10:55:06,998 autoreload Watching for file changes with StatReloader
+WARNING 2026-02-24 10:55:08,299 log Not Found: /api/visitor-stats/
+WARNING 2026-02-24 10:55:13,301 log Not Found: /api/visitor-stats/
+WARNING 2026-02-24 10:55:19,297 log Not Found: /api/visitor-stats/
+WARNING 2026-02-24 10:55:24,289 log Not Found: /api/visitor-stats/
+WARNING 2026-02-24 10:55:29,295 log Not Found: /api/visitor-stats/
+WARNING 2026-02-24 10:55:34,295 log Not Found: /api/visitor-stats/
+WARNING 2026-02-24 10:55:39,298 log Not Found: /api/visitor-stats/
+WARNING 2026-02-24 10:55:44,294 log Not Found: /api/visitor-stats/
+WARNING 2026-02-24 10:55:49,284 log Not Found: /api/visitor-stats/
+WARNING 2026-02-24 10:55:54,285 log Not Found: /api/visitor-stats/
+WARNING 2026-02-24 10:55:59,292 log Not Found: /api/visitor-stats/
+WARNING 2026-02-24 10:56:04,284 log Not Found: /api/visitor-stats/
+WARNING 2026-02-24 10:56:09,287 log Not Found: /api/visitor-stats/
+WARNING 2026-02-24 10:56:14,294 log Not Found: /api/visitor-stats/
+WARNING 2026-02-24 10:56:29,285 log Not Found: /api/visitor-stats/
+INFO 2026-02-24 10:56:34,697 autoreload D:\project\users\decorators.py changed, reloading.
+INFO 2026-02-24 10:56:35,324 autoreload Watching for file changes with StatReloader
+WARNING 2026-02-24 10:56:35,801 log Not Found: /api/visitor-stats/
+INFO 2026-02-24 10:56:36,983 autoreload D:\project\users\decorators.py changed, reloading.
+INFO 2026-02-24 10:56:37,776 autoreload Watching for file changes with StatReloader
+WARNING 2026-02-24 10:56:38,342 log Not Found: /api/visitor-stats/
+WARNING 2026-02-24 10:56:44,290 log Not Found: /api/visitor-stats/
+WARNING 2026-02-24 10:56:49,284 log Not Found: /api/visitor-stats/
+INFO 2026-02-24 10:56:51,114 autoreload D:\project\users\decorators.py changed, reloading.
+INFO 2026-02-24 10:56:51,994 autoreload Watching for file changes with StatReloader
+WARNING 2026-02-24 10:56:52,801 log Not Found: /api/visitor-stats/
+WARNING 2026-02-24 10:56:56,312 log Not Found: /api/visitor-stats/
+WARNING 2026-02-24 10:57:01,318 log Not Found: /api/visitor-stats/
+WARNING 2026-02-24 10:57:05,386 log Not Found: /api/visitor-stats/
+WARNING 2026-02-24 10:57:10,394 log Not Found: /api/visitor-stats/
+WARNING 2026-02-24 10:57:15,398 log Not Found: /api/visitor-stats/
+WARNING 2026-02-24 10:57:20,391 log Not Found: /api/visitor-stats/
+WARNING 2026-02-24 10:57:25,399 log Not Found: /api/visitor-stats/
+WARNING 2026-02-24 10:57:30,398 log Not Found: /api/visitor-stats/
+WARNING 2026-02-24 10:57:35,394 log Not Found: /api/visitor-stats/
+WARNING 2026-02-24 10:57:40,401 log Not Found: /api/visitor-stats/
+WARNING 2026-02-24 10:57:45,402 log Not Found: /api/visitor-stats/
+WARNING 2026-02-24 10:57:50,399 log Not Found: /api/visitor-stats/
+WARNING 2026-02-24 10:57:55,396 log Not Found: /api/visitor-stats/
+WARNING 2026-02-24 10:58:00,400 log Not Found: /api/visitor-stats/
+WARNING 2026-02-24 10:58:05,400 log Not Found: /api/visitor-stats/
+WARNING 2026-02-24 10:58:10,401 log Not Found: /api/visitor-stats/
+WARNING 2026-02-24 10:58:15,387 log Not Found: /api/visitor-stats/
+WARNING 2026-02-24 10:58:20,390 log Not Found: /api/visitor-stats/
+WARNING 2026-02-24 10:58:25,389 log Not Found: /api/visitor-stats/
+WARNING 2026-02-24 10:58:30,403 log Not Found: /api/visitor-stats/
+WARNING 2026-02-24 10:58:35,388 log Not Found: /api/visitor-stats/
+WARNING 2026-02-24 10:58:40,400 log Not Found: /api/visitor-stats/
+WARNING 2026-02-24 10:58:45,400 log Not Found: /api/visitor-stats/
+WARNING 2026-02-24 10:58:50,396 log Not Found: /api/visitor-stats/
+WARNING 2026-02-24 10:58:55,397 log Not Found: /api/visitor-stats/
+WARNING 2026-02-24 10:59:00,389 log Not Found: /api/visitor-stats/
+WARNING 2026-02-24 10:59:06,146 log Not Found: /favicon.ico
+WARNING 2026-02-24 10:59:18,764 log Not Found: /api/visitor-stats/
+WARNING 2026-02-24 10:59:42,528 log Not Found: /api/visitor-stats/
+WARNING 2026-02-24 10:59:45,931 log Not Found: /api/visitor-stats/
+WARNING 2026-02-24 10:59:56,339 log Not Found: /api/visitor-stats/
+WARNING 2026-02-24 11:00:02,285 log Not Found: /api/visitor-stats/
+WARNING 2026-02-24 11:00:07,295 log Not Found: /api/visitor-stats/
+WARNING 2026-02-24 11:00:12,298 log Not Found: /api/visitor-stats/
+WARNING 2026-02-24 11:00:17,289 log Not Found: /api/visitor-stats/
+WARNING 2026-02-24 11:00:22,298 log Not Found: /api/visitor-stats/
+WARNING 2026-02-24 11:00:27,287 log Not Found: /api/visitor-stats/
+WARNING 2026-02-24 11:00:32,282 log Not Found: /api/visitor-stats/
+WARNING 2026-02-24 11:01:39,180 log Not Found: /api/visitor-stats/
+WARNING 2026-02-24 11:01:44,289 log Not Found: /api/visitor-stats/
+WARNING 2026-02-24 11:01:53,030 log Not Found: /api/visitor-stats/
+WARNING 2026-02-24 11:01:58,295 log Not Found: /api/visitor-stats/
+WARNING 2026-02-24 11:02:03,288 log Not Found: /api/visitor-stats/
+WARNING 2026-02-24 11:03:37,257 log Not Found: /favicon.ico
+INFO 2026-02-24 11:06:33,682 autoreload D:\project\cms\views.py changed, reloading.
+INFO 2026-02-24 11:06:34,438 autoreload Watching for file changes with StatReloader
+INFO 2026-02-24 11:06:36,147 autoreload D:\project\cms\views.py changed, reloading.
+INFO 2026-02-24 11:06:36,947 autoreload Watching for file changes with StatReloader
+INFO 2026-02-24 11:09:49,891 autoreload D:\project\cms\views.py changed, reloading.
+INFO 2026-02-24 11:09:50,576 autoreload Watching for file changes with StatReloader
+INFO 2026-02-24 11:09:52,174 autoreload D:\project\cms\views.py changed, reloading.
+INFO 2026-02-24 11:09:53,005 autoreload Watching for file changes with StatReloader

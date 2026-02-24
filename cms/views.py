@@ -10,12 +10,15 @@ from django.views.decorators.http import require_POST
 from django.db import transaction
 from django.contrib.auth import get_user_model
 from django.contrib import messages
+from django.core.exceptions import FieldDoesNotExist
+from django.utils.text import slugify
 from django_ratelimit.decorators import ratelimit
 
 from articles.models import Article
 from blog.models import Blog
 from package.models import Package, SubPackage
-from django.contrib.auth.models import Group  
+from django.contrib.auth.models import Group
+
 User = get_user_model()
 logger = logging.getLogger(__name__)
 
@@ -31,13 +34,13 @@ MODEL_MAP = {
     "subpackage": SubPackage,
 }
 
-
 ACTIVE_FIELD_MAP = {
     "article": "active",
     "blog": "active",
     "package": "is_active",
     "subpackage": "is_active",
 }
+
 
 def redirect_back(request, default='/'):
     """Redirect to previous page or default"""
@@ -47,32 +50,32 @@ def redirect_back(request, default='/'):
         return redirect(default)
     return redirect(referer)
 
+
 def get_obj_name(obj):
     """Return a display name for object"""
     return getattr(obj, 'title', getattr(obj, 'username', str(obj)))
 
+
 def check_user_permission(request, model_class, action="change"):
     if request.user.is_superuser:
         return True
+
     if model_class is User:
         return False
-    if model_class is Article:
-        return True
-    if model_class is Blog:
-        return True
-    if model_class is Package:
-        return True
-    if model_class is SubPackage:
-        return True
-    return False
+
+    app_label = model_class._meta.app_label
+    model_name = model_class._meta.model_name
+    perm = f"{app_label}.{action}_{model_name}"
+
+    return request.user.has_perm(perm)
+
+
 # -------------------------
 # Views
 # -------------------------
 @login_required
 def dashboard(request):
     return render(request, 'dashboard.html')
-
-
 
 
 @ratelimit(key='user', rate='30/m', method='POST')
@@ -84,17 +87,16 @@ def toggle_status(request, model_name, pk):
     if not model_class:
         return JsonResponse({"error": "Invalid model"}, status=400)
 
-    obj = get_object_or_404(model_class, pk=pk)
-
     if not check_user_permission(request, model_class, action="change"):
         return JsonResponse({"error": "Permission denied"}, status=403)
 
-    # Determine the active field dynamically
     active_field = ACTIVE_FIELD_MAP.get(model_name.lower())
     if not active_field:
         return JsonResponse({"error": "This model does not support status toggling"}, status=400)
 
-    # Toggle the field dynamically
+    # Only fetch needed fields
+    obj = get_object_or_404(model_class.objects.only('pk', active_field), pk=pk)
+
     current_status = getattr(obj, active_field)
     setattr(obj, active_field, not current_status)
     obj.save(update_fields=[active_field])
@@ -103,7 +105,6 @@ def toggle_status(request, model_name, pk):
         "status": not current_status,
         "message": f'"{get_obj_name(obj)}" status changed.'
     })
-
 
 
 @ratelimit(key='user', rate='30/m', method='POST')
@@ -116,12 +117,11 @@ def delete_object(request, model_name, pk):
         messages.error(request, "Invalid model type.")
         return redirect_back(request)
 
-    obj = get_object_or_404(model_class, pk=pk)
-
     if not check_user_permission(request, model_class, action="delete"):
         messages.error(request, "You do not have permission to delete this item.")
         return redirect_back(request)
 
+    obj = get_object_or_404(model_class, pk=pk)
     obj_name = get_obj_name(obj)
     obj.delete()
 
@@ -139,28 +139,37 @@ def bulk_action(request, model_name):
         messages.error(request, "Invalid model type.")
         return redirect_back(request)
 
-    # Check permission
-    if not check_user_permission(request, model_class, action="change"):
-        messages.error(request, "You do not have permission for this action.")
-        return redirect_back(request)
-
-    selected_ids = request.POST.getlist("selected_ids") or request.POST.get("ids", "").split(',')
-    selected_ids = [id_val for id_val in selected_ids if id_val]
+    # Standardized ID parsing
+    selected_ids = request.POST.getlist("selected_ids")
+    if not selected_ids:
+        raw_ids = request.POST.get("ids", "")
+        selected_ids = [i.strip() for i in raw_ids.split(',') if i.strip()]
 
     if not selected_ids:
         messages.warning(request, "No items selected.")
         return redirect_back(request)
 
     action = request.POST.get("action") or ("delete" if request.POST.get("ids") else None)
+    if not action:
+        messages.error(request, "Invalid action.")
+        return redirect_back(request)
+
+    # Check permission based on actual action
+    required_permission = "delete" if action == "delete" else "change"
+    if not check_user_permission(request, model_class, action=required_permission):
+        messages.error(request, "You do not have permission for this action.")
+        return redirect_back(request)
+
     queryset = model_class.objects.filter(pk__in=selected_ids)
 
     if action == "toggle":
         active_field = ACTIVE_FIELD_MAP.get(model_name.lower())
-
         if not active_field:
             messages.error(request, "This model does not support status toggling.")
             return redirect_back(request)
 
+        # Capture count before operation
+        count = queryset.count()
         queryset.update(**{
             active_field: Case(
                 When(**{active_field: True}, then=Value(False)),
@@ -168,12 +177,10 @@ def bulk_action(request, model_name):
                 output_field=BooleanField(),
             )
         })
+        messages.success(request, f"{count} {model_name}(s) status toggled.")
 
-        messages.success(
-            request,
-            f"{queryset.count()} {model_name}(s) status toggled."
-        )
     elif action == "delete":
+        # Capture count before delete
         count = queryset.count()
         queryset.delete()
         messages.success(request, f"{count} {model_name}(s) deleted successfully.")
@@ -193,7 +200,6 @@ def update_order(request, model_name):
     if not model_class:
         return JsonResponse({'status': 'error', 'message': 'Invalid model type'}, status=400)
 
-    # Check permission
     if not check_user_permission(request, model_class, action="change"):
         return JsonResponse({'status': 'error', 'message': 'Permission denied'}, status=403)
 
@@ -201,17 +207,15 @@ def update_order(request, model_name):
         data = json.loads(request.body)
         order = data.get('order', [])
 
-        # Validate and convert IDs to integers
         try:
             order = [int(obj_id) for obj_id in order]
         except (TypeError, ValueError):
             return JsonResponse({'status': 'error', 'message': 'Invalid ID format'}, status=400)
 
-        # Get objects and create mapping
-        objs = model_class.objects.filter(id__in=order)
+        # Only fetch needed fields
+        objs = model_class.objects.filter(id__in=order).only('pk', 'position')
         obj_map = {obj.id: obj for obj in objs}
 
-        # Update positions
         updated_objs = []
         for position, obj_id in enumerate(order):
             if obj_id in obj_map:
@@ -219,7 +223,6 @@ def update_order(request, model_name):
                 obj.position = position
                 updated_objs.append(obj)
 
-        # Bulk update in transaction
         with transaction.atomic():
             model_class.objects.bulk_update(updated_objs, ['position'])
 
@@ -231,59 +234,37 @@ def update_order(request, model_name):
     except Exception as e:
         logger.error(f"Error updating order: {e}")
         return JsonResponse({'status': 'error', 'message': 'Failed to update order'}, status=500)
-    
 
-    
+
 @ratelimit(key='user', rate='30/m', method='GET')
 @login_required
 def ajax_check_slug(request, model_name):
     model_class = MODEL_MAP.get(model_name.lower())
     if not model_class:
-        return JsonResponse({
-            "error": "Invalid model",
-            "slug": "",
-            "exists": False
-        }, status=400)
-    
-    # Check if model has slug field
-    if not hasattr(model_class, 'slug'):
+        return JsonResponse({"error": "Invalid model", "slug": "", "exists": False}, status=400)
+
+    # Reliable field existence check
+    try:
+        model_class._meta.get_field('slug')
+    except FieldDoesNotExist:
         return JsonResponse({
             "error": f"{model_name} does not have a slug field",
             "slug": "",
             "exists": False
         }, status=400)
-    
-    # Get slug directly from request (not title)
+
     slug = request.GET.get("slug", "").strip()
     object_id = request.GET.get("object_id", "").strip()
-    
-    # Validate inputs
+
     if not slug:
-        return JsonResponse({
-            "error": "Slug is required",
-            "slug": "",
-            "exists": False
-        }, status=400)
-    
-    # Slugify the input to ensure it's valid
-    from django.utils.text import slugify
+        return JsonResponse({"error": "Slug is required", "slug": "", "exists": False}, status=400)
+
     slug = slugify(slug)
-    
     if not slug:
-        return JsonResponse({
-            "error": "Invalid slug format",
-            "slug": "",
-            "exists": False
-        }, status=400)
-    
-    # Check if slug exists in database
+        return JsonResponse({"error": "Invalid slug format", "slug": "", "exists": False}, status=400)
+
     qs = model_class.objects.filter(slug=slug)
-    
-    # Exclude current object if editing
     if object_id and object_id.isdigit():
         qs = qs.exclude(pk=int(object_id))
-    
-    return JsonResponse({
-        "slug": slug,
-        "exists": qs.exists()
-    })
+
+    return JsonResponse({"slug": slug, "exists": qs.exists()})

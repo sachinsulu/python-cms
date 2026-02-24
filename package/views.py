@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
+from users.decorators import requires_perm
 from django.contrib import messages
 from .models import Package, SubPackage
 from .forms import PackageForm, SubPackageForm
@@ -9,6 +10,7 @@ from .forms import PackageForm, SubPackageForm
 # Package Views
 # ========================
 @login_required
+@requires_perm('package.view_package')
 def package_list(request):
     packages = Package.objects.all().order_by('position')
     return render(request, 'package/list.html', {
@@ -17,6 +19,7 @@ def package_list(request):
 
 
 @login_required
+@requires_perm('package.add_package')
 def package_create(request):
     if request.method == 'POST':
         form = PackageForm(request.POST, request.FILES)
@@ -36,6 +39,7 @@ def package_create(request):
 
 
 @login_required
+@requires_perm('package.change_package')
 def package_edit(request, slug):
     package = get_object_or_404(Package, slug=slug)
 
@@ -61,6 +65,7 @@ def package_edit(request, slug):
 # SubPackage Views
 # ========================
 @login_required
+@requires_perm('package.view_subpackage')
 def subpackage_list(request, package_slug):
     package = get_object_or_404(Package, slug=package_slug)
     subpackages = SubPackage.objects.filter(package=package).order_by('position')
@@ -72,6 +77,7 @@ def subpackage_list(request, package_slug):
 
 
 @login_required
+@requires_perm('package.add_subpackage')
 def subpackage_create(request, package_slug):
     package = get_object_or_404(Package, slug=package_slug)
 
@@ -96,6 +102,7 @@ def subpackage_create(request, package_slug):
 
 
 @login_required
+@requires_perm('package.change_subpackage')
 def subpackage_edit(request, package_slug, slug):
     package = get_object_or_404(Package, slug=package_slug)
     sub = get_object_or_404(SubPackage, slug=slug, package=package)

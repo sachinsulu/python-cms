@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from users.decorators import requires_perm
 from .forms import ArticleForm
 from .models import Article
 from django.shortcuts import render, get_object_or_404, redirect
@@ -14,6 +15,7 @@ from django.urls import reverse
 
 @ensure_csrf_cookie
 @login_required
+@requires_perm('articles.view_article')
 def article_list(request):
     # Capture the parameter if it exists in the URL
     homepage_param = request.GET.get('homepage')
@@ -37,6 +39,7 @@ def article_list(request):
 
 
 @login_required
+@requires_perm('articles.add_article')
 def article_create(request):
     session_filter = request.session.get('articles_homepage_filter', '0')
     homepage = (session_filter == '1')
@@ -69,6 +72,7 @@ def article_create(request):
 
 
 @login_required
+@requires_perm('articles.change_article')
 def article_edit(request, slug):
     article = get_object_or_404(Article, slug=slug)
 

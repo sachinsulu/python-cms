@@ -6,7 +6,7 @@ from users.decorators import requires_perm
 
 
 @login_required
-@requires_perm('blog.view_post')
+@requires_perm('blog.view_blog')
 def blog_list(request):
     homepage_param = request.GET.get('homepage')
     
@@ -28,7 +28,7 @@ def blog_list(request):
 
 
 @login_required
-@requires_perm('blog.add_post')
+@requires_perm('blog.add_blog')
 def create_blog(request):
     session_filter = request.session.get('blog_homepage_filter', '0')
     homepage = (session_filter == '1')
@@ -50,7 +50,7 @@ def create_blog(request):
 
 
 @login_required
-@requires_perm('blog.change_post')
+@requires_perm('blog.change_blog')
 def edit_blog(request, slug):
     blog = get_object_or_404(Blog, slug=slug)
     session_filter = request.session.get('blog_homepage_filter', '0')

@@ -28,10 +28,11 @@ class Blog(models.Model):
             
             # Unique Slug Logic
             if not self.slug:
+                from cms.utils import is_slug_taken
                 base_slug = slugify(self.title, allow_unicode=True)
                 slug = base_slug
                 counter = 1
-                while Blog.objects.filter(slug=slug).exists():
+                while is_slug_taken(slug, exclude_obj=self):
                     slug = f"{base_slug}-{counter}"
                     counter += 1
                 self.slug = slug

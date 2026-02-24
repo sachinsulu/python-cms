@@ -117,11 +117,10 @@ function openDeleteModal(modelName, itemNameOrCount, url, isBulk = false) {
     const modal = document.getElementById('deleteModal');
     const form = document.getElementById('deleteForm');
     const modalText = document.getElementById('modal-text');
-    if (!modal || !form) return;
+    if (!modal || !form || !modalText) return;
 
-    // Clear old hidden inputs
     form.querySelectorAll('input[name="ids"]').forEach(i => i.remove());
-    
+
     if (isBulk) {
         const selected = Array.from(document.querySelectorAll('.row-checkbox:checked'))
                               .map(cb => cb.value);
@@ -129,21 +128,21 @@ function openDeleteModal(modelName, itemNameOrCount, url, isBulk = false) {
             showFlashMessage("Please select at least one item to delete.", "warning");
             return;
         }
-        
-        modalText.innerText = `Are you sure you want to delete ${selected.length} ${modelName}(s)?`;
-        
+
+        modalText.textContent = `Are you sure you want to delete ${selected.length} ${modelName}(s)?`;
+
         const idsInput = document.createElement('input');
         idsInput.type = 'hidden';
         idsInput.name = 'ids';
         idsInput.value = selected.join(',');
         form.appendChild(idsInput);
     } else {
-        modalText.innerText = `Are you sure you want to delete "${itemNameOrCount}"?`;
+        modalText.textContent = `Are you sure you want to delete "${itemNameOrCount}"?`;
     }
 
     form.action = url;
     modal.style.display = 'flex';
-    setTimeout(() => modal.classList.add('show'), 10);
+    requestAnimationFrame(() => modal.classList.add('show'));
 }
 
 function closeDeleteModal() {

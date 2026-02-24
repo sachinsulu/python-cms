@@ -10156,3 +10156,55 @@ INFO 2026-02-24 11:09:49,891 autoreload D:\project\cms\views.py changed, reloadi
 INFO 2026-02-24 11:09:50,576 autoreload Watching for file changes with StatReloader
 INFO 2026-02-24 11:09:52,174 autoreload D:\project\cms\views.py changed, reloading.
 INFO 2026-02-24 11:09:53,005 autoreload Watching for file changes with StatReloader
+INFO 2026-02-24 11:13:17,058 autoreload D:\project\core\views.py changed, reloading.
+INFO 2026-02-24 11:13:17,704 autoreload Watching for file changes with StatReloader
+INFO 2026-02-24 11:13:19,296 autoreload D:\project\core\views.py changed, reloading.
+INFO 2026-02-24 11:13:20,150 autoreload Watching for file changes with StatReloader
+INFO 2026-02-24 11:18:47,907 autoreload D:\project\core\views.py changed, reloading.
+INFO 2026-02-24 11:18:48,574 autoreload Watching for file changes with StatReloader
+INFO 2026-02-24 11:21:08,277 autoreload D:\project\cms\views.py changed, reloading.
+INFO 2026-02-24 11:21:09,006 autoreload Watching for file changes with StatReloader
+INFO 2026-02-24 11:21:10,626 autoreload D:\project\cms\views.py changed, reloading.
+INFO 2026-02-24 11:21:11,470 autoreload Watching for file changes with StatReloader
+INFO 2026-02-24 11:21:14,259 autoreload D:\project\cms\views.py changed, reloading.
+INFO 2026-02-24 11:21:15,107 autoreload Watching for file changes with StatReloader
+INFO 2026-02-24 11:23:00,780 autoreload D:\project\users\views.py changed, reloading.
+INFO 2026-02-24 11:23:35,690 autoreload Watching for file changes with StatReloader
+INFO 2026-02-24 11:23:50,908 autoreload D:\project\users\urls.py changed, reloading.
+INFO 2026-02-24 11:23:51,619 autoreload Watching for file changes with StatReloader
+WARNING 2026-02-24 11:23:56,675 log Not Found: /favicon.ico
+WARNING 2026-02-24 11:24:29,575 log Not Found: /users/undefined
+WARNING 2026-02-24 11:27:31,309 log Not Found: /users/undefined
+WARNING 2026-02-24 11:27:34,554 log Not Found: /users/undefined
+WARNING 2026-02-24 11:28:57,259 log Not Found: /users/undefined
+WARNING 2026-02-24 11:28:57,308 log Not Found: /favicon.ico
+WARNING 2026-02-24 11:31:32,750 log Not Found: /users/undefined
+WARNING 2026-02-24 11:31:35,935 log Not Found: /users/undefined
+WARNING 2026-02-24 11:31:37,006 log Not Found: /users/undefined
+INFO 2026-02-24 11:32:15,168 autoreload D:\project\users\views.py changed, reloading.
+INFO 2026-02-24 11:32:15,970 autoreload Watching for file changes with StatReloader
+INFO 2026-02-24 11:32:21,800 autoreload D:\project\users\views.py changed, reloading.
+INFO 2026-02-24 11:32:22,406 autoreload Watching for file changes with StatReloader
+INFO 2026-02-24 11:32:23,960 autoreload D:\project\users\views.py changed, reloading.
+INFO 2026-02-24 11:32:24,604 autoreload Watching for file changes with StatReloader
+INFO 2026-02-24 11:32:33,704 autoreload D:\project\users\urls.py changed, reloading.
+INFO 2026-02-24 11:32:34,402 autoreload Watching for file changes with StatReloader
+WARNING 2026-02-24 11:32:40,233 log Not Found: /users/undefined
+WARNING 2026-02-24 11:32:40,275 log Not Found: /favicon.ico
+INFO 2026-02-24 11:52:53,420 autoreload D:\project\cms\settings.py changed, reloading.
+INFO 2026-02-24 11:52:54,373 autoreload Watching for file changes with StatReloader
+INFO 2026-02-24 11:52:56,114 autoreload D:\project\cms\settings.py changed, reloading.
+INFO 2026-02-24 11:52:57,354 autoreload Watching for file changes with StatReloader
+INFO 2026-02-24 11:52:59,163 autoreload D:\project\cms\settings.py changed, reloading.
+INFO 2026-02-24 11:53:00,066 autoreload Watching for file changes with StatReloader
+INFO 2026-02-24 11:53:01,747 autoreload D:\project\cms\settings.py changed, reloading.
+INFO 2026-02-24 11:53:02,563 autoreload Watching for file changes with StatReloader
+WARNING 2026-02-24 12:33:20,413 log Not Found: /packages/sub
+WARNING 2026-02-24 12:33:20,460 log Not Found: /favicon.ico
+INFO 2026-02-24 12:38:59,230 autoreload D:\project\cms\views.py changed, reloading.
+INFO 2026-02-24 12:39:00,417 autoreload Watching for file changes with StatReloader
+INFO 2026-02-24 12:39:02,617 autoreload D:\project\articles\models.py changed, reloading.
+INFO 2026-02-24 12:39:03,864 autoreload Watching for file changes with StatReloader
+INFO 2026-02-24 12:39:15,146 autoreload D:\project\cms\views.py changed, reloading.
+INFO 2026-02-24 12:39:16,113 autoreload Watching for file changes with StatReloader
+INFO 2026-02-24 13:53:07,633 autoreload Watching for file changes with StatReloader

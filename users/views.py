@@ -83,8 +83,6 @@ def user_edit(request, id):
     form.fields['password'].required = False
 
     if form.is_valid():
-        if form.cleaned_data.get('password'):
-            user.set_password(form.cleaned_data['password'])
         form.save()
         messages.success(request, "User updated successfully!")
         return redirect('user_list')
@@ -94,16 +92,26 @@ def user_edit(request, id):
 
 @login_required
 def user_delete(request, id):
+    if not request.user.is_superuser:
+        messages.error(request, "You do not have permission to manage users.")
+        return redirect('dashboard')
+
     user = get_object_or_404(User, id=id)
-    if user.is_superuser or user == request.user:
-        messages.error(request, "Cannot delete this user.")
+
+    if user.is_superuser:
+        messages.error(request, "Cannot delete a superuser account.")
+        return redirect('user_list')
+
+    if user == request.user:
+        messages.error(request, "You cannot delete your own account.")
         return redirect('user_list')
 
     if request.method == 'POST':
         user.delete()
         messages.success(request, "User deleted successfully!")
-    return redirect('user_list')
+        return redirect('user_list')
 
+    return render(request, 'users/delete.html', {'user': user})
 
 # ------------------------------
 # GROUP VIEWS

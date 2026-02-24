@@ -10,6 +10,9 @@ from django.db.models import Q
 from django.template.loader import render_to_string
 from django.http import HttpResponse
 from django.urls import reverse
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 
@@ -61,7 +64,7 @@ def article_create(request):
                 messages.success(request, "Article saved!")
                 return redirect(reverse('article_edit', args=[article.slug]))
         else:
-            print("CREATE FORM ERRORS:", form.errors)
+            logger.warning("Article create form errors: %s", form.errors)
     else:
         form = ArticleForm(initial={'homepage': homepage})
 
@@ -93,7 +96,7 @@ def article_edit(request, slug):
             else:  # stay on edit
                 return redirect(reverse('article_edit', args=[article.slug]))
         else:
-            print("EDIT FORM ERRORS:", form.errors)
+            logger.warning("Article edit form errors: %s", form.errors)
     else:
         form = ArticleForm(instance=article)
 

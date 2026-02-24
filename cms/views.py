@@ -13,6 +13,7 @@ from django.contrib import messages
 from django.core.exceptions import FieldDoesNotExist
 from django.utils.text import slugify
 from django_ratelimit.decorators import ratelimit
+from .utils import is_slug_taken
 
 from articles.models import Article
 from blog.models import Blog
@@ -21,6 +22,7 @@ from django.contrib.auth.models import Group
 
 User = get_user_model()
 logger = logging.getLogger(__name__)
+
 
 # -------------------------
 # Global Constants / Helpers
@@ -263,8 +265,6 @@ def ajax_check_slug(request, model_name):
     if not slug:
         return JsonResponse({"error": "Invalid slug format", "slug": "", "exists": False}, status=400)
 
-    qs = model_class.objects.filter(slug=slug)
-    if object_id and object_id.isdigit():
-        qs = qs.exclude(pk=int(object_id))
+    qs_exists = is_slug_taken(slug, exclude_obj=get_object_or_404(model_class, pk=int(object_id)) if object_id and object_id.isdigit() else None)
 
-    return JsonResponse({"slug": slug, "exists": qs.exists()})
+    return JsonResponse({"slug": slug, "exists": qs_exists})

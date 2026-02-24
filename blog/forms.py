@@ -32,12 +32,10 @@ class BlogForm(forms.ModelForm):
         if not slug:
             raise ValidationError("Slug cannot be empty. Please provide a title or slug.")
         
-        # Check for duplicate slugs in database
-        qs = Blog.objects.filter(slug=slug)
-        if self.instance.pk:
-            qs = qs.exclude(pk=self.instance.pk)
-        
-        if qs.exists():
+        # Cross-model slug uniqueness check
+        from cms.utils import is_slug_taken
+        exclude_obj = self.instance if self.instance.pk else None
+        if is_slug_taken(slug, exclude_obj=exclude_obj):
             raise ValidationError(
                 f"The slug '{slug}' is already in use. Please choose a different one."
             )

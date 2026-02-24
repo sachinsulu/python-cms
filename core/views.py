@@ -1,11 +1,14 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_POST
 from django.contrib import messages
+from functools import wraps
 from .models import Module
 from .forms import ModuleForm
 
 
 def superuser_required(view_func):
+    @wraps(view_func)
     def wrapper(request, *args, **kwargs):
         if not request.user.is_authenticated:
             return redirect('login')
@@ -43,6 +46,7 @@ def module_edit(request, pk):
 
 
 @superuser_required
+@require_POST
 def module_delete(request, pk):
     module = get_object_or_404(Module, pk=pk)
     if request.method == 'POST':

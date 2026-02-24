@@ -21,11 +21,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-dev-only-key-change-in-production')
-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 'True').lower() == 'true'
+
+# SECURITY WARNING: keep the secret key used in production secret!
+_default_key = 'django-insecure-dev-only-key-change-in-production'
+SECRET_KEY = os.environ.get('SECRET_KEY', _default_key)
+if not DEBUG and SECRET_KEY == _default_key:
+    raise ValueError('You must set a real SECRET_KEY environment variable in production!')
 
 ALLOWED_HOSTS = [
     'localhost',
@@ -75,9 +78,9 @@ MIDDLEWARE = [
 ]
 
 JAZZMIN_SETTINGS = {
-    "site_title":  "Aurea Hotel",
-    "site_header": "Aurea Hotel Admin",
-    "site_brand":  "Aurea Hotel",
+    "site_title":  "PYTHON CMS",
+    "site_header": "PYTHON CMS",
+    "site_brand":  "PYTHON CMS",
     "theme":       "darkly",        # bootstrap themes available
     "dark_mode_theme": "darkly",
 }
@@ -96,6 +99,7 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
+                'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
@@ -195,6 +199,8 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = [
     BASE_DIR / 'static',   
 ]
+
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

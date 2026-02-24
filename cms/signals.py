@@ -1,46 +1,14 @@
-# import os
-# from django.db.models.signals import post_delete, pre_save
-# from django.dispatch import receiver
-# from django.db.models import FileField
 
-# # 1. Cleanup when object is DELETED
-# @receiver(post_delete)
-# def global_delete_files_on_delete(sender, instance, **kwargs):
-#     """Loop through all fields; if it's a file, delete it from disk."""
-#     for field in instance._meta.fields:
-#         if isinstance(field, FileField):
-#             file = getattr(instance, field.name)
-#             if file and os.path.isfile(file.path):
-#                 file.delete(save=False)
-
-# # 2. Cleanup when file is UPDATED
-# @receiver(pre_save)
-# def global_delete_old_files_on_change(sender, instance, **kwargs):
-#     """Delete the old file when a new one is uploaded."""
-#     if not instance.pk:
-#         return False
-
-#     try:
-#         old_instance = sender.objects.get(pk=instance.pk)
-#     except sender.DoesNotExist:
-#         return False
-
-#     for field in instance._meta.fields:
-#         if isinstance(field, FileField):
-#             old_file = getattr(old_instance, field.name)
-#             new_file = getattr(instance, field.name)
-            
-#             # If the file path has changed, delete the old file
-#             if old_file and old_file != new_file:
-#                 if os.path.isfile(old_file.path):
-#                     old_file.delete(save=False)
 import os
 import re
+import logging
 from django.db.models.signals import post_delete, pre_save
 from django.dispatch import receiver
 from django.db.models import FileField, TextField
 from django.conf import settings
 from django.apps import apps
+
+logger = logging.getLogger(__name__)
 
 # ---------------------------------------------------------
 # 1. Cleanup when object is DELETED (With Cross-Model Check)
@@ -58,7 +26,7 @@ def global_delete_files_on_delete(sender, instance, **kwargs):
                 try:
                     os.remove(file.path)
                 except Exception as e:
-                    print(f"Error: {e}")
+                    logger.error("File cleanup error on delete: %s", e)
 
         # B. CKEditor Images with Cross-Model Check
         elif isinstance(field, TextField):
@@ -74,14 +42,14 @@ def global_delete_files_on_delete(sender, instance, **kwargs):
                 img_url_to_check = settings.MEDIA_URL + path
                 
                 if is_image_in_use_anywhere(img_url_to_check):
-                    print(f"CLEANUP: Skipped {path} (Still used in another record)")
+                    logger.debug("CLEANUP: Skipped %s (still used in another record)", path)
                 else:
                     if os.path.exists(full_path):
                         try:
                             os.remove(full_path)
-                            print(f"CLEANUP: Deleted {path} (No usage anywhere)")
+                            logger.info("CLEANUP: Deleted %s (no usage anywhere)", path)
                         except Exception as e:
-                            print(f"ERROR: {e}")
+                            logger.error("CLEANUP error: %s", e)
 
 def is_image_in_use_anywhere(img_url):
     """
@@ -121,4 +89,4 @@ def global_delete_old_files_on_change(sender, instance, **kwargs):
                     try:
                         os.remove(old_file.path)
                     except Exception as e:
-                        print(f"Update Error: {e}")
+                        logger.error("File update cleanup error: %s", e)

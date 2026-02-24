@@ -1,6 +1,6 @@
 from django.db.models import Prefetch
 from rest_framework.decorators import api_view
-from rest_framework.permissions import IsAdminUser
+
 from rest_framework.response import Response
 from rest_framework import status
 
@@ -13,7 +13,7 @@ from .serializers import ArticleSerializer, BlogSerializer, PackageSerializer, S
 @api_view(['GET'])
 def get_article(request, slug):
     try:
-        article = Article.objects.get(slug=slug, is_active=True)
+        article = Article.objects.get(slug=slug, active=True)
     except Article.DoesNotExist:
         return Response(
             {'error': 'Article not found'},
@@ -45,7 +45,7 @@ def get_all_blogs(request):
 
 @api_view(['GET'])
 def get_all_articles(request):
-    articles = Article.objects.filter(is_active=True, show_on_homepage=False)
+    articles = Article.objects.filter(active=True, homepage=False)
     serializer = ArticleSerializer(articles, many=True, context={'request': request})
     return Response(serializer.data)
 

@@ -322,7 +322,7 @@
                 <i class="fa-solid fa-pen-to-square"></i> Edit
               </a>
               <button class="btn-delete"
-                onclick="openDeleteModal('{% url 'delete_object' 'user' u.id %}', 'Are you sure you want to delete &quot;{{ u.username }}&quot;?')">
+                onclick="openDeleteModal('user', '{{ u.username|escapejs }}', '{% url 'delete_object' 'user' u.id %}')">
                 <i class="fa-solid fa-trash"></i> Delete
               </button>
             {% else %}

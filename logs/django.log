@@ -10656,3 +10656,6 @@ INFO 2026-02-25 12:28:54,550 autoreload Watching for file changes with StatReloa
 WARNING 2026-02-25 12:29:30,771 log Forbidden (CSRF token from POST incorrect.): /login/
 WARNING 2026-02-25 12:31:05,267 log Not Found: /favicon.ico
 WARNING 2026-02-25 12:37:17,901 log Not Found: /favicon.ico
+INFO 2026-02-25 15:59:36,682 autoreload Watching for file changes with StatReloader
+WARNING 2026-02-25 16:12:57,166 log Not Found: /dashboard/
+WARNING 2026-02-25 16:12:57,293 log Not Found: /favicon.ico

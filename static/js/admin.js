@@ -540,14 +540,14 @@ function setFormAction(action) {
 
 });
 
-document.querySelectorAll('.submenu-toggle').forEach(function(toggle) {
+document.querySelectorAll('.sidebar-parent').forEach(function(toggle) {
     toggle.addEventListener('click', function(e) {
         e.preventDefault();
-        const submenu = this.parentElement.nextElementSibling;
-        if (submenu.style.display === 'block') {
-            submenu.style.display = 'none';
-        } else {
-            submenu.style.display = 'block';
-        }
+
+        const submenu = this.nextElementSibling;
+        const icon = this.querySelector('.submenu-toggle');
+
+        submenu.classList.toggle('open');
+        icon.classList.toggle('rotate');
     });
 });

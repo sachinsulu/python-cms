@@ -55,6 +55,19 @@ body {
   z-index: 1000;
 }
 
+.sidebar-submenu {
+    display: none;
+}
+
+.sidebar-submenu.open {
+    display: block;
+}
+
+.submenu-toggle.rotate {
+    transform: rotate(180deg);
+    transition: 0.3s;
+}
+
 .topbar-left, .topbar-right {
   display: flex;
   align-items: center;

@@ -33,11 +33,8 @@ if not DEBUG and SECRET_KEY == _default_key:
 ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
-    'python-cms-production.up.railway.app',
 ]
-CSRF_TRUSTED_ORIGINS = [
-    'https://python-cms-production.up.railway.app',
-]
+
 
 # Application definition
 
@@ -175,7 +172,6 @@ LOGGING = {
 # https://docs.djangoproject.com/en/6.0/topics/i18n/
 CORS_ALLOW_ALL_ORIGINS = False
 CORS_ALLOWED_ORIGINS = [
-    'https://python-cms-production.up.railway.app',
     'http://localhost:8000',
     'http://127.0.0.1:8000',
     'http://127.0.0.1:5500',

@@ -77,7 +77,39 @@ def check_user_permission(request, model_class, action="change"):
 # -------------------------
 @login_required
 def dashboard(request):
-    return render(request, 'dashboard.html')
+    user = request.user
+    stats = []
+    
+    # Helper: add a stat card if user has view permission
+    def add_stat(label, count, icon, color, url_name=None, perm=None):
+        if perm and not user.is_superuser and not user.has_perm(perm):
+            return
+        stats.append({
+            'label': label,
+            'count': count,
+            'icon': icon,
+            'color': color,
+            'url_name': url_name,
+        })
+
+    add_stat('Articles', Article.objects.count(), 'fa-solid fa-newspaper', 'blue', 'article_list', 'articles.view_article')
+    add_stat('Blogs', Blog.objects.count(), 'fa-solid fa-blog', 'orange', 'blog_list', 'blog.view_blog')
+    add_stat('Packages', Package.objects.count(), 'fa-solid fa-box', 'green', 'package_list', 'package.view_package')
+    add_stat('Sub-Packages', SubPackage.objects.count(), 'fa-solid fa-boxes-stacked', 'cyan', None, 'package.view_subpackage')
+
+    if user.is_superuser:
+        add_stat('Users', User.objects.count(), 'fa-solid fa-users', 'red', 'user_list')
+        add_stat('Groups', Group.objects.count(), 'fa-solid fa-users-gear', 'lime', 'group_list')
+
+    # Recent activity — last 5 articles and blogs
+    recent_articles = Article.objects.order_by('-updated_at')[:5] if (user.is_superuser or user.has_perm('articles.view_article')) else []
+    recent_blogs = Blog.objects.order_by('-id')[:5] if (user.is_superuser or user.has_perm('blog.view_blog')) else []
+
+    return render(request, 'dashboard.html', {
+        'stats': stats,
+        'recent_articles': recent_articles,
+        'recent_blogs': recent_blogs,
+    })
 
 
 @ratelimit(key='user', rate='30/m', method='POST')

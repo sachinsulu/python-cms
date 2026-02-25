@@ -25,7 +25,7 @@
   <!-- TOP BAR -->
   <header class="topbar">
     <div class="topbar-left">
-      <span class="logo">DYNAMIC</span>
+      <span class="logo">Python Cms</span>
       <i class="fa-solid fa-bars" id="toggleSidebar"></i>
     </div>
 
@@ -48,24 +48,32 @@
     </a>
 
     {% if request.user.is_superuser %}
+      {# Modules - superuser only #}
       {% with url_name=request.resolver_match.url_name %}
-        <a href="{% url 'module_list' %}" class="{% if 'module' in request.resolver_match.url_name %}active{% endif %}">
-        <i class="fa-solid fa-cubes"></i>
-        <span>Modules</span>
+        <a href="{% url 'module_list' %}" class="{% if 'module' in url_name %}active{% endif %}">
+          <i class="fa-solid fa-cubes"></i>
+          <span>Modules</span>
         </a>
-      <a href="#" class="sidebar-parent {% if 'user' in url_name or 'group' in url_name %}active{% endif %}">
-        <i class="fa-solid fa-user"></i>
-        <span>Users</span>
-        <i class="fa-solid fa-chevron-down submenu-toggle"></i>
-      </a>
-      <div class="sidebar-submenu" style="{% if 'user' in url_name or 'group' in url_name %}display:block;{% else %}display:none;{% endif %}">
-        <a href="{% url 'user_list' %}" class="{% if url_name == 'user_list' or url_name == 'user_create' or url_name == 'user_edit' %}active{% endif %}">
-          <i class="fa-solid fa-user"></i> User List
+      {% endwith %}
+    {% endif %}
+
+    {# Users/Groups - superuser OR users with explicit permission #}
+    {% if request.user.is_superuser or perms.auth.view_user %}
+      {% with url_name=request.resolver_match.url_name %}
+        <a href="#" class="sidebar-parent {% if 'user' in url_name or 'group' in url_name %}active{% endif %}">
+          <i class="fa-solid fa-user"></i>
+          <span>Users</span>
+          <i class="fa-solid fa-chevron-down submenu-toggle {% if 'user' in url_name or 'group' in url_name %}rotate{% endif %}"></i>
         </a>
-        <a href="{% url 'group_list' %}" class="{% if url_name == 'group_list' or url_name == 'group_create' or url_name == 'group_edit' %}active{% endif %}">
-          <i class="fa-solid fa-users-gear"></i> Groups
-        </a>
-      </div>
+
+        <div class="sidebar-submenu {% if 'user' in url_name or 'group' in url_name %}open{% endif %}">
+          <a href="{% url 'user_list' %}" class="{% if url_name == 'user_list' or url_name == 'user_create' or url_name == 'user_edit' %}active{% endif %}">
+            <i class="fa-solid fa-user"></i> User List
+          </a>
+          <a href="{% url 'group_list' %}" class="{% if url_name == 'group_list' or url_name == 'group_create' or url_name == 'group_edit' %}active{% endif %}">
+            <i class="fa-solid fa-users-gear"></i> Groups
+          </a>
+        </div>
       {% endwith %}
     {% endif %}
 

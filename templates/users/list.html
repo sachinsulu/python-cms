@@ -317,16 +317,18 @@
         </td>
         <td>
           <div class="actions-cell">
-            {% if not u.is_superuser and u != request.user %}
+            {% if u.is_superuser %}
+              <span class="btn-disabled"><i class="fa-solid fa-lock"></i> Protected</span>
+            {% else %}
               <a href="{% url 'user_edit' u.id %}" class="btn-edit">
                 <i class="fa-solid fa-pen-to-square"></i> Edit
               </a>
-              <button class="btn-delete"
-                onclick="openDeleteModal('user', '{{ u.username|escapejs }}', '{% url 'delete_object' 'user' u.id %}')">
-                <i class="fa-solid fa-trash"></i> Delete
-              </button>
-            {% else %}
-              <span class="btn-disabled"><i class="fa-solid fa-lock"></i> Protected</span>
+              {% if u != request.user %}
+                <button class="btn-delete"
+                  onclick="openDeleteModal('user', '{{ u.username|escapejs }}', '{% url 'delete_object' 'user' u.id %}')">
+                  <i class="fa-solid fa-trash"></i> Delete
+                </button>
+              {% endif %}
             {% endif %}
           </div>
         </td>

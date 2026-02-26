@@ -10659,3 +10659,314 @@ WARNING 2026-02-25 12:37:17,901 log Not Found: /favicon.ico
 INFO 2026-02-25 15:59:36,682 autoreload Watching for file changes with StatReloader
 WARNING 2026-02-25 16:12:57,166 log Not Found: /dashboard/
 WARNING 2026-02-25 16:12:57,293 log Not Found: /favicon.ico
+INFO 2026-02-25 17:14:00,434 autoreload D:\project\cms\views.py changed, reloading.
+INFO 2026-02-25 17:14:01,858 autoreload Watching for file changes with StatReloader
+INFO 2026-02-25 17:14:31,962 autoreload D:\project\cms\views.py changed, reloading.
+INFO 2026-02-25 17:14:32,703 autoreload Watching for file changes with StatReloader
+ERROR 2026-02-25 17:14:33,408 log Internal Server Error: /
+Traceback (most recent call last):
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\project\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\project\cms\views.py", line 121, in dashboard
+    'color':    pick_color(module.color),
+                           ^^^^^^^^^^^^
+AttributeError: 'Module' object has no attribute 'color'
+WARNING 2026-02-25 17:14:33,523 log Not Found: /favicon.ico
+ERROR 2026-02-25 17:14:38,628 log Internal Server Error: /
+Traceback (most recent call last):
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\project\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\project\cms\views.py", line 121, in dashboard
+    'color':    pick_color(module.color),
+                           ^^^^^^^^^^^^
+AttributeError: 'Module' object has no attribute 'color'
+WARNING 2026-02-25 17:14:38,718 log Not Found: /favicon.ico
+INFO 2026-02-25 17:16:53,464 autoreload D:\project\cms\views.py changed, reloading.
+INFO 2026-02-25 17:16:54,424 autoreload Watching for file changes with StatReloader
+WARNING 2026-02-25 17:17:44,170 log Not Found: /favicon.ico
+WARNING 2026-02-25 17:19:38,304 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+INFO 2026-02-25 17:19:57,502 autoreload D:\project\cms\views.py changed, reloading.
+INFO 2026-02-25 17:19:58,879 autoreload Watching for file changes with StatReloader
+INFO 2026-02-25 17:20:01,396 autoreload D:\project\cms\views.py changed, reloading.
+INFO 2026-02-25 17:20:02,445 autoreload Watching for file changes with StatReloader
+WARNING 2026-02-25 17:20:02,996 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-25 17:20:03,285 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+INFO 2026-02-25 17:20:14,024 autoreload D:\project\cms\views.py changed, reloading.
+INFO 2026-02-25 17:20:15,187 autoreload Watching for file changes with StatReloader
+INFO 2026-02-25 17:20:16,736 autoreload D:\project\cms\views.py changed, reloading.
+INFO 2026-02-25 17:20:17,632 autoreload Watching for file changes with StatReloader
+WARNING 2026-02-25 17:20:18,153 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+INFO 2026-02-25 17:20:42,038 autoreload D:\project\cms\views.py changed, reloading.
+INFO 2026-02-25 17:20:42,891 autoreload Watching for file changes with StatReloader
+ERROR 2026-02-25 17:20:43,411 log Internal Server Error: /
+Traceback (most recent call last):
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\project\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\project\cms\views.py", line 121, in dashboard
+    'color':    pick_color(module.color),
+                           ^^^^^^^^^^^^
+AttributeError: 'Module' object has no attribute 'color'
+WARNING 2026-02-25 17:20:43,480 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-25 17:20:43,561 log Not Found: /favicon.ico
+INFO 2026-02-25 17:20:44,749 autoreload D:\project\cms\views.py changed, reloading.
+INFO 2026-02-25 17:20:45,509 autoreload Watching for file changes with StatReloader
+WARNING 2026-02-25 17:20:46,113 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+INFO 2026-02-25 17:20:48,210 autoreload D:\project\cms\views.py changed, reloading.
+INFO 2026-02-25 17:20:49,093 autoreload Watching for file changes with StatReloader
+WARNING 2026-02-25 17:20:49,696 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-25 17:20:51,523 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-25 17:24:14,644 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-25 17:24:15,673 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-25 17:24:18,860 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-25 17:24:19,926 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-25 17:24:31,644 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-25 17:24:32,689 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-25 17:24:35,863 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-25 17:24:38,026 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-25 17:24:39,073 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-25 17:24:41,214 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-25 17:24:43,323 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-25 17:24:44,362 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-25 17:24:48,514 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-25 17:24:49,048 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-25 17:24:49,397 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-25 17:24:49,602 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-25 17:24:49,792 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-25 17:24:49,966 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+INFO 2026-02-26 10:33:13,026 autoreload Watching for file changes with StatReloader
+WARNING 2026-02-26 10:33:47,541 log Not Found: /favicon.ico
+INFO 2026-02-26 10:53:13,683 autoreload D:\project\users\views.py changed, reloading.
+INFO 2026-02-26 10:53:15,830 autoreload Watching for file changes with StatReloader
+WARNING 2026-02-26 10:53:31,016 log Not Found: /favicon.ico
+WARNING 2026-02-26 11:32:01,641 log Forbidden: /toggle-status/article/13/
+WARNING 2026-02-26 11:32:02,852 log Forbidden: /toggle-status/article/13/
+WARNING 2026-02-26 11:32:03,668 log Forbidden: /toggle-status/article/13/
+WARNING 2026-02-26 11:32:04,447 log Forbidden: /toggle-status/article/13/
+WARNING 2026-02-26 11:32:04,626 log Forbidden: /toggle-status/article/13/
+WARNING 2026-02-26 11:32:04,840 log Forbidden: /toggle-status/article/13/
+WARNING 2026-02-26 11:32:07,609 log Forbidden: /toggle-status/article/13/
+ERROR 2026-02-26 11:40:39,663 log Internal Server Error: /module/
+Traceback (most recent call last):
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\project\core\views.py", line 17, in wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\project\core\views.py", line 24, in module_list
+    return render(request, 'core/module_list.html', {'items': items})
+  File "D:\project\venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "D:\project\venv\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\backends\django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\base.py", line 174, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\base.py", line 1091, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\base.py", line 1052, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\loader_tags.py", line 160, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\base.py", line 1091, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\base.py", line 1052, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\defaulttags.py", line 249, in render
+    nodelist.append(node.render_annotated(context))
+                    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\base.py", line 1052, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\defaulttags.py", line 581, in render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\base.py", line 1091, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\base.py", line 1052, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\defaulttags.py", line 511, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "D:\project\venv\Lib\site-packages\django\urls\base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\django\urls\resolvers.py", line 842, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'menu_list' not found. 'menu_list' is not a valid view function or pattern name.
+ERROR 2026-02-26 11:40:57,573 log Internal Server Error: /module/edit/4/
+Traceback (most recent call last):
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\project\core\views.py", line 17, in wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\project\core\views.py", line 45, in module_edit
+    return render(request, 'core/module_form.html', {'form': form})
+  File "D:\project\venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "D:\project\venv\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\backends\django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\base.py", line 174, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\base.py", line 1091, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\base.py", line 1052, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\loader_tags.py", line 160, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\base.py", line 1091, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\base.py", line 1052, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\defaulttags.py", line 249, in render
+    nodelist.append(node.render_annotated(context))
+                    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\base.py", line 1052, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\defaulttags.py", line 581, in render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\base.py", line 1091, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\base.py", line 1052, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\defaulttags.py", line 511, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "D:\project\venv\Lib\site-packages\django\urls\base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\django\urls\resolvers.py", line 842, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'menu_list' not found. 'menu_list' is not a valid view function or pattern name.
+ERROR 2026-02-26 11:41:00,291 log Internal Server Error: /articles/
+Traceback (most recent call last):
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\project\venv\Lib\site-packages\django\utils\decorators.py", line 192, in _view_wrapper
+    result = _process_exception(request, e)
+  File "D:\project\venv\Lib\site-packages\django\utils\decorators.py", line 190, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\project\users\decorators.py", line 28, in wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\project\articles\views.py", line 38, in article_list
+    return render(request, 'articles/list.html', {
+        'list': articles,
+        'current_filter': current_filter
+    })
+  File "D:\project\venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "D:\project\venv\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\backends\django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\base.py", line 174, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\base.py", line 1091, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\base.py", line 1052, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\loader_tags.py", line 160, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\base.py", line 1091, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\base.py", line 1052, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\defaulttags.py", line 249, in render
+    nodelist.append(node.render_annotated(context))
+                    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\base.py", line 1052, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\defaulttags.py", line 581, in render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\base.py", line 1091, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\base.py", line 1052, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\defaulttags.py", line 511, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "D:\project\venv\Lib\site-packages\django\urls\base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\django\urls\resolvers.py", line 842, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'menu_list' not found. 'menu_list' is not a valid view function or pattern name.
+WARNING 2026-02-26 11:56:08,294 log Forbidden: /toggle-status/article/13/
+WARNING 2026-02-26 11:56:22,636 log Forbidden: /toggle-status/article/13/
+WARNING 2026-02-26 11:56:25,876 log Forbidden: /toggle-status/article/13/
+WARNING 2026-02-26 11:56:26,577 log Forbidden: /toggle-status/article/13/
+WARNING 2026-02-26 11:56:28,108 log Forbidden: /toggle-status/article/13/
+WARNING 2026-02-26 11:56:28,589 log Forbidden: /toggle-status/article/13/
+WARNING 2026-02-26 11:56:28,807 log Forbidden: /toggle-status/article/13/
+WARNING 2026-02-26 11:56:31,683 log Forbidden: /toggle-status/article/13/
+WARNING 2026-02-26 11:56:50,464 log Forbidden: /toggle-status/article/13/
+INFO 2026-02-26 12:31:51,820 autoreload Watching for file changes with StatReloader
+INFO 2026-02-26 12:35:36,420 autoreload D:\project\blog\views.py changed, reloading.
+INFO 2026-02-26 12:35:37,107 autoreload Watching for file changes with StatReloader

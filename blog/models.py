@@ -1,23 +1,43 @@
-from django.db import models,transaction
+from django.db import models, transaction
 from django.utils.text import slugify
 from django.db.models import Max
+from ckeditor_uploader.fields import RichTextUploadingField
+
 
 # Create your models here.
 class Blog(models.Model):
     title = models.CharField(max_length=255)
     slug = models.SlugField(unique=True, blank=True)
-    subtitle = models.CharField(max_length=255, blank=True)
-    content = models.TextField(blank=True)
+    author = models.CharField(max_length=255, blank=True)
+    date = models.DateField(null=True, blank=True)
+
+    banner_image = models.ImageField(upload_to='blog/banners/', blank=True, null=True)
+    image = models.ImageField(upload_to='blog/', blank=True, null=True)
+    content = RichTextUploadingField(blank=True)
     active = models.BooleanField(default=True)
-    homepage = models.BooleanField(default=False)
     position = models.PositiveIntegerField(default=0)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    meta_title = models.CharField(
+        max_length=60,
+        blank=True,
+    )
+    meta_description = models.TextField(
+        max_length=160,
+        blank=True,
+    )
+    meta_keywords = models.CharField(
+        max_length=205,
+        blank=True,
+    )
 
     class Meta:
         ordering = ['position']
-    
 
     def save(self, *args, **kwargs):
-    # ✅ FIX: Wrap position logic in atomic transaction
+        # ✅ FIX: Wrap position logic in atomic transaction
         with transaction.atomic():
             if not self.id or self.position == 0:
                 # ✅ FIX: Use select_for_update() to lock and prevent race condition
@@ -25,7 +45,7 @@ class Blog(models.Model):
                     Max('position')
                 )['position__max']
                 self.position = (last_pos or 0) + 1
-            
+
             # Unique Slug Logic
             if not self.slug:
                 from cms.utils import is_slug_taken
@@ -36,9 +56,8 @@ class Blog(models.Model):
                     slug = f"{base_slug}-{counter}"
                     counter += 1
                 self.slug = slug
-            
-            super().save(*args, **kwargs)
 
+            super().save(*args, **kwargs)
 
     def __str__(self):
         return self.title

@@ -29,21 +29,10 @@
 <header style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
     <div style="display:flex; align-items:center; gap:12px;">
         <h2 style="margin:0;">Blog</h2>
-        
-        <form method="get" id="homepage-filter-form" style="margin:0;">
-            <select name="homepage" onchange="this.form.submit()" style="padding:5px 10px;">
-                <option value="1" {% if current_filter == '1' %}selected{% endif %}>
-                    Homepage
-                </option>
-                <option value="0" {% if current_filter == '0' %}selected{% endif %}>
-                    Inner Page
-                </option>
-            </select>
-        </form>
     </div>
 
 <a href="{% url 'create_blog' %}" class="btn">
-    + Add Article
+    + Add Blog
 </a>
 
 </header>
@@ -69,6 +58,8 @@
             <th style="width: 30px;"></th> 
             <th><input type="checkbox" id="select-all"></th>
             <th>Title</th>
+            <th>Author</th>
+            <th>Date</th>
             <th>Status</th>
             <th>Actions</th>
             
@@ -82,6 +73,8 @@
                 </td>
             <td><input type="checkbox" name="selected_ids" value="{{ b.id }}" class="row-checkbox"> </td>
             <td><a href="{% url 'edit_blog' b.slug %}">{{ b.title }}</a><br> <small>{{b.slug}}</small></td>
+            <td>{{ b.author|default:"-" }}</td>
+            <td>{{ b.date|date:"M d, Y"|default:"-" }}</td>
             <td id="status-{{ b.id }}" class="{% if b.active %}status-active{% else %}status-inactive{% endif %}">
                     {{ b.active|yesno:"Active,Inactive" }}
             </td>

@@ -3,49 +3,40 @@ from .models import Blog
 from .forms import BlogForm
 from django.contrib.auth.decorators import login_required
 from users.decorators import requires_perm
+from django.contrib import messages
+from django.urls import reverse
 
 
 @login_required
 @requires_perm('blog.view_blog')
 def blog_list(request):
-    homepage_param = request.GET.get('homepage')
-    
-    if homepage_param is not None:
-        # Save the choice to the session (namespaced for blog)
-        request.session['blog_homepage_filter'] = homepage_param
-        return redirect('blog_list')
-
-    # Get the value from session, default to '0' (Inner Page)
-    current_filter = request.session.get('blog_homepage_filter', '0')
-
-    # Filtering
-    blog = Blog.objects.filter(homepage=current_filter).order_by('position')
+    blog = Blog.objects.all().order_by('position')
 
     return render(request, 'blog/list.html', {
         'list': blog,
-        'current_filter': current_filter
     })
 
 
 @login_required
 @requires_perm('blog.add_blog')
 def create_blog(request):
-    session_filter = request.session.get('blog_homepage_filter', '0')
-    homepage = (session_filter == '1')
-
     if request.method == 'POST':
-        form = BlogForm(request.POST)
+        form = BlogForm(request.POST, request.FILES)
         if form.is_valid():
             blog = form.save(commit=False)
-            blog.homepage = homepage
             blog.save()
-            return redirect('blog_list')
+
+            action = request.POST.get('action', 'save')
+            if action == 'save_and_quit':
+                return redirect('blog_list')
+            else:
+                messages.success(request, "Blog saved!")
+                return redirect(reverse('edit_blog', args=[blog.slug]))
     else:
-        form = BlogForm(initial={'homepage': homepage})
+        form = BlogForm()
 
     return render(request, 'blog/form.html', {
         'form': form,
-        'homepage': homepage
     })
 
 
@@ -53,21 +44,24 @@ def create_blog(request):
 @requires_perm('blog.change_blog')
 def edit_blog(request, slug):
     blog = get_object_or_404(Blog, slug=slug)
-    session_filter = request.session.get('blog_homepage_filter', '0')
-    homepage = (session_filter == '1')
 
     if request.method == 'POST':
-        form = BlogForm(request.POST, instance=blog)
+        form = BlogForm(request.POST, request.FILES, instance=blog)
         if form.is_valid():
             blog = form.save(commit=False)
-            blog.homepage = homepage
             blog.save()
-            return redirect('blog_list')
+
+            action = request.POST.get('action', 'save')
+            if action == 'save_and_quit':
+                return redirect('blog_list')
+            else:
+                messages.success(request, "Blog saved!")
+                return redirect(reverse('edit_blog', args=[blog.slug]))
     else:
         form = BlogForm(instance=blog)
 
     return render(request, 'blog/form.html', {
         'form': form,
-        'homepage': homepage,
-        'is_edit': True
+        'is_edit': True,
+        'blog': blog,
     })

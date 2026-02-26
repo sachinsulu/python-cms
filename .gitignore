@@ -74,3 +74,5 @@ yarn.lock
 *.bak
 *.tmp
 *.orig
+
+theme

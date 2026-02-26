@@ -55,7 +55,7 @@ def user_list(request):
     if not request.user.is_superuser and not request.user.has_perm('auth.view_user'):
         messages.error(request, "You do not have permission to manage users.")
         return redirect('dashboard')
-    users = User.objects.all()
+    users = User.objects.all() if request.user.is_superuser else User.objects.filter(is_superuser=False)
     return render(request, 'users/list.html', {'users': users})
 
 

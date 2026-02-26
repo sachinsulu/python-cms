@@ -1,4 +1,5 @@
 import json
+import random
 import logging
 from urllib.parse import urlparse
 
@@ -14,6 +15,7 @@ from django.core.exceptions import FieldDoesNotExist
 from django.utils.text import slugify
 from django_ratelimit.decorators import ratelimit
 from .utils import is_slug_taken
+from core.models import Module
 
 from articles.models import Article
 from blog.models import Blog
@@ -41,6 +43,20 @@ ACTIVE_FIELD_MAP = {
     "blog": "active",
     "package": "is_active",
     "subpackage": "is_active",
+}
+
+STAT_COLORS = ['blue', 'orange', 'green', 'cyan', 'red', 'lime', 'purple', 'pink', 'yellow', 'teal']
+
+# Maps a module's url_name to its queryset count callable
+_COUNT_MAP = {
+    'article_list': lambda: Article.objects.count(),
+    'blog_list':    lambda: Blog.objects.count(),
+    'package_list': lambda: Package.objects.count(),
+    'user_list':    lambda: User.objects.count(),
+    'group_list':   lambda: Group.objects.count(),
+}
+_LABEL_COUNT_MAP = {
+    'Sub-Packages': lambda: SubPackage.objects.count(),
 }
 
 
@@ -79,31 +95,43 @@ def check_user_permission(request, model_class, action="change"):
 def dashboard(request):
     user = request.user
     stats = []
-    
-    # Helper: add a stat card if user has view permission
-    def add_stat(label, count, icon, color, url_name=None, perm=None):
-        if perm and not user.is_superuser and not user.has_perm(perm):
-            return
+    used_colors = []
+
+    def pick_color(preferred=''):
+        if preferred:
+            return preferred
+        remaining = [c for c in STAT_COLORS if c not in used_colors]
+        chosen = random.choice(remaining if remaining else STAT_COLORS)
+        used_colors.append(chosen)
+        return chosen
+
+    for module in Module.objects.filter(is_active=True):
+        if module.superuser_only and not user.is_superuser:
+            continue
+        if module.permission_app and not user.is_superuser and not user.has_module_perms(module.permission_app):
+            continue
+
+        count_fn = _COUNT_MAP.get(module.url_name) or _LABEL_COUNT_MAP.get(module.label)
+        count = count_fn() if count_fn else 0
+
         stats.append({
-            'label': label,
-            'count': count,
-            'icon': icon,
-            'color': color,
-            'url_name': url_name,
+            'label':    module.label,
+            'count':    count,
+            'icon':     module.icon,
+            'color':    pick_color(),
+            'url_name': module.url_name or None,
         })
 
-    add_stat('Articles', Article.objects.count(), 'fa-solid fa-newspaper', 'blue', 'article_list', 'articles.view_article')
-    add_stat('Blogs', Blog.objects.count(), 'fa-solid fa-blog', 'orange', 'blog_list', 'blog.view_blog')
-    add_stat('Packages', Package.objects.count(), 'fa-solid fa-box', 'green', 'package_list', 'package.view_package')
-    add_stat('Sub-Packages', SubPackage.objects.count(), 'fa-solid fa-boxes-stacked', 'cyan', None, 'package.view_subpackage')
-
-    if user.is_superuser:
-        add_stat('Users', User.objects.count(), 'fa-solid fa-users', 'red', 'user_list')
-        add_stat('Groups', Group.objects.count(), 'fa-solid fa-users-gear', 'lime', 'group_list')
-
-    # Recent activity — last 5 articles and blogs
-    recent_articles = Article.objects.order_by('-updated_at')[:5] if (user.is_superuser or user.has_perm('articles.view_article')) else []
-    recent_blogs = Blog.objects.order_by('-id')[:5] if (user.is_superuser or user.has_perm('blog.view_blog')) else []
+    recent_articles = (
+        Article.objects.order_by('-updated_at')[:5]
+        if user.is_superuser or user.has_perm('articles.view_article')
+        else []
+    )
+    recent_blogs = (
+        Blog.objects.order_by('-id')[:5]
+        if user.is_superuser or user.has_perm('blog.view_blog')
+        else []
+    )
 
     return render(request, 'dashboard.html', {
         'stats': stats,
@@ -128,7 +156,6 @@ def toggle_status(request, model_name, pk):
     if not active_field:
         return JsonResponse({"error": "This model does not support status toggling"}, status=400)
 
-    # Only fetch needed fields
     obj = get_object_or_404(model_class.objects.only('pk', active_field), pk=pk)
 
     current_status = getattr(obj, active_field)
@@ -173,7 +200,6 @@ def bulk_action(request, model_name):
         messages.error(request, "Invalid model type.")
         return redirect_back(request)
 
-    # Standardized ID parsing
     selected_ids = request.POST.getlist("selected_ids")
     if not selected_ids:
         raw_ids = request.POST.get("ids", "")
@@ -188,7 +214,6 @@ def bulk_action(request, model_name):
         messages.error(request, "Invalid action.")
         return redirect_back(request)
 
-    # Check permission based on actual action
     required_permission = "delete" if action == "delete" else "change"
     if not check_user_permission(request, model_class, action=required_permission):
         messages.error(request, "You do not have permission for this action.")
@@ -202,7 +227,6 @@ def bulk_action(request, model_name):
             messages.error(request, "This model does not support status toggling.")
             return redirect_back(request)
 
-        # Capture count before operation
         count = queryset.count()
         queryset.update(**{
             active_field: Case(
@@ -214,7 +238,6 @@ def bulk_action(request, model_name):
         messages.success(request, f"{count} {model_name}(s) status toggled.")
 
     elif action == "delete":
-        # Capture count before delete
         count = queryset.count()
         queryset.delete()
         messages.success(request, f"{count} {model_name}(s) deleted successfully.")
@@ -246,7 +269,6 @@ def update_order(request, model_name):
         except (TypeError, ValueError):
             return JsonResponse({'status': 'error', 'message': 'Invalid ID format'}, status=400)
 
-        # Only fetch needed fields
         objs = model_class.objects.filter(id__in=order).only('pk', 'position')
         obj_map = {obj.id: obj for obj in objs}
 
@@ -277,7 +299,6 @@ def ajax_check_slug(request, model_name):
     if not model_class:
         return JsonResponse({"error": "Invalid model", "slug": "", "exists": False}, status=400)
 
-    # Reliable field existence check
     try:
         model_class._meta.get_field('slug')
     except FieldDoesNotExist:
@@ -297,6 +318,9 @@ def ajax_check_slug(request, model_name):
     if not slug:
         return JsonResponse({"error": "Invalid slug format", "slug": "", "exists": False}, status=400)
 
-    qs_exists = is_slug_taken(slug, exclude_obj=get_object_or_404(model_class, pk=int(object_id)) if object_id and object_id.isdigit() else None)
+    qs_exists = is_slug_taken(
+        slug,
+        exclude_obj=get_object_or_404(model_class, pk=int(object_id)) if object_id and object_id.isdigit() else None
+    )
 
     return JsonResponse({"slug": slug, "exists": qs_exists})

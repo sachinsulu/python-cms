@@ -198,15 +198,98 @@ document.addEventListener('DOMContentLoaded', function() {
 
     /* 4. Image Preview & Validation */
     (function initImagePreview() {
-        const imageInput = document.querySelector('input[type="file"][name="image"]');
-        const imagePreview = document.getElementById('imagePreview');
-        const removeInput = document.getElementById('remove_image');
+        const imageFields = ['image', 'banner_image'];
         
-        if (!imageInput || !imagePreview) return;
+        imageFields.forEach(fieldName => {
+            const imageInput = document.querySelector(`input[type="file"][name="${fieldName}"]`);
+            let previewId = fieldName === 'image' ? 'imagePreview' : 'bannerImagePreview';
+            const imagePreview = document.getElementById(previewId);
+            const removeInput = document.getElementById(`remove_${fieldName}`);
+            
+            if (!imageInput || !imagePreview) return;
+
+            const imageLabel = imageInput.previousElementSibling;
+            const existingImageUrl = imageInput.dataset.existingImage;
+
+            function toggleInputVisibility(show) {
+                if (show) {
+                    imageInput.style.opacity = '1';
+                    imageInput.style.height = 'auto';
+                    imageInput.style.position = 'static';
+                    if (imageLabel) imageLabel.style.display = 'block';
+                } else {
+                    imageInput.style.opacity = '0';
+                    imageInput.style.height = '0';
+                    imageInput.style.position = 'absolute';
+                    if (imageLabel) imageLabel.style.display = 'none';
+                }
+            }
+
+            function renderPreview(src, isExisting = false) {
+                const labelName = fieldName === 'banner_image' ? 'banner image' : 'image';
+                const label = isExisting ? `Current ${labelName}` : `New ${labelName} selected`;
+                imagePreview.innerHTML = `
+                    <div class="preview-wrapper" style="position:relative; display:inline-block; margin-top: 10px;">
+                        <img src="${src}" style="max-width:300px; max-height:200px; border:1px solid #e5e7eb; border-radius:4px; display: block;">
+                        <span class="remove-image" style="position:absolute; top:-8px; right:-8px; background:#ef4444; color:white; border-radius:50%; width:24px; height:24px; text-align:center; line-height:24px; cursor:pointer; font-weight:bold; font-size: 16px;">×</span>
+                        <p style="margin-top: 5px; font-size: 12px; color: #666;">${label}</p>
+                    </div>`;
+                toggleInputVisibility(false);
+            }
+
+            // Event: Remove Image
+            imagePreview.addEventListener('click', function(e) {
+                if (e.target.closest('.remove-image')) {
+                    const labelName = fieldName === 'banner_image' ? 'banner image' : 'image';
+                    e.preventDefault();
+                    if (removeInput) removeInput.value = '1';
+                    imagePreview.innerHTML = `<p class="no-image text-muted">No ${labelName} selected</p>`;
+                    imageInput.value = '';
+                    imageInput.removeAttribute('data-existing-image');
+                    toggleInputVisibility(true);
+                }
+            });
+
+            // Event: Upload New Image
+            imageInput.addEventListener('change', function() {
+                const file = this.files[0];
+                if (!file) return;
+
+                if (file.size > CONFIG.images.maxSize) {
+                    alert(`File too large! Max size: 2MB. Your file is ${(file.size / (1024 * 1024)).toFixed(1)}MB`);
+                    this.value = '';
+                    return;
+                }
+                if (!CONFIG.images.allowedTypes.includes(file.type)) {
+                    alert('Invalid file type! Allowed: JPG, PNG, GIF, WebP, HEIC');
+                    this.value = '';
+                    return;
+                }
+
+                if (removeInput) removeInput.value = '0';
+                const reader = new FileReader();
+                reader.onload = (e) => renderPreview(e.target.result, false);
+                reader.readAsDataURL(file);
+            });
+
+            if (existingImageUrl) {
+                renderPreview(existingImageUrl, true);
+            } else if (imagePreview.querySelector('img')) {
+                toggleInputVisibility(false);
+            }
+        });
+    })();
+
+
+    /* 4c. Banner Image Preview & Validation */
+    (function initBannerImagePreview() {
+        const imageInput = document.querySelector('input[type="file"][name="banner_image"]');
+        const imagePreview = document.getElementById('bannerImagePreview');
+        const removeInput = document.getElementById('remove_banner_image');
+
+        if (!imageInput || !imagePreview || !removeInput) return;
 
         const imageLabel = imageInput.previousElementSibling;
-        
-        // Check if there's an existing image URL in the data attribute
         const existingImageUrl = imageInput.dataset.existingImage;
 
         function toggleInputVisibility(show) {
@@ -224,7 +307,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         function renderPreview(src, isExisting = false) {
-            const label = isExisting ? 'Current image' : 'New image selected';
+            const label = isExisting ? 'Current banner image' : 'New banner image selected';
             imagePreview.innerHTML = `
                 <div class="preview-wrapper" style="position:relative; display:inline-block; margin-top: 10px;">
                     <img src="${src}" style="max-width:300px; max-height:200px; border:1px solid #e5e7eb; border-radius:4px; display: block;">
@@ -234,25 +317,21 @@ document.addEventListener('DOMContentLoaded', function() {
             toggleInputVisibility(false);
         }
 
-        // Event: Remove Image
         imagePreview.addEventListener('click', function(e) {
             if (e.target.closest('.remove-image')) {
                 e.preventDefault();
                 removeInput.value = '1';
-                imagePreview.innerHTML = '<p class="no-image text-muted">No image selected</p>';
+                imagePreview.innerHTML = '<p class="no-image text-muted">No banner image selected</p>';
                 imageInput.value = '';
-                // Remove the data attribute so it doesn't show again
                 imageInput.removeAttribute('data-existing-image');
                 toggleInputVisibility(true);
             }
         });
 
-        // Event: Upload New Image
         imageInput.addEventListener('change', function() {
             const file = this.files[0];
             if (!file) return;
 
-            // Validations
             if (file.size > CONFIG.images.maxSize) {
                 alert(`File too large! Max size: 2MB. Your file is ${(file.size / (1024 * 1024)).toFixed(1)}MB`);
                 this.value = '';
@@ -264,19 +343,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
 
-            // Success -> Show Preview
             removeInput.value = '0';
             const reader = new FileReader();
             reader.onload = (e) => renderPreview(e.target.result, false);
             reader.readAsDataURL(file);
         });
 
-        // Initial State: Show existing image if present
         if (existingImageUrl) {
             renderPreview(existingImageUrl, true);
-        } else if (imagePreview.querySelector('img')) {
-            // If there's already an img tag in the preview (server-rendered)
-            toggleInputVisibility(false);
         }
     })();
 
@@ -427,7 +501,7 @@ function setFormAction(action) {
         if (!toggleBtn || !metaContent) return;
 
         const metaInputs = metaContent.querySelectorAll('input, textarea');
-        const form = document.querySelector('form[data-model="article"]');
+        const form = document.querySelector('form[data-model]');
 
         toggleBtn.addEventListener('click', function () {
             const isHidden = metaContent.style.display === "none";
@@ -551,3 +625,16 @@ document.querySelectorAll('.sidebar-parent').forEach(function(toggle) {
         icon.classList.toggle('rotate');
     });
 });
+
+(function initActiveToggle() {
+    const cb = document.getElementById('id_active');
+    if (!cb) return;
+    const toggleSwitch = cb.closest('.toggle-switch');
+    if (!toggleSwitch) return;
+    const txt = toggleSwitch.querySelector('.toggle-status-text');
+    if (!txt) return;
+    function update() { txt.textContent = cb.checked ? 'Active' : 'Inactive'; }
+    cb.addEventListener('change', update);
+    update();
+})();
+

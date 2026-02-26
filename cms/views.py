@@ -20,6 +20,7 @@ from core.models import Module
 from articles.models import Article
 from blog.models import Blog
 from package.models import Package, SubPackage
+from testimonials.models import Testimonial
 from django.contrib.auth.models import Group
 
 User = get_user_model()
@@ -36,6 +37,7 @@ MODEL_MAP = {
     "blog": Blog,
     "package": Package,
     "subpackage": SubPackage,
+    "testimonial": Testimonial,
 }
 
 ACTIVE_FIELD_MAP = {
@@ -43,6 +45,7 @@ ACTIVE_FIELD_MAP = {
     "blog": "active",
     "package": "is_active",
     "subpackage": "is_active",
+    "testimonial": "active",
 }
 
 STAT_COLORS = ['blue', 'orange', 'green', 'cyan', 'red', 'lime', 'purple', 'pink', 'yellow', 'teal']
@@ -54,6 +57,7 @@ _COUNT_MAP = {
     'package_list': lambda: Package.objects.count(),
     'user_list':    lambda: User.objects.count(),
     'group_list':   lambda: Group.objects.count(),
+    'testimonial_list': lambda: Testimonial.objects.count(),
 }
 _LABEL_COUNT_MAP = {
     'Sub-Packages': lambda: SubPackage.objects.count(),

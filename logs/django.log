@@ -10970,3 +10970,65 @@ WARNING 2026-02-26 11:56:50,464 log Forbidden: /toggle-status/article/13/
 INFO 2026-02-26 12:31:51,820 autoreload Watching for file changes with StatReloader
 INFO 2026-02-26 12:35:36,420 autoreload D:\project\blog\views.py changed, reloading.
 INFO 2026-02-26 12:35:37,107 autoreload Watching for file changes with StatReloader
+INFO 2026-02-26 13:23:32,649 autoreload D:\project\cms\settings.py changed, reloading.
+INFO 2026-02-26 13:23:33,526 autoreload Watching for file changes with StatReloader
+INFO 2026-02-26 13:23:35,407 autoreload D:\project\cms\settings.py changed, reloading.
+INFO 2026-02-26 13:23:36,438 autoreload Watching for file changes with StatReloader
+INFO 2026-02-26 13:24:01,663 autoreload D:\project\cms\urls.py changed, reloading.
+INFO 2026-02-26 13:24:02,613 autoreload Watching for file changes with StatReloader
+INFO 2026-02-26 13:24:46,951 autoreload D:\project\cms\views.py changed, reloading.
+INFO 2026-02-26 13:24:47,813 autoreload Watching for file changes with StatReloader
+INFO 2026-02-26 13:24:49,367 autoreload D:\project\cms\views.py changed, reloading.
+INFO 2026-02-26 13:24:50,500 autoreload Watching for file changes with StatReloader
+INFO 2026-02-26 13:24:51,916 autoreload D:\project\cms\views.py changed, reloading.
+INFO 2026-02-26 13:24:52,929 autoreload Watching for file changes with StatReloader
+INFO 2026-02-26 13:24:57,535 autoreload D:\project\cms\views.py changed, reloading.
+INFO 2026-02-26 13:24:58,445 autoreload Watching for file changes with StatReloader
+INFO 2026-02-26 13:25:27,508 autoreload D:\project\cms\views.py changed, reloading.
+INFO 2026-02-26 13:25:28,418 autoreload Watching for file changes with StatReloader
+INFO 2026-02-26 13:25:30,944 autoreload D:\project\cms\views.py changed, reloading.
+INFO 2026-02-26 13:25:31,773 autoreload Watching for file changes with StatReloader
+INFO 2026-02-26 13:26:50,042 autoreload D:\project\testimonials\models.py changed, reloading.
+INFO 2026-02-26 13:26:50,957 autoreload Watching for file changes with StatReloader
+INFO 2026-02-26 13:26:54,702 autoreload D:\project\testimonials\models.py changed, reloading.
+INFO 2026-02-26 13:26:55,781 autoreload Watching for file changes with StatReloader
+INFO 2026-02-26 13:27:23,214 autoreload D:\project\testimonials\models.py changed, reloading.
+INFO 2026-02-26 13:27:23,974 autoreload Watching for file changes with StatReloader
+INFO 2026-02-26 13:27:25,168 autoreload D:\project\testimonials\models.py changed, reloading.
+INFO 2026-02-26 13:27:26,208 autoreload Watching for file changes with StatReloader
+INFO 2026-02-26 13:30:18,561 autoreload D:\project\testimonials\admin.py changed, reloading.
+INFO 2026-02-26 13:30:19,611 autoreload Watching for file changes with StatReloader
+INFO 2026-02-26 13:30:31,007 autoreload D:\project\testimonials\apps.py changed, reloading.
+INFO 2026-02-26 13:30:32,008 autoreload Watching for file changes with StatReloader
+INFO 2026-02-26 13:32:34,779 autoreload Watching for file changes with StatReloader
+INFO 2026-02-26 13:55:42,419 autoreload D:\project\testimonials\forms.py changed, reloading.
+INFO 2026-02-26 13:55:44,738 autoreload Watching for file changes with StatReloader
+INFO 2026-02-26 13:55:46,974 autoreload D:\project\testimonials\forms.py changed, reloading.
+INFO 2026-02-26 13:55:47,809 autoreload Watching for file changes with StatReloader
+INFO 2026-02-26 13:56:00,409 autoreload D:\project\testimonials\forms.py changed, reloading.
+INFO 2026-02-26 13:56:01,399 autoreload Watching for file changes with StatReloader
+WARNING 2026-02-26 13:56:50,438 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-26 13:57:51,427 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-26 13:57:55,758 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-26 13:58:02,138 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-26 13:58:26,227 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-26 13:58:34,267 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-26 13:58:53,714 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-26 13:58:58,285 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-26 14:51:51,483 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-26 14:52:02,486 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-26 14:52:03,557 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-26 14:52:06,588 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-26 14:53:32,292 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-26 14:53:46,112 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-26 14:55:17,525 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-26 14:55:27,490 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-26 14:55:32,150 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-26 14:55:33,372 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-26 14:55:42,124 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-26 14:55:56,713 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-26 14:55:57,960 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-26 14:56:02,204 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-26 14:56:03,371 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-26 14:56:04,891 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-26 14:56:06,112 log Not Found: /.well-known/appspecific/com.chrome.devtools.json

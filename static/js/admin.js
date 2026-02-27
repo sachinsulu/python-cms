@@ -4,8 +4,8 @@
 const CONFIG = {
     images: {
         maxSize: 2 * 1024 * 1024, // 2MB
-        allowedTypes: ['image/jpeg', 'image/png', 'image/gif', 'image/webp','image/heic'],
-        allowedExtensions: ['jpg', 'jpeg', 'png', 'gif', 'webp','heic']
+        allowedTypes: ['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'image/heic'],
+        allowedExtensions: ['jpg', 'jpeg', 'png', 'gif', 'webp', 'heic']
     },
     limits: {
         'id_title': 100,
@@ -26,7 +26,7 @@ const CONFIG = {
 function getCSRFToken() {
     let cookieValue = null;
     const name = 'csrftoken';
-    
+
     if (document.cookie && document.cookie !== '') {
         const cookies = document.cookie.split(';');
         for (let i = 0; i < cookies.length; i++) {
@@ -37,7 +37,7 @@ function getCSRFToken() {
             }
         }
     }
-    
+
     // Fallback for some setups
     if (!cookieValue && document.body && document.body.dataset.csrfToken) {
         cookieValue = document.body.dataset.csrfToken;
@@ -82,32 +82,42 @@ function toggleStatus(el) {
         method: "POST",
         headers: { "X-CSRFToken": getCSRFToken() }
     })
-    .then(res => res.json())
-    .then(data => {
-        const icon = el.querySelector("i");
-        if (data.status) {
-            icon.classList.replace("fa-toggle-off", "fa-toggle-on");
-            icon.style.color = "#22c55e";
-        } else {
-            icon.classList.replace("fa-toggle-on", "fa-toggle-off");
-            icon.style.color = "#9ca3af";
-        }
-
-        // Update Status Text Cell if it exists
-        if (targetId) {
-            const statusCell = document.getElementById(targetId);
-            if (statusCell) {
-                statusCell.innerText = data.status ? "Active" : "Inactive";
-                statusCell.className = data.status ? "status-active" : "status-inactive";
+        .then(async res => {
+            const data = await res.json();
+            // Check for HTTP errors or explicit error field from backend
+            if (!res.ok || data.error) {
+                throw new Error(data.error || "You don't have permission to do that");
             }
-        }
-        
-        // Show feedback
-        if (data.message) {
-            showFlashMessage(data.message, data.status ? 'success' : 'info');
-        }
-    })
-    .catch(err => console.error("Toggle failed:", err));
+            return data; // pass the successful data down the chain
+        })
+        .then(data => {
+            const icon = el.querySelector("i");
+            if (data.status) {
+                icon.classList.replace("fa-toggle-off", "fa-toggle-on");
+                icon.style.color = "#22c55e";
+            } else {
+                icon.classList.replace("fa-toggle-on", "fa-toggle-off");
+                icon.style.color = "#9ca3af";
+            }
+
+            // Update Status Text Cell if it exists
+            if (targetId) {
+                const statusCell = document.getElementById(targetId);
+                if (statusCell) {
+                    statusCell.innerText = data.status ? "Active" : "Inactive";
+                    statusCell.className = data.status ? "status-active" : "status-inactive";
+                }
+            }
+
+            // Show feedback
+            if (data.message) {
+                showFlashMessage(data.message, data.status ? 'success' : 'info');
+            }
+        })
+        .catch(err => {
+            console.error("Toggle failed:", err);
+            showFlashMessage(err.message || "Failed to toggle status.", "error");
+        });
 }
 
 /**
@@ -123,7 +133,7 @@ function openDeleteModal(modelName, itemNameOrCount, url, isBulk = false) {
 
     if (isBulk) {
         const selected = Array.from(document.querySelectorAll('.row-checkbox:checked'))
-                              .map(cb => cb.value);
+            .map(cb => cb.value);
         if (!selected.length) {
             showFlashMessage("Please select at least one item to delete.", "warning");
             return;
@@ -156,7 +166,7 @@ function closeDeleteModal() {
    MAIN INITIALIZATION (DOMContentLoaded)
    ========================================================================== */
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     console.log("App Loaded");
 
     /* 1. Sidebar Toggler */
@@ -170,17 +180,17 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     const homepageForm = document.getElementById('homepage-filter-form');
-        if (homepageForm) {
-            const homepageSelect = homepageForm.querySelector('select[name="homepage"]');
-            if (homepageSelect) {
-                homepageSelect.addEventListener('change', function() {
-                    homepageForm.submit();
-                });
-            }
+    if (homepageForm) {
+        const homepageSelect = homepageForm.querySelector('select[name="homepage"]');
+        if (homepageSelect) {
+            homepageSelect.addEventListener('change', function () {
+                homepageForm.submit();
+            });
         }
+    }
 
     /* 2. Modal Outside Click Closer */
-    window.onclick = function(event) {
+    window.onclick = function (event) {
         const modal = document.getElementById('deleteModal');
         if (event.target === modal) closeDeleteModal();
     };
@@ -199,13 +209,13 @@ document.addEventListener('DOMContentLoaded', function() {
     /* 4. Image Preview & Validation */
     (function initImagePreview() {
         const imageFields = ['image', 'banner_image'];
-        
+
         imageFields.forEach(fieldName => {
             const imageInput = document.querySelector(`input[type="file"][name="${fieldName}"]`);
             let previewId = fieldName === 'image' ? 'imagePreview' : 'bannerImagePreview';
             const imagePreview = document.getElementById(previewId);
             const removeInput = document.getElementById(`remove_${fieldName}`);
-            
+
             if (!imageInput || !imagePreview) return;
 
             const imageLabel = imageInput.previousElementSibling;
@@ -238,7 +248,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
 
             // Event: Remove Image
-            imagePreview.addEventListener('click', function(e) {
+            imagePreview.addEventListener('click', function (e) {
                 if (e.target.closest('.remove-image')) {
                     const labelName = fieldName === 'banner_image' ? 'banner image' : 'image';
                     e.preventDefault();
@@ -251,7 +261,7 @@ document.addEventListener('DOMContentLoaded', function() {
             });
 
             // Event: Upload New Image
-            imageInput.addEventListener('change', function() {
+            imageInput.addEventListener('change', function () {
                 const file = this.files[0];
                 if (!file) return;
 
@@ -317,7 +327,7 @@ document.addEventListener('DOMContentLoaded', function() {
             toggleInputVisibility(false);
         }
 
-        imagePreview.addEventListener('click', function(e) {
+        imagePreview.addEventListener('click', function (e) {
             if (e.target.closest('.remove-image')) {
                 e.preventDefault();
                 removeInput.value = '1';
@@ -328,7 +338,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
 
-        imageInput.addEventListener('change', function() {
+        imageInput.addEventListener('change', function () {
             const file = this.files[0];
             if (!file) return;
 
@@ -355,120 +365,120 @@ document.addEventListener('DOMContentLoaded', function() {
     })();
 
     /* 5. Slug Generation */
-function setFormAction(action) {
-    document.getElementById('form-action').value = action;
-}
-
-(function initSlugGenerator() {
-    const titleInput = document.getElementById("id_title");
-    const slugInput = document.getElementById("id_slug");
-    const slugMessage = document.getElementById("slug-message");
-    const articleIdInput = document.getElementById("article-id"); // Ensure these exist in your HTML or handle nulls
-    const modelNameInput = document.getElementById("model-name");
-
-    if (!titleInput || !slugInput) return;
-
-    const objectId = articleIdInput ? articleIdInput.value : "";
-    const modelName = modelNameInput ? modelNameInput.value : "article";
-    
-    let debounceTimer;
-    let slugManuallyEdited = false;
-
-    // Helper function to create slug (if you don't have one globally)
-    function slugify(text) {
-        return text.toString().toLowerCase()
-            .trim()
-            .replace(/\s+/g, '-')           // Replace spaces with -
-            .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
-            .replace(/\-\-+/g, '-')         // Replace multiple - with single -
-            .replace(/^-+/, '')             // Trim - from start of text
-            .replace(/-+$/, '');            // Trim - from end of text
+    function setFormAction(action) {
+        document.getElementById('form-action').value = action;
     }
 
-    // Function to check slug availability via AJAX
-    function checkSlugAvailability(slug) {
-        if (!slug) {
-            if (slugMessage) slugMessage.textContent = "";
-            return;
+    (function initSlugGenerator() {
+        const titleInput = document.getElementById("id_title");
+        const slugInput = document.getElementById("id_slug");
+        const slugMessage = document.getElementById("slug-message");
+        const articleIdInput = document.getElementById("article-id"); // Ensure these exist in your HTML or handle nulls
+        const modelNameInput = document.getElementById("model-name");
+
+        if (!titleInput || !slugInput) return;
+
+        const objectId = articleIdInput ? articleIdInput.value : "";
+        const modelName = modelNameInput ? modelNameInput.value : "article";
+
+        let debounceTimer;
+        let slugManuallyEdited = false;
+
+        // Helper function to create slug (if you don't have one globally)
+        function slugify(text) {
+            return text.toString().toLowerCase()
+                .trim()
+                .replace(/\s+/g, '-')           // Replace spaces with -
+                .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
+                .replace(/\-\-+/g, '-')         // Replace multiple - with single -
+                .replace(/^-+/, '')             // Trim - from start of text
+                .replace(/-+$/, '');            // Trim - from end of text
         }
 
-        fetch(`/ajax/check-slug/${modelName}/?slug=${encodeURIComponent(slug)}&object_id=${objectId}`)
-            .then(res => res.json())
-            .then(data => {
-                if (data.error) {
-                    if (slugMessage) {
-                        slugMessage.textContent = `⚠️ ${data.error}`;
-                        slugMessage.style.color = "#f59e0b";
-                    }
-                    return;
-                }
-                
-                if (slugMessage) {
-                    if (data.exists) {
-                        slugMessage.textContent = `❌ Slug already in use`;
-                        slugMessage.style.color = "#dc2626";
-                    } else {
-                        slugMessage.textContent = `✅ Slug available`;
-                        slugMessage.style.color = "#16a34a";
-                    }
-                }
-            })
-            .catch(err => console.error("Slug check failed:", err));
-    }
-
-    // When slug field is manually edited
-    slugInput.addEventListener("input", function () {
-        const slug = slugInput.value.trim();
-
-        // FIX: If the user clears the slug, reset the flag so Title can generate it again
-        if (slug === "") {
-            slugManuallyEdited = false;
-            if (slugMessage) slugMessage.textContent = ""; // Clear message
-        } else {
-            slugManuallyEdited = true;
-        }
-        
-        clearTimeout(debounceTimer);
-
-        debounceTimer = setTimeout(() => {
-            if (!slug) return;
-            checkSlugAvailability(slug);
-        }, 400);
-    });
-
-    // When title changes - auto-generate slug and check availability
-    titleInput.addEventListener("input", function () {
-        clearTimeout(debounceTimer);
-        
-        // Auto-fill slug from title if not manually edited
-        if (!slugManuallyEdited) {
-            slugInput.value = slugify(titleInput.value);
-        }
-
-        debounceTimer = setTimeout(() => {
-            const slug = slugInput.value.trim();
-            
+        // Function to check slug availability via AJAX
+        function checkSlugAvailability(slug) {
             if (!slug) {
                 if (slugMessage) slugMessage.textContent = "";
                 return;
             }
 
-            // Check availability of the current slug
-            checkSlugAvailability(slug);
-        }, 400);
-    });
+            fetch(`/ajax/check-slug/${modelName}/?slug=${encodeURIComponent(slug)}&object_id=${objectId}`)
+                .then(res => res.json())
+                .then(data => {
+                    if (data.error) {
+                        if (slugMessage) {
+                            slugMessage.textContent = `⚠️ ${data.error}`;
+                            slugMessage.style.color = "#f59e0b";
+                        }
+                        return;
+                    }
 
-    // Validate on blur
-    slugInput.addEventListener("blur", function () {
-        const slug = slugInput.value.trim();
-        if (slug) {
-            checkSlugAvailability(slug);
+                    if (slugMessage) {
+                        if (data.exists) {
+                            slugMessage.textContent = `❌ Slug already in use`;
+                            slugMessage.style.color = "#dc2626";
+                        } else {
+                            slugMessage.textContent = `✅ Slug available`;
+                            slugMessage.style.color = "#16a34a";
+                        }
+                    }
+                })
+                .catch(err => console.error("Slug check failed:", err));
         }
-    });
-})();
+
+        // When slug field is manually edited
+        slugInput.addEventListener("input", function () {
+            const slug = slugInput.value.trim();
+
+            // FIX: If the user clears the slug, reset the flag so Title can generate it again
+            if (slug === "") {
+                slugManuallyEdited = false;
+                if (slugMessage) slugMessage.textContent = ""; // Clear message
+            } else {
+                slugManuallyEdited = true;
+            }
+
+            clearTimeout(debounceTimer);
+
+            debounceTimer = setTimeout(() => {
+                if (!slug) return;
+                checkSlugAvailability(slug);
+            }, 400);
+        });
+
+        // When title changes - auto-generate slug and check availability
+        titleInput.addEventListener("input", function () {
+            clearTimeout(debounceTimer);
+
+            // Auto-fill slug from title if not manually edited
+            if (!slugManuallyEdited) {
+                slugInput.value = slugify(titleInput.value);
+            }
+
+            debounceTimer = setTimeout(() => {
+                const slug = slugInput.value.trim();
+
+                if (!slug) {
+                    if (slugMessage) slugMessage.textContent = "";
+                    return;
+                }
+
+                // Check availability of the current slug
+                checkSlugAvailability(slug);
+            }, 400);
+        });
+
+        // Validate on blur
+        slugInput.addEventListener("blur", function () {
+            const slug = slugInput.value.trim();
+            if (slug) {
+                checkSlugAvailability(slug);
+            }
+        });
+    })();
 
 
-    
+
 
 
 
@@ -480,12 +490,12 @@ function setFormAction(action) {
             if (typeof CKEDITOR !== 'undefined' && CKEDITOR.instances['id_content']) {
                 const editor = CKEDITOR.instances['id_content'];
                 const content = editor.getData();
-                
+
                 if (content.includes('read-more-separator')) {
                     showFlashMessage('Read More separator already exists.', 'info');
                     return;
                 }
-                
+
                 editor.insertHtml('<hr class="read-more-separator" style="border: 1px dashed #f60;" />');
                 editor.focus();
             }
@@ -497,7 +507,7 @@ function setFormAction(action) {
         const toggleBtn = document.getElementById('toggleMeta');
         const metaContent = document.getElementById('metaContent');
         const statusIcon = document.getElementById('metaStatusIcon');
-        
+
         if (!toggleBtn || !metaContent) return;
 
         const metaInputs = metaContent.querySelectorAll('input, textarea');
@@ -541,7 +551,7 @@ function setFormAction(action) {
     })();
 
 
-/* 11. Character Counters */
+    /* 11. Character Counters */
 
     Object.keys(CONFIG.limits).forEach(fieldId => {
         const inputField = document.getElementById(fieldId);
@@ -614,8 +624,8 @@ function setFormAction(action) {
 
 });
 
-document.querySelectorAll('.sidebar-parent').forEach(function(toggle) {
-    toggle.addEventListener('click', function(e) {
+document.querySelectorAll('.sidebar-parent').forEach(function (toggle) {
+    toggle.addEventListener('click', function (e) {
         e.preventDefault();
 
         const submenu = this.nextElementSibling;

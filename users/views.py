@@ -35,8 +35,26 @@ class UserCreateForm(forms.ModelForm):
 # ------------------------------
 class GroupForm(forms.ModelForm):
     permissions = forms.ModelMultipleChoiceField(
-        queryset=Permission.objects.filter(
-            content_type__app_label__in=['articles', 'auth', 'package', 'blog']
+        queryset=Permission.objects.exclude(
+            content_type__app_label__in=[
+                # Django internals
+                'admin',
+                'contenttypes',
+                'sessions',
+                'messages',
+                # Third-party packages
+                'ckeditor',
+                'ckeditor_uploader',
+                'rest_framework',
+                'corsheaders',
+                'widget_tweaks',
+                'django_browser_reload',
+                'jazzmin',
+                # CMS infra apps (not content apps)
+                'cms',
+                'accounts',
+                'core',  # keep this out — raw auth perms (add_user etc) handled separately
+            ]
         ).select_related('content_type'),
         widget=forms.CheckboxSelectMultiple,
         required=False

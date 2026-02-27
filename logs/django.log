@@ -11032,3 +11032,187 @@ WARNING 2026-02-26 14:56:02,204 log Not Found: /.well-known/appspecific/com.chro
 WARNING 2026-02-26 14:56:03,371 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
 WARNING 2026-02-26 14:56:04,891 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
 WARNING 2026-02-26 14:56:06,112 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-26 15:00:16,536 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-26 15:00:27,906 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-26 15:00:34,205 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-26 15:01:00,785 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-26 15:01:02,922 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-26 15:01:04,003 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-26 15:01:05,213 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-26 15:01:06,707 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-26 15:01:09,556 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-26 15:01:13,677 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-26 15:03:08,455 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-26 15:03:09,523 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+INFO 2026-02-26 15:35:41,312 autoreload Watching for file changes with StatReloader
+WARNING 2026-02-26 15:35:45,378 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-26 15:35:48,710 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-26 15:35:51,061 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-26 15:36:45,627 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-26 15:36:47,868 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-26 15:36:51,887 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-26 15:36:54,505 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-26 15:36:58,716 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-26 15:37:03,120 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-26 15:37:07,324 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+INFO 2026-02-26 15:42:19,861 autoreload D:\project\users\views.py changed, reloading.
+INFO 2026-02-26 15:42:20,824 autoreload Watching for file changes with StatReloader
+WARNING 2026-02-26 15:42:21,554 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+INFO 2026-02-26 15:42:23,890 autoreload D:\project\users\views.py changed, reloading.
+INFO 2026-02-26 15:42:24,566 autoreload Watching for file changes with StatReloader
+WARNING 2026-02-26 15:42:25,018 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+INFO 2026-02-26 15:42:26,312 autoreload D:\project\users\views.py changed, reloading.
+INFO 2026-02-26 15:42:27,134 autoreload Watching for file changes with StatReloader
+WARNING 2026-02-26 15:42:27,819 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+INFO 2026-02-26 15:43:57,082 autoreload D:\project\users\views.py changed, reloading.
+INFO 2026-02-26 15:43:58,029 autoreload Watching for file changes with StatReloader
+WARNING 2026-02-26 15:43:58,778 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+INFO 2026-02-26 15:43:59,698 autoreload D:\project\users\views.py changed, reloading.
+INFO 2026-02-26 15:44:00,627 autoreload Watching for file changes with StatReloader
+WARNING 2026-02-26 15:44:01,336 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-26 15:44:05,046 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-26 15:44:07,065 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-26 15:44:19,795 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+INFO 2026-02-26 15:45:03,523 autoreload D:\project\users\views.py changed, reloading.
+INFO 2026-02-26 15:45:04,490 autoreload Watching for file changes with StatReloader
+WARNING 2026-02-26 15:45:05,170 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-26 15:45:08,754 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-26 15:45:11,144 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-26 15:45:20,194 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+INFO 2026-02-26 15:45:32,235 autoreload D:\project\users\views.py changed, reloading.
+INFO 2026-02-26 15:45:33,130 autoreload Watching for file changes with StatReloader
+WARNING 2026-02-26 15:45:33,909 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+INFO 2026-02-26 15:45:35,088 autoreload D:\project\users\views.py changed, reloading.
+INFO 2026-02-26 15:45:36,046 autoreload Watching for file changes with StatReloader
+WARNING 2026-02-26 15:45:36,759 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-26 15:45:38,559 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-26 15:45:45,964 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-26 15:45:48,826 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-26 15:45:52,648 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-26 15:45:56,651 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-26 15:45:58,262 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-26 15:46:00,534 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-26 15:46:07,826 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-26 15:46:12,776 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-26 15:46:17,613 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-26 15:46:40,502 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-26 15:46:44,805 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-26 15:46:49,510 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-26 15:46:51,937 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-26 15:46:54,343 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-26 15:46:57,284 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+INFO 2026-02-26 15:51:23,321 autoreload D:\project\api\serializers.py changed, reloading.
+INFO 2026-02-26 15:51:24,642 autoreload Watching for file changes with StatReloader
+WARNING 2026-02-26 15:51:25,290 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+INFO 2026-02-26 15:51:43,727 autoreload D:\project\api\views.py changed, reloading.
+INFO 2026-02-26 15:51:44,695 autoreload Watching for file changes with StatReloader
+WARNING 2026-02-26 15:51:45,370 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+INFO 2026-02-26 15:52:07,986 autoreload D:\project\api\urls.py changed, reloading.
+INFO 2026-02-26 15:52:08,798 autoreload Watching for file changes with StatReloader
+WARNING 2026-02-26 15:52:09,378 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-26 15:52:25,624 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-26 15:52:25,795 log Not Found: /favicon.ico
+WARNING 2026-02-26 15:52:41,023 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-26 15:52:53,238 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-26 15:52:58,525 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-26 15:53:15,612 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-26 15:53:21,250 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+INFO 2026-02-26 15:56:11,518 autoreload D:\project\cms\views.py changed, reloading.
+INFO 2026-02-26 15:56:12,941 autoreload Watching for file changes with StatReloader
+WARNING 2026-02-26 15:56:13,816 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+INFO 2026-02-26 15:56:15,872 autoreload D:\project\cms\views.py changed, reloading.
+INFO 2026-02-26 15:56:16,994 autoreload Watching for file changes with StatReloader
+WARNING 2026-02-26 15:56:17,928 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+INFO 2026-02-26 15:56:22,359 autoreload D:\project\cms\views.py changed, reloading.
+INFO 2026-02-26 15:56:23,549 autoreload Watching for file changes with StatReloader
+WARNING 2026-02-26 15:56:24,332 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+INFO 2026-02-26 15:56:26,465 autoreload D:\project\cms\views.py changed, reloading.
+INFO 2026-02-26 15:56:27,280 autoreload Watching for file changes with StatReloader
+WARNING 2026-02-26 15:56:27,890 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+INFO 2026-02-26 15:57:01,357 autoreload D:\project\cms\views.py changed, reloading.
+INFO 2026-02-26 15:57:02,331 autoreload Watching for file changes with StatReloader
+WARNING 2026-02-26 15:57:03,056 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-02-26 15:57:03,649 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+INFO 2026-02-26 15:58:56,153 autoreload D:\project\cms\views.py changed, reloading.
+INFO 2026-02-26 15:58:57,286 autoreload Watching for file changes with StatReloader
+INFO 2026-02-26 15:58:59,902 autoreload D:\project\cms\views.py changed, reloading.
+INFO 2026-02-26 15:59:00,800 autoreload Watching for file changes with StatReloader
+INFO 2026-02-26 15:59:07,901 autoreload D:\project\cms\views.py changed, reloading.
+INFO 2026-02-26 15:59:08,800 autoreload Watching for file changes with StatReloader
+INFO 2026-02-26 16:00:23,277 autoreload D:\project\cms\views.py changed, reloading.
+INFO 2026-02-26 16:00:24,295 autoreload Watching for file changes with StatReloader
+INFO 2026-02-26 16:07:49,123 autoreload D:\project\cms\views.py changed, reloading.
+INFO 2026-02-26 16:07:50,044 autoreload Watching for file changes with StatReloader
+ERROR 2026-02-26 16:07:50,618 log Internal Server Error: /
+Traceback (most recent call last):
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\project\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\project\cms\views.py", line 117, in dashboard
+    if module.tile_model:
+       ^^^^^^^^^^^^^^^^^
+AttributeError: 'Module' object has no attribute 'tile_model'
+WARNING 2026-02-26 16:07:50,741 log Not Found: /favicon.ico
+ERROR 2026-02-26 16:09:57,085 log Internal Server Error: /
+Traceback (most recent call last):
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\project\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\project\cms\views.py", line 117, in dashboard
+    if module.tile_model:
+       ^^^^^^^^^^^^^^^^^
+AttributeError: 'Module' object has no attribute 'tile_model'
+ERROR 2026-02-26 16:09:57,122 log Internal Server Error: /
+Traceback (most recent call last):
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\project\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\project\cms\views.py", line 117, in dashboard
+    if module.tile_model:
+       ^^^^^^^^^^^^^^^^^
+AttributeError: 'Module' object has no attribute 'tile_model'
+INFO 2026-02-26 16:11:08,768 autoreload D:\project\cms\views.py changed, reloading.
+INFO 2026-02-26 16:11:09,511 autoreload Watching for file changes with StatReloader
+INFO 2026-02-26 17:17:42,473 autoreload Watching for file changes with StatReloader
+INFO 2026-02-27 10:33:34,966 autoreload Watching for file changes with StatReloader
+WARNING 2026-02-27 11:13:54,580 log Not Found: /favicon.ico
+WARNING 2026-02-27 11:14:41,363 log Forbidden: /toggle-status/blog/1/
+WARNING 2026-02-27 11:14:44,631 log Forbidden: /toggle-status/blog/1/
+INFO 2026-02-27 11:17:50,770 autoreload D:\project\cms\views.py changed, reloading.
+INFO 2026-02-27 11:17:52,283 autoreload Watching for file changes with StatReloader
+WARNING 2026-02-27 11:18:07,314 log Forbidden: /toggle-status/blog/1/
+WARNING 2026-02-27 11:18:10,646 log Forbidden: /toggle-status/blog/1/
+WARNING 2026-02-27 11:22:57,472 log Forbidden: /toggle-status/blog/1/
+WARNING 2026-02-27 11:22:59,018 log Forbidden: /toggle-status/blog/1/
+WARNING 2026-02-27 11:23:00,146 log Forbidden: /toggle-status/blog/1/
+WARNING 2026-02-27 11:23:13,891 log Forbidden: /toggle-status/blog/1/
+WARNING 2026-02-27 11:23:34,844 log Forbidden: /toggle-status/blog/1/
+WARNING 2026-02-27 11:23:35,447 log Forbidden: /toggle-status/blog/1/
+WARNING 2026-02-27 11:23:35,610 log Forbidden: /toggle-status/blog/1/
+WARNING 2026-02-27 11:23:35,774 log Forbidden: /toggle-status/blog/1/
+WARNING 2026-02-27 11:23:36,007 log Forbidden: /toggle-status/blog/1/
+WARNING 2026-02-27 11:23:47,554 log Forbidden: /toggle-status/blog/1/
+WARNING 2026-02-27 11:23:48,465 log Forbidden: /toggle-status/blog/1/
+WARNING 2026-02-27 11:24:21,758 log Forbidden: /toggle-status/blog/1/
+INFO 2026-02-27 11:25:22,532 autoreload D:\project\cms\views.py changed, reloading.
+INFO 2026-02-27 11:25:23,673 autoreload Watching for file changes with StatReloader
+INFO 2026-02-27 11:25:34,815 autoreload D:\project\cms\views.py changed, reloading.
+INFO 2026-02-27 11:25:35,759 autoreload Watching for file changes with StatReloader
+WARNING 2026-02-27 11:25:59,861 log Forbidden: /toggle-status/blog/1/
+INFO 2026-02-27 11:33:59,636 autoreload D:\project\api\views.py changed, reloading.
+INFO 2026-02-27 11:34:00,626 autoreload Watching for file changes with StatReloader
+WARNING 2026-02-27 11:34:11,970 log Not Found: /favicon.ico
+WARNING 2026-02-27 11:34:26,386 log Not Found: /api/social_list/
+INFO 2026-02-27 11:34:42,729 autoreload D:\project\api\urls.py changed, reloading.
+INFO 2026-02-27 11:34:43,817 autoreload Watching for file changes with StatReloader
+WARNING 2026-02-27 11:34:45,517 log Not Found: /favicon.ico
+INFO 2026-02-27 11:51:56,378 autoreload Watching for file changes with StatReloader

@@ -1,14 +1,27 @@
 from django.db.models import Prefetch
 from rest_framework.decorators import api_view
-
 from rest_framework.response import Response
 from rest_framework import status
 
 from articles.models import Article
 from blog.models import Blog
 from package.models import Package, SubPackage
-from .serializers import ArticleSerializer, BlogSerializer, PackageSerializer, SubPackageSerializer
+from testimonials.models import Testimonial
+from social.models import Social
 
+from .serializers import (
+    ArticleSerializer,
+    BlogSerializer,
+    PackageSerializer,
+    SubPackageSerializer,
+    TestimonialSerializer,
+    SocialSerializer,
+)
+
+
+# ========================
+# Article APIs
+# ========================
 
 @api_view(['GET'])
 def get_article(request, slug):
@@ -22,6 +35,17 @@ def get_article(request, slug):
     serializer = ArticleSerializer(article, context={'request': request})
     return Response(serializer.data)
 
+
+@api_view(['GET'])
+def get_all_articles(request):
+    articles = Article.objects.filter(active=True, homepage=False)
+    serializer = ArticleSerializer(articles, many=True, context={'request': request})
+    return Response(serializer.data)
+
+
+# ========================
+# Blog APIs
+# ========================
 
 @api_view(['GET'])
 def get_blog(request, slug):
@@ -43,16 +67,10 @@ def get_all_blogs(request):
     return Response(serializer.data)
 
 
-@api_view(['GET'])
-def get_all_articles(request):
-    articles = Article.objects.filter(active=True, homepage=False)
-    serializer = ArticleSerializer(articles, many=True, context={'request': request})
-    return Response(serializer.data)
-
-
 # ========================
 # Package APIs
 # ========================
+
 @api_view(['GET'])
 def get_all_packages(request):
     """Get all active packages with their sub-packages nested inside."""
@@ -82,6 +100,7 @@ def get_package(request, slug):
 # ========================
 # SubPackage APIs
 # ========================
+
 @api_view(['GET'])
 def get_all_subpackages(request):
     """Get all active sub-packages across all packages."""
@@ -106,3 +125,69 @@ def get_subpackage(request, slug):
     serializer = SubPackageSerializer(sub, context={'request': request})
     return Response(serializer.data)
 
+
+# ========================
+# Testimonial APIs
+# ========================
+
+@api_view(['GET'])
+def get_all_testimonials(request):
+    """Get all active testimonials ordered by position."""
+    testimonials = Testimonial.objects.filter(active=True).order_by('position')
+    serializer = TestimonialSerializer(testimonials, many=True, context={'request': request})
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+def get_testimonial(request, pk):
+    """Get a single testimonial by id."""
+    try:
+        testimonial = Testimonial.objects.get(pk=pk, active=True)
+    except Testimonial.DoesNotExist:
+        return Response(
+            {'error': 'Testimonial not found'},
+            status=status.HTTP_404_NOT_FOUND
+        )
+    serializer = TestimonialSerializer(testimonial, context={'request': request})
+    return Response(serializer.data)
+
+
+# ========================
+# Social / OTA APIs
+# ========================
+
+@api_view(['GET'])
+def social_list(request):
+    """Get all active social links ordered by position."""
+    socials = Social.objects.filter(active=True).order_by('position')
+    serializer = SocialSerializer(socials, many=True, context={'request': request})
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def get_all_socials(request):
+    """Get all active social links ordered by position."""
+    socials = Social.objects.filter(active=True, type=Social.TYPE_SOCIAL).order_by('position')
+    serializer = SocialSerializer(socials, many=True, context={'request': request})
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+def get_all_otas(request):
+    """Get all active OTA links ordered by position."""
+    otas = Social.objects.filter(active=True, type=Social.TYPE_OTA).order_by('position')
+    serializer = SocialSerializer(otas, many=True, context={'request': request})
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+def get_social(request, pk):
+    """Get a single social or OTA entry by id."""
+    try:
+        item = Social.objects.get(pk=pk, active=True)
+    except Social.DoesNotExist:
+        return Response(
+            {'error': 'Not found'},
+            status=status.HTTP_404_NOT_FOUND
+        )
+    serializer = SocialSerializer(item, context={'request': request})
+    return Response(serializer.data)

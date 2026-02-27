@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+{% block content %}
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.8/css/jquery.dataTables.min.css">
+<script src="https://cdn.datatables.net/1.13.8/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+
+<style>
+    .sortable-ghost { opacity: 0.3; background-color: #f0f0f0 !important; }
+    .success-badge {
+        display: none; position: fixed; top: 20px; right: 20px;
+        background: #28a745; color: white; padding: 12px 24px;
+        border-radius: 4px; z-index: 9999; font-weight: bold;
+    }
+    a { text-decoration: none; }
+    .icon-preview { font-size: 1.2rem; color: #374151; }
+</style>
+
+<header style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+    <div style="display:flex; align-items:center; gap:12px;">
+        <h2 style="margin:0;">{% if current_filter == type_ota %}OTA{% else %}Social{% endif %}</h2>
+
+        <form method="get" id="type-filter-form" style="margin:0;">
+            <select name="type" onchange="this.form.submit()" style="padding:5px 10px;">
+                <option value="{{ type_social }}" {% if current_filter == type_social %}selected{% endif %}>
+                    Social
+                </option>
+                <option value="{{ type_ota }}" {% if current_filter == type_ota %}selected{% endif %}>
+                    OTA
+                </option>
+            </select>
+        </form>
+    </div>
+
+    <a href="{% url 'social_create' %}" class="btn">+ Add {% if current_filter == type_ota %}OTA{% else %}Social{% endif %}</a>
+</header>
+
+<div style="display:flex; align-items:center; gap:8px; margin-bottom:12px;">
+    <button type="button" class="btn btn-warning"
+            onclick="document.getElementById('bulk-form').querySelector('button[name=action][value=toggle]').click()">
+        Status
+    </button>
+    <button type="button" class="btn btn-danger"
+            onclick="openDeleteModal('social', null, '/bulk/social/', true)">
+        Delete
+    </button>
+</div>
+
+<div id="saveMsg" class="success-badge">Order Saved!</div>
+
+<form method="post" action="{% url 'bulk_action' 'social' %}" id="bulk-form">
+    {% csrf_token %}
+    <table id="listTable" class="display" style="width:100%"
+           data-sort-url="{% url 'sort' 'social' %}">
+        <thead>
+            <tr>
+                <th style="width:30px;"></th>
+                <th><input type="checkbox" id="select-all"></th>
+                <th>Title</th>
+                <th>Icon</th>
+                <th>Link</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in list %}
+            <tr data-id="{{ item.id }}">
+                <td class="drag-handle" style="cursor:grab; color:#9ca3af;">
+                    <i class="fa-solid fa-grip-vertical"></i>
+                </td>
+                <td><input type="checkbox" name="selected_ids" value="{{ item.id }}" class="row-checkbox"></td>
+                <td>
+                    {% if item.image %}
+                        <img src="{{ item.image.url }}" style="width:28px; height:28px; object-fit:cover; border-radius:4px; vertical-align:middle; margin-right:6px;">
+                    {% endif %}
+                    <a href="{% url 'social_edit' item.pk %}">{{ item.title }}</a>
+                </td>
+                <td>
+                    {% if item.icon %}
+                        <span class="icon-preview"><i class="{{ item.icon }}"></i></span>
+                        <small style="color:#6b7280; margin-left:4px;">{{ item.icon }}</small>
+                    {% else %}
+                        <span style="color:#d1d5db;">—</span>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if item.link %}
+                        <a href="{{ item.link }}" target="_blank" style="color:#3b82f6; font-size:0.8rem;">
+                            {{ item.link|truncatechars:35 }}
+                        </a>
+                    {% else %}
+                        <span style="color:#d1d5db;">—</span>
+                    {% endif %}
+                </td>
+                <td id="status-{{ item.id }}" class="{% if item.active %}status-active{% else %}status-inactive{% endif %}">
+                    {{ item.active|yesno:"Active,Inactive" }}
+                </td>
+                <td class="actions">
+                    <span class="status-toggle"
+                          data-url="{% url 'toggle_status' 'social' item.id %}"
+                          data-target="status-{{ item.id }}"
+                          onclick="event.preventDefault(); toggleStatus(this)">
+                        <i class="fa-solid {% if item.active %}fa-toggle-on{% else %}fa-toggle-off{% endif %}"></i>
+                    </span>
+                    <a href="{% url 'social_edit' item.pk %}" class="icon edit">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                    </a>
+                    <span class="icon delete"
+                          onclick="openDeleteModal('social', '{{ item.title }}', '{% url 'delete_object' 'social' item.id %}', false)">
+                        <i class="fa-solid fa-trash"></i>
+                    </span>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <button type="submit" name="action" value="toggle" style="display:none;"></button>
+</form>
+
+{% load static %}
+<script src="{% static 'js/data_tables.js' %}"></script>
+{% endblock %}

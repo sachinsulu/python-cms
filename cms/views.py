@@ -22,7 +22,7 @@ from blog.models import Blog
 from package.models import Package, SubPackage
 from testimonials.models import Testimonial
 from django.contrib.auth.models import Group
-
+from social.models import Social
 User = get_user_model()
 logger = logging.getLogger(__name__)
 
@@ -38,6 +38,7 @@ MODEL_MAP = {
     "package": Package,
     "subpackage": SubPackage,
     "testimonial": Testimonial,
+    "social": Social,
 }
 
 ACTIVE_FIELD_MAP = {
@@ -46,6 +47,7 @@ ACTIVE_FIELD_MAP = {
     "package": "is_active",
     "subpackage": "is_active",
     "testimonial": "active",
+    "social": "active",
 }
 
 STAT_COLORS = ['blue', 'orange', 'green', 'cyan', 'red', 'lime', 'purple', 'pink', 'yellow', 'teal']
@@ -58,6 +60,7 @@ _COUNT_MAP = {
     'user_list':    lambda: User.objects.count(),
     'group_list':   lambda: Group.objects.count(),
     'testimonial_list': lambda: Testimonial.objects.count(),
+    'social_list': lambda: Social.objects.count(),
 }
 _LABEL_COUNT_MAP = {
     'Sub-Packages': lambda: SubPackage.objects.count(),
@@ -89,7 +92,15 @@ def check_user_permission(request, model_class, action="change"):
     model_name = model_class._meta.model_name
     perm = f"{app_label}.{action}_{model_name}"
 
-    return request.user.has_perm(perm)
+    if not request.user.has_perm(perm):
+        return False
+
+    # Also block if the module itself is disabled (mirrors requires_perm decorator)
+    module = Module.objects.filter(permission_app=app_label).first()
+    if module and not module.is_active:
+        return False
+
+    return True
 
 
 # -------------------------
@@ -99,48 +110,46 @@ def check_user_permission(request, model_class, action="change"):
 def dashboard(request):
     user = request.user
     stats = []
-    used_colors = []
 
-    def pick_color(preferred=''):
-        if preferred:
-            return preferred
-        remaining = [c for c in STAT_COLORS if c not in used_colors]
-        chosen = random.choice(remaining if remaining else STAT_COLORS)
-        used_colors.append(chosen)
-        return chosen
-
-    for module in Module.objects.filter(is_active=True):
-        if module.superuser_only and not user.is_superuser:
-            continue
-        if module.permission_app and not user.is_superuser and not user.has_module_perms(module.permission_app):
-            continue
-
-        count_fn = _COUNT_MAP.get(module.url_name) or _LABEL_COUNT_MAP.get(module.label)
-        count = count_fn() if count_fn else 0
-
+    def add_stat(label, count, icon, color, url_name=None, perm=None):
+        if perm and not user.is_superuser and not user.has_perm(perm):
+            return
         stats.append({
-            'label':    module.label,
-            'count':    count,
-            'icon':     module.icon,
-            'color':    pick_color(),
-            'url_name': module.url_name or None,
+            'label': label,
+            'count': count,
+            'icon': icon,
+            'color': color,
+            'url_name': url_name,
         })
 
-    recent_articles = (
-        Article.objects.order_by('-updated_at')[:5]
-        if user.is_superuser or user.has_perm('articles.view_article')
-        else []
-    )
-    recent_blogs = (
-        Blog.objects.order_by('-id')[:5]
-        if user.is_superuser or user.has_perm('blog.view_blog')
-        else []
-    )
+    add_stat('Articles',     Article.objects.count(),     'fa-solid fa-newspaper',     'blue',   'article_list',     'articles.view_article')
+    add_stat('Blogs',        Blog.objects.count(),        'fa-solid fa-blog',          'orange', 'blog_list',        'blog.view_blog')
+    add_stat('Packages',     Package.objects.count(),     'fa-solid fa-box',           'green',  'package_list',     'package.view_package')
+    add_stat('Sub-Packages', SubPackage.objects.count(),  'fa-solid fa-boxes-stacked', 'cyan',   None,               'package.view_subpackage')
+    add_stat('Testimonials', Testimonial.objects.count(), 'fa-solid fa-star',          'yellow', 'testimonial_list', 'testimonials.view_testimonial')
+    add_stat('Social',       Social.objects.filter(type=Social.TYPE_SOCIAL).count(), 'fa-solid fa-share-nodes', 'pink', 'social_list', 'social.view_social')
+    add_stat('OTA',          Social.objects.filter(type=Social.TYPE_OTA).count(),    'fa-solid fa-globe',       'lime', 'social_list', 'social.view_social')
+
+    if user.is_superuser:
+        add_stat('Users',  User.objects.count(),  'fa-solid fa-users',      'red',  'user_list')
+        add_stat('Groups', Group.objects.count(), 'fa-solid fa-users-gear', 'teal', 'group_list')
+
+    can_article     = user.is_superuser or user.has_perm('articles.view_article')
+    can_blog        = user.is_superuser or user.has_perm('blog.view_blog')
+    can_testimonial = user.is_superuser or user.has_perm('testimonials.view_testimonial')
+    can_social      = user.is_superuser or user.has_perm('social.view_social')
+
+    recent_articles     = Article.objects.order_by('-updated_at')[:5]     if can_article     else []
+    recent_blogs        = Blog.objects.order_by('-id')[:5]                 if can_blog        else []
+    recent_testimonials = Testimonial.objects.order_by('-created_at')[:5] if can_testimonial else []
+    recent_socials      = Social.objects.order_by('type', 'position')[:6] if can_social      else []
 
     return render(request, 'dashboard.html', {
-        'stats': stats,
-        'recent_articles': recent_articles,
-        'recent_blogs': recent_blogs,
+        'stats':               stats,
+        'recent_articles':     recent_articles,
+        'recent_blogs':        recent_blogs,
+        'recent_testimonials': recent_testimonials,
+        'recent_socials':      recent_socials,
     })
 
 
@@ -154,7 +163,7 @@ def toggle_status(request, model_name, pk):
         return JsonResponse({"error": "Invalid model"}, status=400)
 
     if not check_user_permission(request, model_class, action="change"):
-        return JsonResponse({"error": "Permission denied"}, status=403)
+        return JsonResponse({"error": "You don't have permission to do that"}, status=403)
 
     active_field = ACTIVE_FIELD_MAP.get(model_name.lower())
     if not active_field:
@@ -262,7 +271,7 @@ def update_order(request, model_name):
         return JsonResponse({'status': 'error', 'message': 'Invalid model type'}, status=400)
 
     if not check_user_permission(request, model_class, action="change"):
-        return JsonResponse({'status': 'error', 'message': 'Permission denied'}, status=403)
+        return JsonResponse({'status': 'error', 'message': 'You don\'t have permission to do that'}, status=403)
 
     try:
         data = json.loads(request.body)

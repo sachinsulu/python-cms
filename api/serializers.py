@@ -2,6 +2,8 @@ from rest_framework import serializers
 from articles.models import Article
 from blog.models import Blog
 from package.models import Package, SubPackage
+from testimonials.models import Testimonial
+from social.models import Social
 
 
 class ArticleSerializer(serializers.ModelSerializer):
@@ -19,16 +21,8 @@ class BlogSerializer(serializers.ModelSerializer):
         model = Blog
         fields = [
             'title',
-            'slug',
-            'author',
-            'date',
-            'banner_image',
-            'image',
+            'subtitle',
             'content',
-            'active',
-            'meta_title',
-            'meta_description',
-            'meta_keywords',
         ]
 
 
@@ -65,4 +59,38 @@ class PackageSerializer(serializers.ModelSerializer):
             'is_active',
             'position',
             'sub_packages',
+        ]
+
+
+class TestimonialSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Testimonial
+        fields = [
+            'id',
+            'title',
+            'name',
+            'content',
+            'rating',
+            'image',
+            'linksrc',
+            'country',
+            'via_type',
+            'position',
+        ]
+
+
+class SocialSerializer(serializers.ModelSerializer):
+    type_display = serializers.CharField(source='get_type_display', read_only=True)
+
+    class Meta:
+        model = Social
+        fields = [
+            'id',
+            'title',
+            'link',
+            'image',
+            'icon',
+            'type',
+            'type_display',
+            'position',
         ]

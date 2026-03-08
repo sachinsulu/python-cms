@@ -11673,3 +11673,165 @@ WARNING 2026-03-08 12:15:37,886 log Not Found: /.well-known/appspecific/com.chro
 INFO 2026-03-08 12:16:11,889 autoreload D:\project\users\views.py changed, reloading.
 INFO 2026-03-08 12:16:12,709 autoreload Watching for file changes with StatReloader
 WARNING 2026-03-08 12:16:13,291 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-03-08 12:18:15,740 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-03-08 12:18:17,715 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-03-08 12:18:26,589 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-03-08 12:18:30,917 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-03-08 12:18:31,105 log Not Found: /favicon.ico
+WARNING 2026-03-08 12:18:35,916 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-03-08 12:18:39,408 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-03-08 12:18:41,063 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-03-08 12:18:43,090 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-03-08 12:18:50,702 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-03-08 12:18:55,609 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-03-08 12:19:03,196 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+INFO 2026-03-08 12:22:52,888 autoreload D:\project\cms\views.py changed, reloading.
+INFO 2026-03-08 12:22:53,654 autoreload Watching for file changes with StatReloader
+WARNING 2026-03-08 12:22:54,279 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-03-08 12:23:17,759 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+INFO 2026-03-08 12:25:55,180 autoreload D:\project\users\views.py changed, reloading.
+INFO 2026-03-08 12:25:56,365 autoreload Watching for file changes with StatReloader
+INFO 2026-03-08 12:26:25,837 autoreload D:\project\users\views.py changed, reloading.
+INFO 2026-03-08 12:26:26,523 autoreload Watching for file changes with StatReloader
+INFO 2026-03-08 12:27:18,018 autoreload D:\project\cms\views.py changed, reloading.
+INFO 2026-03-08 12:27:18,764 autoreload Watching for file changes with StatReloader
+INFO 2026-03-08 12:27:26,786 autoreload D:\project\cms\views.py changed, reloading.
+INFO 2026-03-08 12:27:27,750 autoreload Watching for file changes with StatReloader
+WARNING 2026-03-08 12:28:48,953 log Not Found: /favicon.ico
+INFO 2026-03-08 12:28:55,646 autoreload D:\project\users\views.py changed, reloading.
+INFO 2026-03-08 12:28:56,951 autoreload Watching for file changes with StatReloader
+INFO 2026-03-08 12:30:44,598 autoreload D:\project\cms\views.py changed, reloading.
+INFO 2026-03-08 12:30:45,563 autoreload Watching for file changes with StatReloader
+INFO 2026-03-08 12:30:48,351 autoreload D:\project\cms\views.py changed, reloading.
+INFO 2026-03-08 12:30:49,169 autoreload Watching for file changes with StatReloader
+INFO 2026-03-08 12:30:50,922 autoreload D:\project\cms\views.py changed, reloading.
+INFO 2026-03-08 12:30:51,740 autoreload Watching for file changes with StatReloader
+ERROR 2026-03-08 12:34:28,155 log Internal Server Error: /
+Traceback (most recent call last):
+  File "D:\project\venv\Lib\site-packages\django\db\models\options.py", line 684, in get_field
+    return self.fields_map[field_name]
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^
+KeyError: 'slug'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\project\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\project\cms\views.py", line 165, in dashboard
+    return render(request, 'dashboard.html', {
+        'stats':               stats,
+    ...<5 lines>...
+        'recent_faqs':         recent_faqs,
+    })
+  File "D:\project\venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "D:\project\venv\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\backends\django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\base.py", line 174, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\base.py", line 1091, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\base.py", line 1052, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\loader_tags.py", line 160, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\base.py", line 1091, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\base.py", line 1052, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\loader_tags.py", line 66, in render
+    result = block.nodelist.render(context)
+  File "D:\project\venv\Lib\site-packages\django\template\base.py", line 1091, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\base.py", line 1052, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\defaulttags.py", line 333, in render
+    return nodelist.render(context)
+           ~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\base.py", line 1091, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\base.py", line 1052, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\defaulttags.py", line 332, in render
+    if match:
+       ^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 404, in __bool__
+    self._fetch_all()
+    ~~~~~~~~~~~~~~~^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 2000, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+                         ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\query.py", line 95, in __iter__
+    results = compiler.execute_sql(
+        chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size
+    )
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1611, in execute_sql
+    sql, params = self.as_sql()
+                  ~~~~~~~~~~~^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\compiler.py", line 767, in as_sql
+    extra_select, order_by, group_by = self.pre_sql_setup(
+                                       ~~~~~~~~~~~~~~~~~~^
+        with_col_aliases=with_col_aliases or bool(combinator),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\compiler.py", line 86, in pre_sql_setup
+    self.setup_query(with_col_aliases=with_col_aliases)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\compiler.py", line 75, in setup_query
+    self.select, self.klass_info, self.annotation_col_map = self.get_select(
+                                                            ~~~~~~~~~~~~~~~^
+        with_col_aliases=with_col_aliases,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\compiler.py", line 253, in get_select
+    select_mask = self.query.get_select_mask()
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 892, in get_select_mask
+    return self._get_only_select_mask(opts, mask)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\db\models\sql\query.py", line 861, in _get_only_select_mask
+    field = opts.get_field(field_name)
+  File "D:\project\venv\Lib\site-packages\django\db\models\options.py", line 686, in get_field
+    raise FieldDoesNotExist(
+        "%s has no field named '%s'" % (self.object_name, field_name)
+    )
+django.core.exceptions.FieldDoesNotExist: FAQ has no field named 'slug'
+WARNING 2026-03-08 12:34:28,322 log Not Found: /favicon.ico
+INFO 2026-03-08 12:35:30,803 autoreload D:\project\cms\views.py changed, reloading.
+INFO 2026-03-08 12:35:31,540 autoreload Watching for file changes with StatReloader
+INFO 2026-03-08 12:35:33,173 autoreload D:\project\cms\views.py changed, reloading.
+INFO 2026-03-08 12:35:34,132 autoreload Watching for file changes with StatReloader
+INFO 2026-03-08 12:35:49,618 autoreload D:\project\cms\views.py changed, reloading.
+INFO 2026-03-08 12:35:50,573 autoreload Watching for file changes with StatReloader
+INFO 2026-03-08 12:35:52,063 autoreload D:\project\cms\views.py changed, reloading.
+INFO 2026-03-08 12:35:53,036 autoreload Watching for file changes with StatReloader
+INFO 2026-03-08 12:35:56,566 autoreload D:\project\cms\views.py changed, reloading.
+INFO 2026-03-08 12:35:57,336 autoreload Watching for file changes with StatReloader
+INFO 2026-03-08 12:35:58,748 autoreload D:\project\cms\views.py changed, reloading.
+INFO 2026-03-08 12:35:59,516 autoreload Watching for file changes with StatReloader

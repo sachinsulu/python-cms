@@ -122,6 +122,10 @@ def dashboard(request):
     def add_stat(label, count, icon, color, url_name=None, perm=None):
         if perm and not user.is_superuser and not user.has_perm(perm):
             return
+        
+        # Superuser check handles 'Users' and 'Groups' since we wrap those calls
+        if label in ['Users', 'Groups'] and not user.is_superuser:
+            return
         stats.append({
             'label': label,
             'count': count,
@@ -137,20 +141,26 @@ def dashboard(request):
     add_stat('Testimonials', Testimonial.objects.count(), 'fa-solid fa-star',          'yellow', 'testimonial_list', 'testimonials.view_testimonial')
     add_stat('Social',       Social.objects.filter(type=Social.TYPE_SOCIAL).count(), 'fa-solid fa-share-nodes', 'pink', 'social_list', 'social.view_social')
     add_stat('OTA',          Social.objects.filter(type=Social.TYPE_OTA).count(),    'fa-solid fa-globe',       'lime', 'social_list', 'social.view_social')
+    add_stat('Nearby',       Nearby.objects.count(),        'fa-solid fa-map-marker-alt',          'orange', 'nearby_list',        'nearby.view_nearby')
+    add_stat('FAQ',        FAQ.objects.count(),        'fa-solid fa-question-circle',          'orange', 'faq_list',        'faq.view_faq')
 
     if user.is_superuser:
-        add_stat('Users',  User.objects.count(),  'fa-solid fa-users',      'red',  'user_list')
-        add_stat('Groups', Group.objects.count(), 'fa-solid fa-users-gear', 'teal', 'group_list')
+        add_stat('Users',  User.objects.count(),  'fa-solid fa-users',      'red',  'user_list', 'auth.view_user')
+        add_stat('Groups', Group.objects.count(), 'fa-solid fa-users-gear', 'teal', 'group_list', 'auth.view_group')
 
     can_article     = user.is_superuser or user.has_perm('articles.view_article')
     can_blog        = user.is_superuser or user.has_perm('blog.view_blog')
     can_testimonial = user.is_superuser or user.has_perm('testimonials.view_testimonial')
     can_social      = user.is_superuser or user.has_perm('social.view_social')
+    can_nearby      = user.is_superuser or user.has_perm('nearby.view_nearby')
+    can_faq         = user.is_superuser or user.has_perm('faq.view_faq')
 
-    recent_articles     = Article.objects.order_by('-updated_at')[:5]     if can_article     else []
-    recent_blogs        = Blog.objects.order_by('-id')[:5]                 if can_blog        else []
-    recent_testimonials = Testimonial.objects.order_by('-created_at')[:5] if can_testimonial else []
-    recent_socials      = Social.objects.order_by('type', 'position')[:6] if can_social      else []
+    recent_articles     = Article.objects.only('title', 'slug', 'active', 'updated_at').order_by('-updated_at')[:5]     if can_article     else []
+    recent_blogs        = Blog.objects.only('title', 'slug', 'active', 'updated_at').order_by('-id')[:5]                 if can_blog        else []
+    recent_testimonials = Testimonial.objects.only('title', 'name', 'rating', 'active').order_by('-created_at')[:5] if can_testimonial else []
+    recent_socials      = Social.objects.only('title', 'type', 'active', 'icon').order_by('type', 'position')[:5] if can_social      else []
+    recent_nearbys      = Nearby.objects.only('title','distance','active').order_by('-id')[:5] if can_nearby else []
+    recent_faqs         = FAQ.objects.only('title', 'active').order_by('-id')[:5] if can_faq else []
 
     return render(request, 'dashboard.html', {
         'stats':               stats,
@@ -158,6 +168,8 @@ def dashboard(request):
         'recent_blogs':        recent_blogs,
         'recent_testimonials': recent_testimonials,
         'recent_socials':      recent_socials,
+        'recent_nearbys':      recent_nearbys,
+        'recent_faqs':         recent_faqs,
     })
 
 

@@ -5,6 +5,23 @@
 
 <h2>Dashboard</h2>
 
+<style>
+  /* Make table rows clickable with a hover effect */
+  .log-table tbody tr {
+    transition: background-color 0.15s ease;
+  }
+  .log-table tbody tr:hover {
+    background-color: #f3f4f6;
+    cursor: pointer;
+  }
+  /* Remove default link colors in table to look more unified */
+  .log-table tbody tr a {
+    color: inherit;
+    text-decoration: none;
+    display: block;  /* makes the link take up the cell space */
+  }
+</style>
+
 <!-- Stat Tiles -->
 <div class="tiles">
   {% for stat in stats %}
@@ -21,8 +38,9 @@
 </div>
 
 <!-- Recent Activity -->
-{% if recent_articles or recent_blogs or recent_testimonials or recent_socials %}
-<div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap:20px; margin-top:20px;">
+<!-- Recent Activity -->
+{% if recent_articles or recent_blogs or recent_testimonials or recent_socials or recent_nearbys or recent_faqs %}
+<div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(100%, 380px)); gap:20px; margin-top:20px;">
 
   {% if recent_articles %}
   <div>
@@ -37,8 +55,8 @@
       </thead>
       <tbody>
         {% for article in recent_articles %}
-        <tr>
-          <td><a href="{% url 'article_edit' article.slug %}">{{ article.title }}</a></td>
+        <tr onclick="window.location='{% url 'article_edit' article.slug %}'">
+          <td>{{ article.title }}</td>
           <td>
             {% if article.active %}
               <span class="badge badge-green">Active</span>
@@ -46,7 +64,11 @@
               <span class="badge badge-gray">Inactive</span>
             {% endif %}
           </td>
-          <td style="font-size:12px; color:#6b7280;">{{ article.updated_at|timesince }} ago</td>
+          <td style="font-size:12px; color:#6b7280;">{{ article.updated_at|date:"M d, Y" }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="3" style="text-align:center; color:#9ca3af; padding: 20px 0;">No recent articles.</td>
         </tr>
         {% endfor %}
       </tbody>
@@ -67,8 +89,8 @@
       </thead>
       <tbody>
         {% for blog in recent_blogs %}
-        <tr>
-          <td><a href="{% url 'edit_blog' blog.slug %}">{{ blog.title }}</a></td>
+        <tr onclick="window.location='{% url 'edit_blog' blog.slug %}'">
+          <td>{{ blog.title }}</td>
           <td>
             {% if blog.active %}
               <span class="badge badge-green">Active</span>
@@ -76,7 +98,11 @@
               <span class="badge badge-gray">Inactive</span>
             {% endif %}
           </td>
-          <td style="font-size:12px; color:#6b7280;">{{ blog.updated_at|timesince }} ago</td>
+          <td style="font-size:12px; color:#6b7280;">{{ blog.updated_at|date:"M d, Y" }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="3" style="text-align:center; color:#9ca3af; padding: 20px 0;">No recent blogs.</td>
         </tr>
         {% endfor %}
       </tbody>
@@ -97,9 +123,9 @@
       </thead>
       <tbody>
         {% for t in recent_testimonials %}
-        <tr>
+        <tr onclick="window.location='{% url 'testimonial_edit' t.pk %}'">
           <td>
-            <a href="{% url 'testimonial_edit' t.pk %}">{{ t.title }}</a>
+            {{ t.title }}
             <br><small style="color:#6b7280;">{{ t.name }}</small>
           </td>
           <td style="color:#f59e0b;">
@@ -112,6 +138,10 @@
               <span class="badge badge-gray">Inactive</span>
             {% endif %}
           </td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="3" style="text-align:center; color:#9ca3af; padding: 20px 0;">No recent testimonials.</td>
         </tr>
         {% endfor %}
       </tbody>
@@ -132,12 +162,10 @@
       </thead>
       <tbody>
         {% for item in recent_socials %}
-        <tr>
+        <tr onclick="window.location='{% url 'social_edit' item.pk %}'">
           <td>
-            <a href="{% url 'social_edit' item.pk %}">
-              {% if item.icon %}<i class="{{ item.icon }}" style="margin-right:6px;"></i>{% endif %}
-              {{ item.title }}
-            </a>
+            {% if item.icon %}<i class="{{ item.icon }}" style="margin-right:6px;"></i>{% endif %}
+            {{ item.title }}
           </td>
           <td>
             <span style="font-size:0.75rem; font-weight:600; padding:2px 8px; border-radius:4px;
@@ -154,6 +182,10 @@
             {% endif %}
           </td>
         </tr>
+        {% empty %}
+        <tr>
+          <td colspan="3" style="text-align:center; color:#9ca3af; padding: 20px 0;">No recent social links.</td>
+        </tr>
         {% endfor %}
       </tbody>
     </table>
@@ -161,6 +193,76 @@
   {% endif %}
 
 </div>
+
+  <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(100%, 380px)); gap:20px; margin-top:20px;">
+  
+    {% if recent_nearbys %}
+    <div>
+      <h3 style="margin-bottom:12px; font-size:16px; color:#374151;">Recent Nearby Places</h3>
+      <table class="log-table">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Distance</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for nearby in recent_nearbys %}
+          <tr onclick="window.location='{% url 'edit_nearby' nearby.pk %}'">
+            <td>{{ nearby.title }}</td>
+            <td>{{ nearby.distance }} KM</td>
+            <td>
+              {% if nearby.active %}
+                <span class="badge badge-green">Active</span>
+              {% else %}
+                <span class="badge badge-gray">Inactive</span>
+              {% endif %}
+            </td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="2" style="text-align:center; color:#9ca3af; padding: 20px 0;">No nearby places.</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% endif %}
+  
+    {% if recent_faqs %}
+    <div>
+      <h3 style="margin-bottom:12px; font-size:16px; color:#374151;">Recent FAQs</h3>
+      <table class="log-table">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for faq in recent_faqs %}
+          <tr onclick="window.location='{% url 'faq_edit' faq.pk %}'">
+            <td>{{ faq.title }}</td>
+            <td>
+              {% if faq.active %}
+                <span class="badge badge-green">Active</span>
+              {% else %}
+                <span class="badge badge-gray">Inactive</span>
+              {% endif %}
+            </td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="2" style="text-align:center; color:#9ca3af; padding: 20px 0;">No recent FAQs.</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% endif %}
+  </div>
+
 {% endif %}
 
 {% endblock %}

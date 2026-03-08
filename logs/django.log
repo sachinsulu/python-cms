@@ -11667,3 +11667,9 @@ WARNING 2026-03-08 12:13:29,506 log Not Found: /.well-known/appspecific/com.chro
 WARNING 2026-03-08 12:13:34,009 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
 WARNING 2026-03-08 12:13:36,317 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
 WARNING 2026-03-08 12:13:54,935 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+INFO 2026-03-08 12:15:36,496 autoreload D:\project\faq\views.py changed, reloading.
+INFO 2026-03-08 12:15:37,265 autoreload Watching for file changes with StatReloader
+WARNING 2026-03-08 12:15:37,886 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+INFO 2026-03-08 12:16:11,889 autoreload D:\project\users\views.py changed, reloading.
+INFO 2026-03-08 12:16:12,709 autoreload Watching for file changes with StatReloader
+WARNING 2026-03-08 12:16:13,291 log Not Found: /.well-known/appspecific/com.chrome.devtools.json

@@ -3,7 +3,7 @@ from django.contrib.auth.models import User, Group, Permission
 from django.shortcuts import render, redirect, get_object_or_404
 from django import forms
 from django.contrib import messages
-from django.contrib.auth.decorators import permission_required
+from users.decorators import requires_perm
 
 # ------------------------------
 # USER FORMS
@@ -68,21 +68,15 @@ class GroupForm(forms.ModelForm):
 # USER VIEWS
 # ------------------------------
 @login_required
-@permission_required('auth.view_user')
+@requires_perm('auth.view_user')
 def user_list(request):
-    if not request.user.is_superuser and not request.user.has_perm('auth.view_user'):
-        messages.error(request, "You do not have permission to manage users.")
-        return redirect('dashboard')
     users = User.objects.all() if request.user.is_superuser else User.objects.filter(is_superuser=False)
     return render(request, 'users/list.html', {'users': users})
 
 
 @login_required
+@requires_perm('auth.add_user')
 def user_create(request):
-    if not request.user.is_superuser and not request.user.has_perm('auth.add_user'):
-        messages.error(request, "You do not have permission to manage users.")
-        return redirect('dashboard')
-
     form = UserCreateForm(request.POST or None)
     if form.is_valid():
         form.save()
@@ -93,11 +87,8 @@ def user_create(request):
 
 
 @login_required
+@requires_perm('auth.change_user')
 def user_edit(request, id):
-    if not request.user.is_superuser and not request.user.has_perm('auth.change_user'):
-        messages.error(request, "You do not have permission to manage users.")
-        return redirect('dashboard')
-
     user = get_object_or_404(User, id=id)
     form = UserCreateForm(request.POST or None, instance=user)
     form.fields['password'].required = False
@@ -111,11 +102,8 @@ def user_edit(request, id):
 
 
 @login_required
+@requires_perm('auth.delete_user')
 def user_delete(request, id):
-    if not request.user.is_superuser and not request.user.has_perm('auth.delete_user'):
-        messages.error(request, "You do not have permission to manage users.")
-        return redirect('dashboard')
-
     user = get_object_or_404(User, id=id)
 
     if user.is_superuser:
@@ -137,20 +125,15 @@ def user_delete(request, id):
 # GROUP VIEWS
 # ------------------------------
 @login_required
+@requires_perm('auth.view_group')
 def group_list(request):
-    if not request.user.is_superuser and not request.user.has_perm('auth.view_group'):
-        messages.error(request, "You do not have permission to manage groups.")
-        return redirect('dashboard')
     groups = Group.objects.all()
     return render(request, 'users/group_list.html', {'groups': groups})
 
 
 @login_required
+@requires_perm('auth.add_group')
 def group_create(request):
-    if not request.user.is_superuser and not request.user.has_perm('auth.add_group'):
-        messages.error(request, "You do not have permission to manage groups.")
-        return redirect('dashboard')
-
     form = GroupForm(request.POST or None)
     if form.is_valid():
         form.save()
@@ -161,11 +144,8 @@ def group_create(request):
 
 
 @login_required
+@requires_perm('auth.change_group')
 def group_edit(request, id):
-    if not request.user.is_superuser and not request.user.has_perm('auth.change_group'):
-        messages.error(request, "You do not have permission to manage groups.")
-        return redirect('dashboard')
-
     group = get_object_or_404(Group, id=id)
     form = GroupForm(request.POST or None, instance=group)
     if form.is_valid():

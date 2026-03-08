@@ -11418,3 +11418,252 @@ WARNING 2026-03-08 11:48:31,955 log Not Found: /favicon.ico
 WARNING 2026-03-08 11:50:10,439 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
 WARNING 2026-03-08 11:50:12,778 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
 WARNING 2026-03-08 11:50:15,902 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+INFO 2026-03-08 11:59:55,723 autoreload D:\project\cms\settings.py changed, reloading.
+INFO 2026-03-08 11:59:56,456 autoreload Watching for file changes with StatReloader
+INFO 2026-03-08 11:59:58,100 autoreload D:\project\cms\settings.py changed, reloading.
+INFO 2026-03-08 11:59:58,847 autoreload Watching for file changes with StatReloader
+WARNING 2026-03-08 12:03:23,041 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-03-08 12:03:25,561 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-03-08 12:03:28,066 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+ERROR 2026-03-08 12:04:09,023 log Internal Server Error: /module/
+Traceback (most recent call last):
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\project\core\views.py", line 17, in wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\project\core\views.py", line 24, in module_list
+    return render(request, 'core/module_list.html', {'items': items})
+  File "D:\project\venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "D:\project\venv\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\backends\django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\base.py", line 174, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\base.py", line 1091, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\base.py", line 1052, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\loader_tags.py", line 160, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\base.py", line 1091, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\base.py", line 1052, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\defaulttags.py", line 249, in render
+    nodelist.append(node.render_annotated(context))
+                    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\base.py", line 1052, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\defaulttags.py", line 581, in render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\base.py", line 1091, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\base.py", line 1052, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\defaulttags.py", line 511, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "D:\project\venv\Lib\site-packages\django\urls\base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\django\urls\resolvers.py", line 842, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'faq_list' not found. 'faq_list' is not a valid view function or pattern name.
+WARNING 2026-03-08 12:04:09,071 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+INFO 2026-03-08 12:04:31,615 autoreload D:\project\cms\urls.py changed, reloading.
+INFO 2026-03-08 12:04:32,413 autoreload Watching for file changes with StatReloader
+ERROR 2026-03-08 12:04:32,998 log Internal Server Error: /module/
+Traceback (most recent call last):
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\project\core\views.py", line 17, in wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\project\core\views.py", line 24, in module_list
+    return render(request, 'core/module_list.html', {'items': items})
+  File "D:\project\venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "D:\project\venv\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\backends\django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\base.py", line 174, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\base.py", line 1091, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\base.py", line 1052, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\loader_tags.py", line 160, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\base.py", line 1091, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\base.py", line 1052, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\defaulttags.py", line 249, in render
+    nodelist.append(node.render_annotated(context))
+                    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\base.py", line 1052, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\defaulttags.py", line 581, in render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\base.py", line 1091, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\base.py", line 1052, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\template\defaulttags.py", line 511, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "D:\project\venv\Lib\site-packages\django\urls\base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\django\urls\resolvers.py", line 842, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'faq_list' not found. 'faq_list' is not a valid view function or pattern name.
+WARNING 2026-03-08 12:04:33,046 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+INFO 2026-03-08 12:04:34,036 autoreload D:\project\cms\urls.py changed, reloading.
+INFO 2026-03-08 12:04:34,828 autoreload Watching for file changes with StatReloader
+WARNING 2026-03-08 12:04:35,392 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+INFO 2026-03-08 12:04:48,279 autoreload D:\project\cms\views.py changed, reloading.
+INFO 2026-03-08 12:04:49,162 autoreload Watching for file changes with StatReloader
+WARNING 2026-03-08 12:04:49,653 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+INFO 2026-03-08 12:04:55,143 autoreload D:\project\cms\views.py changed, reloading.
+INFO 2026-03-08 12:04:55,996 autoreload Watching for file changes with StatReloader
+WARNING 2026-03-08 12:04:56,559 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+INFO 2026-03-08 12:04:58,881 autoreload D:\project\cms\views.py changed, reloading.
+INFO 2026-03-08 12:04:59,832 autoreload Watching for file changes with StatReloader
+WARNING 2026-03-08 12:05:00,380 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+INFO 2026-03-08 12:05:05,819 autoreload D:\project\cms\views.py changed, reloading.
+INFO 2026-03-08 12:05:06,852 autoreload Watching for file changes with StatReloader
+WARNING 2026-03-08 12:05:07,504 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-03-08 12:05:08,201 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-03-08 12:05:10,235 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-03-08 12:05:12,746 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+INFO 2026-03-08 12:06:23,021 autoreload D:\project\api\serializers.py changed, reloading.
+INFO 2026-03-08 12:06:23,821 autoreload Watching for file changes with StatReloader
+WARNING 2026-03-08 12:06:24,741 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+INFO 2026-03-08 12:06:31,350 autoreload D:\project\api\serializers.py changed, reloading.
+INFO 2026-03-08 12:06:32,105 autoreload Watching for file changes with StatReloader
+WARNING 2026-03-08 12:06:32,696 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+INFO 2026-03-08 12:06:47,421 autoreload D:\project\api\serializers.py changed, reloading.
+INFO 2026-03-08 12:06:48,401 autoreload Watching for file changes with StatReloader
+WARNING 2026-03-08 12:06:48,948 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+INFO 2026-03-08 12:06:51,359 autoreload D:\project\api\serializers.py changed, reloading.
+INFO 2026-03-08 12:06:52,148 autoreload Watching for file changes with StatReloader
+WARNING 2026-03-08 12:06:52,742 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+INFO 2026-03-08 12:07:00,278 autoreload D:\project\api\views.py changed, reloading.
+INFO 2026-03-08 12:07:01,141 autoreload Watching for file changes with StatReloader
+WARNING 2026-03-08 12:07:01,736 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+INFO 2026-03-08 12:07:04,054 autoreload D:\project\api\views.py changed, reloading.
+INFO 2026-03-08 12:07:05,277 autoreload Watching for file changes with StatReloader
+WARNING 2026-03-08 12:07:05,883 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+INFO 2026-03-08 12:07:11,404 autoreload D:\project\api\views.py changed, reloading.
+INFO 2026-03-08 12:07:12,163 autoreload Watching for file changes with StatReloader
+WARNING 2026-03-08 12:07:12,776 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+INFO 2026-03-08 12:07:18,210 autoreload D:\project\api\urls.py changed, reloading.
+INFO 2026-03-08 12:07:19,078 autoreload Watching for file changes with StatReloader
+WARNING 2026-03-08 12:07:19,830 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-03-08 12:07:20,295 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-03-08 12:07:24,890 log Not Found: /favicon.ico
+WARNING 2026-03-08 12:07:28,609 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-03-08 12:07:30,535 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+ERROR 2026-03-08 12:07:37,510 log Internal Server Error: /faq/create/
+Traceback (most recent call last):
+  File "D:\project\venv\Lib\site-packages\django\urls\base.py", line 81, in reverse
+    extra, resolver = resolver.namespace_dict[ns]
+                      ~~~~~~~~~~~~~~~~~~~~~~~^^^^
+KeyError: 'faq'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\project\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\project\faq\views.py", line 29, in faq_create
+    return redirect('faq:list')
+  File "D:\project\venv\Lib\site-packages\django\shortcuts.py", line 51, in redirect
+    resolve_url(to, *args, **kwargs),
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\django\shortcuts.py", line 184, in resolve_url
+    return reverse(to, args=args, kwargs=kwargs)
+  File "D:\project\venv\Lib\site-packages\django\urls\base.py", line 92, in reverse
+    raise NoReverseMatch("%s is not a registered namespace" % key)
+django.urls.exceptions.NoReverseMatch: 'faq' is not a registered namespace
+WARNING 2026-03-08 12:07:37,551 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+INFO 2026-03-08 12:11:15,123 autoreload D:\project\faq\views.py changed, reloading.
+INFO 2026-03-08 12:11:15,964 autoreload Watching for file changes with StatReloader
+WARNING 2026-03-08 12:11:16,608 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-03-08 12:11:38,431 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+INFO 2026-03-08 12:11:43,580 autoreload D:\project\faq\urls.py changed, reloading.
+INFO 2026-03-08 12:11:44,435 autoreload Watching for file changes with StatReloader
+WARNING 2026-03-08 12:11:45,442 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-03-08 12:11:48,200 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-03-08 12:11:59,637 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-03-08 12:12:08,726 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+INFO 2026-03-08 12:12:51,336 autoreload D:\project\faq\views.py changed, reloading.
+INFO 2026-03-08 12:12:52,199 autoreload Watching for file changes with StatReloader
+ERROR 2026-03-08 12:12:52,924 log Internal Server Error: /faq/
+Traceback (most recent call last):
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\project\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\project\faq\views.py", line 12, in faq_list
+    return render(request, 'faq/list.html', {'faqs': faqs})
+                                                     ^^^^
+NameError: name 'faqs' is not defined
+WARNING 2026-03-08 12:12:52,987 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+INFO 2026-03-08 12:12:57,073 autoreload D:\project\faq\views.py changed, reloading.
+INFO 2026-03-08 12:12:58,015 autoreload Watching for file changes with StatReloader
+WARNING 2026-03-08 12:12:58,571 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-03-08 12:12:59,702 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-03-08 12:13:06,864 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-03-08 12:13:12,302 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-03-08 12:13:16,422 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-03-08 12:13:21,356 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-03-08 12:13:29,506 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-03-08 12:13:34,009 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-03-08 12:13:36,317 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-03-08 12:13:54,935 log Not Found: /.well-known/appspecific/com.chrome.devtools.json

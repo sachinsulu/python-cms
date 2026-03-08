@@ -9,6 +9,7 @@ from package.models import Package, SubPackage
 from testimonials.models import Testimonial
 from social.models import Social
 from nearby.models import Nearby
+from faq.models import FAQ
 
 from .serializers import (
     ArticleSerializer,
@@ -18,6 +19,7 @@ from .serializers import (
     TestimonialSerializer,
     SocialSerializer,
     NearbySerializer,
+    FAQSerializer,
 )
 
 
@@ -218,4 +220,30 @@ def get_nearby(request, pk):
             status=status.HTTP_404_NOT_FOUND
         )
     serializer = NearbySerializer(nearby, context={'request': request})
+    return Response(serializer.data)
+
+
+# ========================
+# FAQ APIs
+# ========================
+
+@api_view(['GET'])
+def get_all_faqs(request):
+    """Get all active FAQs ordered by position."""
+    faqs = FAQ.objects.filter(active=True).order_by('position')
+    serializer = FAQSerializer(faqs, many=True, context={'request': request})
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+def get_faq(request, pk):
+    """Get a single FAQ by id."""
+    try:
+        faq = FAQ.objects.get(pk=pk, active=True)
+    except FAQ.DoesNotExist:
+        return Response(
+            {'error': 'FAQ not found'},
+            status=status.HTTP_404_NOT_FOUND
+        )
+    serializer = FAQSerializer(faq, context={'request': request})
     return Response(serializer.data)

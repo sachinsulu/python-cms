@@ -5,6 +5,7 @@ from package.models import Package, SubPackage
 from testimonials.models import Testimonial
 from social.models import Social
 from nearby.models import Nearby
+from faq.models import FAQ
 
 
 class ArticleSerializer(serializers.ModelSerializer):
@@ -104,6 +105,18 @@ class NearbySerializer(serializers.ModelSerializer):
             'id',
             'title',
             'distance',
+            'active',
+            'position',
+        ]
+
+
+class FAQSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = FAQ
+        fields = [
+            'id',
+            'title',
+            'content',
             'active',
             'position',
         ]

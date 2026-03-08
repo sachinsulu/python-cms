@@ -32,4 +32,8 @@ urlpatterns = [
     # Nearby
     path('nearby/', views.get_all_nearby, name='get_all_nearby'),
     path('nearby/<int:pk>/', views.get_nearby, name='get_nearby'),
+
+    # FAQ
+    path('faq/', views.get_all_faqs, name='get_all_faqs'),
+    path('faq/<int:pk>/', views.get_faq, name='get_faq'),
 ]

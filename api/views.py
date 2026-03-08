@@ -8,6 +8,7 @@ from blog.models import Blog
 from package.models import Package, SubPackage
 from testimonials.models import Testimonial
 from social.models import Social
+from nearby.models import Nearby
 
 from .serializers import (
     ArticleSerializer,
@@ -16,6 +17,7 @@ from .serializers import (
     SubPackageSerializer,
     TestimonialSerializer,
     SocialSerializer,
+    NearbySerializer,
 )
 
 
@@ -190,4 +192,30 @@ def get_social(request, pk):
             status=status.HTTP_404_NOT_FOUND
         )
     serializer = SocialSerializer(item, context={'request': request})
+    return Response(serializer.data)
+
+
+# ========================
+# Nearby APIs
+# ========================
+
+@api_view(['GET'])
+def get_all_nearby(request):
+    """Get all active nearby places ordered by position."""
+    nearby_places = Nearby.objects.filter(active=True).order_by('position')
+    serializer = NearbySerializer(nearby_places, many=True, context={'request': request})
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+def get_nearby(request, pk):
+    """Get a single nearby place by id."""
+    try:
+        nearby = Nearby.objects.get(pk=pk, active=True)
+    except Nearby.DoesNotExist:
+        return Response(
+            {'error': 'Nearby place not found'},
+            status=status.HTTP_404_NOT_FOUND
+        )
+    serializer = NearbySerializer(nearby, context={'request': request})
     return Response(serializer.data)

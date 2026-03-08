@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'package',
     'testimonials',
     'social',
+    'nearby',
     'api',
     'rest_framework',
     'corsheaders',

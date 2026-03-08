@@ -20,6 +20,7 @@ from core.models import Module
 from articles.models import Article
 from blog.models import Blog
 from package.models import Package, SubPackage
+from nearby.models import Nearby
 from testimonials.models import Testimonial
 from django.contrib.auth.models import Group
 from social.models import Social
@@ -39,6 +40,7 @@ MODEL_MAP = {
     "subpackage": SubPackage,
     "testimonial": Testimonial,
     "social": Social,
+    "nearby": Nearby,
 }
 
 ACTIVE_FIELD_MAP = {
@@ -48,6 +50,7 @@ ACTIVE_FIELD_MAP = {
     "subpackage": "is_active",
     "testimonial": "active",
     "social": "active",
+    "nearby": "active",
 }
 
 STAT_COLORS = ['blue', 'orange', 'green', 'cyan', 'red', 'lime', 'purple', 'pink', 'yellow', 'teal']
@@ -61,6 +64,7 @@ _COUNT_MAP = {
     'group_list':   lambda: Group.objects.count(),
     'testimonial_list': lambda: Testimonial.objects.count(),
     'social_list': lambda: Social.objects.count(),
+    'nearby_list': lambda: Nearby.objects.count(),
 }
 _LABEL_COUNT_MAP = {
     'Sub-Packages': lambda: SubPackage.objects.count(),

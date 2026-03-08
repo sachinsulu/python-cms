@@ -4,6 +4,7 @@ from blog.models import Blog
 from package.models import Package, SubPackage
 from testimonials.models import Testimonial
 from social.models import Social
+from nearby.models import Nearby
 
 
 class ArticleSerializer(serializers.ModelSerializer):
@@ -92,5 +93,17 @@ class SocialSerializer(serializers.ModelSerializer):
             'icon',
             'type',
             'type_display',
+            'position',
+        ]
+
+
+class NearbySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Nearby
+        fields = [
+            'id',
+            'title',
+            'distance',
+            'active',
             'position',
         ]

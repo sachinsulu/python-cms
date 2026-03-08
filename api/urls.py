@@ -27,4 +27,9 @@ urlpatterns = [
     path('social/', views.get_all_socials, name='get_all_socials'),
     path('ota/', views.get_all_otas, name='get_all_otas'),
     path('social/<int:pk>/', views.get_social, name='get_social'),
+
+
+    # Nearby
+    path('nearby/', views.get_all_nearby, name='get_all_nearby'),
+    path('nearby/<int:pk>/', views.get_nearby, name='get_nearby'),
 ]

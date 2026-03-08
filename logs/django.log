@@ -11221,3 +11221,200 @@ INFO 2026-03-01 11:37:47,354 autoreload Watching for file changes with StatReloa
 WARNING 2026-03-01 11:37:50,090 log Not Found: /favicon.ico
 WARNING 2026-03-01 11:41:45,251 log Not Found: /api/
 WARNING 2026-03-01 11:41:45,295 log Not Found: /favicon.ico
+INFO 2026-03-08 10:51:44,682 autoreload Watching for file changes with StatReloader
+WARNING 2026-03-08 10:52:06,550 log Not Found: /favicon.ico
+INFO 2026-03-08 11:25:08,687 autoreload D:\project\cms\urls.py changed, reloading.
+INFO 2026-03-08 11:25:09,592 autoreload Watching for file changes with StatReloader
+INFO 2026-03-08 11:25:11,427 autoreload D:\project\cms\urls.py changed, reloading.
+INFO 2026-03-08 11:25:12,248 autoreload Watching for file changes with StatReloader
+INFO 2026-03-08 11:25:24,557 autoreload D:\project\cms\settings.py changed, reloading.
+INFO 2026-03-08 11:25:25,400 autoreload Watching for file changes with StatReloader
+INFO 2026-03-08 11:25:26,884 autoreload D:\project\cms\settings.py changed, reloading.
+INFO 2026-03-08 11:25:27,713 autoreload Watching for file changes with StatReloader
+INFO 2026-03-08 11:25:37,840 autoreload D:\project\cms\views.py changed, reloading.
+INFO 2026-03-08 11:25:38,563 autoreload Watching for file changes with StatReloader
+INFO 2026-03-08 11:25:40,008 autoreload D:\project\cms\views.py changed, reloading.
+INFO 2026-03-08 11:25:40,872 autoreload Watching for file changes with StatReloader
+INFO 2026-03-08 11:25:42,327 autoreload D:\project\cms\views.py changed, reloading.
+INFO 2026-03-08 11:25:43,142 autoreload Watching for file changes with StatReloader
+INFO 2026-03-08 11:25:44,585 autoreload D:\project\cms\views.py changed, reloading.
+INFO 2026-03-08 11:25:45,253 autoreload Watching for file changes with StatReloader
+INFO 2026-03-08 11:25:51,937 autoreload D:\project\cms\views.py changed, reloading.
+INFO 2026-03-08 11:25:52,844 autoreload Watching for file changes with StatReloader
+INFO 2026-03-08 11:26:43,052 autoreload D:\project\nearby\models.py changed, reloading.
+INFO 2026-03-08 11:26:43,833 autoreload Watching for file changes with StatReloader
+INFO 2026-03-08 11:26:46,251 autoreload D:\project\nearby\models.py changed, reloading.
+INFO 2026-03-08 11:26:46,846 autoreload Watching for file changes with StatReloader
+INFO 2026-03-08 11:27:37,844 autoreload D:\project\nearby\models.py changed, reloading.
+INFO 2026-03-08 11:27:38,627 autoreload Watching for file changes with StatReloader
+INFO 2026-03-08 11:27:42,111 autoreload D:\project\nearby\models.py changed, reloading.
+INFO 2026-03-08 11:27:42,761 autoreload Watching for file changes with StatReloader
+INFO 2026-03-08 11:27:48,372 autoreload D:\project\nearby\models.py changed, reloading.
+INFO 2026-03-08 11:27:49,180 autoreload Watching for file changes with StatReloader
+INFO 2026-03-08 11:28:04,499 autoreload D:\project\nearby\models.py changed, reloading.
+INFO 2026-03-08 11:28:05,259 autoreload Watching for file changes with StatReloader
+INFO 2026-03-08 11:28:09,795 autoreload D:\project\nearby\models.py changed, reloading.
+INFO 2026-03-08 11:28:10,713 autoreload Watching for file changes with StatReloader
+INFO 2026-03-08 11:28:17,428 autoreload D:\project\nearby\models.py changed, reloading.
+INFO 2026-03-08 11:28:18,145 autoreload Watching for file changes with StatReloader
+INFO 2026-03-08 11:28:23,765 autoreload D:\project\nearby\models.py changed, reloading.
+INFO 2026-03-08 11:28:24,509 autoreload Watching for file changes with StatReloader
+INFO 2026-03-08 11:28:25,866 autoreload D:\project\nearby\models.py changed, reloading.
+INFO 2026-03-08 11:28:26,625 autoreload Watching for file changes with StatReloader
+INFO 2026-03-08 11:28:36,436 autoreload D:\project\nearby\models.py changed, reloading.
+INFO 2026-03-08 11:28:37,195 autoreload Watching for file changes with StatReloader
+INFO 2026-03-08 11:28:45,984 autoreload D:\project\nearby\models.py changed, reloading.
+INFO 2026-03-08 11:28:46,769 autoreload Watching for file changes with StatReloader
+INFO 2026-03-08 11:28:48,112 autoreload D:\project\nearby\models.py changed, reloading.
+INFO 2026-03-08 11:28:48,919 autoreload Watching for file changes with StatReloader
+INFO 2026-03-08 11:28:57,685 autoreload D:\project\nearby\models.py changed, reloading.
+INFO 2026-03-08 11:28:58,333 autoreload Watching for file changes with StatReloader
+INFO 2026-03-08 11:29:01,816 autoreload D:\project\nearby\models.py changed, reloading.
+INFO 2026-03-08 11:29:02,520 autoreload Watching for file changes with StatReloader
+INFO 2026-03-08 11:29:05,974 autoreload D:\project\nearby\models.py changed, reloading.
+INFO 2026-03-08 11:29:06,892 autoreload Watching for file changes with StatReloader
+INFO 2026-03-08 11:29:20,894 autoreload D:\project\nearby\models.py changed, reloading.
+INFO 2026-03-08 11:29:21,709 autoreload Watching for file changes with StatReloader
+INFO 2026-03-08 11:29:22,909 autoreload D:\project\nearby\models.py changed, reloading.
+INFO 2026-03-08 11:29:23,671 autoreload Watching for file changes with StatReloader
+INFO 2026-03-08 11:29:25,063 autoreload D:\project\nearby\models.py changed, reloading.
+INFO 2026-03-08 11:29:25,896 autoreload Watching for file changes with StatReloader
+INFO 2026-03-08 11:29:30,512 autoreload D:\project\nearby\models.py changed, reloading.
+INFO 2026-03-08 11:29:31,184 autoreload Watching for file changes with StatReloader
+INFO 2026-03-08 11:29:33,666 autoreload D:\project\nearby\models.py changed, reloading.
+INFO 2026-03-08 11:29:34,370 autoreload Watching for file changes with StatReloader
+INFO 2026-03-08 11:29:49,510 autoreload D:\project\nearby\models.py changed, reloading.
+INFO 2026-03-08 11:29:50,249 autoreload Watching for file changes with StatReloader
+INFO 2026-03-08 11:29:52,452 autoreload D:\project\nearby\models.py changed, reloading.
+INFO 2026-03-08 11:29:53,109 autoreload Watching for file changes with StatReloader
+INFO 2026-03-08 11:30:58,212 autoreload D:\project\nearby\models.py changed, reloading.
+INFO 2026-03-08 11:30:58,958 autoreload Watching for file changes with StatReloader
+INFO 2026-03-08 11:31:02,464 autoreload D:\project\nearby\models.py changed, reloading.
+INFO 2026-03-08 11:31:03,263 autoreload Watching for file changes with StatReloader
+INFO 2026-03-08 11:39:30,491 autoreload Watching for file changes with StatReloader
+INFO 2026-03-08 11:39:35,296 autoreload D:\project\cms\views.py changed, reloading.
+INFO 2026-03-08 11:39:36,018 autoreload Watching for file changes with StatReloader
+INFO 2026-03-08 11:39:41,706 autoreload D:\project\cms\views.py changed, reloading.
+INFO 2026-03-08 11:39:42,442 autoreload Watching for file changes with StatReloader
+INFO 2026-03-08 11:39:55,491 autoreload D:\project\cms\views.py changed, reloading.
+INFO 2026-03-08 11:39:56,272 autoreload Watching for file changes with StatReloader
+INFO 2026-03-08 11:39:57,687 autoreload D:\project\cms\views.py changed, reloading.
+INFO 2026-03-08 11:39:58,361 autoreload Watching for file changes with StatReloader
+INFO 2026-03-08 11:40:12,393 autoreload D:\project\cms\views.py changed, reloading.
+INFO 2026-03-08 11:40:13,173 autoreload Watching for file changes with StatReloader
+INFO 2026-03-08 11:40:14,598 autoreload D:\project\cms\views.py changed, reloading.
+INFO 2026-03-08 11:40:15,335 autoreload Watching for file changes with StatReloader
+INFO 2026-03-08 11:43:51,846 autoreload D:\project\api\serializers.py changed, reloading.
+INFO 2026-03-08 11:43:52,555 autoreload Watching for file changes with StatReloader
+INFO 2026-03-08 11:43:58,286 autoreload D:\project\api\serializers.py changed, reloading.
+INFO 2026-03-08 11:43:59,021 autoreload Watching for file changes with StatReloader
+INFO 2026-03-08 11:44:00,472 autoreload D:\project\api\serializers.py changed, reloading.
+INFO 2026-03-08 11:44:01,234 autoreload Watching for file changes with StatReloader
+INFO 2026-03-08 11:44:02,663 autoreload D:\project\api\serializers.py changed, reloading.
+INFO 2026-03-08 11:44:03,430 autoreload Watching for file changes with StatReloader
+INFO 2026-03-08 11:44:11,485 autoreload D:\project\api\views.py changed, reloading.
+INFO 2026-03-08 11:44:12,258 autoreload Watching for file changes with StatReloader
+INFO 2026-03-08 11:44:14,024 autoreload D:\project\api\views.py changed, reloading.
+INFO 2026-03-08 11:44:15,019 autoreload Watching for file changes with StatReloader
+INFO 2026-03-08 11:44:20,866 autoreload D:\project\api\urls.py changed, reloading.
+INFO 2026-03-08 11:44:21,664 autoreload Watching for file changes with StatReloader
+INFO 2026-03-08 11:44:23,349 autoreload D:\project\api\urls.py changed, reloading.
+INFO 2026-03-08 11:44:24,245 autoreload Watching for file changes with StatReloader
+ERROR 2026-03-08 11:44:43,941 log Internal Server Error: /api/nearby/
+Traceback (most recent call last):
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\generic\base.py", line 106, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\rest_framework\decorators.py", line 50, in handler
+    return func(*args, **kwargs)
+  File "D:\project\api\views.py", line 203, in get_all_nearby
+    nearby_places = Nearby.objects.filter(active=True).order_by('position')
+                    ^^^^^^
+NameError: name 'Nearby' is not defined
+WARNING 2026-03-08 11:44:44,066 log Not Found: /favicon.ico
+INFO 2026-03-08 11:45:11,892 autoreload D:\project\api\views.py changed, reloading.
+INFO 2026-03-08 11:45:12,610 autoreload Watching for file changes with StatReloader
+ERROR 2026-03-08 11:45:13,216 log Internal Server Error: /api/nearby/
+Traceback (most recent call last):
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\generic\base.py", line 106, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\rest_framework\decorators.py", line 50, in handler
+    return func(*args, **kwargs)
+  File "D:\project\api\views.py", line 204, in get_all_nearby
+    nearby_places = Nearby.objects.filter(active=True).order_by('position')
+                    ^^^^^^
+NameError: name 'Nearby' is not defined
+INFO 2026-03-08 11:45:14,249 autoreload D:\project\api\views.py changed, reloading.
+INFO 2026-03-08 11:45:15,083 autoreload Watching for file changes with StatReloader
+ERROR 2026-03-08 11:45:15,593 log Internal Server Error: /api/nearby/
+Traceback (most recent call last):
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\project\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\django\views\generic\base.py", line 106, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "D:\project\venv\Lib\site-packages\rest_framework\views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "D:\project\venv\Lib\site-packages\rest_framework\decorators.py", line 50, in handler
+    return func(*args, **kwargs)
+  File "D:\project\api\views.py", line 205, in get_all_nearby
+    serializer = NearbySerializer(nearby_places, many=True, context={'request': request})
+                 ^^^^^^^^^^^^^^^^
+NameError: name 'NearbySerializer' is not defined
+INFO 2026-03-08 11:45:16,826 autoreload D:\project\api\views.py changed, reloading.
+INFO 2026-03-08 11:45:17,708 autoreload Watching for file changes with StatReloader
+WARNING 2026-03-08 11:47:52,714 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-03-08 11:47:57,307 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-03-08 11:48:05,208 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-03-08 11:48:12,616 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-03-08 11:48:13,855 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-03-08 11:48:19,296 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-03-08 11:48:20,662 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-03-08 11:48:26,524 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-03-08 11:48:27,673 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-03-08 11:48:31,955 log Not Found: /favicon.ico
+WARNING 2026-03-08 11:50:10,439 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-03-08 11:50:12,778 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2026-03-08 11:50:15,902 log Not Found: /.well-known/appspecific/com.chrome.devtools.json

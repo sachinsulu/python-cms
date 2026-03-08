@@ -1,0 +1,164 @@
+{% extends "base.html" %}
+{% block content %}
+{{ form.media }}
+
+<h2>{% if is_edit %}Edit{% else %}Create{% endif %} Nearby</h2>
+
+    <style>
+        .toggle-label-text {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 8px;
+        }
+        .toggle-switch {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            user-select: none;
+        }
+        .toggle-switch input[type="checkbox"] {
+            position: absolute;
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .toggle-track {
+            position: relative;
+            width: 48px;
+            height: 26px;
+            background: #d1d5db;
+            border-radius: 999px;
+            transition: background 0.25s ease;
+            flex-shrink: 0;
+        }
+        .toggle-thumb {
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+            transition: transform 0.25s ease;
+        }
+        .toggle-switch input:checked ~ .toggle-track {
+            background: #10b981;
+        }
+        .toggle-switch input:checked ~ .toggle-track .toggle-thumb {
+            transform: translateX(22px);
+        }
+        .toggle-status-text {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #6b7280;
+        }
+        .toggle-switch input:checked ~ .toggle-status-text {
+            color: #10b981;
+        }
+    </style>
+
+<a href="{% url 'nearby_list' %}" class="btn">← Back to Nearby</a>
+
+<div class="form-container">
+
+  <form method="post" enctype="multipart/form-data" data-model="nearby" id="nearby-form">
+    {% csrf_token %}
+
+    <input type="hidden" name="action" id="form-action" value="save">
+
+    {% if form.non_field_errors %}
+      <div class="error">{{ form.non_field_errors }}</div>
+    {% endif %}
+
+    <div class="form-group">
+      <label for="{{ form.title.id_for_label }}">
+          {{ form.title.label }} <span style="color: red;">*</span>
+      </label>
+      {{ form.title }}
+      <small class="help-text">{{ form.title.help_text }}</small>
+      {% if form.title.errors %}
+          <div class="error">{{ form.title.errors }}</div>
+      {% endif %}
+    </div>
+
+    <div class="form-group">
+      <label for="{{ form.distance.id_for_label }}">
+          {{ form.distance.label }} <span style="color: red;">*</span>
+      </label>
+      {{ form.distance }}
+      <small class="help-text">{{ form.distance.help_text }}</small>
+      {% if form.distance.errors %}
+          <div class="error">{{ form.distance.errors }}</div>
+      {% endif %}
+    </div>
+
+    <div class="form-group">
+      <label for="{{ form.map.id_for_label }}">
+          {{ form.map.label }} <span style="color: red;">*</span>
+      </label>
+      {{ form.map }}
+      <small class="help-text">{{ form.map.help_text }}</small>
+      {% if form.map.errors %}
+          <div class="error">{{ form.map.errors }}</div>
+      {% endif %}
+    </div>
+
+    <div class="form-group">
+      <label for="{{ form.content.id_for_label }}">
+          {{ form.content.label }}
+      </label>
+      {{ form.content }}
+      {% if form.content.errors %}
+          <div class="error">{{ form.content.errors }}</div>
+      {% endif %}
+    </div>
+
+    <div class="form-group">
+        <label class="toggle-label-text">{{ form.active.label }}</label>
+        <label class="toggle-switch" for="{{ form.active.id_for_label }}">
+            {{ form.active }}
+            <span class="toggle-track">
+                <span class="toggle-thumb"></span>
+            </span>
+            <span class="toggle-status-text"></span>
+        </label>
+    </div>
+
+    <div style="margin-bottom: 20px;"></div>
+
+    <div class="form-actions" style="display: flex; gap: 10px; align-items: center;">
+      <button type="submit" class="btn" onclick="setFormAction('save')">
+          Save
+      </button>
+      <button type="submit" class="btn" onclick="setFormAction('save_and_quit')" style="background: #3b82f6;">
+          Save & Quit
+      </button>
+      <a href="{% url 'nearby_list' %}" class="btn-cancel">Cancel</a>
+    </div>
+  </form>
+</div>
+
+<script>
+function setFormAction(action) {
+    document.getElementById('form-action').value = action;
+}
+
+// Toggle active status text
+const toggleInput = document.querySelector('.toggle-switch input[type="checkbox"]');
+const statusText = document.querySelector('.toggle-status-text');
+
+function updateToggleText() {
+    statusText.textContent = toggleInput.checked ? 'Active' : 'Inactive';
+}
+
+if (toggleInput) {
+    updateToggleText();
+    toggleInput.addEventListener('change', updateToggleText);
+}
+</script>
+
+{% endblock %}

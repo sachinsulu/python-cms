@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     'social',
     'nearby',
     'faq',
+    'menu',
     'api',
     'rest_framework',
     'corsheaders',

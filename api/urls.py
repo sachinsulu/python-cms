@@ -36,4 +36,9 @@ urlpatterns = [
     # FAQ
     path('faq/', views.get_all_faqs, name='get_all_faqs'),
     path('faq/<int:pk>/', views.get_faq, name='get_faq'),
+
+
+    # Menu
+
+    path('menu/', views.get_menu, name='get_menu'),
 ]

@@ -10,6 +10,7 @@ from testimonials.models import Testimonial
 from social.models import Social
 from nearby.models import Nearby
 from faq.models import FAQ
+from menu.models import MenuItem
 
 from .serializers import (
     ArticleSerializer,
@@ -20,6 +21,7 @@ from .serializers import (
     SocialSerializer,
     NearbySerializer,
     FAQSerializer,
+    MenuItemSerializer,
 )
 
 
@@ -247,3 +249,23 @@ def get_faq(request, pk):
         )
     serializer = FAQSerializer(faq, context={'request': request})
     return Response(serializer.data)
+
+
+
+
+# ========================
+# Menu API
+# ========================
+
+@api_view(['GET'])
+def get_menu(request):
+    items = (
+        MenuItem.objects
+        .filter(active=True, parent=None)
+        .prefetch_related('children')
+        .order_by('position')
+    )
+    serializer = MenuItemSerializer(items, many=True, context={'request': request})
+    return Response(serializer.data)
+
+

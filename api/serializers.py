@@ -6,6 +6,7 @@ from testimonials.models import Testimonial
 from social.models import Social
 from nearby.models import Nearby
 from faq.models import FAQ
+from menu.models import MenuItem
 
 
 class ArticleSerializer(serializers.ModelSerializer):
@@ -120,3 +121,25 @@ class FAQSerializer(serializers.ModelSerializer):
             'active',
             'position',
         ]
+
+
+
+
+
+
+class ChildMenuItemSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = MenuItem
+        fields = ['id', 'label', 'url','position', 'open_in_new_tab']
+
+
+class MenuItemSerializer(serializers.ModelSerializer):
+    children = serializers.SerializerMethodField()
+
+    class Meta:
+        model = MenuItem
+        fields = ['id', 'label', 'url', 'open_in_new_tab', 'position', 'children']
+
+    def get_children(self, instance):
+        active_children = instance.children.filter(active=True).order_by('position')
+        return ChildMenuItemSerializer(active_children, many=True).data

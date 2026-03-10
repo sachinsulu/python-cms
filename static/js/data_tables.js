@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).ready(function () {
     // 1. Get CSRF Token
     function getCookie(name) {
         let cookieValue = null;
@@ -23,9 +23,9 @@ $(document).ready(function() {
         ordering: false,
         pageLength: 10,
         lengthMenu: [
-        [10, 25, 50, -1],  // -1 tells DataTables to show all rows
-        [10, 25, 50, "All"] // The labels displayed in the dropdown
-    ]
+            [10, 25, 50, -1],  // -1 tells DataTables to show all rows
+            [10, 25, 50, "All"] // The labels displayed in the dropdown
+        ]
     });
 
 
@@ -41,11 +41,12 @@ $(document).ready(function() {
         ghostClass: 'sortable-ghost',
         onEnd: function () {
             let newOrder = [];
-            
-            // Loop through all rows in current DOM order to get their data-ids
-            $('#listTable tbody tr').each(function() {
+
+            // Loop through parent rows only (skip child-group rows)
+            $('#listTable tbody tr').each(function () {
+                if ($(this).hasClass('child-group')) return;
                 const id = $(this).data('id');
-                if(id) newOrder.push(id);
+                if (id) newOrder.push(id);
             });
 
             // 4. Send the new ID list to the server
@@ -55,10 +56,10 @@ $(document).ready(function() {
                 headers: { "X-CSRFToken": csrftoken },
                 contentType: "application/json",
                 data: JSON.stringify({ order: newOrder }),
-                success: function() {
+                success: function () {
                     $('#saveMsg').fadeIn().delay(800).fadeOut();
                 },
-                error: function() {
+                error: function () {
                     alert('Save failed. Please refresh and try again.');
                 }
             });

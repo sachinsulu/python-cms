@@ -1,7 +1,7 @@
 from django.contrib import admin
-from django.utils.html import format_html
+from django.utils.html import format_html, mark_safe
 from .models import MenuItem
-
+from django.contrib.admin import ModelAdmin
 
 class ChildMenuItemInline(admin.TabularInline):
     model = MenuItem
@@ -27,6 +27,6 @@ class MenuItemAdmin(admin.ModelAdmin):
 
     def active_icon(self, obj):
         if obj.active:
-            return format_html('<span style="color: green;">✔</span>')
-        return format_html('<span style="color: red;">✖</span>')
+            return mark_safe('<span style="color: green;">✔</span>')
+        return mark_safe('<span style="color: red;">✖</span>')
     active_icon.short_description = "Active"

@@ -39,6 +39,8 @@ urlpatterns = [
 
 
     # Menu
-
     path('menu/', views.get_menu, name='get_menu'),
+
+    # Universal Slug API (Fallback route, should be at the bottom)
+    path('<slug:slug>/', views.get_by_slug, name='get_by_slug'),
 ]

@@ -269,3 +269,66 @@ def get_menu(request):
     return Response(serializer.data)
 
 
+# ========================
+# Universal Slug API
+# ========================
+
+@api_view(['GET'])
+def get_by_slug(request, slug):
+    """
+    Looks up a given slug across Article, Blog, Package, and SubPackage.
+    Returns the first matching active item along with its type.
+    """
+    
+    # Check Articles
+    try:
+        article = Article.objects.get(slug=slug, active=True)
+        serializer = ArticleSerializer(article, context={'request': request})
+        return Response({
+            'type': 'article',
+            'data': serializer.data
+        })
+    except Article.DoesNotExist:
+        pass
+
+    # Check Blogs
+    try:
+        blog = Blog.objects.get(slug=slug, active=True)
+        serializer = BlogSerializer(blog, context={'request': request})
+        return Response({
+            'type': 'blog',
+            'data': serializer.data
+        })
+    except Blog.DoesNotExist:
+        pass
+
+    # Check Packages
+    try:
+        package = Package.objects.prefetch_related(
+            Prefetch('sub_packages', queryset=SubPackage.objects.filter(is_active=True))
+        ).get(slug=slug, is_active=True)
+        serializer = PackageSerializer(package, context={'request': request})
+        return Response({
+            'type': 'package',
+            'data': serializer.data
+        })
+    except Package.DoesNotExist:
+        pass
+
+    # Check SubPackages
+    try:
+        sub = SubPackage.objects.get(slug=slug, is_active=True, package__is_active=True)
+        serializer = SubPackageSerializer(sub, context={'request': request})
+        return Response({
+            'type': 'subpackage',
+            'data': serializer.data
+        })
+    except SubPackage.DoesNotExist:
+        pass
+
+    # Nothing found
+    return Response(
+        {'error': 'Content not found for this slug.'},
+        status=status.HTTP_404_NOT_FOUND
+    )
+

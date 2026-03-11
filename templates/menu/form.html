@@ -283,12 +283,12 @@ const slugData = {
     subpackage: {{ subpackages_json|safe }},
 };
 
-// URL prefix for each content type (adjust to match your frontend routes)
+// URL prefix for each content type (set to / as per user request for direct slug links)
 const urlPrefix = {
-    article:    '/articles/',
-    blog:       '/blog/',
-    package:    '/packages/',
-    subpackage: '/packages/sub/',
+    article:    '/',
+    blog:       '/',
+    package:    '/',
+    subpackage: '/',
 };
 
 const typeSelect    = document.getElementById('slug-type-select');

@@ -44,7 +44,7 @@ def get_article(request, slug):
 
 @api_view(['GET'])
 def get_all_articles(request):
-    articles = Article.objects.filter(active=True, homepage=False)
+    articles = Article.objects.filter(active=True)
     serializer = ArticleSerializer(articles, many=True, context={'request': request})
     return Response(serializer.data)
 

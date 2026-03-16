@@ -349,7 +349,7 @@
                 Edit
               </a>
               <button class="mi-btn-delete"
-                onclick="openDeleteModal('{% url 'module_delete' item.pk %}', 'Are you sure you want to delete &quot;{{ item.label }}&quot;?')">
+                onclick="openDeleteModal('module', '{{ item.label }}', '{% url 'module_delete' item.pk %}')">
                 <i class="fa-solid fa-trash" style="font-size:0.7rem;"></i>
                 Delete
               </button>

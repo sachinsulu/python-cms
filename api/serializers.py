@@ -46,7 +46,7 @@ class SubPackageSerializer(serializers.ModelSerializer):
         ]
 
     def get_amenities(self, obj):
-        features = obj.amenities.order_by('amenity_links__position')
+        features = obj.amenities.filter(active=True).order_by('amenity_links__position')
         return FeatureSerializer(features, many=True, context=self.context).data
 
 

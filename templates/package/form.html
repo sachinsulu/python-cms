@@ -61,8 +61,7 @@
         <label>Package Type <span style="color: red;">*</span></label>
         <div style="display: flex; gap: 20px; margin-top: 8px;">
             {% for radio in form.package_type %}
-            <label
-                style="display: flex; align-items: center; gap: 6px; cursor: pointer; padding: 10px 20px; border: 2px solid #e5e7eb; border-radius: 8px; transition: all 0.2s;">
+            <label style="display: flex; align-items: center; gap: 6px; cursor: pointer; padding: 10px 20px; border: 2px solid #e5e7eb; border-radius: 8px; transition: all 0.2s;">
                 {{ radio.tag }}
                 {{ radio.choice_label }}
             </label>
@@ -73,6 +72,20 @@
         </small>
         {% if form.package_type.errors %}
         <div class="error">{{ form.package_type.errors }}</div>
+        {% endif %}
+    </div>
+
+    <!-- Feature Group dropdown (NEW) -->
+    <div class="form-group">
+        <label for="{{ form.feature_group.id_for_label }}">
+            {{ form.feature_group.label }}
+        </label>
+        {{ form.feature_group }}
+        <small style="color: #6b7280; margin-top: 4px; display: block;">
+            Features from this group will appear as selectable amenities in all sub-packages.
+        </small>
+        {% if form.feature_group.errors %}
+        <div class="error">{{ form.feature_group.errors }}</div>
         {% endif %}
     </div>
 

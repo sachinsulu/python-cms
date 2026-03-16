@@ -1,7 +1,6 @@
 from django.contrib import admin
-from django.utils.html import format_html
 from django.utils.safestring import mark_safe
-from .models import Package, SubPackage
+from .models import Package, SubPackage, SubPackageAmenity
 
 
 class SubPackageInline(admin.TabularInline):
@@ -9,6 +8,13 @@ class SubPackageInline(admin.TabularInline):
     extra = 0
     fields = ('title', 'slug', 'price', 'capacity', 'beds', 'is_active', 'position')
     prepopulated_fields = {"slug": ("title",)}
+
+
+class SubPackageAmenityInline(admin.TabularInline):
+    model = SubPackageAmenity
+    extra = 0
+    fields = ('feature', 'position')
+    ordering = ('position',)
 
 
 @admin.register(Package)
@@ -45,3 +51,11 @@ class SubPackageAdmin(admin.ModelAdmin):
     list_filter = ('is_active', 'package')
     search_fields = ('title', 'description')
     prepopulated_fields = {"slug": ("title",)}
+    inlines = [SubPackageAmenityInline]
+
+
+@admin.register(SubPackageAmenity)
+class SubPackageAmenityAdmin(admin.ModelAdmin):
+    list_display = ('subpackage', 'feature', 'position')
+    list_filter = ('subpackage__package',)
+    ordering = ('subpackage', 'position')

@@ -18,6 +18,14 @@ class Package(models.Model):
         choices=PACKAGE_TYPE_CHOICES,
         default='non_room',
     )
+    feature_group = models.ForeignKey(
+        'features.FeatureGroup',
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='packages',
+        help_text='Feature group whose features will be available as amenities in sub-packages.',
+    )
     is_active = models.BooleanField(default=True)
     position = models.PositiveIntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -53,6 +61,20 @@ class Package(models.Model):
         return f"{self.title} ({self.get_package_type_display()})"
 
 
+class SubPackageAmenity(models.Model):
+    """Through model for SubPackage.amenities — stores display order."""
+    subpackage = models.ForeignKey('SubPackage', on_delete=models.CASCADE, related_name='amenity_links')
+    feature = models.ForeignKey('features.Feature', on_delete=models.CASCADE, related_name='amenity_links')
+    position = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        ordering = ['position']
+        unique_together = [('subpackage', 'feature')]
+
+    def __str__(self):
+        return f"{self.subpackage.title} — {self.feature.title} (pos {self.position})"
+
+
 class SubPackage(models.Model):
     package = models.ForeignKey(Package, on_delete=models.CASCADE, related_name='sub_packages')
     title = models.CharField(max_length=255)
@@ -60,11 +82,16 @@ class SubPackage(models.Model):
     description = models.TextField(blank=True)
     image = models.ImageField(upload_to='subpackages/', blank=True, null=True)
 
-    # Room-only fields
     price = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     capacity = models.PositiveIntegerField(null=True, blank=True, help_text="Max guests")
     beds = models.PositiveIntegerField(null=True, blank=True)
-    amenities = models.TextField(blank=True, help_text="Comma separated: AC, WiFi, TV")
+
+    amenities = models.ManyToManyField(
+        'features.Feature',
+        through=SubPackageAmenity,
+        blank=True,
+        related_name='subpackages',
+    )
 
     is_active = models.BooleanField(default=True)
     position = models.PositiveIntegerField(default=0)

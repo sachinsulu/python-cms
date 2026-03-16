@@ -88,17 +88,68 @@
                 {% endif %}
             </div>
         </div>
-
-        <div class="form-group">
-            <label for="{{ form.amenities.id_for_label }}">Amenities</label>
-            {{ form.amenities }}
-            <small style="color: #6b7280;">Comma separated: AC, WiFi, Mini Bar, TV</small>
-            {% if form.amenities.errors %}
-                <div class="error">{{ form.amenities.errors }}</div>
-            {% endif %}
-        </div>
     </fieldset>
     {% endif %}
+
+    <!-- Amenities section (NEW) -->
+
+    <fieldset style="border: 2px solid #d1fae5; border-radius: 8px; padding: 20px; margin: 20px 0;">
+        <legend style="color: #065f46; font-weight: 600; padding: 0 10px;">✅ Amenities</legend>
+
+        {% if package.feature_group %}
+            <p style="font-size: 0.85rem; color: #6b7280; margin-bottom: 12px;">
+                Showing features from group: <strong>{{ package.feature_group.title }}</strong>
+                &nbsp;·&nbsp; <span style="color:#10b981;">Drag to reorder</span>
+            </p>
+
+            {% if form.amenities.field.queryset.exists %}
+
+            <!-- Hidden input — JS keeps this in sync with drag order -->
+            <input type="hidden" name="amenity_order" id="amenity_order" value="">
+
+            <ul id="amenity-list" style="list-style:none; padding:0; margin:0; display:flex; flex-wrap:wrap; gap:10px;">
+                {% for checkbox in form.amenities %}
+                <li class="amenity-item"
+                    data-id="{{ checkbox.data.value }}"
+                    style="display:flex; align-items:center; gap:8px; padding:8px 14px;
+                        border:1.5px solid #d1d5db; border-radius:8px; cursor:grab;
+                        background:#fff; user-select:none; transition: border-color 0.2s, background 0.2s;">
+                    <!-- Drag handle -->
+                    <i class="fa-solid fa-grip-vertical" style="color:#9ca3af; font-size:0.8rem;"></i>
+                    <!-- Actual checkbox (hidden visually, state tracked by JS) -->
+                    <input type="checkbox"
+                        name="amenities"
+                        value="{{ checkbox.data.value }}"
+                        id="amenity_{{ checkbox.data.value }}"
+                        {% if checkbox.data.selected %}checked{% endif %}
+                        style="display:none;">
+                    <span class="amenity-title" style="font-size:0.9rem;">{{ checkbox.choice_label }}</span>
+                </li>
+                {% endfor %}
+            </ul>
+
+            {% if form.amenities.errors %}
+                <div class="error" style="margin-top:8px;">{{ form.amenities.errors }}</div>
+            {% endif %}
+
+            {% else %}
+                <p style="color:#9ca3af; font-size:0.9rem;">
+                    No active features found in this group.
+                    <a href="{% url 'feature_create' package.feature_group.id %}" style="color:#3b82f6;">Add features →</a>
+                </p>
+            {% endif %}
+
+        {% else %}
+            <p style="color:#9ca3af; font-size:0.9rem;">
+                No feature group assigned to this package.
+                <a href="{% url 'package_edit' package.slug %}" style="color:#3b82f6;">Edit the package to assign one →</a>
+            </p>
+        {% endif %}
+    </fieldset>
+
+
+
+
 
     <div class="form-group">
         <label>Image</label>
@@ -134,4 +185,79 @@
         <a href="{% url 'subpackage_list' package.slug %}" class="btn btn-secondary">Cancel</a>
     </div>
 </form>
+
+<style>
+.amenity-checkbox-label:has(input:checked) {
+    border-color: #10b981;
+    background: #ecfdf5;
+    color: #065f46;
+}
+.amenity-checkbox-label input[type="checkbox"] {
+    accent-color: #10b981;
+    width: 16px;
+    height: 16px;
+}
+.amenity-item { touch-action: none; }
+.amenity-item.selected {
+    border-color: #10b981 !important;
+    background: #ecfdf5 !important;
+    color: #065f46;
+}
+.amenity-item.selected i { color: #10b981; }
+.amenity-item.sortable-ghost { opacity: 0.35; background: #f0fdf4 !important; }
+.amenity-item.sortable-chosen { box-shadow: 0 4px 12px rgba(16,185,129,0.25); cursor: grabbing; }
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+<script>
+(function () {
+    const list       = document.getElementById('amenity-list');
+    const orderInput = document.getElementById('amenity_order');
+    if (!list) return;
+
+    // --- Restore existing order for edit page ---
+    const existingOrder = {{ existing_amenity_ids|default:"[]" }};
+    if (existingOrder.length) {
+        const items = Array.from(list.querySelectorAll('.amenity-item'));
+        const map   = Object.fromEntries(items.map(el => [el.dataset.id, el]));
+        // Append in saved order first, then any remaining (unchecked) ones
+        existingOrder.forEach(id => { if (map[String(id)]) list.appendChild(map[String(id)]); });
+        items.forEach(el   => { if (!existingOrder.includes(Number(el.dataset.id))) list.appendChild(el); });
+    }
+
+    // --- Toggle selected state on click ---
+    list.addEventListener('click', function (e) {
+        const item = e.target.closest('.amenity-item');
+        if (!item) return;
+        const cb = item.querySelector('input[type="checkbox"]');
+        cb.checked = !cb.checked;
+        item.classList.toggle('selected', cb.checked);
+        syncOrder();
+    });
+
+    // --- Init visual state from checkbox state ---
+    list.querySelectorAll('.amenity-item').forEach(item => {
+        const cb = item.querySelector('input[type="checkbox"]');
+        if (cb.checked) item.classList.add('selected');
+    });
+
+    // --- SortableJS drag-and-drop ---
+    Sortable.create(list, {
+        animation: 150,
+        handle: '.fa-grip-vertical',
+        ghostClass: 'sortable-ghost',
+        chosenClass: 'sortable-chosen',
+        onEnd: syncOrder,
+    });
+
+    function syncOrder() {
+        const ids = Array.from(list.querySelectorAll('.amenity-item'))
+                         .map(el => el.dataset.id);
+        orderInput.value = ids.join(',');
+    }
+
+    // Sync on load
+    syncOrder();
+})();
+</script>
 {% endblock %}

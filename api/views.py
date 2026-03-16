@@ -11,6 +11,7 @@ from social.models import Social
 from nearby.models import Nearby
 from faq.models import FAQ
 from menu.models import MenuItem
+from features.models import Feature
 
 from .serializers import (
     ArticleSerializer,
@@ -22,6 +23,7 @@ from .serializers import (
     NearbySerializer,
     FAQSerializer,
     MenuItemSerializer,
+    FeatureSerializer,
 )
 
 
@@ -332,3 +334,21 @@ def get_by_slug(request, slug):
         status=status.HTTP_404_NOT_FOUND
     )
 
+
+
+# ========================
+# Feature APIs
+# ========================
+
+@api_view(['GET'])
+def get_all_features(request):
+    features = Feature.objects.filter(status=Feature.STATUS_ACTIVE).order_by('position')
+    return Response(FeatureSerializer(features, many=True, context={'request': request}).data)
+
+@api_view(['GET'])
+def get_feature(request, pk):
+    try:
+        feature = Feature.objects.get(pk=pk, status=Feature.STATUS_ACTIVE)
+    except Feature.DoesNotExist:
+        return Response({'error': 'Feature not found'}, status=status.HTTP_404_NOT_FOUND)
+    return Response(FeatureSerializer(feature, context={'request': request}).data)

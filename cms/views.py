@@ -26,6 +26,7 @@ from testimonials.models import Testimonial
 from django.contrib.auth.models import Group
 from social.models import Social
 from menu.models import MenuItem
+from features.models import Feature, FeatureGroup
 User = get_user_model()
 logger = logging.getLogger(__name__)
 
@@ -45,6 +46,8 @@ MODEL_MAP = {
     "nearby": Nearby,
     "faq": FAQ,
     "menu": MenuItem,
+    "feature": Feature,
+    "featuregroup": FeatureGroup,
 }
 
 ACTIVE_FIELD_MAP = {
@@ -57,6 +60,8 @@ ACTIVE_FIELD_MAP = {
     "nearby": "active",
     "faq": "active",
     "menu": "active",
+    "feature": "active",
+    "featuregroup": "active",
 }
 
 STAT_COLORS = ['blue', 'orange', 'green', 'cyan', 'red', 'lime', 'purple', 'pink', 'yellow', 'teal']
@@ -72,6 +77,7 @@ _COUNT_MAP = {
     'social_list': lambda: Social.objects.count(),
     'nearby_list': lambda: Nearby.objects.count(),
     'faq_list': lambda: FAQ.objects.count(),
+    'feature_list': lambda: Feature.objects.count(),
     
 }
 _LABEL_COUNT_MAP = {

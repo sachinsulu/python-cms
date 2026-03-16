@@ -7,6 +7,7 @@ from social.models import Social
 from nearby.models import Nearby
 from faq.models import FAQ
 from menu.models import MenuItem
+from features.models import Feature
 
 
 class ArticleSerializer(serializers.ModelSerializer):
@@ -143,3 +144,11 @@ class MenuItemSerializer(serializers.ModelSerializer):
     def get_children(self, instance):
         active_children = instance.children.filter(active=True).order_by('position')
         return ChildMenuItemSerializer(active_children, many=True).data
+
+
+
+
+class FeatureSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Feature
+        fields = ['id', 'title', 'image', 'content', 'icon', 'status', 'position']

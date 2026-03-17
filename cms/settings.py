@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     'testimonials',
     'social',
     'nearby',
+    'services',
     'faq',
     'menu',
     'features',

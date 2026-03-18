@@ -27,6 +27,7 @@ from django.contrib.auth.models import Group
 from social.models import Social
 from menu.models import MenuItem
 from features.models import Feature, FeatureGroup
+from popup.models import Popup
 User = get_user_model()
 logger = logging.getLogger(__name__)
 
@@ -48,6 +49,7 @@ MODEL_MAP = {
     "menu": MenuItem,
     "feature": Feature,
     "featuregroup": FeatureGroup,
+    "popup": Popup,
 }
 
 ACTIVE_FIELD_MAP = {
@@ -62,6 +64,7 @@ ACTIVE_FIELD_MAP = {
     "menu": "active",
     "feature": "active",
     "featuregroup": "active",
+    "popup": "status",
 }
 
 STAT_COLORS = ['blue', 'orange', 'green', 'cyan', 'red', 'lime', 'purple', 'pink', 'yellow', 'teal']

@@ -1,0 +1,265 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>{% if is_edit %}Edit{% else %}Create{% endif %} Popup</h2>
+
+<a href="{% url 'popup_list' %}" class="btn">← Back to Popups</a>
+
+<style>
+    .toggle-label-text {
+        display: block; font-size: 0.85rem; font-weight: 600; color: #374151; margin-bottom: 8px;
+    }
+    .toggle-switch {
+        display: inline-flex; align-items: center; gap: 10px; cursor: pointer; user-select: none;
+    }
+    .toggle-switch input[type="checkbox"] { position: absolute; opacity: 0; width: 0; height: 0; }
+    .toggle-track {
+        position: relative; width: 48px; height: 26px; background: #d1d5db;
+        border-radius: 999px; transition: background 0.25s ease; flex-shrink: 0;
+    }
+    .toggle-thumb {
+        position: absolute; top: 3px; left: 3px; width: 20px; height: 20px;
+        background: white; border-radius: 50%; box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+        transition: transform 0.25s ease;
+    }
+    .toggle-switch input:checked ~ .toggle-track { background: #10b981; }
+    .toggle-switch input:checked ~ .toggle-track .toggle-thumb { transform: translateX(22px); }
+    .toggle-status-text { font-size: 0.85rem; font-weight: 500; color: #6b7280; }
+    .toggle-switch input:checked ~ .toggle-status-text { color: #10b981; }
+
+    /* Type selector tabs */
+    .type-tabs { display: flex; gap: 8px; margin-bottom: 10px; }
+    .type-tab {
+        flex: 1; padding: 10px; border-radius: 8px; border: 2px solid #e5e7eb;
+        background: #f9fafb; color: #6b7280; font-size: 0.85rem; font-weight: 600;
+        cursor: pointer; transition: all 0.15s; text-align: center;
+        display: flex; flex-direction: column; align-items: center; gap: 6px;
+    }
+    .type-tab i { font-size: 1.3rem; }
+    .type-tab.active { border-color: #6366f1; background: #eef2ff; color: #4338ca; }
+
+    /* File preview */
+    .file-preview-wrap { margin-top: 10px; }
+    .file-preview-wrap img, .file-preview-wrap video {
+        max-width: 100%; max-height: 220px; border-radius: 8px;
+        border: 1px solid #e5e7eb; display: block;
+    }
+    .remove-file-btn {
+        margin-top: 6px; font-size: 12px; color: #ef4444;
+        cursor: pointer; display: inline-flex; align-items: center; gap: 4px;
+    }
+    .remove-file-btn:hover { text-decoration: underline; }
+</style>
+
+<div class="form-container">
+  <form method="post" enctype="multipart/form-data" id="popup-form">
+    {% csrf_token %}
+    <input type="hidden" name="action" id="form-action" value="save">
+    <input type="hidden" name="remove_file" id="remove_file" value="0">
+    <input type="hidden" name="type" id="hidden_type" value="{{ form.type.value|default:'image' }}">
+
+    {% if form.non_field_errors %}
+      <div class="error">{{ form.non_field_errors }}</div>
+    {% endif %}
+
+    <!-- Title -->
+    <div class="form-group">
+      <label for="{{ form.title.id_for_label }}">
+        {{ form.title.label }} <span style="color:red;">*</span>
+      </label>
+      {{ form.title }}
+      {% if form.title.errors %}<div class="error">{{ form.title.errors }}</div>{% endif %}
+    </div>
+
+    <!-- Date row -->
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+      <div class="form-group">
+        <label for="{{ form.start_date.id_for_label }}">
+          {{ form.start_date.label }} <span style="color:red;">*</span>
+        </label>
+        {{ form.start_date }}
+        {% if form.start_date.errors %}<div class="error">{{ form.start_date.errors }}</div>{% endif %}
+      </div>
+      <div class="form-group">
+        <label for="{{ form.end_date.id_for_label }}">
+          {{ form.end_date.label }} <span style="color:red;">*</span>
+        </label>
+        {{ form.end_date }}
+        {% if form.end_date.errors %}<div class="error">{{ form.end_date.errors }}</div>{% endif %}
+      </div>
+    </div>
+
+    <!-- Type selector -->
+    <div class="form-group">
+      <label class="toggle-label-text">Type <span style="color:red;">*</span></label>
+      <div class="type-tabs">
+        <button type="button" class="type-tab {% if form.type.value != 'video' %}active{% endif %}" data-type="image" id="tab-image">
+          <i class="fa-solid fa-image"></i>
+          Image
+        </button>
+        <button type="button" class="type-tab {% if form.type.value == 'video' %}active{% endif %}" data-type="video" id="tab-video">
+          <i class="fa-solid fa-video"></i>
+          Video
+        </button>
+      </div>
+      {% if form.type.errors %}<div class="error">{{ form.type.errors }}</div>{% endif %}
+    </div>
+
+    <!-- File upload -->
+    <div class="form-group">
+      <label for="{{ form.file.id_for_label }}">Upload File</label>
+      {% if form.file.errors %}<div class="error">{{ form.file.errors }}</div>{% endif %}
+
+      <div class="input-file-container">
+        <input type="file" name="file" id="id_file" class="form-control" accept="image/*">
+      </div>
+      <small class="help-text" id="file-help-image">
+        Allowed: JPG, PNG, WebP | Max 2MB | Max 1920×1280px
+      </small>
+      <small class="help-text" id="file-help-video" style="display:none;">
+        Allowed: MP4, WebM, OGG, MOV | Max 50MB
+      </small>
+
+      <!-- Preview -->
+      <div class="file-preview-wrap" id="file-preview-wrap">
+        {% if is_edit and item.file %}
+          {% if item.is_image %}
+            <img src="{{ item.file.url }}" alt="{{ item.title }}" id="preview-img">
+            <video id="preview-video" style="display:none;" controls></video>
+          {% else %}
+            <img id="preview-img" style="display:none;" alt="">
+            <video src="{{ item.file.url }}" id="preview-video" controls></video>
+          {% endif %}
+          <span class="remove-file-btn" onclick="removeFile()">
+            <i class="fa-solid fa-xmark"></i> Remove file
+          </span>
+        {% else %}
+          <img id="preview-img" style="display:none;" alt="">
+          <video id="preview-video" style="display:none;" controls></video>
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- Link -->
+    <div class="form-group">
+      <label for="{{ form.link.id_for_label }}">{{ form.link.label }}</label>
+      {{ form.link }}
+      <small class="help-text">Optional. E.g. <code>/about/</code> or <code>https://example.com</code></small>
+      {% if form.link.errors %}<div class="error">{{ form.link.errors }}</div>{% endif %}
+    </div>
+
+    <!-- Status toggle -->
+    <div class="form-group">
+      <label class="toggle-label-text">{{ form.status.label }}</label>
+      <label class="toggle-switch" for="{{ form.status.id_for_label }}">
+        {{ form.status }}
+        <span class="toggle-track">
+          <span class="toggle-thumb"></span>
+        </span>
+        <span class="toggle-status-text status-text"></span>
+      </label>
+    </div>
+
+    <div style="margin-bottom:20px;"></div>
+
+    <div class="form-actions" style="display:flex; gap:10px; align-items:center;">
+      <button type="submit" class="btn" onclick="setFormAction('save')">Save</button>
+      <button type="submit" class="btn" onclick="setFormAction('save_and_new')" style="background:#10b981;">Save &amp; New</button>
+      <button type="submit" class="btn" onclick="setFormAction('save_and_quit')" style="background:#3b82f6;">Save &amp; Quit</button>
+      <a href="{% url 'popup_list' %}" class="btn-cancel">Cancel</a>
+    </div>
+
+  </form>
+</div>
+
+<script>
+// ─── Form action ───────────────────────────────────────────────
+function setFormAction(action) {
+    document.getElementById('form-action').value = action;
+}
+
+// ─── Status toggle ─────────────────────────────────────────────
+const statusInput = document.querySelector('#{{ form.status.id_for_label }}');
+const statusText  = document.querySelector('.status-text');
+function updateStatusText() {
+    statusText.textContent = statusInput.checked ? 'Active' : 'Inactive';
+}
+if (statusInput) { updateStatusText(); statusInput.addEventListener('change', updateStatusText); }
+
+// ─── Type tabs ─────────────────────────────────────────────────
+const hiddenType  = document.getElementById('hidden_type');
+const fileInput   = document.getElementById('id_file');
+const helpImage   = document.getElementById('file-help-image');
+const helpVideo   = document.getElementById('file-help-video');
+const previewImg  = document.getElementById('preview-img');
+const previewVid  = document.getElementById('preview-video');
+
+function setType(type) {
+    hiddenType.value = type;
+    document.querySelectorAll('.type-tab').forEach(t => t.classList.remove('active'));
+    document.getElementById('tab-' + type).classList.add('active');
+
+    if (type === 'image') {
+        fileInput.accept = 'image/*';
+        helpImage.style.display = '';
+        helpVideo.style.display = 'none';
+    } else {
+        fileInput.accept = 'video/*';
+        helpImage.style.display = 'none';
+        helpVideo.style.display = '';
+    }
+
+    // Reset preview on type switch
+    previewImg.style.display = 'none';
+    previewImg.src = '';
+    previewVid.style.display = 'none';
+    previewVid.src = '';
+    fileInput.value = '';
+}
+
+document.querySelectorAll('.type-tab').forEach(tab => {
+    tab.addEventListener('click', () => setType(tab.dataset.type));
+});
+
+// ─── Live file preview ──────────────────────────────────────────
+fileInput.addEventListener('change', () => {
+    const file = fileInput.files[0];
+    if (!file) return;
+
+    const type = hiddenType.value;
+    const url  = URL.createObjectURL(file);
+
+    if (type === 'image') {
+        previewImg.src = url;
+        previewImg.style.display = 'block';
+        previewVid.style.display = 'none';
+    } else {
+        previewVid.src = url;
+        previewVid.style.display = 'block';
+        previewImg.style.display = 'none';
+    }
+
+    // Show remove button if not already present
+    let removeBtn = document.querySelector('.remove-file-btn');
+    if (!removeBtn) {
+        removeBtn = document.createElement('span');
+        removeBtn.className = 'remove-file-btn';
+        removeBtn.innerHTML = '<i class="fa-solid fa-xmark"></i> Remove file';
+        removeBtn.onclick = removeFile;
+        document.getElementById('file-preview-wrap').appendChild(removeBtn);
+    }
+    document.getElementById('remove_file').value = '0';
+});
+
+// ─── Remove existing file ───────────────────────────────────────
+function removeFile() {
+    document.getElementById('remove_file').value = '1';
+    previewImg.src = ''; previewImg.style.display = 'none';
+    previewVid.src = ''; previewVid.style.display = 'none';
+    fileInput.value = '';
+    const removeBtn = document.querySelector('.remove-file-btn');
+    if (removeBtn) removeBtn.remove();
+}
+</script>
+
+{% endblock %}

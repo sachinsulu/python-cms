@@ -1,9 +1,14 @@
+import json
 import logging
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 from django.urls import reverse
 from django.views.decorators.csrf import ensure_csrf_cookie
+
+from articles.models import Article
+from blog.models import Blog
+from package.models import Package, SubPackage
 
 from users.decorators import requires_perm
 from .forms import ServiceForm
@@ -12,6 +17,22 @@ from .models import Service
 logger = logging.getLogger(__name__)
 
 SESSION_KEY = 'service_type_filter'
+
+
+def _slug_json(queryset, title_field='title'):
+    return json.dumps([
+        {'title': str(getattr(obj, title_field)), 'slug': obj.slug}
+        for obj in queryset
+    ])
+
+
+def _picker_context():
+    return {
+        'articles_json':    _slug_json(Article.objects.filter(active=True).order_by('title')),
+        'blogs_json':       _slug_json(Blog.objects.filter(active=True).order_by('title')),
+        'packages_json':    _slug_json(Package.objects.filter(is_active=True).order_by('title')),
+        'subpackages_json': _slug_json(SubPackage.objects.filter(is_active=True).order_by('title')),
+    }
 
 
 @ensure_csrf_cookie
@@ -64,6 +85,7 @@ def service_create(request):
     return render(request, 'services/form.html', {
         'form': form,
         'current_type': current_type,
+        **_picker_context(),
     })
 
 
@@ -101,4 +123,5 @@ def service_edit(request, pk):
         'is_edit': True,
         'item': item,
         'current_type': current_type,
+        **_picker_context(),
     })

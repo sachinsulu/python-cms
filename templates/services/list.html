@@ -92,9 +92,7 @@
                 {% if current_filter == type_main_service %}
                 <td>
                     {% if item.link %}
-                        <a href="{{ item.link }}" target="_blank" style="color:#3b82f6; font-size:0.8rem;">
-                            {{ item.link|truncatechars:35 }}
-                        </a>
+                        <code>{{ item.link|truncatechars:35 }}</code>
                     {% else %}
                         <span style="color:#d1d5db;">—</span>
                     {% endif %}

@@ -80,7 +80,7 @@
     {% for item in sidebar_menu %}
       {% with keywords=item.url_name_match|split:"," %}
       <a href="{% url item.url_name %}"
-         class="{% for kw in keywords %}{% if kw in request.resolver_match.url_name %}active{% endif %}{% endfor %}">
+         class="{% for kw in keywords %}{% if kw and kw in request.resolver_match.url_name %}active{% endif %}{% endfor %}">
         <i class="{{ item.icon }}"></i>
         <span>{{ item.label }}</span>
       </a>

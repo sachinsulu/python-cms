@@ -8,6 +8,8 @@ from nearby.models import Nearby
 from faq.models import FAQ
 from menu.models import MenuItem
 from features.models import Feature, FeatureGroup
+from services.models import Service
+from popup.models import Popup
 
 
 class ArticleSerializer(serializers.ModelSerializer):
@@ -109,3 +111,13 @@ class MenuItemSerializer(serializers.ModelSerializer):
     def get_children(self, instance):
         active_children = instance.children.filter(active=True).order_by('position')
         return ChildMenuItemSerializer(active_children, many=True).data
+
+class ServiceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Service
+        fields = ['id', 'title', 'content', 'image', 'icon', 'active', 'position']
+
+class PopupSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Popup
+        fields = ['id', 'title', 'content', 'image', 'icon', 'active', 'position']

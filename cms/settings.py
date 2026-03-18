@@ -61,6 +61,7 @@ INSTALLED_APPS = [
     'faq',
     'menu',
     'features',
+    'popup',
     'api',
     'rest_framework',
     'corsheaders',

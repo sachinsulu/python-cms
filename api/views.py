@@ -12,6 +12,8 @@ from nearby.models import Nearby
 from faq.models import FAQ
 from menu.models import MenuItem
 from features.models import Feature
+from services.models import Service
+from popup.models import Popup
 
 from .serializers import (
     ArticleSerializer,
@@ -24,6 +26,8 @@ from .serializers import (
     FAQSerializer,
     MenuItemSerializer,
     FeatureSerializer,
+    ServiceSerializer,
+    PopupSerializer,
 )
 
 
@@ -352,3 +356,39 @@ def get_feature(request, pk):
     except Feature.DoesNotExist:
         return Response({'error': 'Feature not found'}, status=status.HTTP_404_NOT_FOUND)
     return Response(FeatureSerializer(feature, context={'request': request}).data)
+
+
+# ========================
+# Service APIs
+# ========================
+
+@api_view(['GET'])
+def get_all_services(request):
+    services = Service.objects.filter(active=True).order_by('position')
+    return Response(ServiceSerializer(services, many=True, context={'request': request}).data)
+
+@api_view(['GET'])
+def get_service(request, pk):
+    try:
+        service = Service.objects.get(pk=pk, active=True)
+    except Service.DoesNotExist:
+        return Response({'error': 'Service not found'}, status=status.HTTP_404_NOT_FOUND)
+    return Response(ServiceSerializer(service, context={'request': request}).data)
+
+
+# ========================
+# Popup APIs
+# ========================
+
+@api_view(['GET'])
+def get_all_popups(request):
+    popups = Popup.objects.filter(active=True).order_by('position')
+    return Response(PopupSerializer(popups, many=True, context={'request': request}).data)
+
+@api_view(['GET'])
+def get_popup(request, pk):
+    try:
+        popup = Popup.objects.get(pk=pk, active=True)
+    except Popup.DoesNotExist:
+        return Response({'error': 'Popup not found'}, status=status.HTTP_404_NOT_FOUND)
+    return Response(PopupSerializer(popup, context={'request': request}).data)

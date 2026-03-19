@@ -30,6 +30,19 @@ class Package(models.Model):
     position = models.PositiveIntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
 
+    meta_title = models.CharField(
+        max_length=60,
+        blank=True,
+    )
+    meta_description = models.TextField(
+        max_length=160,
+        blank=True,
+    )
+    meta_keywords = models.CharField(
+        max_length=205,
+        blank=True,
+    )
+
     class Meta:
         ordering = ['position']
 
@@ -96,6 +109,19 @@ class SubPackage(models.Model):
     is_active = models.BooleanField(default=True)
     position = models.PositiveIntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
+
+    meta_title = models.CharField(
+        max_length=60,
+        blank=True,
+    )
+    meta_description = models.TextField(
+        max_length=160,
+        blank=True,
+    )
+    meta_keywords = models.CharField(
+        max_length=205,
+        blank=True,
+    )
 
     class Meta:
         ordering = ['position']

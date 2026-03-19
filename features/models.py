@@ -1,5 +1,6 @@
 from django.db import models, transaction
 from django.db.models import Max
+from ckeditor_uploader.fields import RichTextUploadingField
 
 
 class FeatureGroup(models.Model):
@@ -28,7 +29,7 @@ class Feature(models.Model):
     group = models.ForeignKey(FeatureGroup, on_delete=models.CASCADE, related_name='features')
     title    = models.CharField(max_length=255)
     image    = models.ImageField(upload_to='features/', blank=True, null=True)
-    content  = models.TextField(blank=True)
+    content  = RichTextUploadingField(blank=True)
     icon     = models.CharField(max_length=255, blank=True, help_text='CSS class e.g. fa-solid fa-star')
     active   = models.BooleanField(default=True)
     position = models.PositiveIntegerField(default=0)

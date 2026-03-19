@@ -28,6 +28,7 @@ from social.models import Social
 from menu.models import MenuItem
 from features.models import Feature, FeatureGroup
 from popup.models import Popup
+from offers.models import Offer
 User = get_user_model()
 logger = logging.getLogger(__name__)
 
@@ -50,6 +51,7 @@ MODEL_MAP = {
     "feature": Feature,
     "featuregroup": FeatureGroup,
     "popup": Popup,
+    "offer": Offer,
 }
 
 ACTIVE_FIELD_MAP = {
@@ -65,6 +67,7 @@ ACTIVE_FIELD_MAP = {
     "feature": "active",
     "featuregroup": "active",
     "popup": "status",
+    "offer": "active",
 }
 
 STAT_COLORS = ['blue', 'orange', 'green', 'cyan', 'red', 'lime', 'purple', 'pink', 'yellow', 'teal']
@@ -81,7 +84,7 @@ _COUNT_MAP = {
     'nearby_list': lambda: Nearby.objects.count(),
     'faq_list': lambda: FAQ.objects.count(),
     'feature_list': lambda: Feature.objects.count(),
-    
+    'offer_list': lambda: Offer.objects.count(),
 }
 _LABEL_COUNT_MAP = {
     'Sub-Packages': lambda: SubPackage.objects.count(),

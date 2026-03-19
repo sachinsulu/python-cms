@@ -53,6 +53,14 @@ urlpatterns = [
     path('popups/', views.get_all_popups, name='get_all_popups'),
     path('popups/<int:pk>/', views.get_popup, name='get_popup'),
 
+    # Offers
+    path('offers/', views.get_all_offers, name='get_all_offers'),
+    path('offers/<int:pk>/', views.get_offer, name='get_offer'),
+
+    # Core Modules
+    path('modules/', views.get_all_modules, name='get_all_modules'),
+    path('modules/<int:pk>/', views.get_module, name='get_module'),
+
     # Universal Slug API (Fallback route, should be at the bottom)
     path('<slug:slug>/', views.get_by_slug, name='get_by_slug'),
 ]

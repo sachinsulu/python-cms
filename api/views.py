@@ -14,6 +14,8 @@ from menu.models import MenuItem
 from features.models import Feature
 from services.models import Service
 from popup.models import Popup
+from offers.models import Offer
+from core.models import Module
 
 from .serializers import (
     ArticleSerializer,
@@ -28,6 +30,8 @@ from .serializers import (
     FeatureSerializer,
     ServiceSerializer,
     PopupSerializer,
+    OfferSerializer,
+    ModuleSerializer,
 )
 
 
@@ -392,3 +396,55 @@ def get_popup(request, pk):
     except Popup.DoesNotExist:
         return Response({'error': 'Popup not found'}, status=status.HTTP_404_NOT_FOUND)
     return Response(PopupSerializer(popup, context={'request': request}).data)
+
+
+# ========================
+# Offer APIs
+# ========================
+
+@api_view(['GET'])
+def get_all_offers(request):
+    """Get all active offers ordered by position."""
+    offers = Offer.objects.filter(active=True).order_by('position')
+    serializer = OfferSerializer(offers, many=True, context={'request': request})
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+def get_offer(request, pk):
+    """Get a single offer by id."""
+    try:
+        offer = Offer.objects.get(pk=pk, active=True)
+    except Offer.DoesNotExist:
+        return Response(
+            {'error': 'Offer not found'},
+            status=status.HTTP_404_NOT_FOUND
+        )
+    serializer = OfferSerializer(offer, context={'request': request})
+    return Response(serializer.data)
+
+
+# ========================
+# Core Module APIs
+# ========================
+
+@api_view(['GET'])
+def get_all_modules(request):
+    """Get all active core modules ordered by position."""
+    modules = Module.objects.filter(is_active=True).order_by('order')
+    serializer = ModuleSerializer(modules, many=True, context={'request': request})
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+def get_module(request, pk):
+    """Get a single core module by id."""
+    try:
+        module = Module.objects.get(pk=pk, is_active=True)
+    except Module.DoesNotExist:
+        return Response(
+            {'error': 'Module not found'},
+            status=status.HTTP_404_NOT_FOUND
+        )
+    serializer = ModuleSerializer(module, context={'request': request})
+    return Response(serializer.data)

@@ -10,6 +10,8 @@ from menu.models import MenuItem
 from features.models import Feature, FeatureGroup
 from services.models import Service
 from popup.models import Popup
+from offers.models import Offer
+from core.models import Module
 
 
 class ArticleSerializer(serializers.ModelSerializer):
@@ -121,3 +123,13 @@ class PopupSerializer(serializers.ModelSerializer):
     class Meta:
         model = Popup
         fields = ['id', 'title', 'content', 'image', 'icon', 'active', 'position']
+
+class OfferSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Offer
+        fields = '__all__'
+
+class ModuleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Module
+        fields = '__all__'

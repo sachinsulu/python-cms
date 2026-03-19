@@ -36,6 +36,7 @@ urlpatterns = [
     path('menu/', include('menu.urls')),
     path('features/', include('features.urls')),
     path('services/', include('services.urls')),
+    path('offers/', include('offers.urls')),
     path('popup/', include('popup.urls')),
     path('ckeditor/', include('ckeditor_uploader.urls')),
     path('admin/', admin.site.urls),

@@ -11,7 +11,7 @@ class FeatureTitleChoiceField(forms.ModelMultipleChoiceField):
 class PackageForm(forms.ModelForm):
     class Meta:
         model = Package
-        fields = ['title', 'slug', 'description', 'image', 'package_type', 'feature_group', 'is_active']
+        fields = ['title', 'slug', 'description', 'image', 'package_type', 'feature_group', 'is_active', 'meta_title', 'meta_description', 'meta_keywords']
         widgets = {
             'title': forms.TextInput(attrs={'placeholder': 'Package Title'}),
             'description': forms.Textarea(attrs={
@@ -21,6 +21,9 @@ class PackageForm(forms.ModelForm):
             'image': forms.FileInput(),
             'package_type': forms.RadioSelect(),
             'feature_group': forms.Select(attrs={'class': 'form-control'}),
+            'meta_title': forms.TextInput(attrs={'placeholder': 'Meta title (max 60 chars)', 'maxlength': '60'}),
+            'meta_description': forms.Textarea(attrs={'rows': 3, 'placeholder': 'Meta description (max 160 chars)', 'maxlength': '160'}),
+            'meta_keywords': forms.TextInput(attrs={'placeholder': 'Meta keywords (max 250 chars)', 'maxlength': '250'}),
         }
         labels = {
             'feature_group': 'Feature Group (Amenities Source)',
@@ -47,7 +50,7 @@ class SubPackageForm(forms.ModelForm):
     class Meta:
         model = SubPackage
         # amenities intentionally excluded from Meta.fields
-        fields = ['title', 'slug', 'description', 'image', 'price', 'capacity', 'beds', 'is_active']
+        fields = ['title', 'slug', 'description', 'image', 'price', 'capacity', 'beds', 'is_active', 'meta_title', 'meta_description', 'meta_keywords']
         widgets = {
             'title': forms.TextInput(attrs={'placeholder': 'Sub-Package Title'}),
             'description': forms.Textarea(attrs={'rows': 4, 'placeholder': 'Description'}),
@@ -55,6 +58,9 @@ class SubPackageForm(forms.ModelForm):
             'price': forms.NumberInput(attrs={'placeholder': '0.00', 'step': '0.01'}),
             'capacity': forms.NumberInput(attrs={'placeholder': 'Max guests'}),
             'beds': forms.NumberInput(attrs={'placeholder': 'Number of beds'}),
+            'meta_title': forms.TextInput(attrs={'placeholder': 'Meta title (max 60 chars)', 'maxlength': '60'}),
+            'meta_description': forms.Textarea(attrs={'rows': 3, 'placeholder': 'Meta description (max 160 chars)', 'maxlength': '160'}),
+            'meta_keywords': forms.TextInput(attrs={'placeholder': 'Meta keywords (max 250 chars)', 'maxlength': '250'}),
         }
 
     def __init__(self, *args, feature_group=None, **kwargs):

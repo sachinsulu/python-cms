@@ -4,62 +4,6 @@
 
 <h2>{% if is_edit %}Edit{% else %}Create{% endif %} FAQ</h2>
 
-    <style>
-        .toggle-label-text {
-            display: block;
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: #374151;
-            margin-bottom: 8px;
-        }
-        .toggle-switch {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            cursor: pointer;
-            user-select: none;
-        }
-        .toggle-switch input[type="checkbox"] {
-            position: absolute;
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-        .toggle-track {
-            position: relative;
-            width: 48px;
-            height: 26px;
-            background: #d1d5db;
-            border-radius: 999px;
-            transition: background 0.25s ease;
-            flex-shrink: 0;
-        }
-        .toggle-thumb {
-            position: absolute;
-            top: 3px;
-            left: 3px;
-            width: 20px;
-            height: 20px;
-            background: white;
-            border-radius: 50%;
-            box-shadow: 0 1px 4px rgba(0,0,0,0.2);
-            transition: transform 0.25s ease;
-        }
-        .toggle-switch input:checked ~ .toggle-track {
-            background: #10b981;
-        }
-        .toggle-switch input:checked ~ .toggle-track .toggle-thumb {
-            transform: translateX(22px);
-        }
-        .toggle-status-text {
-            font-size: 0.85rem;
-            font-weight: 500;
-            color: #6b7280;
-        }
-        .toggle-switch input:checked ~ .toggle-status-text {
-            color: #10b981;
-        }
-    </style>
 
 <a href="{% url 'faq_list' %}" class="btn">← Back to FAQs</a>
 
@@ -122,22 +66,6 @@
   </form>
 </div>
 
-<script>
-function setFormAction(action) {
-    document.getElementById('form-action').value = action;
-}
 
-const toggleInput = document.querySelector('.toggle-switch input[type="checkbox"]');
-const statusText = document.querySelector('.toggle-status-text');
-
-function updateToggleText() {
-    statusText.textContent = toggleInput.checked ? 'Active' : 'Inactive';
-}
-
-if (toggleInput) {
-    updateToggleText();
-    toggleInput.addEventListener('change', updateToggleText);
-}
-</script>
 
 {% endblock %}

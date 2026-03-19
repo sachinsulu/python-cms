@@ -415,7 +415,7 @@ body {
   color: var(--text-secondary);
 }
 
-.form-group input,
+.form-group input:not([type="checkbox"]):not([type="radio"]),
 .form-group select {
   width: 100%;
   padding: 10px 12px;
@@ -489,7 +489,7 @@ body {
   color: #10b981;
 }
 
-.form-group input:focus,
+.form-group input:not([type="checkbox"]):not([type="radio"]):focus,
 .form-group select:focus {
   border-color: var(--primary);
   box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);

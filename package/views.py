@@ -55,9 +55,16 @@ def package_create(request):
     if request.method == 'POST':
         form = PackageForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
-            messages.success(request, "Package created successfully!")
-            return redirect('package_list')
+            package = form.save()
+            action = request.POST.get('action', 'save')
+            if action == 'save_and_new':
+                messages.success(request, "Package saved! You can create a new one now.")
+                return redirect('package_create')
+            elif action == 'save_and_quit':
+                return redirect('package_list')
+            else:  # 'save'
+                messages.success(request, "Package saved!")
+                return redirect('package_edit', slug=package.slug)
         else:
             messages.error(request, "Please fix the errors below.")
     else:
@@ -75,8 +82,14 @@ def package_edit(request, slug):
         form = PackageForm(request.POST, request.FILES, instance=package)
         if form.is_valid():
             form.save()
-            messages.success(request, "Package updated successfully!")
-            return redirect('package_list')
+            action = request.POST.get('action', 'save')
+            if action == 'save_and_new':
+                return redirect('package_create')
+            elif action == 'save_and_quit':
+                return redirect('package_list')
+            else:
+                messages.success(request, "Package updated successfully!")
+                return redirect('package_edit', slug=package.slug)
         else:
             messages.error(request, "Please fix the errors below.")
     else:
@@ -125,8 +138,15 @@ def subpackage_create(request, package_slug):
 
             _save_amenities(sub, selected_ids, ordered_ids)
 
-            messages.success(request, f'"{sub.title}" created successfully!')
-            return redirect('subpackage_list', package_slug=package.slug)
+            action = request.POST.get('action', 'save')
+            if action == 'save_and_new':
+                messages.success(request, "Sub-package saved! You can create a new one now.")
+                return redirect('subpackage_create', package_slug=package.slug)
+            elif action == 'save_and_quit':
+                return redirect('subpackage_list', package_slug=package.slug)
+            else:  # 'save'
+                messages.success(request, "Sub-package saved!")
+                return redirect('subpackage_edit', package_slug=package.slug, slug=sub.slug)
         else:
             messages.error(request, "Please fix the errors below.")
     else:
@@ -160,8 +180,14 @@ def subpackage_edit(request, package_slug, slug):
 
             _save_amenities(sub, selected_ids, ordered_ids)
 
-            messages.success(request, f'"{sub.title}" updated successfully!')
-            return redirect('subpackage_list', package_slug=package.slug)
+            action = request.POST.get('action', 'save')
+            if action == 'save_and_new':
+                return redirect('subpackage_create', package_slug=package.slug)
+            elif action == 'save_and_quit':
+                return redirect('subpackage_list', package_slug=package.slug)
+            else:
+                messages.success(request, "Sub-package updated successfully!")
+                return redirect('subpackage_edit', package_slug=package.slug, slug=sub.slug)
         else:
             messages.error(request, "Please fix the errors below.")
     else:

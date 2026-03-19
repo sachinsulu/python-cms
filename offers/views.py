@@ -10,7 +10,8 @@ from django.views.decorators.csrf import ensure_csrf_cookie
 from users.decorators import requires_perm
 from .forms import OfferForm
 from .models import Offer
-
+from core.models import Module, PageMeta
+from core.forms import PageMetaForm
 logger = logging.getLogger(__name__)
 
 
@@ -19,7 +20,25 @@ logger = logging.getLogger(__name__)
 @requires_perm('offers.view_offer')
 def offer_list(request):
     items = Offer.objects.all().order_by('position')
-    return render(request, 'offers/list.html', {'list': items})
+    module = Module.objects.filter(url_name='offer_list').first()
+
+    # Get existing PageMeta if it exists
+    page_meta = None
+    if module:
+        try:
+            page_meta = module.page_meta
+        except PageMeta.DoesNotExist:
+            page_meta = None
+
+    # Pre-fill form with existing data
+    page_meta_form = PageMetaForm(instance=page_meta)
+
+    return render(request, 'offers/list.html', {
+        'list':             items,
+        'page_meta':        page_meta,
+        'page_meta_form':   page_meta_form,
+        'module_url_name':  'offer_list',
+    })
 
 
 @login_required

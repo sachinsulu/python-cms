@@ -6,12 +6,34 @@ from django.contrib.auth.decorators import login_required
 from users.decorators import requires_perm
 from .models import FAQ
 from .forms import FAQForm
+from core.models import Module, PageMeta
+from core.forms import PageMetaForm
 
 @login_required
 @requires_perm('faq.view_faq')
 def faq_list(request):
     list = FAQ.objects.all().order_by('position')
-    return render(request, 'faq/list.html', {'list': list})
+
+    # Get the Module row for this section
+    module = Module.objects.filter(url_name='faq_list').first()
+
+    # Get existing PageMeta if it exists
+    page_meta = None
+    if module:
+        try:
+            page_meta = module.page_meta
+        except PageMeta.DoesNotExist:
+            page_meta = None
+
+    # Pre-fill form with existing data
+    page_meta_form = PageMetaForm(instance=page_meta)
+
+    return render(request, 'faq/list.html', {
+        'list':             list,
+        'page_meta':        page_meta,
+        'page_meta_form':   page_meta_form,
+        'module_url_name':  'faq_list',
+    })
 
 @login_required
 @requires_perm('faq.add_faq')

@@ -2,189 +2,239 @@
 {% block title %}{% if is_edit %}Edit{% else %}Create{% endif %} Sub-Package - {{ package.title }}{% endblock %}
 
 {% block content %}
-<div class="content-header">
-    <div style="display:flex; align-items:center; gap:12px;">
-        <h2>{% if is_edit %}Edit{% else %}Create{% endif %} Sub-Package</h2>
-        <small style="color: #6b7280;">under <strong>{{ package.title }}</strong></small>
-    </div>
-    <a href="{% url 'subpackage_list' package.slug %}" class="btn btn-secondary">← Back to List</a>
+<style>
+  .toggle-label-text { display: block; font-size: 0.85rem; font-weight: 600; color: #374151; margin-bottom: 8px; }
+  .toggle-switch { display: inline-flex; align-items: center; gap: 10px; cursor: pointer; user-select: none; }
+  .toggle-switch input[type="checkbox"] { position: absolute; opacity: 0; width: 0; height: 0; }
+  .toggle-track { position: relative; width: 48px; height: 26px; background: #d1d5db; border-radius: 999px; transition: background 0.25s ease; flex-shrink: 0; }
+  .toggle-thumb { position: absolute; top: 3px; left: 3px; width: 20px; height: 20px; background: white; border-radius: 50%; box-shadow: 0 1px 4px rgba(0,0,0,0.2); transition: transform 0.25s ease; }
+  .toggle-switch input:checked ~ .toggle-track { background: #10b981; }
+  .toggle-switch input:checked ~ .toggle-track .toggle-thumb { transform: translateX(22px); }
+  .toggle-status-text { font-size: 0.85rem; font-weight: 500; color: #6b7280; }
+  .toggle-switch input:checked ~ .toggle-status-text { color: #10b981; }
+</style>
+<div style="display:flex; align-items:center; gap:12px; margin-bottom: 20px;">
+    <h2>{% if is_edit %}Edit{% else %}Create{% endif %} Sub-Package</h2>
+    <small style="color: #6b7280;">under <strong>{{ package.title }}</strong></small>
 </div>
 
-{% if messages %}
-<div id="messages-container">
-    {% for message in messages %}
-        <div class="message {{ message.tags }}">{{ message }}</div>
-    {% endfor %}
-</div>
-{% endif %}
+<a href="{% url 'subpackage_list' package.slug %}" class="btn">← Back to List</a>
 
-<form method="post" enctype="multipart/form-data" class="cms-form">
-    {% csrf_token %}
+<div class="form-container" style="max-width: 800px;">
+    <form method="post" enctype="multipart/form-data" data-model="subpackage" id="subpackage-form">
+        {% csrf_token %}
+        <input type="hidden" name="action" id="form-action" value="save">
 
-    {% if form.non_field_errors %}
-        <div class="error">{{ form.non_field_errors }}</div>
-    {% endif %}
-
-    <input type="hidden" id="model-name" value="subpackage">
-    {% if is_edit %}
-        <input type="hidden" id="article-id" value="{{ sub.id }}">
-    {% endif %}
-
-    <div class="form-group">
-        <label for="{{ form.title.id_for_label }}">
-            Title <span style="color: red;">*</span>
-        </label>
-        {{ form.title }}
-        {% if form.title.errors %}
-            <div class="error">{{ form.title.errors }}</div>
+        {% if form.non_field_errors %}
+            <div class="error">{{ form.non_field_errors }}</div>
         {% endif %}
-    </div>
-
-    <div class="form-group">
-        <label for="{{ form.slug.id_for_label }}">
-            Slug <span style="color: red;">*</span>
-        </label>
-        {{ form.slug }}
-        <small id="slug-message"></small>
-        {% if form.slug.errors %}
-            <div class="error">{{ form.slug.errors }}</div>
-        {% endif %}
-    </div>
-
-    <div class="form-group">
-        <label for="{{ form.description.id_for_label }}">Description</label>
-        {{ form.description }}
-        {% if form.description.errors %}
-            <div class="error">{{ form.description.errors }}</div>
-        {% endif %}
-    </div>
-
-    {% if package.is_room %}
-    <fieldset style="border: 2px solid #dbeafe; border-radius: 8px; padding: 20px; margin: 20px 0;">
-        <legend style="color: #1d4ed8; font-weight: 600; padding: 0 10px;">🛏 Room Details</legend>
 
         <div class="form-group">
-            <label for="{{ form.price.id_for_label }}">Price (₹)</label>
-            {{ form.price }}
-            {% if form.price.errors %}
-                <div class="error">{{ form.price.errors }}</div>
+            <label for="{{ form.title.id_for_label }}">
+                Title <span style="color: red;">*</span>
+            </label>
+            {{ form.title }}
+            {% if form.title.errors %}
+                <div class="error">{{ form.title.errors }}</div>
             {% endif %}
         </div>
 
-        <div style="display: flex; gap: 20px;">
-            <div class="form-group" style="flex:1;">
-                <label for="{{ form.capacity.id_for_label }}">Capacity (Guests)</label>
-                {{ form.capacity }}
-                {% if form.capacity.errors %}
-                    <div class="error">{{ form.capacity.errors }}</div>
-                {% endif %}
-            </div>
-
-            <div class="form-group" style="flex:1;">
-                <label for="{{ form.beds.id_for_label }}">Beds</label>
-                {{ form.beds }}
-                {% if form.beds.errors %}
-                    <div class="error">{{ form.beds.errors }}</div>
-                {% endif %}
-            </div>
-        </div>
-    </fieldset>
-    {% endif %}
-
-    <!-- Amenities section (NEW) -->
-
-    <fieldset style="border: 2px solid #d1fae5; border-radius: 8px; padding: 20px; margin: 20px 0;">
-        <legend style="color: #065f46; font-weight: 600; padding: 0 10px;">✅ Amenities</legend>
-
-        {% if package.feature_group %}
-            <p style="font-size: 0.85rem; color: #6b7280; margin-bottom: 12px;">
-                Showing features from group: <strong>{{ package.feature_group.title }}</strong>
-                &nbsp;·&nbsp; <span style="color:#10b981;">Drag to reorder</span>
-            </p>
-
-            {% if form.amenities.field.queryset.exists %}
-
-            <!-- Hidden input — JS keeps this in sync with drag order -->
-            <input type="hidden" name="amenity_order" id="amenity_order" value="">
-
-            <ul id="amenity-list" style="list-style:none; padding:0; margin:0; display:flex; flex-wrap:wrap; gap:10px;">
-                {% for checkbox in form.amenities %}
-                <li class="amenity-item"
-                    data-id="{{ checkbox.data.value }}"
-                    style="display:flex; align-items:center; gap:8px; padding:8px 14px;
-                        border:1.5px solid #d1d5db; border-radius:8px; cursor:grab;
-                        background:#fff; user-select:none; transition: border-color 0.2s, background 0.2s;">
-                    <!-- Drag handle -->
-                    <i class="fa-solid fa-grip-vertical" style="color:#9ca3af; font-size:0.8rem;"></i>
-                    <!-- Actual checkbox (hidden visually, state tracked by JS) -->
-                    <input type="checkbox"
-                        name="amenities"
-                        value="{{ checkbox.data.value }}"
-                        id="amenity_{{ checkbox.data.value }}"
-                        {% if checkbox.data.selected %}checked{% endif %}
-                        style="display:none;">
-                    <span class="amenity-title" style="font-size:0.9rem;">{{ checkbox.choice_label }}</span>
-                </li>
-                {% endfor %}
-            </ul>
-
-            {% if form.amenities.errors %}
-                <div class="error" style="margin-top:8px;">{{ form.amenities.errors }}</div>
+        <div class="form-group">
+            <label for="{{ form.slug.id_for_label }}">
+                Slug <span style="color: red;">*</span>
+            </label>
+            {{ form.slug }}
+            <small id="slug-message" class="help-text"></small>
+            {% if form.slug.errors %}
+                <div class="error">{{ form.slug.errors }}</div>
             {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label for="{{ form.description.id_for_label }}">Description</label>
+            {{ form.description }}
+            {% if form.description.errors %}
+                <div class="error">{{ form.description.errors }}</div>
+            {% endif %}
+        </div>
+
+        {% if package.is_room %}
+        <fieldset style="border: 2px solid #dbeafe; border-radius: 8px; padding: 20px; margin: 20px 0;">
+            <legend style="color: #1d4ed8; font-weight: 600; padding: 0 10px;">🛏 Room Details</legend>
+
+            <div class="form-group">
+                <label for="{{ form.price.id_for_label }}">Price (₹)</label>
+                {{ form.price }}
+                {% if form.price.errors %}
+                    <div class="error">{{ form.price.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div style="display: flex; gap: 20px;">
+                <div class="form-group" style="flex:1;">
+                    <label for="{{ form.capacity.id_for_label }}">Capacity (Guests)</label>
+                    {{ form.capacity }}
+                    {% if form.capacity.errors %}
+                        <div class="error">{{ form.capacity.errors }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="form-group" style="flex:1;">
+                    <label for="{{ form.beds.id_for_label }}">Beds</label>
+                    {{ form.beds }}
+                    {% if form.beds.errors %}
+                        <div class="error">{{ form.beds.errors }}</div>
+                    {% endif %}
+                </div>
+            </div>
+        </fieldset>
+        {% endif %}
+
+        <fieldset style="border: 2px solid #d1fae5; border-radius: 8px; padding: 20px; margin: 20px 0;">
+            <legend style="color: #065f46; font-weight: 600; padding: 0 10px;">✅ Amenities</legend>
+
+            {% if package.feature_group %}
+                <p style="font-size: 0.85rem; color: #6b7280; margin-bottom: 12px;">
+                    Showing features from group: <strong>{{ package.feature_group.title }}</strong>
+                    &nbsp;·&nbsp; <span style="color:#10b981;">Drag to reorder</span>
+                </p>
+
+                {% if form.amenities.field.queryset.exists %}
+                <input type="hidden" name="amenity_order" id="amenity_order" value="">
+
+                <ul id="amenity-list" style="list-style:none; padding:0; margin:0; display:flex; flex-wrap:wrap; gap:10px;">
+                    {% for checkbox in form.amenities %}
+                    <li class="amenity-item"
+                        data-id="{{ checkbox.data.value }}"
+                        style="display:flex; align-items:center; gap:8px; padding:8px 14px;
+                            border:1.5px solid #d1d5db; border-radius:8px; cursor:grab;
+                            background:#fff; user-select:none; transition: border-color 0.2s, background 0.2s;">
+                        <i class="fa-solid fa-grip-vertical" style="color:#9ca3af; font-size:0.8rem;"></i>
+                        <input type="checkbox"
+                            name="amenities"
+                            value="{{ checkbox.data.value }}"
+                            id="amenity_{{ checkbox.data.value }}"
+                            {% if checkbox.data.selected %}checked{% endif %}
+                            style="display:none;">
+                        <span class="amenity-title" style="font-size:0.9rem;">{{ checkbox.choice_label }}</span>
+                    </li>
+                    {% endfor %}
+                </ul>
+
+                {% if form.amenities.errors %}
+                    <div class="error" style="margin-top:8px;">{{ form.amenities.errors }}</div>
+                {% endif %}
+
+                {% else %}
+                    <p style="color:#9ca3af; font-size:0.9rem;">
+                        No active features found in this group.
+                        <a href="{% url 'feature_create' package.feature_group.id %}" style="color:#3b82f6;">Add features →</a>
+                    </p>
+                {% endif %}
 
             {% else %}
                 <p style="color:#9ca3af; font-size:0.9rem;">
-                    No active features found in this group.
-                    <a href="{% url 'feature_create' package.feature_group.id %}" style="color:#3b82f6;">Add features →</a>
+                    No feature group assigned to this package.
+                    <a href="{% url 'package_edit' package.slug %}" style="color:#3b82f6;">Edit the package to assign one →</a>
                 </p>
             {% endif %}
+        </fieldset>
 
-        {% else %}
-            <p style="color:#9ca3af; font-size:0.9rem;">
-                No feature group assigned to this package.
-                <a href="{% url 'package_edit' package.slug %}" style="color:#3b82f6;">Edit the package to assign one →</a>
-            </p>
-        {% endif %}
-    </fieldset>
-
-
-
-
-
-    <div class="form-group">
-        <label>Image</label>
-        <input type="hidden" id="remove_image" name="remove_image" value="0">
-        {{ form.image }}
-        <div id="imagePreview">
-            {% if is_edit and sub.image %}
-                <div class="preview-wrapper" style="position:relative; display:inline-block; margin-top: 10px;">
-                    <img src="{{ sub.image.url }}" style="max-width:300px; max-height:200px; border:1px solid #e5e7eb; border-radius:4px; display: block;">
-                    <span class="remove-image" style="position:absolute; top:-8px; right:-8px; background:#ef4444; color:white; border-radius:50%; width:24px; height:24px; text-align:center; line-height:24px; cursor:pointer; font-weight:bold; font-size: 16px;">×</span>
-                    <p style="margin-top: 5px; font-size: 12px; color: #666;">Current image</p>
-                </div>
-            {% else %}
-                <p class="no-image text-muted">No image selected</p>
+        <div class="form-group">
+            <label>Image</label>
+            <input type="hidden" id="remove_image" name="remove_image" value="0">
+            {{ form.image }}
+            <div id="imagePreview" class="mt-2">
+                {% if is_edit and sub.image %}
+                    <div class="preview-wrapper" style="position:relative; display:inline-block; margin-top: 10px;">
+                        <img src="{{ sub.image.url }}" style="max-width:300px; max-height:200px; border:1px solid #e5e7eb; border-radius:4px; display: block;">
+                        <span class="remove-image" style="position:absolute; top:-8px; right:-8px; background:#ef4444; color:white; border-radius:50%; width:24px; height:24px; text-align:center; line-height:24px; cursor:pointer; font-weight:bold; font-size: 16px;">×</span>
+                        <p class="help-text">Current image</p>
+                    </div>
+                {% else %}
+                    <p class="no-image text-muted">No image selected</p>
+                {% endif %}
+            </div>
+            {% if form.image.errors %}
+                <div class="error">{{ form.image.errors }}</div>
             {% endif %}
         </div>
-        {% if form.image.errors %}
-            <div class="error">{{ form.image.errors }}</div>
-        {% endif %}
-    </div>
 
-    <div class="form-group">
-        <label>
-            <input type="checkbox" name="is_active" {% if form.is_active.value %}checked{% endif %}>
-            Active
-        </label>
-    </div>
+        <div class="form-group">
+            <label class="toggle-label-text">{{ form.is_active.label }}</label>
+            <label class="toggle-switch">
+                {{ form.is_active }}
+                <span class="toggle-track">
+                    <span class="toggle-thumb"></span>
+                </span>
+                <span class="toggle-status-text"></span>
+            </label>   
+        </div>
 
-    <div class="form-actions">
-        <button type="submit" class="btn btn-primary">
-            {% if is_edit %}Update{% else %}Create{% endif %} Sub-Package
-        </button>
-        <a href="{% url 'subpackage_list' package.slug %}" class="btn btn-secondary">Cancel</a>
-    </div>
-</form>
+        <div class="meta-collapsible-wrapper" style="margin-top: 20px; border: 1px solid #ddd; border-radius: 4px;">
+            <button type="button" id="toggleMeta" class="btn-secondary" style="width: 100%; text-align: left; padding: 10px; background: #f8f9fa; border: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center;">
+                <span style="font-weight: bold;">Meta Tags</span>
+                <span id="metaStatusIcon">▼</span>
+            </button>
+
+            <div id="metaContent" style="display: none; padding: 15px; border-top: 1px solid #ddd; background: #fff;">
+                
+                <div class="form-group">
+                    <label for="{{ form.meta_title.id_for_label }}">
+                        {{ form.meta_title.label }} <span style="color: red;">*</span>
+                    </label>
+                    {{ form.meta_title }}
+                    <small class="help-text">
+                        <strong><span id="meta-title-counter">60 characters remaining</span></strong>
+                    </small>
+                    {% if form.meta_title.errors %}
+                        <div class="error">{{ form.meta_title.errors }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    <label for="{{ form.meta_description.id_for_label }}">
+                        {{ form.meta_description.label }} <span style="color: red;">*</span>
+                    </label>
+                    {{ form.meta_description }}
+                    <small class="help-text">
+                        <strong><span id="meta-desc-counter">160 characters remaining</span></strong>
+                    </small>
+                    {% if form.meta_description.errors %}
+                        <div class="error">{{ form.meta_description.errors }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    <label for="{{ form.meta_keywords.id_for_label }}">
+                        {{ form.meta_keywords.label }} <span style="color: red;">*</span>
+                    </label>
+                    {{ form.meta_keywords }}
+                    <small class="help-text">
+                        <strong><span id="meta-keywords-counter">250 characters remaining</span></strong>
+                    </small>
+                    {% if form.meta_keywords.errors %}
+                        <div class="error">{{ form.meta_keywords.errors }}</div>
+                    {% endif %}
+                </div>
+
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn" onclick="setFormAction('save')">
+                Save
+            </button>
+            <button type="submit" class="btn" onclick="setFormAction('save_and_new')" style="background: #10b981;">
+                Save & More
+            </button>
+            <button type="submit" class="btn" onclick="setFormAction('save_and_quit')" style="background: #3b82f6;">
+                Save & Quit
+            </button>
+            <a href="{% url 'subpackage_list' package.slug %}" class="btn-cancel">Cancel</a>
+        </div>
+    </form>
+</div>
 
 <style>
 .amenity-checkbox-label:has(input:checked) {
@@ -210,6 +260,23 @@
 
 <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
 <script>
+    function setFormAction(action) {
+        document.getElementById('form-action').value = action;
+    }
+
+    // Status toggle logic
+    const statusInput = document.querySelector('input[name="is_active"]');
+    const statusText  = document.querySelector('.toggle-status-text');
+    function updateStatusText() {
+        if (statusText && statusInput) {
+            statusText.textContent = statusInput.checked ? 'Active' : 'Inactive';
+        }
+    }
+    if (statusInput) { 
+        updateStatusText(); 
+        statusInput.addEventListener('change', updateStatusText); 
+    }
+
 (function () {
     const list       = document.getElementById('amenity-list');
     const orderInput = document.getElementById('amenity_order');
@@ -259,5 +326,6 @@
     // Sync on load
     syncOrder();
 })();
+
 </script>
 {% endblock %}

@@ -96,6 +96,17 @@
         {% endwith %}
       {% elif item.label|lower == 'feature' or item.label|lower == 'features' %}
         {# Skip rendering standalone feature link since it's already inside the package dropdown #}
+      {% elif item.label|lower == 'site preference' or item.label|lower == 'site preferences' or item.url_name == 'preference_edit' %}
+        <a href="#" class="sidebar-parent {% if 'preference' in request.resolver_match.url_name %}active{% endif %}">
+          <i class="fa-solid fa-gear"></i>
+          <span>Site Settings</span>
+          <i class="fa-solid fa-chevron-down submenu-toggle {% if 'preference' in request.resolver_match.url_name %}rotate{% endif %}"></i>
+        </a>
+        <div class="sidebar-submenu {% if 'preference' in request.resolver_match.url_name %}open{% endif %}">
+          <a href="{% url item.url_name %}" class="{% if request.resolver_match.url_name == item.url_name %}active{% endif %}">
+            <i class="{{ item.icon }}"></i> {{ item.label }}
+          </a>
+        </div>
       {% else %}
         {% with keywords=item.url_name_match|split:"," %}
         <a href="{% url item.url_name %}"

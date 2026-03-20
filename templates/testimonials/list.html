@@ -99,6 +99,8 @@
     <button type="submit" name="action" value="toggle" style="display:none;"></button>
 </form>
 
+    {% include 'core/page_meta_form.html' %}
+
 {% load static %}
 <script src="{% static 'js/data_tables.js' %}"></script>
 {% endblock %}

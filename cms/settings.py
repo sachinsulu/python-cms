@@ -256,8 +256,7 @@ CKEDITOR_CONFIGS = {
         'toolbar': 'full',
         'height': 400,
         'width': '100%',
-        'allowedContent': False,
-        'removePlugins': 'sourcearea',
-        'extraPlugins': 'uploadimage,image2',  # advanced image support
+        'allowedContent': True,
+        'extraPlugins': 'uploadimage,image2,sourcearea',
     }
 }

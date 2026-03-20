@@ -484,21 +484,32 @@ document.addEventListener('DOMContentLoaded', function () {
 
     /* 9. CKEditor "Read More" Button */
     const readMoreBtn = document.getElementById('readMore');
+
     if (readMoreBtn) {
         readMoreBtn.addEventListener('click', function (e) {
             e.preventDefault();
-            if (typeof CKEDITOR !== 'undefined' && CKEDITOR.instances['id_content']) {
-                const editor = CKEDITOR.instances['id_content'];
-                const content = editor.getData();
 
-                if (content.includes('read-more-separator')) {
-                    showFlashMessage('Read More separator already exists.', 'info');
-                    return;
+            if (typeof CKEDITOR === 'undefined') return;
+
+            const editors = ['id_content', 'id_description'];
+
+            editors.forEach(function (editorId) {
+
+                if (CKEDITOR.instances[editorId]) {
+
+                    const editor = CKEDITOR.instances[editorId];
+                    const content = editor.getData();
+
+                    if (content.includes('read-more-separator')) {
+                        showFlashMessage('Read More separator already exists in ' + editorId, 'info');
+                        return;
+                    }
+
+                    editor.insertHtml('<hr class="read-more-separator" style="border: 1px dashed #f60;" />');
+                    editor.focus();
                 }
 
-                editor.insertHtml('<hr class="read-more-separator" style="border: 1px dashed #f60;" />');
-                editor.focus();
-            }
+            });
         });
     }
 

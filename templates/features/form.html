@@ -92,9 +92,19 @@
 
     <!-- Content -->
     <div class="form-group">
-      <label for="{{ form.content.id_for_label }}">{{ form.content.label }}</label>
+      <label for="{{ form.content.id_for_label }}">
+          {{ form.content.label }} <span style="color: red;">*</span>
+      </label>
       {{ form.content }}
-      {% if form.content.errors %}<div class="error">{{ form.content.errors }}</div>{% endif %}
+      <a class="btn medium bg-orange mrg5T"
+        title="Read More"
+        id="readMore"
+        href="javascript:void(0);">
+            <span class="button-content">Read More</span>
+        </a>
+      {% if form.content.errors %}
+          <div class="error">{{ form.content.errors }}</div>
+      {% endif %}
     </div>
 
     <!-- Image -->

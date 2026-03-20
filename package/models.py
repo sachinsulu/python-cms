@@ -1,6 +1,7 @@
 from django.db import models, transaction
 from django.utils.text import slugify
 from django.db.models import Max
+from ckeditor_uploader.fields import RichTextUploadingField
 
 
 class Package(models.Model):
@@ -11,7 +12,7 @@ class Package(models.Model):
 
     title = models.CharField(max_length=255)
     slug = models.SlugField(unique=True, blank=True)
-    description = models.TextField(blank=True)
+    description = RichTextUploadingField(blank=True)
     image = models.ImageField(upload_to='packages/', blank=True, null=True)
     package_type = models.CharField(
         max_length=10,
@@ -92,7 +93,7 @@ class SubPackage(models.Model):
     package = models.ForeignKey(Package, on_delete=models.CASCADE, related_name='sub_packages')
     title = models.CharField(max_length=255)
     slug = models.SlugField(unique=True, blank=True)
-    description = models.TextField(blank=True)
+    description = RichTextUploadingField(blank=True)
     image = models.ImageField(upload_to='subpackages/', blank=True, null=True)
 
     price = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)

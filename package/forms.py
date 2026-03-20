@@ -1,6 +1,7 @@
 from django import forms
 from features.models import FeatureGroup, Feature
 from .models import Package, SubPackage
+from ckeditor_uploader.widgets import CKEditorUploadingWidget
 
 
 class FeatureTitleChoiceField(forms.ModelMultipleChoiceField):
@@ -14,10 +15,7 @@ class PackageForm(forms.ModelForm):
         fields = ['title', 'slug', 'description', 'image', 'package_type', 'feature_group', 'is_active', 'meta_title', 'meta_description', 'meta_keywords']
         widgets = {
             'title': forms.TextInput(attrs={'placeholder': 'Package Title'}),
-            'description': forms.Textarea(attrs={
-                'rows': 4,
-                'placeholder': 'Package Description',
-            }),
+            'description': CKEditorUploadingWidget(),
             'image': forms.FileInput(),
             'package_type': forms.RadioSelect(),
             'feature_group': forms.Select(attrs={'class': 'form-control'}),
@@ -53,7 +51,7 @@ class SubPackageForm(forms.ModelForm):
         fields = ['title', 'slug', 'description', 'image', 'price', 'capacity', 'beds', 'is_active', 'meta_title', 'meta_description', 'meta_keywords']
         widgets = {
             'title': forms.TextInput(attrs={'placeholder': 'Sub-Package Title'}),
-            'description': forms.Textarea(attrs={'rows': 4, 'placeholder': 'Description'}),
+            'description': CKEditorUploadingWidget(),
             'image': forms.FileInput(),
             'price': forms.NumberInput(attrs={'placeholder': '0.00', 'step': '0.01'}),
             'capacity': forms.NumberInput(attrs={'placeholder': 'Max guests'}),

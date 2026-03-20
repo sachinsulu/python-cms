@@ -21,6 +21,7 @@
 <div class="form-container">
     <form method="post" enctype="multipart/form-data" data-model="package" id="package-form">
         {% csrf_token %}
+        {{ form.media }}
         <input type="hidden" name="action" id="form-action" value="save">
 
         {% if form.non_field_errors %}

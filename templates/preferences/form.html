@@ -1,0 +1,234 @@
+{% extends "base.html" %}
+{% block content %}
+{{ form.media }}
+
+<h2>Site Preferences</h2>
+
+<div class="form-container">
+  <form method="post" enctype="multipart/form-data" id="preferences-form">
+    {% csrf_token %}
+
+    {% if form.non_field_errors %}
+      <div class="error">{{ form.non_field_errors }}</div>
+    {% endif %}
+
+    <!-- ── Status ─────────────────────────────────────────────────── -->
+    <h3 class="section-title">
+      <i class="fa-solid fa-triangle-exclamation" style="color:#f59e0b;"></i> Site Status
+    </h3>
+
+    <div class="form-group">
+      <label class="toggle-label-text">{{ form.is_maintenance.label }}</label>
+      <label class="toggle-switch" for="{{ form.is_maintenance.id_for_label }}">
+        {{ form.is_maintenance }}
+        <span class="toggle-track"><span class="toggle-thumb"></span></span>
+        <span class="toggle-status-text"></span>
+      </label>
+      <small class="help-text">When ON, frontend shows a maintenance page.</small>
+    </div>
+
+    <hr class="section-divider">
+
+    <!-- ── Identity ───────────────────────────────────────────────── -->
+    <h3 class="section-title">
+      <i class="fa-solid fa-id-card"></i> Identity
+    </h3>
+
+    <div class="form-group">
+      <label for="{{ form.site_title.id_for_label }}">{{ form.site_title.label }}</label>
+      {{ form.site_title }}
+      {% if form.site_title.errors %}<div class="error">{{ form.site_title.errors }}</div>{% endif %}
+    </div>
+
+    <div class="form-group">
+      <label for="{{ form.site_name.id_for_label }}">{{ form.site_name.label }}</label>
+      {{ form.site_name }}
+      {% if form.site_name.errors %}<div class="error">{{ form.site_name.errors }}</div>{% endif %}
+    </div>
+
+    <div class="form-group">
+      <label for="{{ form.copyright_text.id_for_label }}">{{ form.copyright_text.label }}</label>
+      {{ form.copyright_text }}
+      {% if form.copyright_text.errors %}<div class="error">{{ form.copyright_text.errors }}</div>{% endif %}
+    </div>
+
+    <hr class="section-divider">
+
+    <!-- ── Media — Branding ───────────────────────────────────────── -->
+    <h3 class="section-title">
+      <i class="fa-solid fa-image"></i> Media — Branding
+    </h3>
+
+    {% include 'preferences/_image_field.html' with field=form.icon current=instance.icon field_name='icon' label='Favicon / Icon' %}
+    {% include 'preferences/_image_field.html' with field=form.logo current=instance.logo field_name='logo' label='Logo' %}
+
+    <hr class="section-divider">
+
+    <!-- ── Media — Social Sharing ─────────────────────────────────── -->
+    <h3 class="section-title">
+      <i class="fa-solid fa-share-nodes"></i> Media — Social Sharing
+    </h3>
+
+    {% include 'preferences/_image_field.html' with field=form.fb_sharing current=instance.fb_sharing field_name='fb_sharing' label='Facebook Sharing Image' help='Recommended: 1200×630px' %}
+    {% include 'preferences/_image_field.html' with field=form.twitter_sharing current=instance.twitter_sharing field_name='twitter_sharing' label='Twitter / X Sharing Image' help='Recommended: 1200×600px' %}
+
+    <hr class="section-divider">
+
+    <!-- ── Media — Pages ──────────────────────────────────────────── -->
+    <h3 class="section-title">
+      <i class="fa-solid fa-file-image"></i> Media — Pages
+    </h3>
+
+    {% include 'preferences/_image_field.html' with field=form.gallery_image    current=instance.gallery_image    field_name='gallery_image'    label='Gallery Page Image' %}
+    {% include 'preferences/_image_field.html' with field=form.contact_image    current=instance.contact_image    field_name='contact_image'    label='Contact Page Image' %}
+    {% include 'preferences/_image_field.html' with field=form.default_image    current=instance.default_image    field_name='default_image'    label='Default / Fallback Image' %}
+    {% include 'preferences/_image_field.html' with field=form.facilities_image current=instance.facilities_image field_name='facilities_image' label='Facilities Page Image' %}
+    {% include 'preferences/_image_field.html' with field=form.offer_image      current=instance.offer_image      field_name='offer_image'      label='Offer Page Image' %}
+
+    <hr class="section-divider">
+
+    <!-- ── Booking ────────────────────────────────────────────────── -->
+    <h3 class="section-title">
+      <i class="fa-solid fa-calendar-check"></i> Booking Configuration
+    </h3>
+
+    <div class="form-group">
+      <label for="{{ form.booking_type.id_for_label }}">{{ form.booking_type.label }}</label>
+      {{ form.booking_type }}
+      {% if form.booking_type.errors %}<div class="error">{{ form.booking_type.errors }}</div>{% endif %}
+    </div>
+
+    <div class="form-group booking-dependent-field">
+      <label for="{{ form.hotel_result_page.id_for_label }}">{{ form.hotel_result_page.label }}</label>
+      {{ form.hotel_result_page }}
+      {% if form.hotel_result_page.errors %}<div class="error">{{ form.hotel_result_page.errors }}</div>{% endif %}
+    </div>
+
+    <div class="form-group booking-dependent-field">
+      <label for="{{ form.hotel_code.id_for_label }}">{{ form.hotel_code.label }}</label>
+      {{ form.hotel_code }}
+      {% if form.hotel_code.errors %}<div class="error">{{ form.hotel_code.errors }}</div>{% endif %}
+    </div>
+
+    <div class="form-group booking-dependent-field">
+      <label for="{{ form.online_booking_code.id_for_label }}">{{ form.online_booking_code.label }}</label>
+      {{ form.online_booking_code }}
+      <small class="help-text">⚠️ Raw HTML — booking widget embed code.</small>
+      {% if form.online_booking_code.errors %}<div class="error">{{ form.online_booking_code.errors }}</div>{% endif %}
+    </div>
+
+    <hr class="section-divider">
+
+    <!-- ── SEO ────────────────────────────────────────────────────── -->
+    <h3 class="section-title">
+      <i class="fa-solid fa-robot"></i> SEO
+    </h3>
+
+    <div class="form-group">
+      <label for="{{ form.robots_txt.id_for_label }}">{{ form.robots_txt.label }}</label>
+      {{ form.robots_txt }}
+      <small class="help-text">Content for robots.txt. Leave blank for a permissive default.</small>
+      {% if form.robots_txt.errors %}<div class="error">{{ form.robots_txt.errors }}</div>{% endif %}
+    </div>
+
+    <hr class="section-divider">
+
+    <!-- ── Scripts ────────────────────────────────────────────────── -->
+    <h3 class="section-title">
+      <i class="fa-solid fa-code"></i> Tracking Scripts
+    </h3>
+
+    <div class="form-group">
+      <label for="{{ form.google_analytics_code.id_for_label }}">{{ form.google_analytics_code.label }}</label>
+      {{ form.google_analytics_code }}
+      <small class="help-text">⚠️ Raw HTML — paste the full &lt;script&gt; tag.</small>
+      {% if form.google_analytics_code.errors %}<div class="error">{{ form.google_analytics_code.errors }}</div>{% endif %}
+    </div>
+
+    <div class="form-group">
+      <label for="{{ form.facebook_pixel_code.id_for_label }}">{{ form.facebook_pixel_code.label }}</label>
+      {{ form.facebook_pixel_code }}
+      <small class="help-text">⚠️ Raw HTML — paste the full &lt;script&gt; tag.</small>
+      {% if form.facebook_pixel_code.errors %}<div class="error">{{ form.facebook_pixel_code.errors }}</div>{% endif %}
+    </div>
+
+    <!-- Moved online_booking_code to Booking Configuration section -->
+
+    <div style="margin-bottom: 20px;"></div>
+
+    <div class="form-actions" style="display:flex; gap:10px; align-items:center;">
+      <button type="submit" class="btn">Save Preferences</button>
+    </div>
+
+  </form>
+</div>
+
+<style>
+  .section-title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #374151;
+    margin: 0 0 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-divider {
+    border: none;
+    border-top: 1px solid #e5e7eb;
+    margin: 24px 0;
+  }
+  .toggle-label-text { display:block; font-size:0.85rem; font-weight:600; color:#374151; margin-bottom:8px; }
+  .toggle-switch { display:inline-flex; align-items:center; gap:10px; cursor:pointer; user-select:none; }
+  .toggle-switch input[type="checkbox"] { position:absolute; opacity:0; width:0; height:0; }
+  .toggle-track { position:relative; width:48px; height:26px; background:#d1d5db; border-radius:999px; transition:background 0.25s ease; flex-shrink:0; }
+  .toggle-thumb { position:absolute; top:3px; left:3px; width:20px; height:20px; background:white; border-radius:50%; box-shadow:0 1px 4px rgba(0,0,0,0.2); transition:transform 0.25s ease; }
+  .toggle-switch input:checked ~ .toggle-track { background:#10b981; }
+  .toggle-switch input:checked ~ .toggle-track .toggle-thumb { transform:translateX(22px); }
+  .toggle-status-text { font-size:0.85rem; font-weight:500; color:#6b7280; }
+  .toggle-switch input:checked ~ .toggle-status-text { color:#10b981; }
+</style>
+
+<script>
+const toggleInput = document.querySelector('#{{ form.is_maintenance.id_for_label }}');
+const statusText  = document.querySelector('.toggle-status-text');
+function updateToggle() {
+  if (statusText) statusText.textContent = toggleInput.checked ? 'ON' : 'OFF';
+}
+if (toggleInput) { updateToggle(); toggleInput.addEventListener('change', updateToggle); }
+</script>
+
+<script>
+document.addEventListener('click', function (e) {
+  if (!e.target.classList.contains('remove-image')) return;
+  const targetId = e.target.dataset.target;
+  document.getElementById(targetId).value = '1';
+  e.target.closest('.preview-wrapper').remove();
+  e.target.closest('.form-group').querySelector('.mt-2').innerHTML =
+    '<p class="no-image text-muted">No image selected</p>';
+});
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const bookingTypeSelect = document.getElementById('{{ form.booking_type.id_for_label }}');
+  const dependentFields = document.querySelectorAll('.booking-dependent-field');
+
+  function toggleBookingFields() {
+    if (!bookingTypeSelect) return;
+    const isRojai = bookingTypeSelect.value === 'rojai';
+    dependentFields.forEach(field => {
+      field.style.display = isRojai ? 'block' : 'none';
+    });
+  }
+
+  if (bookingTypeSelect) {
+    toggleBookingFields();
+    bookingTypeSelect.addEventListener('change', toggleBookingFields);
+  }
+});
+</script>
+
+{% include 'core/page_meta_form.html' %}
+
+{% endblock %}

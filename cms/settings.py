@@ -61,6 +61,7 @@ INSTALLED_APPS = [
     'faq',
     'menu',
     'offers',
+    'preferences',
     'features',
     'popup',
     'api',

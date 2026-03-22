@@ -448,3 +448,17 @@ def get_module(request, pk):
         )
     serializer = ModuleSerializer(module, context={'request': request})
     return Response(serializer.data)
+
+
+# ========================
+# Location API
+# ========================
+
+from location.models import Location
+from .serializers import LocationSerializer
+
+@api_view(['GET'])
+def get_location(request):
+    location = Location.objects.get_solo()
+    serializer = LocationSerializer(location, context={'request': request})
+    return Response(serializer.data)

@@ -1,0 +1,230 @@
+{% extends "base.html" %}
+{% block content %}
+{{ form.media }}
+
+<h2>Location Settings</h2>
+
+<div class="form-container">
+  <form method="post" id="location-form">
+    {% csrf_token %}
+
+    {% if form.non_field_errors %}
+      <div class="error">{{ form.non_field_errors }}</div>
+    {% endif %}
+
+    <!-- ── Addresses ─────────────────────────────────────────── -->
+    <h3 class="section-title">
+      <i class="fa-solid fa-map-pin"></i> Addresses
+    </h3>
+
+    <div class="form-group">
+      <label for="{{ form.fiscal_address.id_for_label }}">
+        {{ form.fiscal_address.label }}
+      </label>
+      {{ form.fiscal_address }}
+      {% if form.fiscal_address.errors %}
+        <div class="error">{{ form.fiscal_address.errors }}</div>
+      {% endif %}
+    </div>
+
+    <div class="form-group">
+      <label for="{{ form.ktm_address.id_for_label }}">
+        {{ form.ktm_address.label }}
+      </label>
+      {{ form.ktm_address }}
+      {% if form.ktm_address.errors %}
+        <div class="error">{{ form.ktm_address.errors }}</div>
+      {% endif %}
+    </div>
+
+    <hr class="section-divider">
+
+    <!-- ── Contact ───────────────────────────────────────────── -->
+    <h3 class="section-title">
+      <i class="fa-solid fa-address-book"></i> Contact Details
+    </h3>
+
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+
+      <div class="form-group">
+        <label for="{{ form.ktm_contact_info.id_for_label }}">
+          {{ form.ktm_contact_info.label }}
+        </label>
+        {{ form.ktm_contact_info }}
+        {% if form.ktm_contact_info.errors %}
+          <div class="error">{{ form.ktm_contact_info.errors }}</div>
+        {% endif %}
+      </div>
+
+      <div class="form-group">
+        <label for="{{ form.ktm_email.id_for_label }}">
+          {{ form.ktm_email.label }}
+        </label>
+        {{ form.ktm_email }}
+        {% if form.ktm_email.errors %}
+          <div class="error">{{ form.ktm_email.errors }}</div>
+        {% endif %}
+      </div>
+
+      <div class="form-group">
+        <label for="{{ form.landline.id_for_label }}">
+          {{ form.landline.label }}
+        </label>
+        {{ form.landline }}
+        {% if form.landline.errors %}
+          <div class="error">{{ form.landline.errors }}</div>
+        {% endif %}
+      </div>
+
+      <div class="form-group">
+        <label for="{{ form.phone.id_for_label }}">
+          {{ form.phone.label }}
+        </label>
+        {{ form.phone }}
+        {% if form.phone.errors %}
+          <div class="error">{{ form.phone.errors }}</div>
+        {% endif %}
+      </div>
+
+      <div class="form-group">
+        <label for="{{ form.p_o_box.id_for_label }}">
+          {{ form.p_o_box.label }}
+        </label>
+        {{ form.p_o_box }}
+        {% if form.p_o_box.errors %}
+          <div class="error">{{ form.p_o_box.errors }}</div>
+        {% endif %}
+      </div>
+
+      <div class="form-group">
+        <label for="{{ form.email_address.id_for_label }}">
+          {{ form.email_address.label }}
+        </label>
+        {{ form.email_address }}
+        {% if form.email_address.errors %}
+          <div class="error">{{ form.email_address.errors }}</div>
+        {% endif %}
+      </div>
+
+      <div class="form-group">
+        <label for="{{ form.whatsapp.id_for_label }}">
+          {{ form.whatsapp.label }}
+        </label>
+        {{ form.whatsapp }}
+        {% if form.whatsapp.errors %}
+          <div class="error">{{ form.whatsapp.errors }}</div>
+        {% endif %}
+      </div>
+
+    </div>
+
+    <hr class="section-divider">
+
+    <!-- ── Map ───────────────────────────────────────────────── -->
+    <h3 class="section-title">
+      <i class="fa-solid fa-map"></i> Map
+    </h3>
+
+    <div class="form-group">
+      <label for="{{ form.map_embed.id_for_label }}">
+        {{ form.map_embed.label }}
+      </label>
+      {{ form.map_embed }}
+      <small class="help-text">
+        In Google Maps → Share → Embed a map → copy the full
+        <code>&lt;iframe&gt;</code> tag.
+      </small>
+      {% if form.map_embed.errors %}
+        <div class="error">{{ form.map_embed.errors }}</div>
+      {% endif %}
+    </div>
+
+    {% if instance.map_embed %}
+    <div style="margin-top:12px; margin-bottom:16px;">
+      <p style="font-size:0.8rem; color:#6b7280; margin-bottom:6px;">
+        Current saved map:
+      </p>
+      <div style="border:1px solid #e5e7eb; border-radius:6px;
+                  overflow:hidden; max-width:100%; height:300px;">
+        {{ instance.map_embed|safe }}
+      </div>
+    </div>
+    {% endif %}
+
+    <div id="map-preview" style="display:none; margin-top:10px;">
+      <p style="font-size:0.8rem; color:#6b7280; margin-bottom:6px;">
+        Live preview:
+      </p>
+      <div id="map-preview-inner"
+           style="border:1px solid #e5e7eb; border-radius:6px;
+                  overflow:hidden; max-width:100%; height:300px;">
+      </div>
+    </div>
+
+    <hr class="section-divider">
+
+    <!-- ── Content ───────────────────────────────────────────── -->
+    <h3 class="section-title">
+      <i class="fa-solid fa-file-lines"></i> Additional Content
+    </h3>
+
+    <div class="form-group">
+      <label for="{{ form.content.id_for_label }}">
+        {{ form.content.label }}
+      </label>
+      {{ form.content }}
+      {% if form.content.errors %}
+        <div class="error">{{ form.content.errors }}</div>
+      {% endif %}
+    </div>
+
+    <div style="margin-bottom:20px;"></div>
+
+    <div class="form-actions" style="display:flex; gap:10px; align-items:center;">
+      <button type="submit" class="btn">Save Location</button>
+    </div>
+
+  </form>
+</div>
+
+<style>
+  .section-title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #374151;
+    margin: 0 0 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-divider {
+    border: none;
+    border-top: 1px solid #e5e7eb;
+    margin: 24px 0;
+  }
+</style>
+
+<script>
+(function () {
+  const textarea     = document.getElementById('{{ form.map_embed.id_for_label }}');
+  const preview      = document.getElementById('map-preview');
+  const previewInner = document.getElementById('map-preview-inner');
+
+  if (!textarea) return;
+
+  function updatePreview() {
+    const val = textarea.value.trim();
+    if (val.startsWith('<iframe') && val.includes('</iframe>')) {
+      previewInner.innerHTML = val;
+      preview.style.display  = 'block';
+    } else {
+      previewInner.innerHTML = '';
+      preview.style.display  = 'none';
+    }
+  }
+
+  textarea.addEventListener('input', updatePreview);
+})();
+</script>
+
+{% endblock %}

@@ -64,6 +64,7 @@ INSTALLED_APPS = [
     'preferences',
     'features',
     'popup',
+    'location',
     'api',
     'rest_framework',
     'corsheaders',

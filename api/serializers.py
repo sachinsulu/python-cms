@@ -133,3 +133,15 @@ class ModuleSerializer(serializers.ModelSerializer):
     class Meta:
         model = Module
         fields = '__all__'
+
+
+from location.models import Location
+
+class LocationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model  = Location
+        fields = [
+            'fiscal_address', 'ktm_address', 'ktm_contact_info',
+            'ktm_email', 'landline', 'phone', 'p_o_box',
+            'email_address', 'whatsapp', 'map_embed', 'content',
+        ]

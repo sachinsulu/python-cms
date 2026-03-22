@@ -61,6 +61,9 @@ urlpatterns = [
     path('modules/', views.get_all_modules, name='get_all_modules'),
     path('modules/<int:pk>/', views.get_module, name='get_module'),
 
+    # Location
+    path('location/', views.get_location, name='get_location'),
+
     # Universal Slug API (Fallback route, should be at the bottom)
     path('<slug:slug>/', views.get_by_slug, name='get_by_slug'),
 ]

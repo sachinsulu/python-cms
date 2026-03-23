@@ -49,6 +49,10 @@
     <div class="form-group">
       <label for="{{ form.copyright_text.id_for_label }}">{{ form.copyright_text.label }}</label>
       {{ form.copyright_text }}
+      {% if form.copyright_text.help_text %}
+        <small class="help-text">{{ form.copyright_text.help_text }}</small>
+      {% endif %}
+      <small class="help-text">Copy this red code for copyright year dynamic <span style="color:red">{year}</span></small>
       {% if form.copyright_text.errors %}<div class="error">{{ form.copyright_text.errors }}</div>{% endif %}
     </div>
 

@@ -54,19 +54,34 @@ def global_delete_files_on_delete(sender, instance, **kwargs):
                         except Exception as e:
                             logger.error("CLEANUP error: %s", e)
 
+# Models that can contain CKEditor-embedded image URLs in TextFields.
+# Update this list if you add new models with RichText fields.
+_CKEDITOR_CONTENT_FIELDS = [
+    ('articles', 'Article',     'content'),
+    ('blog',     'Blog',        'content'),
+    ('faq',      'FAQ',         'content'),
+    ('nearby',   'Nearby',      'content'),
+    ('offers',   'Offer',       'content'),
+    ('features', 'Feature',     'content'),
+    ('services', 'Service',     'content'),
+    ('package',  'Package',     'description'),
+    ('package',  'SubPackage',  'description'),
+    ('location', 'Location',    'content'),
+]
+
 def is_image_in_use_anywhere(img_url):
     """
-    Searches all models in the project for a specific image URL.
+    Checks only known CKEditor-capable models for a specific image URL.
+    Avoids a full apps.get_models() scan on every deletion.
     """
-    # Loop through every model registered in your Django project
-    for model in apps.get_models():
-        # Look for models that have TextFields
-        text_fields = [f.name for f in model._meta.fields if isinstance(f, TextField)]
-        
-        for field_name in text_fields:
-            # Check if any record in this model contains the image URL
+    from django.apps import apps
+    for app_label, model_name, field_name in _CKEDITOR_CONTENT_FIELDS:
+        try:
+            model = apps.get_model(app_label, model_name)
             if model.objects.filter(**{f"{field_name}__icontains": img_url}).exists():
                 return True
+        except LookupError:
+            continue
     return False
 
 # ---------------------------------------------------------

@@ -337,8 +337,16 @@ def get_by_slug(request, slug):
 
     # Check Packages
     try:
-        package = Package.objects.prefetch_related(
-            Prefetch('sub_packages', queryset=SubPackage.objects.filter(is_active=True))
+        package = Package.objects.select_related('feature_group').prefetch_related(
+            Prefetch(
+                'sub_packages',
+                queryset=SubPackage.objects.filter(is_active=True).prefetch_related(
+                    Prefetch(
+                        'amenity_links',
+                        queryset=SubPackageAmenity.objects.select_related('feature__image').order_by('position'),
+                    )
+                )
+            )
         ).get(slug=slug, is_active=True)
         serializer = PackageSerializer(package, context={'request': request})
         return Response({
@@ -497,16 +505,4 @@ def get_site_preferences(request):
     preferences = SitePreferences.objects.get_solo()
     serializer = SitePreferenceSerializer(preferences, context={'request': request})
     return Response(serializer.data)
-
-@api_view(['GET'])
-def get_amenities(self, obj):
-    # Use prefetched amenity_links to avoid extra queries.
-    # Falls back gracefully if prefetch wasn't done.
-    if hasattr(obj, '_prefetched_objects_cache') and 'amenity_links' in obj._prefetched_objects_cache:
-        features = [
-            link.feature for link in obj.amenity_links.all()
-            if link.feature.active
-        ]
-    else:
-        features = obj.amenities.filter(active=True).order_by('amenity_links__position')
-    return FeatureSerializer(features, many=True, context=self.context).data
+

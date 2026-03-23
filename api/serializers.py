@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from articles.models import Article
 from blog.models import Blog
-from package.models import Package, SubPackage
+from package.models import Package, SubPackage, SubPackageAmenity
 from testimonials.models import Testimonial
 from social.models import Social
 from nearby.models import Nearby
@@ -68,7 +68,15 @@ class SubPackageSerializer(serializers.ModelSerializer):
         ]
 
     def get_amenities(self, obj):
-        features = obj.amenities.filter(active=True).order_by('amenity_links__position')
+        # Use prefetched amenity_links to avoid extra queries.
+        # Falls back gracefully if prefetch wasn't done.
+        if hasattr(obj, '_prefetched_objects_cache') and 'amenity_links' in obj._prefetched_objects_cache:
+            features = [
+                link.feature for link in obj.amenity_links.all()
+                if link.feature.active
+            ]
+        else:
+            features = obj.amenities.filter(active=True).order_by('amenity_links__position')
         return FeatureSerializer(features, many=True, context=self.context).data
 
 

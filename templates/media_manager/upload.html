@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>
+  {% if is_folder_form %}
+    <i class="fa-solid fa-folder-plus"></i> Create Folder
+  {% else %}
+    <i class="fa-solid fa-upload"></i> Upload File
+  {% endif %}
+</h2>
+
+<a href="{% if current_folder %}{% url 'media_folder' current_folder.pk %}{% else %}{% url 'media_library' %}{% endif %}" class="btn">
+  ← Back to Library
+</a>
+
+<div class="form-container" style="max-width:520px;">
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    {% if form.non_field_errors %}
+      <div class="error">{{ form.non_field_errors }}</div>
+    {% endif %}
+
+    {% for field in form %}
+    <div class="form-group">
+      <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+      {{ field }}
+      {% if field.help_text %}
+        <small class="help-text">{{ field.help_text }}</small>
+      {% endif %}
+      {% if field.errors %}
+        <div class="error">{{ field.errors }}</div>
+      {% endif %}
+    </div>
+    {% endfor %}
+
+    <div class="form-actions" style="margin-top:20px;">
+      <button type="submit" class="btn">
+        {% if is_folder_form %}Create Folder{% else %}Upload{% endif %}
+      </button>
+      <a href="{% url 'media_library' %}" class="btn-cancel">Cancel</a>
+    </div>
+  </form>
+</div>
+
+{% endblock %}

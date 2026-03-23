@@ -37,6 +37,7 @@ urlpatterns = [
     path('features/', include('features.urls')),
     path('services/', include('services.urls')),
     path('offers/', include('offers.urls')),
+    path("media/", include("media_manager.urls")),
     path('popup/', include('popup.urls')),
     path('location/', include('location.urls')),
     path('preferences/', include('preferences.urls')),

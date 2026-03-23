@@ -1,0 +1,139 @@
+from django.db import models
+from django.contrib.auth import get_user_model
+from PIL import Image, UnidentifiedImageError
+
+User = get_user_model()
+
+
+class MediaFolder(models.Model):
+    name = models.CharField(max_length=255)
+    parent = models.ForeignKey(
+        "self",
+        null=True,
+        blank=True,
+        related_name="children",
+        on_delete=models.CASCADE,
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ["name"]
+        verbose_name = "Media Folder"
+        verbose_name_plural = "Media Folders"
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_path(self):
+        """Returns slash-separated path e.g. 'Articles / Hero'."""
+        parts = [self.name]
+        node = self
+        while node.parent_id:
+            node = node.parent
+            parts.insert(0, node.name)
+        return " / ".join(parts)
+
+
+class Media(models.Model):
+    TYPE_IMAGE = "image"
+    TYPE_VIDEO = "video"
+    TYPE_FILE = "file"
+
+    TYPE_CHOICES = [
+        (TYPE_IMAGE, "Image"),
+        (TYPE_VIDEO, "Video"),
+        (TYPE_FILE, "File"),
+    ]
+
+    VIDEO_EXTENSIONS = {"mp4", "webm", "ogg", "mov", "avi", "mkv"}
+
+    title = models.CharField(max_length=255, blank=True)
+    file = models.FileField(upload_to="library/")
+    folder = models.ForeignKey(
+        MediaFolder,
+        null=True,
+        blank=True,
+        related_name="media",
+        on_delete=models.SET_NULL,
+    )
+    type = models.CharField(
+        max_length=10,
+        choices=TYPE_CHOICES,
+        default=TYPE_FILE,
+        editable=False,
+    )
+    alt_text = models.CharField(max_length=255, blank=True)
+    size = models.PositiveIntegerField(default=0, editable=False)
+    width = models.PositiveIntegerField(null=True, blank=True, editable=False)
+    height = models.PositiveIntegerField(null=True, blank=True, editable=False)
+    uploaded_by = models.ForeignKey(
+        User,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="uploaded_media",
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ["-created_at"]
+        verbose_name = "Media"
+        verbose_name_plural = "Media"
+
+    def __str__(self):
+        return self.title or self.file.name
+
+    def save(self, *args, **kwargs):
+        if self.file:
+            # Size is always available from the file object on new uploads
+            if hasattr(self.file, "size"):
+                self.size = self.file.size
+
+            # Auto-detect title from filename if not provided
+            if not self.title:
+                import os
+                self.title = os.path.splitext(
+                    os.path.basename(self.file.name)
+                )[0].replace("_", " ").replace("-", " ").title()
+
+            # Detect type from extension first (fast path)
+            ext = os.path.splitext(self.file.name)[1].lstrip(".").lower()
+            if ext in self.VIDEO_EXTENSIONS:
+                self.type = self.TYPE_VIDEO
+            else:
+                # Attempt PIL open to confirm image and extract dimensions
+                try:
+                    self.file.seek(0)
+                    with Image.open(self.file) as img:
+                        img.verify()  # Confirms it's a valid image
+                    # verify() closes/corrupts the handle — reopen for size
+                    self.file.seek(0)
+                    with Image.open(self.file) as img:
+                        self.width, self.height = img.size
+                    self.type = self.TYPE_IMAGE
+                    self.file.seek(0)
+                except (IOError, SyntaxError, UnidentifiedImageError):
+                    # Not an image — treat as generic file
+                    self.type = self.TYPE_FILE
+                    self.width = None
+                    self.height = None
+
+        super().save(*args, **kwargs)
+
+    @property
+    def is_image(self):
+        return self.type == self.TYPE_IMAGE
+
+    @property
+    def filename(self):
+        import os
+        return os.path.basename(self.file.name)
+
+    @property
+    def size_display(self):
+        """Human-readable file size."""
+        if self.size < 1024:
+            return f"{self.size} B"
+        elif self.size < 1024 * 1024:
+            return f"{self.size / 1024:.1f} KB"
+        return f"{self.size / (1024 * 1024):.1f} MB"

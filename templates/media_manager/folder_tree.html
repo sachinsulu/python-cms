@@ -1,0 +1,16 @@
+{% if folder_tree %}
+<ul>
+  {% for node in folder_tree %}
+  <li>
+    <a href="{% url 'media_folder' node.folder.pk %}"
+       class="{% if current_folder and current_folder.pk == node.folder.pk %}active{% endif %}">
+      <i class="fa-solid fa-folder" style="color:#f59e0b; margin-right:5px;"></i>
+      {{ node.folder.name }}
+    </a>
+    {% if node.children %}
+      {% include "media_manager/folder_tree.html" with folder_tree=node.children current_folder=current_folder %}
+    {% endif %}
+  </li>
+  {% endfor %}
+</ul>
+{% endif %}

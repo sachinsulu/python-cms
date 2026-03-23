@@ -65,6 +65,7 @@ INSTALLED_APPS = [
     'features',
     'popup',
     'location',
+    'media_manager',
     'api',
     'rest_framework',
     'corsheaders',

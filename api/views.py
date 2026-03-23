@@ -16,6 +16,8 @@ from services.models import Service
 from popup.models import Popup
 from offers.models import Offer
 from core.models import Module
+from preferences.models import SitePreferences
+from location.models import Location
 
 from .serializers import (
     ArticleSerializer,
@@ -32,6 +34,8 @@ from .serializers import (
     PopupSerializer,
     OfferSerializer,
     ModuleSerializer,
+    SitePreferenceSerializer,
+    LocationSerializer,
 )
 
 
@@ -454,11 +458,23 @@ def get_module(request, pk):
 # Location API
 # ========================
 
-from location.models import Location
-from .serializers import LocationSerializer
+
 
 @api_view(['GET'])
 def get_location(request):
     location = Location.objects.get_solo()
     serializer = LocationSerializer(location, context={'request': request})
+    return Response(serializer.data)
+
+
+# ========================
+# Site Preferences API
+# ========================
+
+
+
+@api_view(['GET'])
+def get_site_preferences(request):
+    preferences = SitePreferences.objects.get_solo()
+    serializer = SitePreferenceSerializer(preferences, context={'request': request})
     return Response(serializer.data)

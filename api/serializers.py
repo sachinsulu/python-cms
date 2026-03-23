@@ -12,6 +12,8 @@ from services.models import Service
 from popup.models import Popup
 from offers.models import Offer
 from core.models import Module
+from location.models import Location
+from preferences.models import SitePreferences
 
 
 class ArticleSerializer(serializers.ModelSerializer):
@@ -135,7 +137,7 @@ class ModuleSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-from location.models import Location
+
 
 class LocationSerializer(serializers.ModelSerializer):
     class Meta:
@@ -145,3 +147,8 @@ class LocationSerializer(serializers.ModelSerializer):
             'ktm_email', 'landline', 'phone', 'p_o_box',
             'email_address', 'whatsapp', 'map_embed', 'content',
         ]
+
+class SitePreferenceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SitePreferences
+        fields = '__all__'

@@ -32,7 +32,7 @@ class SitePreferencesForm(forms.ModelForm):
         widgets = {
             'site_title':             forms.TextInput(attrs={'placeholder': 'e.g. My Hotel | Official Site'}),
             'site_name':              forms.TextInput(attrs={'placeholder': 'e.g. My Hotel'}),
-            'copyright_text':         forms.TextInput(attrs={'placeholder': 'e.g. © 2025 My Hotel. All rights reserved.'}),
+            'copyright_text':         forms.TextInput(attrs={'placeholder': 'e.g. © {year} My Hotel. All rights reserved.'}),
             'icon':                   forms.FileInput(),
             'logo':                   forms.FileInput(),
             'fb_sharing':             forms.FileInput(),

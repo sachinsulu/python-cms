@@ -1,15 +1,13 @@
+# social/forms.py
 from django import forms
 from django.core.exceptions import ValidationError
 from .models import Social
+from media_manager.fields import MediaFKField  # ← replaces inline IntegerField
 
 
 class SocialForm(forms.ModelForm):
 
-    # Hidden field receives Media.pk from the JS picker
-    image_media = forms.IntegerField(
-        required=False,
-        widget=forms.HiddenInput(),
-    )
+    image_media = MediaFKField()  # ← replaces manual IntegerField + clean_image_media
 
     class Meta:
         model  = Social
@@ -21,10 +19,6 @@ class SocialForm(forms.ModelForm):
         }
 
     def clean_link(self):
-        """
-        Validate link at form level rather than using URLField on the model.
-        Accepts full URLs and relative paths (both are valid CMS link values).
-        """
         link = self.cleaned_data.get('link', '').strip()
         if link and not link.startswith(('http://', 'https://', '/')):
             raise ValidationError(
@@ -32,24 +26,9 @@ class SocialForm(forms.ModelForm):
             )
         return link
 
-    def clean_image_media(self):
-        pk = self.cleaned_data.get('image_media')
-        if not pk:
-            return None
-        from media_manager.models import Media
-        try:
-            return Media.objects.get(pk=pk)
-        except Media.DoesNotExist:
-            raise ValidationError(
-                f"Selected media (id={pk}) no longer exists. "
-                "Please choose a different file from the library."
-            )
-
     def save(self, commit=True):
         instance = super().save(commit=False)
         media = self.cleaned_data.get('image_media')
-        # Only overwrite if picker submitted something —
-        # preserves existing image when saving without touching image field
         if media is not None:
             instance.image = media
         if commit:

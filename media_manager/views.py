@@ -5,6 +5,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.core.paginator import Paginator
 from django.views.decorators.csrf import ensure_csrf_cookie
+from django.views.decorators.http import require_POST
+from django_ratelimit.decorators import ratelimit
 
 from users.decorators import requires_perm
 from .models import Media, MediaFolder
@@ -65,7 +67,7 @@ def media_library(request, folder_id=None):
         "breadcrumbs": breadcrumbs,
         "q": q,
         "type_filter": type_filter,
-        "total_count": media_qs.count(),
+        "total_count": paginator.count,
     })
 
 
@@ -132,25 +134,23 @@ def create_folder(request):
     })
 
 
+@require_POST
 @login_required
 @requires_perm("media_manager.delete_media")
 def delete_media(request, media_id):
     media = get_object_or_404(Media, pk=media_id)
     folder = media.folder
 
-    if request.method == "POST":
-        MediaService.delete(media)
-        messages.success(request, "File deleted.")
-        if folder:
-            return redirect("media_folder", folder_id=folder.pk)
-        return redirect("media_library")
-
-    # GET — should not happen in normal flow, redirect safely
+    MediaService.delete(media)
+    messages.success(request, "File deleted.")
+    if folder:
+        return redirect("media_folder", folder_id=folder.pk)
     return redirect("media_library")
 
 
 @login_required
 @requires_perm("media_manager.view_media")
+@ratelimit(key='user', rate='30/m', method='GET')
 def media_picker_api(request):
     """
     AJAX endpoint for the picker modal.

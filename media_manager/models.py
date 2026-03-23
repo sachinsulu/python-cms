@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth import get_user_model
+import os
 from PIL import Image, UnidentifiedImageError
 
 User = get_user_model()
@@ -81,17 +82,17 @@ class Media(models.Model):
         verbose_name_plural = "Media"
 
     def __str__(self):
-        return self.title or self.file.name
+        return self.title or (self.file.name if self.file else f"Media #{self.pk}")
 
     def save(self, *args, **kwargs):
-        if self.file:
+        update_fields = kwargs.get("update_fields")
+        if self.file and not update_fields:
             # Size is always available from the file object on new uploads
             if hasattr(self.file, "size"):
                 self.size = self.file.size
 
             # Auto-detect title from filename if not provided
             if not self.title:
-                import os
                 self.title = os.path.splitext(
                     os.path.basename(self.file.name)
                 )[0].replace("_", " ").replace("-", " ").title()
@@ -126,7 +127,6 @@ class Media(models.Model):
 
     @property
     def filename(self):
-        import os
         return os.path.basename(self.file.name)
 
     @property

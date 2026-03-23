@@ -18,6 +18,9 @@ def global_delete_files_on_delete(sender, instance, **kwargs):
     """
     Deletes files only if they are not used by ANY model in the project.
     """
+    if sender.__name__ == 'Media':
+        return
+
     for field in instance._meta.fields:
         # A. Standard FileFields
         if isinstance(field, FileField):

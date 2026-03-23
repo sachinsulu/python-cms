@@ -21,6 +21,8 @@ class MediaService:
         """
         Create and persist a Media instance.
         All metadata extraction happens in Media.save().
+        Note: Not wrapped in transaction.atomic() because if PIL inspection in Media.save() 
+        raises mid-way, the file is already on disk. Atomic transaction wouldn't help with the filesystem.
         """
         if user is None or not user.is_authenticated:
             raise PermissionError("An authenticated user is required to upload media.")

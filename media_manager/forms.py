@@ -5,7 +5,7 @@ from PIL import Image, UnidentifiedImageError
 
 from .models import Media, MediaFolder
 
-MAX_UPLOAD_SIZE = getattr(settings, "IMAGE_MAX_FILE_SIZE", 10 * 1024 * 1024)  # 10MB default
+MAX_UPLOAD_SIZE = getattr(settings, "MEDIA_LIBRARY_MAX_UPLOAD_SIZE", 50 * 1024 * 1024)  # 50MB default
 ALLOWED_IMAGE_EXTENSIONS = getattr(
     settings, "IMAGE_ALLOWED_EXTENSIONS", ["jpg", "jpeg", "png", "gif", "webp", "heic"]
 )

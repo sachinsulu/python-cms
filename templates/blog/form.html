@@ -7,245 +7,328 @@
 <a href="{% url 'blog_list' %}" class="btn">← Back to Blog</a>
 
 <div class="form-container">
+    <form method="post" enctype="multipart/form-data" data-model="blog" id="blog-form">
+        {% csrf_token %}
+        <input type="hidden" name="action" id="form-action" value="save">
 
-  <form method="post" enctype="multipart/form-data" data-model="blog" id="blog-form">
-    {% csrf_token %}
-    
-    <input type="hidden" name="action" id="form-action" value="save">
+        {{ form.remove_image }}
+        {{ form.remove_banner_image }}
 
-    {% if form.non_field_errors %}
-      <div class="error">{{ form.non_field_errors }}</div>
-    {% endif %}
-
-    <div class="form-group">
-      <label for="{{ form.title.id_for_label }}">
-          {{ form.title.label }} <span style="color: red;">*</span>
-      </label>
-      {{ form.title }}
-      <small class="help-text">{{ form.title.help_text }}</small>
-      {% if form.title.errors %}
-          <div class="error">{{ form.title.errors }}</div>
-      {% endif %}
-    </div>
-
-    {% if form.slug %}
-    <div class="form-group">
-      <label for="{{ form.slug.id_for_label }}">
-          {{ form.slug.label }} <span style="color: red;">*</span>
-      </label>
-      {{ form.slug }}
-
-      <small id="slug-message" class="help-text"></small>
-      {% if form.slug.errors %}
-          <div class="error">{{ form.slug.errors }}</div>
-      {% endif %}
-    </div>
-    {% endif %}
-
-    <div class="form-group">
-      <label for="{{ form.author.id_for_label }}">
-          {{ form.author.label }}
-      </label>
-      {{ form.author }}
-      <small class="help-text">{{ form.author.help_text }}</small>
-      {% if form.author.errors %}
-          <div class="error">{{ form.author.errors }}</div>
-      {% endif %}
-    </div>
-
-    <div class="form-group">
-      <label for="{{ form.date.id_for_label }}">
-          {{ form.date.label }}
-      </label>
-      {{ form.date }}
-      <small class="help-text">{{ form.date.help_text }}</small>
-      {% if form.date.errors %}
-          <div class="error">{{ form.date.errors }}</div>
-      {% endif %}
-    </div>
-
-    <div class="form-group">
-        <label for="{{ form.banner_image.id_for_label }}">
-            {{ form.banner_image.label }}
-        </label>
-        {% if form.banner_image.errors %}
-            <div class="error">{{ form.banner_image.errors }}</div>
+        {% if form.non_field_errors %}
+        <div class="error">{{ form.non_field_errors }}</div>
         {% endif %}
 
-        <!-- Hidden fields the picker writes into -->
-        <input type="hidden" name="banner_media_url" id="blogBannerMediaUrl" value="">
-        <input type="hidden" name="banner_media_id"  id="blogBannerMediaId"  value="">
-
-        <div class="input-file-container">
-            {% if is_edit and blog.banner_image %}
-                <input type="file" name="banner_image" accept="image/*" id="id_banner_image" data-existing-image="{{ blog.banner_image.url }}">
-            {% else %}
-                {{ form.banner_image }}
+        <!-- Title -->
+        <div class="form-group">
+            <label for="{{ form.title.id_for_label }}">
+                {{ form.title.label }} <span style="color:red;">*</span>
+            </label>
+            {{ form.title }}
+            {% if form.title.errors %}
+            <div class="error">{{ form.title.errors }}</div>
             {% endif %}
         </div>
-        <small class="help-text">
-            Allowed formats: JPG, PNG, WebP | Max size: 2MB | Max dimensions: 1920x1280px
-        </small>
 
-        <!-- Picker trigger -->
-        <button type="button"
-                class="btn"
-                style="margin-top:8px;"
-                data-media-picker
-                data-target-url="#blogBannerMediaUrl"
-                data-target-id="#blogBannerMediaId"
-                data-preview="#bannerImagePreview"
-                data-type="image">
-            <i class="fa-solid fa-photo-film"></i> Choose from Library
-        </button>
-
-        <div id="bannerImagePreview" class="mt-2">
-            <p class="no-image text-muted">No banner image selected</p>
-        </div>
-
-        <input type="hidden" name="remove_banner_image" id="remove_banner_image" value="0">
-    </div>
-
-    <div class="form-group">
-        <label for="{{ form.image.id_for_label }}">
-            {{ form.image.label }}
-        </label>
-        {% if form.image.errors %}
-            <div class="error">{{ form.image.errors }}</div>
-        {% endif %}
-
-        <!-- Hidden fields the picker writes into -->
-        <input type="hidden" name="media_url" id="blogMediaUrl" value="">
-        <input type="hidden" name="media_id"  id="blogMediaId"  value="">
-
-        <div class="input-file-container">
-            {% if is_edit and blog.image %}
-                <input type="file" name="image" accept="image/*" id="id_image" data-existing-image="{{ blog.image.url }}">
-            {% else %}
-                {{ form.image }}
+        <!-- Slug -->
+        <div class="form-group">
+            <label for="{{ form.slug.id_for_label }}">
+                {{ form.slug.label }} <span style="color:red;">*</span>
+            </label>
+            {{ form.slug }}
+            <small id="slug-message" class="help-text"></small>
+            {% if form.slug.errors %}
+            <div class="error">{{ form.slug.errors }}</div>
             {% endif %}
         </div>
-        <small class="help-text">
-            Allowed formats: JPG, PNG, WebP | Max size: 2MB | Max dimensions: 1920x1280px
-        </small>
 
-        <!-- Picker trigger -->
-        <button type="button"
-                class="btn"
-                style="margin-top:8px;"
-                data-media-picker
-                data-target-url="#blogMediaUrl"
-                data-target-id="#blogMediaId"
-                data-preview="#imagePreview"
-                data-type="image">
-            <i class="fa-solid fa-photo-film"></i> Choose from Library
-        </button>
-
-        <div id="imagePreview" class="mt-2">
-            <p class="no-image text-muted">No image selected</p>
+        <!-- Author -->
+        <div class="form-group">
+            <label for="{{ form.author.id_for_label }}">{{ form.author.label }}</label>
+            {{ form.author }}
+            {% if form.author.errors %}
+            <div class="error">{{ form.author.errors }}</div>
+            {% endif %}
         </div>
 
-        <input type="hidden" name="remove_image" id="remove_image" value="0">
-    </div>
+        <!-- Date -->
+        <div class="form-group">
+            <label for="{{ form.date.id_for_label }}">{{ form.date.label }}</label>
+            {{ form.date }}
+            {% if form.date.errors %}
+            <div class="error">{{ form.date.errors }}</div>
+            {% endif %}
+        </div>
 
-    <div class="form-group">
-      <label for="{{ form.content.id_for_label }}">
-          {{ form.content.label }} <span style="color: red;">*</span>
-      </label>
-      {{ form.content }}
-      <a class="btn medium bg-orange mrg5T"
-        title="Read More"
-        id="readMore"
-        href="javascript:void(0);">
-            <span class="button-content">Read More</span>
-        </a>
-      {% if form.content.errors %}
-          <div class="error">{{ form.content.errors }}</div>
-      {% endif %}
-    </div>
+        <!-- Banner Image -->
+        <div class="form-group">
+            <label>Banner Image</label>
 
-<div class="form-group">
-    <label class="toggle-label-text">{{ form.active.label }}</label>
-    <label class="toggle-switch" for="{{ form.active.id_for_label }}">
-        {{ form.active }}
-        <span class="toggle-track">
-            <span class="toggle-thumb"></span>
-        </span>
-        <span class="toggle-status-text"></span>
-    </label>
+            {% if form.banner_image_media.errors %}
+            <div class="error">{{ form.banner_image_media.errors }}</div>
+            {% endif %}
 
-</div>
+            {{ form.banner_image_media }}
 
-    <div class="meta-collapsible-wrapper" style="margin-top: 20px; border: 1px solid #ddd; border-radius: 4px;">
-        <button type="button" id="toggleMeta" class="btn-secondary" style="width: 100%; text-align: left; padding: 10px; background: #f8f9fa; border: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center;">
-            <span style="font-weight: bold;">Meta Tags</span>
-            <span id="metaStatusIcon">▼</span>
-        </button>
+            <div id="bannerImagePreview" class="mt-2">
+                {% if is_edit and blog.banner_image_url %}
+                <div class="preview-wrapper" style="position:relative; display:inline-block; margin-top:10px;">
+                    <img src="{{ blog.banner_image_url }}" style="max-width:300px; max-height:200px;
+                        border:1px solid #e5e7eb; border-radius:4px; display:block;">
+                    <span class="remove-image" data-target="bannerImagePreview" data-input="id_banner_image_media"
+                        data-flag="remove_banner_image" style="position:absolute; top:-8px; right:-8px;
+                         background:#ef4444; color:white; border-radius:50%;
+                         width:24px; height:24px; text-align:center;
+                         line-height:24px; cursor:pointer;
+                         font-weight:bold; font-size:16px;">×</span>
+                    <p style="margin-top:5px; font-size:12px; color:#666;">
+                        Current banner
+                        {% if blog.banner_image %}
+                        <span style="color:#10b981;">
+                            <i class="fa-solid fa-circle-check"></i> From library
+                        </span>
+                        {% else %}
+                        <span style="color:#f59e0b;">
+                            <i class="fa-solid fa-triangle-exclamation"></i> Legacy file
+                        </span>
+                        {% endif %}
+                    </p>
+                </div>
+                {% else %}
+                <p class="no-image text-muted">No banner image selected</p>
+                {% endif %}
+            </div>
 
-        <div id="metaContent" style="display: none; padding: 15px; border-top: 1px solid #ddd; background: #fff;">
-            
-            <div class="form-group">
-                <label for="{{ form.meta_title.id_for_label }}">
-                    {{ form.meta_title.label }} <span style="color: red;">*</span>
-                </label>
-                {{ form.meta_title }}
-                <small class="help-text">
-                    <strong><span id="meta-title-counter">60 characters remaining</span></strong>
-                </small>
-                {% if form.meta_title.errors %}
+            <button type="button" class="btn" style="margin-top:8px;" data-media-picker
+                data-target-id="#id_banner_image_media" data-preview="#bannerImagePreview" data-field="banner_image"
+                data-type="image">
+                <i class="fa-solid fa-photo-film"></i> Choose from Library
+            </button>
+
+            <small class="help-text" style="display:block; margin-top:6px;">
+                Select from the media library.
+                <a href="{% url 'upload_media' %}" target="_blank" style="color:#3b82f6;">Upload new file →</a>
+            </small>
+        </div>
+
+        <!-- Image -->
+        <div class="form-group">
+            <label>Image</label>
+
+            {% if form.image_media.errors %}
+            <div class="error">{{ form.image_media.errors }}</div>
+            {% endif %}
+
+            {{ form.image_media }}
+
+            <div id="imagePreview" class="mt-2">
+                {% if is_edit and blog.image_url %}
+                <div class="preview-wrapper" style="position:relative; display:inline-block; margin-top:10px;">
+                    <img src="{{ blog.image_url }}" style="max-width:300px; max-height:200px;
+                        border:1px solid #e5e7eb; border-radius:4px; display:block;">
+                    <span class="remove-image" data-target="imagePreview" data-input="id_image_media"
+                        data-flag="remove_image" style="position:absolute; top:-8px; right:-8px;
+                         background:#ef4444; color:white; border-radius:50%;
+                         width:24px; height:24px; text-align:center;
+                         line-height:24px; cursor:pointer;
+                         font-weight:bold; font-size:16px;">×</span>
+                    <p style="margin-top:5px; font-size:12px; color:#666;">
+                        Current image
+                        {% if blog.image %}
+                        <span style="color:#10b981;">
+                            <i class="fa-solid fa-circle-check"></i> From library
+                        </span>
+                        {% else %}
+                        <span style="color:#f59e0b;">
+                            <i class="fa-solid fa-triangle-exclamation"></i> Legacy file
+                        </span>
+                        {% endif %}
+                    </p>
+                </div>
+                {% else %}
+                <p class="no-image text-muted">No image selected</p>
+                {% endif %}
+            </div>
+
+            <button type="button" class="btn" style="margin-top:8px;" data-media-picker data-target-id="#id_image_media"
+                data-preview="#imagePreview" data-field="image" data-type="image">
+                <i class="fa-solid fa-photo-film"></i> Choose from Library
+            </button>
+
+            <small class="help-text" style="display:block; margin-top:6px;">
+                Select from the media library.
+                <a href="{% url 'upload_media' %}" target="_blank" style="color:#3b82f6;">Upload new file →</a>
+            </small>
+        </div>
+
+        <!-- Content -->
+        <div class="form-group">
+            <label for="{{ form.content.id_for_label }}">{{ form.content.label }}</label>
+            {{ form.content }}
+            {% if form.content.errors %}
+            <div class="error">{{ form.content.errors }}</div>
+            {% endif %}
+        </div>
+
+        <!-- Active -->
+        <div class="form-group">
+            <label class="toggle-label-text">{{ form.active.label }}</label>
+            <label class="toggle-switch" for="{{ form.active.id_for_label }}">
+                {{ form.active }}
+                <span class="toggle-track"><span class="toggle-thumb"></span></span>
+                <span class="toggle-status-text"></span>
+            </label>
+        </div>
+
+        <!-- Meta Tags -->
+        <div class="meta-collapsible-wrapper" style="margin-top:20px; border:1px solid #ddd; border-radius:4px;">
+            <button type="button" id="toggleMeta" style="width:100%; text-align:left; padding:10px; background:#f8f9fa;
+                     border:none; cursor:pointer; display:flex;
+                     justify-content:space-between; align-items:center;">
+                <span style="font-weight:bold;">Meta Tags</span>
+                <span id="metaStatusIcon">▼</span>
+            </button>
+            <div id="metaContent" style="display:none; padding:15px; border-top:1px solid #ddd; background:#fff;">
+                <div class="form-group">
+                    <label for="{{ form.meta_title.id_for_label }}">{{ form.meta_title.label }}</label>
+                    {{ form.meta_title }}
+                    <small class="help-text">
+                        <strong><span id="meta-title-counter">60 characters remaining</span></strong>
+                    </small>
+                    {% if form.meta_title.errors %}
                     <div class="error">{{ form.meta_title.errors }}</div>
-                {% endif %}
-            </div>
-
-            <div class="form-group">
-                <label for="{{ form.meta_description.id_for_label }}">
-                    {{ form.meta_description.label }} <span style="color: red;">*</span>
-                </label>
-                {{ form.meta_description }}
-                <small class="help-text">
-                    <strong><span id="meta-desc-counter">160 characters remaining</span></strong>
-                </small>
-                {% if form.meta_description.errors %}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.meta_description.id_for_label }}">
+                        {{ form.meta_description.label }}
+                    </label>
+                    {{ form.meta_description }}
+                    <small class="help-text">
+                        <strong><span id="meta-desc-counter">160 characters remaining</span></strong>
+                    </small>
+                    {% if form.meta_description.errors %}
                     <div class="error">{{ form.meta_description.errors }}</div>
-                {% endif %}
-            </div>
-
-            <div class="form-group">
-                <label for="{{ form.meta_keywords.id_for_label }}">
-                    {{ form.meta_keywords.label }} <span style="color: red;">*</span>
-                </label>
-                {{ form.meta_keywords }}
-                <small class="help-text">
-                    <strong><span id="meta-keywords-counter">250 characters remaining</span></strong>
-                </small>
-                {% if form.meta_keywords.errors %}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.meta_keywords.id_for_label }}">
+                        {{ form.meta_keywords.label }}
+                    </label>
+                    {{ form.meta_keywords }}
+                    <small class="help-text">
+                        <strong><span id="meta-keywords-counter">250 characters remaining</span></strong>
+                    </small>
+                    {% if form.meta_keywords.errors %}
                     <div class="error">{{ form.meta_keywords.errors }}</div>
-                {% endif %}
+                    {% endif %}
+                </div>
             </div>
-
         </div>
-    </div>
 
-    <div style="margin-bottom: 20px;"></div>
+        <div style="margin-bottom:20px;"></div>
 
-    <div class="form-actions" style="display: flex; gap: 10px; align-items: center;">
-      <button type="submit" class="btn" onclick="setFormAction('save')">
-          Save
-      </button>
-      <button type="submit" class="btn" onclick="setFormAction('save_and_quit')" style="background: #3b82f6;">
-          Save & Quit
-      </button>
-      <a href="{% url 'blog_list' %}" class="btn-cancel">Cancel</a>
-    </div>
-  </form>
+        <div class="form-actions" style="display:flex; gap:10px; align-items:center;">
+            <button type="submit" class="btn" onclick="setFormAction('save')">Save</button>
+            <button type="submit" class="btn" onclick="setFormAction('save_and_quit')" style="background:#3b82f6;">Save
+                & Quit</button>
+            <a href="{% url 'blog_list' %}" class="btn-cancel">Cancel</a>
+        </div>
+    </form>
 </div>
 
 <script>
-function setFormAction(action) {
-    document.getElementById('form-action').value = action;
-}
+    function setFormAction(action) {
+        document.getElementById('form-action').value = action;
+    }
+
+    // ── Generic remove handler — works for both image fields ──────────
+    document.addEventListener('click', function (e) {
+        if (e.target.classList.contains('remove-image')) {
+            const previewId = e.target.dataset.target;
+            const inputId = e.target.dataset.input;
+            const flagName = e.target.dataset.flag;
+
+            // Set the remove flag
+            document.querySelector(`[name="${flagName}"]`).value = '1';
+            // Clear the picker input
+            document.getElementById(inputId).value = '';
+            // Reset preview
+            e.target.closest('.preview-wrapper').remove();
+            document.getElementById(previewId).innerHTML =
+                '<p class="no-image text-muted">No image selected</p>';
+        }
+    });
+
+    // ── Picker insertion handler ───────────────────────────────────────
+    document.addEventListener('mediaPicked', function (e) {
+        const trigger = e.target;
+        const item = e.detail;
+        const previewId = trigger.dataset.preview.replace('#', '');
+        const flagField = trigger.dataset.field === 'banner_image'
+            ? 'remove_banner_image'
+            : 'remove_image';
+
+        document.querySelector(`[name="${flagField}"]`).value = '0';
+
+        if (item.is_image) {
+            document.getElementById(previewId).innerHTML = `
+            <div class="preview-wrapper"
+                 style="position:relative; display:inline-block; margin-top:10px;">
+                <img src="${item.url}"
+                     style="max-width:300px; max-height:200px;
+                            border:1px solid #e5e7eb; border-radius:4px; display:block;">
+                <span class="remove-image"
+                      data-target="${previewId}"
+                      data-input="${trigger.dataset.targetId.replace('#', '')}"
+                      data-flag="${flagField}"
+                      style="position:absolute; top:-8px; right:-8px;
+                             background:#ef4444; color:white; border-radius:50%;
+                             width:24px; height:24px; text-align:center;
+                             line-height:24px; cursor:pointer;
+                             font-weight:bold; font-size:16px;">×</span>
+                <p style="margin-top:5px; font-size:12px; color:#666;">
+                    ${item.title}
+                    <span style="color:#10b981;">
+                        <i class="fa-solid fa-circle-check"></i> From library
+                    </span>
+                </p>
+            </div>`;
+        }
+    });
+
+    // ── Meta counters ─────────────────────────────────────────────────
+    function charCounter(inputId, counterId, max) {
+        const input = document.getElementById(inputId);
+        const counter = document.getElementById(counterId);
+        if (!input || !counter) return;
+        function update() {
+            const remaining = max - input.value.length;
+            counter.textContent = remaining + ' characters remaining';
+            counter.style.color = remaining < 10 ? '#ef4444' : '#6b7280';
+        }
+        update();
+        input.addEventListener('input', update);
+    }
+    charCounter('id_meta_title', 'meta-title-counter', 60);
+    charCounter('id_meta_description', 'meta-desc-counter', 160);
+    charCounter('id_meta_keywords', 'meta-keywords-counter', 250);
+
+    // ── Meta collapsible ──────────────────────────────────────────────
+    (function () {
+        const btn = document.getElementById('toggleMeta');
+        const content = document.getElementById('metaContent');
+        const icon = document.getElementById('metaStatusIcon');
+        if (!btn) return;
+        btn.addEventListener('click', function () {
+            const isOpen = content.style.display !== 'none';
+            content.style.display = isOpen ? 'none' : 'block';
+            icon.textContent = isOpen ? '▼' : '▲';
+        });
+        {% if form.meta_title.errors or form.meta_description.errors or form.meta_keywords.errors %}
+        content.style.display = 'block';
+        icon.textContent = '▲';
+        {% endif %}
+    })();
 </script>
-
-
 
 {% endblock %}

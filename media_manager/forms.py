@@ -1,9 +1,10 @@
+# media_manager/forms.py
 from django import forms
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from PIL import Image, UnidentifiedImageError
 
-from .models import Media, MediaFolder
+from .models import MediaFolder
 
 MAX_UPLOAD_SIZE = getattr(settings, "MEDIA_LIBRARY_MAX_UPLOAD_SIZE", 50 * 1024 * 1024)  # 50MB default
 ALLOWED_IMAGE_EXTENSIONS = getattr(
@@ -12,32 +13,66 @@ ALLOWED_IMAGE_EXTENSIONS = getattr(
 VIDEO_EXTENSIONS = {"mp4", "webm", "ogg", "mov"}
 
 
-class MediaUploadForm(forms.ModelForm):
-    class Meta:
-        model = Media
-        fields = ["file", "title", "alt_text", "folder"]
-        widgets = {
-            "title": forms.TextInput(attrs={"placeholder": "Auto-detected if left blank"}),
-            "alt_text": forms.TextInput(attrs={"placeholder": "Describe the image for accessibility"}),
-            "folder": forms.Select(attrs={"class": "form-control"}),
-            "file": forms.FileInput(attrs={"class": "form-control"}),
-        }
+class MultipleFileInput(forms.FileInput):
+    def __init__(self, attrs=None):
+        super().__init__(attrs)
+    
+    def allow_multiple_selected(self):
+        return True  # Django checks this property to allow multiple
+
+class MultipleFileField(forms.FileField):
+    def __init__(self, *args, **kwargs):
+        kwargs.setdefault("widget", MultipleFileInput())
+        super().__init__(*args, **kwargs)
+
+    def clean(self, data, initial=None):
+        single_file_clean = super().clean
+        if isinstance(data, (list, tuple)):
+            result = [single_file_clean(d, initial) for d in data]
+        else:
+            result = single_file_clean(data, initial)
+        return result
+
+
+class MediaUploadForm(forms.Form):
+    """Multi-file upload form. View calls validate_single_file() per file."""
+    files = MultipleFileField(
+        widget=MultipleFileInput(attrs={
+            "multiple": True,
+            "class": "form-control",
+            "id": "id_files",
+            "accept": "image/*,video/mp4,video/webm,video/ogg,video/quicktime",
+        }),
+        required=True,
+    )
+
+    title = forms.CharField(
+        required=False,
+        widget=forms.TextInput(attrs={"placeholder": "Auto-detected if left blank"}),
+    )
+    alt_text = forms.CharField(
+        required=False,
+        widget=forms.TextInput(attrs={"placeholder": "Describe the image for accessibility"}),
+    )
+    folder = forms.ModelChoiceField(
+        queryset=MediaFolder.objects.none(),
+        required=False,
+        widget=forms.Select(attrs={"class": "form-control"}),
+        empty_label="— Root (no folder) —",
+    )
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields["folder"].queryset = MediaFolder.objects.select_related("parent").order_by("name")
-        self.fields["folder"].empty_label = "— Root (no folder) —"
-        self.fields["folder"].required = False
 
-    def clean_file(self):
-        file = self.cleaned_data.get("file")
-        if not file or not hasattr(file, "name"):
-            return file
-
-        # File size guard
+    def validate_single_file(self, file):
+        """
+        Validate one file object. Returns cleaned file or raises ValidationError.
+        Called by the view for each file in request.FILES.getlist('files').
+        """
         if file.size > MAX_UPLOAD_SIZE:
             raise ValidationError(
-                f"File too large. Max {MAX_UPLOAD_SIZE // (1024 * 1024)}MB. "
+                f"'{file.name}' is too large. Max {MAX_UPLOAD_SIZE // (1024 * 1024)}MB. "
                 f"Your file is {file.size / (1024 * 1024):.1f}MB."
             )
 
@@ -46,11 +81,10 @@ class MediaUploadForm(forms.ModelForm):
 
         if ext not in allowed_all:
             raise ValidationError(
-                f"File type '.{ext}' is not allowed. "
+                f"'{file.name}': file type '.{ext}' is not allowed. "
                 f"Allowed: {', '.join(allowed_all)}"
             )
 
-        # Deep image validation (PIL)
         if ext in ALLOWED_IMAGE_EXTENSIONS:
             try:
                 file.seek(0)
@@ -59,10 +93,10 @@ class MediaUploadForm(forms.ModelForm):
                 file.seek(0)
             except (IOError, SyntaxError, UnidentifiedImageError):
                 raise ValidationError(
-                    "This file does not appear to be a valid image."
+                    f"'{file.name}' does not appear to be a valid image."
                 )
+            file.seek(0)
 
-        file.seek(0)
         return file
 
 

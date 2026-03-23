@@ -121,6 +121,9 @@ class Media(models.Model):
                 self.title = os.path.splitext(
                     os.path.basename(self.file.name)
                 )[0].replace("_", " ").replace("-", " ").title()
+            
+            if not self.alt_text:
+                self.alt_text = self.title
 
             ext = os.path.splitext(self.file.name)[1].lstrip(".").lower()
             if ext in self.VIDEO_EXTENSIONS:

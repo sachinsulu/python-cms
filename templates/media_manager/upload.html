@@ -5,7 +5,7 @@
   {% if is_folder_form %}
     <i class="fa-solid fa-folder-plus"></i> Create Folder
   {% else %}
-    <i class="fa-solid fa-upload"></i> Upload File
+    <i class="fa-solid fa-upload"></i> Upload Files
   {% endif %}
 </h2>
 
@@ -13,34 +13,343 @@
   ← Back to Library
 </a>
 
-<div class="form-container" style="max-width:520px;">
+<div class="form-container" style="max-width:640px;">
+
+  {% if is_folder_form %}
+  {# ── Folder creation form (unchanged) ── #}
   <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% if form.non_field_errors %}
+      <div class="error">{{ form.non_field_errors }}</div>
+    {% endif %}
+    {% for field in form %}
+    <div class="form-group">
+      <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+      {{ field }}
+      {% if field.help_text %}<small class="help-text">{{ field.help_text }}</small>{% endif %}
+      {% if field.errors %}<div class="error">{{ field.errors }}</div>{% endif %}
+    </div>
+    {% endfor %}
+    <div class="form-actions" style="margin-top:20px;">
+      <button type="submit" class="btn">Create Folder</button>
+      <a href="{% url 'media_library' %}" class="btn-cancel">Cancel</a>
+    </div>
+  </form>
+
+  {% else %}
+  {# ── Multi-file upload form ── #}
+  <form method="post" enctype="multipart/form-data" id="upload-form">
     {% csrf_token %}
 
     {% if form.non_field_errors %}
       <div class="error">{{ form.non_field_errors }}</div>
     {% endif %}
 
-    {% for field in form %}
-    <div class="form-group">
-      <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-      {{ field }}
-      {% if field.help_text %}
-        <small class="help-text">{{ field.help_text }}</small>
-      {% endif %}
-      {% if field.errors %}
-        <div class="error">{{ field.errors }}</div>
-      {% endif %}
+    {# ── Drop zone ── #}
+    <div id="drop-zone"
+         style="border:2px dashed #d1d5db; border-radius:12px; padding:40px 20px;
+                text-align:center; cursor:pointer; transition:all 0.2s;
+                background:#fafafa; margin-bottom:16px;"
+         onclick="document.getElementById('id_files').click()">
+      <i class="fa-solid fa-cloud-arrow-up"
+         style="font-size:2.5rem; color:#94a3b8; display:block; margin-bottom:10px;"></i>
+      <p style="font-size:0.95rem; font-weight:600; color:#374151; margin:0 0 4px;">
+        Click to browse or drag &amp; drop files here
+      </p>
+      <p style="font-size:0.8rem; color:#94a3b8; margin:0;">
+        JPG, PNG, WebP, GIF, HEIC, MP4, MOV · Max 50 MB per file · Multiple files supported
+      </p>
+      {# Hidden real input #}
+      <input type="file"
+             name="files"
+             id="id_files"
+             multiple
+             accept="image/*,video/mp4,video/webm,video/ogg,video/quicktime"
+             style="display:none;">
     </div>
-    {% endfor %}
+
+    {% if form.files.errors %}
+      <div class="error">{{ form.files.errors }}</div>
+    {% endif %}
+
+    {# ── Preview grid ── #}
+    <div id="preview-grid"
+         style="display:none; margin-bottom:20px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+        <span id="preview-count"
+              style="font-size:0.82rem; font-weight:600; color:#374151;"></span>
+        <button type="button"
+                onclick="clearAll()"
+                style="font-size:0.75rem; color:#dc2626; background:none; border:none;
+                       cursor:pointer; padding:4px 8px;">
+          <i class="fa-solid fa-xmark"></i> Clear all
+        </button>
+      </div>
+      <div id="preview-items"
+           style="display:grid; grid-template-columns:repeat(auto-fill,minmax(120px,1fr)); gap:10px;">
+      </div>
+    </div>
+
+    {# ── Optional metadata (single-file only) ── #}
+    <div id="single-file-meta" style="display:none;">
+      <div class="form-group">
+        <label for="{{ form.title.id_for_label }}">{{ form.title.label }}</label>
+        {{ form.title }}
+        <small class="help-text">Auto-detected from filename if left blank.</small>
+      </div>
+      <div class="form-group">
+        <label for="{{ form.alt_text.id_for_label }}">{{ form.alt_text.label }}</label>
+        {{ form.alt_text }}
+      </div>
+    </div>
+
+    {# ── Folder selector ── #}
+    <div class="form-group">
+      <label for="{{ form.folder.id_for_label }}">{{ form.folder.label }}</label>
+      {{ form.folder }}
+      {% if form.folder.errors %}<div class="error">{{ form.folder.errors }}</div>{% endif %}
+    </div>
+
+    {# ── Progress bar (shown on submit) ── #}
+    <div id="upload-progress" style="display:none; margin-bottom:16px;">
+      <div style="height:6px; background:#e5e7eb; border-radius:3px; overflow:hidden;">
+        <div id="progress-bar"
+             style="height:100%; width:0%; background:#3b82f6;
+                    border-radius:3px; transition:width 0.3s;"></div>
+      </div>
+      <p id="progress-text"
+         style="font-size:0.78rem; color:#6b7280; margin-top:6px; text-align:center;">
+        Uploading…
+      </p>
+    </div>
 
     <div class="form-actions" style="margin-top:20px;">
-      <button type="submit" class="btn">
-        {% if is_folder_form %}Create Folder{% else %}Upload{% endif %}
+      <button type="submit" id="submit-btn" class="btn" disabled>
+        <i class="fa-solid fa-upload"></i>
+        <span id="submit-label">Upload</span>
       </button>
-      <a href="{% url 'media_library' %}" class="btn-cancel">Cancel</a>
+      <a href="{% if current_folder %}{% url 'media_folder' current_folder.pk %}{% else %}{% url 'media_library' %}{% endif %}"
+         class="btn-cancel">Cancel</a>
     </div>
   </form>
+  {% endif %}
+
 </div>
+
+{% if not is_folder_form %}
+<style>
+  #drop-zone.drag-over {
+    border-color: #3b82f6;
+    background: #eff6ff;
+  }
+  .preview-card {
+    position: relative;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #f8fafc;
+    font-size: 0.72rem;
+    color: #374151;
+  }
+  .preview-thumb {
+    width: 100%;
+    height: 85px;
+    object-fit: cover;
+    display: block;
+    background: #e5e7eb;
+  }
+  .preview-thumb-icon {
+    width: 100%;
+    height: 85px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    color: #94a3b8;
+  }
+  .preview-name {
+    padding: 5px 7px 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-weight: 500;
+  }
+  .preview-size {
+    padding: 0 7px 6px;
+    color: #94a3b8;
+  }
+  .preview-remove {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    width: 20px;
+    height: 20px;
+    background: rgba(0,0,0,0.55);
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    font-size: 0.7rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    padding: 0;
+  }
+  .preview-remove:hover { background: #ef4444; }
+</style>
+
+<script>
+// ── State ────────────────────────────────────────────────────────────────────
+let fileList = [];   // Array of File objects we're tracking
+
+const dropZone     = document.getElementById('drop-zone');
+const fileInput    = document.getElementById('id_files');
+const previewGrid  = document.getElementById('preview-grid');
+const previewItems = document.getElementById('preview-items');
+const previewCount = document.getElementById('preview-count');
+const submitBtn    = document.getElementById('submit-btn');
+const submitLabel  = document.getElementById('submit-label');
+const singleMeta   = document.getElementById('single-file-meta');
+const form         = document.getElementById('upload-form');
+
+// ── Drag & Drop ──────────────────────────────────────────────────────────────
+dropZone.addEventListener('dragover', e => {
+  e.preventDefault();
+  dropZone.classList.add('drag-over');
+});
+['dragleave', 'dragend'].forEach(evt =>
+  dropZone.addEventListener(evt, () => dropZone.classList.remove('drag-over'))
+);
+dropZone.addEventListener('drop', e => {
+  e.preventDefault();
+  dropZone.classList.remove('drag-over');
+  addFiles([...e.dataTransfer.files]);
+});
+
+// ── File input change ────────────────────────────────────────────────────────
+fileInput.addEventListener('change', () => {
+  addFiles([...fileInput.files]);
+  // Reset input so the same files can be re-added after removal
+  fileInput.value = '';
+});
+
+// ── Add files ────────────────────────────────────────────────────────────────
+function addFiles(newFiles) {
+  // Deduplicate by name+size
+  newFiles.forEach(f => {
+    const dup = fileList.find(x => x.name === f.name && x.size === f.size);
+    if (!dup) fileList.push(f);
+  });
+  renderPreviews();
+}
+
+// ── Render preview grid ──────────────────────────────────────────────────────
+function renderPreviews() {
+  previewItems.innerHTML = '';
+
+  if (fileList.length === 0) {
+    previewGrid.style.display  = 'none';
+    submitBtn.disabled         = true;
+    submitLabel.textContent    = 'Upload';
+    singleMeta.style.display   = 'none';
+    return;
+  }
+
+  previewGrid.style.display  = 'block';
+  submitBtn.disabled         = false;
+  submitLabel.textContent    = fileList.length === 1
+    ? 'Upload 1 file'
+    : `Upload ${fileList.length} files`;
+  singleMeta.style.display   = fileList.length === 1 ? 'block' : 'none';
+  previewCount.textContent   = `${fileList.length} file${fileList.length > 1 ? 's' : ''} selected`;
+
+  fileList.forEach((file, idx) => {
+    const card = document.createElement('div');
+    card.className = 'preview-card';
+
+    const isImage = file.type.startsWith('image/');
+    const isVideo = file.type.startsWith('video/');
+    const sizeTxt = file.size < 1024 * 1024
+      ? `${(file.size / 1024).toFixed(0)} KB`
+      : `${(file.size / (1024 * 1024)).toFixed(1)} MB`;
+
+    // Thumb
+    if (isImage) {
+      const img = document.createElement('img');
+      img.className = 'preview-thumb';
+      img.alt = file.name;
+      const reader = new FileReader();
+      reader.onload = e => { img.src = e.target.result; };
+      reader.readAsDataURL(file);
+      card.appendChild(img);
+    } else {
+      const iconDiv = document.createElement('div');
+      iconDiv.className = 'preview-thumb-icon';
+      iconDiv.innerHTML = isVideo
+        ? '<i class="fa-solid fa-video"></i>'
+        : '<i class="fa-solid fa-file"></i>';
+      card.appendChild(iconDiv);
+    }
+    card.insertAdjacentHTML('beforeend', `
+      <div class="preview-name" title="${file.name}">${file.name}</div>
+      <div class="preview-size">${sizeTxt}</div>
+    `);
+
+    // Remove button
+    const removeBtn = document.createElement('button');
+    removeBtn.type = 'button';
+    removeBtn.className = 'preview-remove';
+    removeBtn.title = 'Remove';
+    removeBtn.innerHTML = '<i class="fa-solid fa-xmark"></i>';
+    removeBtn.addEventListener('click', () => {
+      fileList.splice(idx, 1);
+      renderPreviews();
+    });
+    card.appendChild(removeBtn);
+
+    previewItems.appendChild(card);
+  });
+}
+
+// ── Clear all ────────────────────────────────────────────────────────────────
+function clearAll() {
+  fileList = [];
+  renderPreviews();
+}
+
+// ── On submit: sync FileList into a DataTransfer so the real input carries
+//    our managed fileList (handles removals) ──────────────────────────────────
+form.addEventListener('submit', e => {
+  if (fileList.length === 0) {
+    e.preventDefault();
+    return;
+  }
+
+  // Rebuild the input's FileList from our managed array
+  const dt = new DataTransfer();
+  fileList.forEach(f => dt.items.add(f));
+  fileInput.files = dt.files;
+
+  // Show progress bar
+  document.getElementById('upload-progress').style.display = 'block';
+  submitBtn.disabled = true;
+  submitLabel.textContent = 'Uploading…';
+
+  // Fake progress animation (real progress requires XHR)
+  let pct = 0;
+  const bar = document.getElementById('progress-bar');
+  const txt = document.getElementById('progress-text');
+  const timer = setInterval(() => {
+    pct = Math.min(pct + Math.random() * 15, 90);
+    bar.style.width = pct + '%';
+    txt.textContent = `Uploading ${fileList.length} file${fileList.length > 1 ? 's' : ''}…`;
+  }, 300);
+
+  // Let form submit naturally; stop animation after a timeout
+  setTimeout(() => clearInterval(timer), 8000);
+});
+</script>
+{% endif %}
 
 {% endblock %}

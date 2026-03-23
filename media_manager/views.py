@@ -70,6 +70,8 @@ def media_library(request, folder_id=None):
         "total_count": paginator.count,
     })
 
+# ── Replace the upload_media view in media_manager/views.py ──────────────────
+# (everything else in that file stays the same)
 
 @login_required
 @requires_perm("media_manager.add_media")
@@ -81,21 +83,42 @@ def upload_media(request, folder_id=None):
     if request.method == "POST":
         form = MediaUploadForm(request.POST, request.FILES)
         if form.is_valid():
-            try:
-                MediaService.upload(
-                    file=form.cleaned_data["file"],
-                    folder=form.cleaned_data.get("folder") or current_folder,
-                    user=request.user,
-                    title=form.cleaned_data.get("title", ""),
-                    alt_text=form.cleaned_data.get("alt_text", ""),
+            files = request.FILES.getlist("files")
+            folder = form.cleaned_data.get("folder") or current_folder
+            title = form.cleaned_data.get("title", "")
+            alt_text = form.cleaned_data.get("alt_text", "")
+
+            errors = []
+            success_count = 0
+
+            for file in files:
+                try:
+                    form.validate_single_file(file)
+                    MediaService.upload(
+                        file=file,
+                        folder=folder,
+                        user=request.user,
+                        # Only apply manual title to single-file uploads
+                        title=title if len(files) == 1 else "",
+                        alt_text=alt_text if len(files) == 1 else "",
+                    )
+                    success_count += 1
+                except Exception as exc:
+                    errors.append(str(exc))
+
+            if errors:
+                for err in errors:
+                    messages.error(request, err)
+            if success_count:
+                messages.success(
+                    request,
+                    f"{success_count} file{'s' if success_count > 1 else ''} uploaded successfully."
                 )
-                messages.success(request, "File uploaded successfully.")
+
+            if success_count and not errors:
                 if current_folder:
                     return redirect("media_folder", folder_id=current_folder.pk)
                 return redirect("media_library")
-            except Exception as exc:
-                logger.error("Upload failed: %s", exc)
-                messages.error(request, "Upload failed. Please try again.")
         else:
             logger.warning("Upload form errors: %s", form.errors)
     else:

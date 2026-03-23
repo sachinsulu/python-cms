@@ -20,10 +20,12 @@ from preferences.models import SitePreferences
 
 class ArticleSerializer(serializers.ModelSerializer):
     image_url = serializers.SerializerMethodField()
+    image_alt = serializers.CharField(source='image.alt_text', read_only=True)
+    image_title = serializers.CharField(source='image.title', read_only=True)
 
     class Meta:
         model = Article
-        fields = ['title', 'content', 'image_url']
+        fields = ['title', 'content', 'image_url', 'image_alt', 'image_title']
 
     def get_image_url(self, obj):
         """

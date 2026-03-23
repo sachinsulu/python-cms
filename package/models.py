@@ -12,8 +12,23 @@ class Package(models.Model):
 
     title = models.CharField(max_length=255)
     slug = models.SlugField(unique=True, blank=True)
-    description = RichTextUploadingField(blank=True)
-    image = models.ImageField(upload_to='packages/', blank=True, null=True)
+    content = RichTextUploadingField(blank=True)
+
+    # ── Legacy ImageField (kept during transition — DO NOT REMOVE YET) ──
+    image_legacy = models.ImageField(
+        upload_to='packages/',
+        blank=True, null=True,
+        verbose_name='[Legacy] Image',
+    )
+    # ── New FK field ─────────────────────────────────────────────────────
+    image = models.ForeignKey(
+        'media_manager.Media',
+        null=True, blank=True,
+        on_delete=models.SET_NULL,
+        related_name='package_images',
+        verbose_name='Image',
+    )
+
     package_type = models.CharField(
         max_length=10,
         choices=PACKAGE_TYPE_CHOICES,
@@ -31,18 +46,9 @@ class Package(models.Model):
     position = models.PositiveIntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
 
-    meta_title = models.CharField(
-        max_length=60,
-        blank=True,
-    )
-    meta_description = models.TextField(
-        max_length=160,
-        blank=True,
-    )
-    meta_keywords = models.CharField(
-        max_length=205,
-        blank=True,
-    )
+    meta_title = models.CharField(max_length=60, blank=True)
+    meta_description = models.TextField(max_length=160, blank=True)
+    meta_keywords = models.CharField(max_length=205, blank=True)
 
     class Meta:
         ordering = ['position']
@@ -50,6 +56,20 @@ class Package(models.Model):
     @property
     def is_room(self):
         return self.package_type == 'room'
+
+    @property
+    def image_url(self):
+        if self.image_id:
+            try:
+                return self.image.file.url
+            except (ValueError, AttributeError):
+                pass
+        if self.image_legacy:
+            try:
+                return self.image_legacy.url
+            except (ValueError, AttributeError):
+                pass
+        return None
 
     def save(self, *args, **kwargs):
         with transaction.atomic():
@@ -93,8 +113,22 @@ class SubPackage(models.Model):
     package = models.ForeignKey(Package, on_delete=models.CASCADE, related_name='sub_packages')
     title = models.CharField(max_length=255)
     slug = models.SlugField(unique=True, blank=True)
-    description = RichTextUploadingField(blank=True)
-    image = models.ImageField(upload_to='subpackages/', blank=True, null=True)
+    content = RichTextUploadingField(blank=True)
+
+    # ── Legacy ImageField (kept during transition — DO NOT REMOVE YET) ──
+    image_legacy = models.ImageField(
+        upload_to='subpackages/',
+        blank=True, null=True,
+        verbose_name='[Legacy] Image',
+    )
+    # ── New FK field ─────────────────────────────────────────────────────
+    image = models.ForeignKey(
+        'media_manager.Media',
+        null=True, blank=True,
+        on_delete=models.SET_NULL,
+        related_name='subpackage_images',
+        verbose_name='Image',
+    )
 
     price = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     capacity = models.PositiveIntegerField(null=True, blank=True, help_text="Max guests")
@@ -111,21 +145,26 @@ class SubPackage(models.Model):
     position = models.PositiveIntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
 
-    meta_title = models.CharField(
-        max_length=60,
-        blank=True,
-    )
-    meta_description = models.TextField(
-        max_length=160,
-        blank=True,
-    )
-    meta_keywords = models.CharField(
-        max_length=205,
-        blank=True,
-    )
+    meta_title = models.CharField(max_length=60, blank=True)
+    meta_description = models.TextField(max_length=160, blank=True)
+    meta_keywords = models.CharField(max_length=205, blank=True)
 
     class Meta:
         ordering = ['position']
+
+    @property
+    def image_url(self):
+        if self.image_id:
+            try:
+                return self.image.file.url
+            except (ValueError, AttributeError):
+                pass
+        if self.image_legacy:
+            try:
+                return self.image_legacy.url
+            except (ValueError, AttributeError):
+                pass
+        return None
 
     def save(self, *args, **kwargs):
         with transaction.atomic():

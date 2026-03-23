@@ -10,18 +10,8 @@ from features.models import Feature
 
 
 def _save_amenities(sub, selected_ids, ordered_ids):
-    """
-    Persist amenity selections with positions.
-    ordered_ids  — feature PKs in drag-sorted order (from hidden input).
-    selected_ids — feature PKs that are checked (from checkbox POST).
-    Only features that are both checked AND in the allowed queryset are saved.
-    Position follows ordered_ids; unchecked features are removed.
-    """
-    # Build a position map from the drag order; fall back to enumeration
     position_map = {int(pk): idx for idx, pk in enumerate(ordered_ids)}
-
     sub.amenity_links.all().delete()
-
     links = []
     for pk in selected_ids:
         pk = int(pk)
@@ -30,12 +20,9 @@ def _save_amenities(sub, selected_ids, ordered_ids):
             feature_id=pk,
             position=position_map.get(pk, 9999),
         ))
-
-    # Sort before bulk_create so positions are clean
     links.sort(key=lambda x: x.position)
     for idx, link in enumerate(links):
         link.position = idx
-
     SubPackageAmenity.objects.bulk_create(links)
 
 
@@ -53,23 +40,25 @@ def package_list(request):
 @requires_perm('package.add_package')
 def package_create(request):
     if request.method == 'POST':
-        form = PackageForm(request.POST, request.FILES)
+        form = PackageForm(request.POST)
         if form.is_valid():
-            package = form.save()
+            package = form.save(commit=False)
+            if request.POST.get('remove_image') == '1':
+                package.image = None
+            package.save()
             action = request.POST.get('action', 'save')
             if action == 'save_and_new':
                 messages.success(request, "Package saved! You can create a new one now.")
                 return redirect('package_create')
             elif action == 'save_and_quit':
                 return redirect('package_list')
-            else:  # 'save'
+            else:
                 messages.success(request, "Package saved!")
                 return redirect('package_edit', slug=package.slug)
         else:
             messages.error(request, "Please fix the errors below.")
     else:
         form = PackageForm()
-
     return render(request, 'package/form.html', {'form': form, 'is_edit': False})
 
 
@@ -77,11 +66,13 @@ def package_create(request):
 @requires_perm('package.change_package')
 def package_edit(request, slug):
     package = get_object_or_404(Package, slug=slug)
-
     if request.method == 'POST':
-        form = PackageForm(request.POST, request.FILES, instance=package)
+        form = PackageForm(request.POST, instance=package)
         if form.is_valid():
-            form.save()
+            pkg = form.save(commit=False)
+            if request.POST.get('remove_image') == '1':
+                pkg.image = None
+            pkg.save()
             action = request.POST.get('action', 'save')
             if action == 'save_and_new':
                 return redirect('package_create')
@@ -89,12 +80,14 @@ def package_edit(request, slug):
                 return redirect('package_list')
             else:
                 messages.success(request, "Package updated successfully!")
-                return redirect('package_edit', slug=package.slug)
+                return redirect('package_edit', slug=pkg.slug)
         else:
             messages.error(request, "Please fix the errors below.")
     else:
-        form = PackageForm(instance=package)
-
+        initial = {}
+        if package.image_id:
+            initial['image_media'] = package.image_id
+        form = PackageForm(instance=package, initial=initial)
     return render(request, 'package/form.html', {
         'form': form,
         'is_edit': True,
@@ -123,10 +116,12 @@ def subpackage_create(request, package_slug):
     feature_group = package.feature_group
 
     if request.method == 'POST':
-        form = SubPackageForm(request.POST, request.FILES, feature_group=feature_group)
+        form = SubPackageForm(request.POST, feature_group=feature_group)
         if form.is_valid():
             sub = form.save(commit=False)
             sub.package = package
+            if request.POST.get('remove_image') == '1':
+                sub.image = None
             sub.save()
 
             selected_ids = request.POST.getlist('amenities')
@@ -135,7 +130,6 @@ def subpackage_create(request, package_slug):
             ]
             if not ordered_ids:
                 ordered_ids = selected_ids
-
             _save_amenities(sub, selected_ids, ordered_ids)
 
             action = request.POST.get('action', 'save')
@@ -144,7 +138,7 @@ def subpackage_create(request, package_slug):
                 return redirect('subpackage_create', package_slug=package.slug)
             elif action == 'save_and_quit':
                 return redirect('subpackage_list', package_slug=package.slug)
-            else:  # 'save'
+            else:
                 messages.success(request, "Sub-package saved!")
                 return redirect('subpackage_edit', package_slug=package.slug, slug=sub.slug)
         else:
@@ -167,9 +161,12 @@ def subpackage_edit(request, package_slug, slug):
     feature_group = package.feature_group
 
     if request.method == 'POST':
-        form = SubPackageForm(request.POST, request.FILES, instance=sub, feature_group=feature_group)
+        form = SubPackageForm(request.POST, instance=sub, feature_group=feature_group)
         if form.is_valid():
-            form.save()
+            obj = form.save(commit=False)
+            if request.POST.get('remove_image') == '1':
+                obj.image = None
+            obj.save()
 
             selected_ids = request.POST.getlist('amenities')
             ordered_ids = [
@@ -177,7 +174,6 @@ def subpackage_edit(request, package_slug, slug):
             ]
             if not ordered_ids:
                 ordered_ids = selected_ids
-
             _save_amenities(sub, selected_ids, ordered_ids)
 
             action = request.POST.get('action', 'save')
@@ -187,18 +183,20 @@ def subpackage_edit(request, package_slug, slug):
                 return redirect('subpackage_list', package_slug=package.slug)
             else:
                 messages.success(request, "Sub-package updated successfully!")
-                return redirect('subpackage_edit', package_slug=package.slug, slug=sub.slug)
+                return redirect('subpackage_edit', package_slug=package.slug, slug=obj.slug)
         else:
             messages.error(request, "Please fix the errors below.")
     else:
-        form = SubPackageForm(instance=sub, feature_group=feature_group)
+        initial = {}
+        if sub.image_id:
+            initial['image_media'] = sub.image_id
+        form = SubPackageForm(instance=sub, feature_group=feature_group, initial=initial)
 
     return render(request, 'package/sub_form.html', {
         'form': form,
         'package': package,
         'sub': sub,
         'is_edit': True,
-        # Pass sorted existing amenities so JS can build the initial drag order
         'existing_amenity_ids': list(
             sub.amenity_links.order_by('position').values_list('feature_id', flat=True)
         ),

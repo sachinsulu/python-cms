@@ -52,18 +52,18 @@
         </div>
 
         <div class="form-group">
-            <label for="{{ form.description.id_for_label }}">
-                Description <span style="color: red;">*</span>
+            <label for="{{ form.content.id_for_label }}">
+                Content <span style="color: red;">*</span>
             </label>
-            {{ form.description }}
+            {{ form.content }}
             <a class="btn medium bg-orange mrg5T"
                 title="Read More"
                 id="readMore"
                 href="javascript:void(0);">
                 <span class="button-content">Read More</span>
             </a>
-            {% if form.description.errors %}
-                <div class="error">{{ form.description.errors }}</div>
+            {% if form.content.errors %}
+                <div class="error">{{ form.content.errors }}</div>
             {% endif %}
         </div>
 
@@ -149,43 +149,55 @@
             {% endif %}
         </fieldset>
 
+<!-- Image — Media Library Picker -->
+        <!-- REPLACE the existing image <div class="form-group"> block in sub_form.html with this -->
         <div class="form-group">
             <label>Image</label>
-            <input type="hidden" id="remove_image" name="remove_image" value="0">
 
-            <!-- Hidden fields the picker writes into -->
-            <input type="hidden" name="media_url" id="subMediaUrl" value="">
-            <input type="hidden" name="media_id"  id="subMediaId"  value="">
+            {% if form.image_media.errors %}
+                <div class="error">{{ form.image_media.errors }}</div>
+            {% endif %}
 
-            {{ form.image }}
-
-            <!-- Picker trigger -->
-            <button type="button"
-                    class="btn"
-                    style="margin-top:8px;"
-                    data-media-picker
-                    data-target-url="#subMediaUrl"
-                    data-target-id="#subMediaId"
-                    data-preview="#imagePreview"
-                    data-type="image">
-                <i class="fa-solid fa-photo-film"></i> Choose from Library
-            </button>
+            {{ form.image_media }}
 
             <div id="imagePreview" class="mt-2">
-                {% if is_edit and sub.image %}
-                    <div class="preview-wrapper" style="position:relative; display:inline-block; margin-top: 10px;">
-                        <img src="{{ sub.image.url }}" style="max-width:300px; max-height:200px; border:1px solid #e5e7eb; border-radius:4px; display: block;">
-                        <span class="remove-image" style="position:absolute; top:-8px; right:-8px; background:#ef4444; color:white; border-radius:50%; width:24px; height:24px; text-align:center; line-height:24px; cursor:pointer; font-weight:bold; font-size: 16px;">×</span>
-                        <p class="help-text">Current image</p>
+                {% if is_edit and sub.image_url %}
+                    <div class="preview-wrapper" style="position:relative; display:inline-block; margin-top:10px;">
+                        <img src="{{ sub.image_url }}"
+                             style="max-width:300px; max-height:200px; border:1px solid #e5e7eb; border-radius:4px; display:block;">
+                        <span class="remove-image"
+                              style="position:absolute; top:-8px; right:-8px; background:#ef4444; color:white; border-radius:50%; width:24px; height:24px; text-align:center; line-height:24px; cursor:pointer; font-weight:bold; font-size:16px;">×</span>
+                        <p style="margin-top:5px; font-size:12px; color:#666;">
+                            Current image
+                            {% if sub.image %}
+                                <span style="color:#10b981;"><i class="fa-solid fa-circle-check"></i> From library</span>
+                            {% elif sub.image_legacy %}
+                                <span style="color:#f59e0b;"><i class="fa-solid fa-triangle-exclamation"></i> Legacy file</span>
+                            {% endif %}
+                        </p>
                     </div>
                 {% else %}
                     <p class="no-image text-muted">No image selected</p>
                 {% endif %}
             </div>
-            {% if form.image.errors %}
-                <div class="error">{{ form.image.errors }}</div>
-            {% endif %}
+
+            <button type="button"
+                    class="btn"
+                    style="margin-top:8px;"
+                    data-media-picker
+                    data-target-id="#id_image_media"
+                    data-preview="#imagePreview"
+                    data-type="image">
+                <i class="fa-solid fa-photo-film"></i> Choose from Library
+            </button>
+
+            <small class="help-text" style="display:block; margin-top:6px;">
+                Select an image from the media library.
+                <a href="{% url 'upload_media' %}" target="_blank" style="color:#3b82f6;">Upload new file →</a>
+            </small>
         </div>
+        <!-- Also add to the sub_form.html <form> tag: -->
+        <!-- <input type="hidden" name="remove_image" id="remove_image" value="0"> -->
 
         <div class="form-group">
             <label class="toggle-label-text">{{ form.is_active.label }}</label>

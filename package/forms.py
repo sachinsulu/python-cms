@@ -1,7 +1,9 @@
 from django import forms
+from django.core.exceptions import ValidationError
 from features.models import FeatureGroup, Feature
 from .models import Package, SubPackage
 from ckeditor_uploader.widgets import CKEditorUploadingWidget
+from media_manager.fields import MediaFKField
 
 
 class FeatureTitleChoiceField(forms.ModelMultipleChoiceField):
@@ -10,13 +12,18 @@ class FeatureTitleChoiceField(forms.ModelMultipleChoiceField):
 
 
 class PackageForm(forms.ModelForm):
+    image_media = MediaFKField()
+
     class Meta:
         model = Package
-        fields = ['title', 'slug', 'description', 'image', 'package_type', 'feature_group', 'is_active', 'meta_title', 'meta_description', 'meta_keywords']
+        fields = [
+            'title', 'slug', 'content',
+            'package_type', 'feature_group', 'is_active',
+            'meta_title', 'meta_description', 'meta_keywords',
+        ]
         widgets = {
             'title': forms.TextInput(attrs={'placeholder': 'Package Title'}),
-            'description': CKEditorUploadingWidget(),
-            'image': forms.FileInput(),
+            'content': CKEditorUploadingWidget(),
             'package_type': forms.RadioSelect(),
             'feature_group': forms.Select(attrs={'class': 'form-control'}),
             'meta_title': forms.TextInput(attrs={'placeholder': 'Meta title (max 60 chars)', 'maxlength': '60'}),
@@ -32,12 +39,19 @@ class PackageForm(forms.ModelForm):
         self.fields['feature_group'].queryset = FeatureGroup.objects.filter(active=True).order_by('position')
         self.fields['feature_group'].empty_label = '— No feature group —'
 
+    def save(self, commit=True):
+        instance = super().save(commit=False)
+        media = self.cleaned_data.get('image_media')
+        if media is not None:
+            instance.image = media
+        if commit:
+            instance.save()
+        return instance
+
 
 class SubPackageForm(forms.ModelForm):
-    """
-    amenities is excluded — handled manually in the view
-    so we can persist the drag-and-drop position via SubPackageAmenity.
-    """
+    image_media = MediaFKField()
+
     # Standalone field — not bound to the model, used only to render checkboxes
     amenities = FeatureTitleChoiceField(
         queryset=Feature.objects.none(),
@@ -47,12 +61,14 @@ class SubPackageForm(forms.ModelForm):
 
     class Meta:
         model = SubPackage
-        # amenities intentionally excluded from Meta.fields
-        fields = ['title', 'slug', 'description', 'image', 'price', 'capacity', 'beds', 'is_active', 'meta_title', 'meta_description', 'meta_keywords']
+        fields = [
+            'title', 'slug', 'content',
+            'price', 'capacity', 'beds', 'is_active',
+            'meta_title', 'meta_description', 'meta_keywords',
+        ]
         widgets = {
             'title': forms.TextInput(attrs={'placeholder': 'Sub-Package Title'}),
-            'description': CKEditorUploadingWidget(),
-            'image': forms.FileInput(),
+            'content': CKEditorUploadingWidget(),
             'price': forms.NumberInput(attrs={'placeholder': '0.00', 'step': '0.01'}),
             'capacity': forms.NumberInput(attrs={'placeholder': 'Max guests'}),
             'beds': forms.NumberInput(attrs={'placeholder': 'Number of beds'}),
@@ -67,6 +83,14 @@ class SubPackageForm(forms.ModelForm):
             self.fields['amenities'].queryset = Feature.objects.filter(
                 group=feature_group, active=True
             ).order_by('position')
-        # Pre-select existing amenities when editing
         if self.instance and self.instance.pk:
             self.fields['amenities'].initial = self.instance.amenities.values_list('pk', flat=True)
+
+    def save(self, commit=True):
+        instance = super().save(commit=False)
+        media = self.cleaned_data.get('image_media')
+        if media is not None:
+            instance.image = media
+        if commit:
+            instance.save()
+        return instance

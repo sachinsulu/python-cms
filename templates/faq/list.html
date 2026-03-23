@@ -71,7 +71,7 @@
                     <i class="fa-solid fa-grip-vertical"></i>
                 </td>
             <td><input type="checkbox" name="selected_ids" value="{{ b.id }}" class="row-checkbox"> </td>
-            <td><a href="{% url 'faq_edit' b.id %}">{{ b.title }}</a><br> <small>{{b.slug}}</small></td>
+            <td><a href="{% url 'faq_edit' b.id %}">{{ b.title }}</a></td>
             <td id="status-{{ b.id }}" class="{% if b.active %}status-active{% else %}status-inactive{% endif %}">
                     {{ b.active|yesno:"Active,Inactive" }}
             </td>

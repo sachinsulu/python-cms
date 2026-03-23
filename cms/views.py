@@ -29,6 +29,7 @@ from menu.models import MenuItem
 from features.models import Feature, FeatureGroup
 from popup.models import Popup
 from offers.models import Offer
+from services.models import Service
 User = get_user_model()
 logger = logging.getLogger(__name__)
 
@@ -52,6 +53,8 @@ MODEL_MAP = {
     "featuregroup": FeatureGroup,
     "popup": Popup,
     "offer": Offer,
+    "service": Service,
+
 }
 
 ACTIVE_FIELD_MAP = {
@@ -68,6 +71,7 @@ ACTIVE_FIELD_MAP = {
     "featuregroup": "active",
     "popup": "status",
     "offer": "active",
+    "service": "active",
 }
 
 STAT_COLORS = ['blue', 'orange', 'green', 'cyan', 'red', 'lime', 'purple', 'pink', 'yellow', 'teal']

@@ -151,13 +151,12 @@ class SitePreferences(models.Model):
     # FK takes priority over legacy. Templates use these exclusively.
     # Never access .icon.file.url directly in templates — use .icon_url.
 
-    def _resolve_url(self, fk_obj, legacy_field):
+    def _resolve_url(self, fk_id, fk_obj, legacy_field):
         """
-        Return the best available URL for an image field.
-        FK Media object takes priority over legacy ImageField.
-        Returns None if neither is set.
+        Use the _id sentinel to check presence — avoids AttributeError
+        on deferred/null FK objects.
         """
-        if fk_obj_id := (fk_obj.pk if fk_obj else None):
+        if fk_id:
             try:
                 return fk_obj.file.url
             except (ValueError, AttributeError):
@@ -171,39 +170,39 @@ class SitePreferences(models.Model):
 
     @property
     def icon_url(self):
-        return self._resolve_url(self.icon, self.icon_legacy)
+        return self._resolve_url(self.icon_id, self.icon, self.icon_legacy)
 
     @property
     def logo_url(self):
-        return self._resolve_url(self.logo, self.logo_legacy)
+        return self._resolve_url(self.logo_id, self.logo, self.logo_legacy)
 
     @property
     def fb_sharing_url(self):
-        return self._resolve_url(self.fb_sharing, self.fb_sharing_legacy)
+        return self._resolve_url(self.fb_sharing_id, self.fb_sharing, self.fb_sharing_legacy)
 
     @property
     def twitter_sharing_url(self):
-        return self._resolve_url(self.twitter_sharing, self.twitter_sharing_legacy)
+        return self._resolve_url(self.twitter_sharing_id, self.twitter_sharing, self.twitter_sharing_legacy)
 
     @property
     def gallery_image_url(self):
-        return self._resolve_url(self.gallery_image, self.gallery_image_legacy)
+        return self._resolve_url(self.gallery_image_id, self.gallery_image, self.gallery_image_legacy)
 
     @property
     def contact_image_url(self):
-        return self._resolve_url(self.contact_image, self.contact_image_legacy)
+        return self._resolve_url(self.contact_image_id, self.contact_image, self.contact_image_legacy)
 
     @property
     def default_image_url(self):
-        return self._resolve_url(self.default_image, self.default_image_legacy)
+        return self._resolve_url(self.default_image_id, self.default_image, self.default_image_legacy)
 
     @property
     def facilities_image_url(self):
-        return self._resolve_url(self.facilities_image, self.facilities_image_legacy)
+        return self._resolve_url(self.facilities_image_id, self.facilities_image, self.facilities_image_legacy)
 
     @property
     def offer_image_url(self):
-        return self._resolve_url(self.offer_image, self.offer_image_legacy)
+        return self._resolve_url(self.offer_image_id, self.offer_image, self.offer_image_legacy)
 
     # ── Singleton enforcement ─────────────────────────────────────────────
     def save(self, *args, **kwargs):

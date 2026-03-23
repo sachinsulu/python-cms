@@ -83,7 +83,7 @@ class Offer(models.Model):
                     Max('position')
                 )['position__max']
                 self.position = (last or 0) + 1
-        super().save(*args, **kwargs)
+            super().save(*args, **kwargs)
 
     def __str__(self):
         return self.title

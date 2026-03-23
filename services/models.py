@@ -63,3 +63,12 @@ class Service(models.Model):
 
     def __str__(self):
         return self.title
+
+    def save(self, *args, **kwargs):
+        with transaction.atomic():
+            if not self.pk or self.position == 0:
+                last = Service.objects.select_for_update().aggregate(
+                    Max('position')
+                )['position__max']
+                self.position = (last or 0) + 1
+            super().save(*args, **kwargs)

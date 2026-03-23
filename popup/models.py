@@ -62,6 +62,15 @@ class Popup(models.Model):
                 pass
         return None
 
+    def save(self, *args, **kwargs):
+        with transaction.atomic():
+            if not self.pk or self.position == 0:
+                last = Popup.objects.select_for_update().aggregate(
+                    Max('position')
+                )['position__max']
+                self.position = (last or 0) + 1
+            super().save(*args, **kwargs)
+
     @property
     def is_image(self):
         return self.type == self.TYPE_IMAGE

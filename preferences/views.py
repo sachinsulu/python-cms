@@ -6,9 +6,7 @@ from django.views.decorators.http import require_http_methods
 
 from users.decorators import requires_perm
 from .models import SitePreferences
-from .forms import SitePreferencesForm
-from core.models import Module, PageMeta
-from core.forms import PageMetaForm
+from .forms import SitePreferencesForm, IMAGE_FIELDS
 
 logger = logging.getLogger(__name__)
 
@@ -20,7 +18,7 @@ def preference_edit(request):
     instance = SitePreferences.objects.get_solo()
 
     if request.method == 'POST':
-        form = SitePreferencesForm(request.POST, request.FILES, instance=instance)
+        form = SitePreferencesForm(request.POST, instance=instance)
         if form.is_valid():
             form.save()
             messages.success(request, 'Site preferences saved successfully.')
@@ -28,22 +26,16 @@ def preference_edit(request):
         else:
             logger.warning('Preferences form errors: %s', form.errors)
     else:
-        form = SitePreferencesForm(instance=instance)
-
-    module = Module.objects.filter(url_name='preference_edit').first()
-    page_meta = None
-    if module:
-        try:
-            page_meta = module.page_meta
-        except PageMeta.DoesNotExist:
-            page_meta = None
-
-    page_meta_form = PageMetaForm(instance=page_meta)
+        # Pre-populate hidden picker fields with current Media PKs
+        # so the template knows what is already selected
+        initial = {}
+        for field in IMAGE_FIELDS:
+            media_obj = getattr(instance, field)
+            if media_obj:
+                initial[f'{field}_media'] = media_obj.pk
+        form = SitePreferencesForm(instance=instance, initial=initial)
 
     return render(request, 'preferences/form.html', {
         'form':     form,
         'instance': instance,
-        'page_meta': page_meta,
-        'page_meta_form': page_meta_form,
-        'module_url_name': 'preference_edit',
     })

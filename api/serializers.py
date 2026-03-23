@@ -81,10 +81,26 @@ class TestimonialSerializer(serializers.ModelSerializer):
 
 class SocialSerializer(serializers.ModelSerializer):
     type_display = serializers.CharField(source='get_type_display', read_only=True)
+    image_url    = serializers.SerializerMethodField()
 
     class Meta:
-        model = Social
-        fields = ['id', 'title', 'link', 'image', 'icon', 'type', 'type_display', 'position']
+        model  = Social
+        fields = [
+            'id', 'title', 'link',
+            'image_url',          # resolved URL (FK or legacy)
+            'icon', 'type', 'type_display', 'position',
+        ]
+
+    def get_image_url(self, obj):
+        """
+        Resolve image URL from FK (Media) or legacy ImageField.
+        Builds an absolute URL when a request context is available.
+        """
+        url = obj.image_url  # model property handles FK vs legacy resolution
+        if not url:
+            return None
+        request = self.context.get('request')
+        return request.build_absolute_uri(url) if request else url
 
 
 class NearbySerializer(serializers.ModelSerializer):

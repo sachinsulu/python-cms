@@ -1,58 +1,57 @@
 from django import forms
-from .models import Social
 from django.core.exceptions import ValidationError
-from django.conf import settings
-from PIL import Image as PILImage
+from .models import Social
 
 
 class SocialForm(forms.ModelForm):
-    remove_image = forms.CharField(widget=forms.HiddenInput(), required=False, initial='0')
+
+    # Hidden field receives Media.pk from the JS picker
+    image_media = forms.IntegerField(
+        required=False,
+        widget=forms.HiddenInput(),
+    )
 
     class Meta:
-        model = Social
-        fields = ['title', 'link', 'image', 'icon', 'active']
+        model  = Social
+        fields = ['title', 'link', 'icon', 'active']
         widgets = {
             'title': forms.TextInput(attrs={'placeholder': 'Title'}),
-            'link':  forms.TextInput(attrs={'placeholder': 'https://'}),
+            'link':  forms.TextInput(attrs={'placeholder': 'https://example.com or /relative/path/'}),
             'icon':  forms.TextInput(attrs={'placeholder': 'e.g. fa-brands fa-instagram'}),
-            'image': forms.FileInput(),
         }
 
-    def clean_image(self):
-        image = self.cleaned_data.get('image')
-        if not image:
-            return image
-        if self.instance and self.instance.pk and self.instance.image:
-            if image == self.instance.image:
-                return image
-        if not hasattr(image, 'file'):
-            return image
-
-        max_size       = getattr(settings, 'IMAGE_MAX_FILE_SIZE', 2 * 1024 * 1024)
-        allowed_ext    = getattr(settings, 'IMAGE_ALLOWED_EXTENSIONS', ['jpg', 'jpeg', 'png', 'webp'])
-        max_dimensions = getattr(settings, 'IMAGE_MAX_DIMENSIONS', (1920, 1280))
-
-        if image.size > max_size:
+    def clean_link(self):
+        """
+        Validate link at form level rather than using URLField on the model.
+        Accepts full URLs and relative paths (both are valid CMS link values).
+        """
+        link = self.cleaned_data.get('link', '').strip()
+        if link and not link.startswith(('http://', 'https://', '/')):
             raise ValidationError(
-                f"Image too large. Max {max_size/(1024*1024):.0f}MB. "
-                f"Your file is {image.size/(1024*1024):.1f}MB."
+                "Enter a valid URL (https://...) or a relative path (/page/)."
             )
-        ext = image.name.split('.')[-1].lower()
-        if ext not in allowed_ext:
-            raise ValidationError(f"Invalid type '.{ext}'. Allowed: {', '.join(allowed_ext)}")
+        return link
 
+    def clean_image_media(self):
+        pk = self.cleaned_data.get('image_media')
+        if not pk:
+            return None
+        from media_manager.models import Media
         try:
-            img = PILImage.open(image)
-            img.verify()
-            image.seek(0)
-        except Exception:
-            raise ValidationError("Invalid image file.")
+            return Media.objects.get(pk=pk)
+        except Media.DoesNotExist:
+            raise ValidationError(
+                f"Selected media (id={pk}) no longer exists. "
+                "Please choose a different file from the library."
+            )
 
-        image.seek(0)
-        img = PILImage.open(image)
-        w, h = img.size
-        mw, mh = max_dimensions
-        if w > mw or h > mh:
-            raise ValidationError(f"Image too large ({w}x{h}). Max {mw}x{mh}px.")
-        image.seek(0)
-        return image
+    def save(self, commit=True):
+        instance = super().save(commit=False)
+        media = self.cleaned_data.get('image_media')
+        # Only overwrite if picker submitted something —
+        # preserves existing image when saving without touching image field
+        if media is not None:
+            instance.image = media
+        if commit:
+            instance.save()
+        return instance

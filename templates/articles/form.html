@@ -75,6 +75,11 @@
         {% if form.image.errors %}
             <div class="error">{{ form.image.errors }}</div>
         {% endif %}
+
+        <!-- Hidden fields the picker writes into -->
+        <input type="hidden" name="media_url" id="articleMediaUrl" value="">
+        <input type="hidden" name="media_id"  id="articleMediaId"  value="">
+
         <div class="input-file-container">
             {% if is_edit and article.image %}
                 <input type="file" name="image" accept="image/*" id="id_image" data-existing-image="{{ article.image.url }}">
@@ -85,6 +90,18 @@
         <small class="help-text">
             Allowed formats: JPG, PNG, WebP | Max size: 2MB | Max dimensions: 1920x1280px
         </small>
+
+        <!-- Picker trigger -->
+        <button type="button"
+                class="btn"
+                style="margin-top:8px;"
+                data-media-picker
+                data-target-url="#articleMediaUrl"
+                data-target-id="#articleMediaId"
+                data-preview="#imagePreview"
+                data-type="image">
+            <i class="fa-solid fa-photo-film"></i> Choose from Library
+        </button>
 
         <div id="imagePreview" class="mt-2">
             <p class="no-image text-muted">No image selected</p>

@@ -19,6 +19,9 @@
 
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+  <!-- Phase 2: Media Picker JS -->
+  <script src="{% static 'js/media_picker.js' %}" defer></script>
 </head>
 
 <body data-csrf-token="{{ csrf_token }}">
@@ -172,6 +175,9 @@
   <script src="{% static 'js/admin.js' %}"></script>
   <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
 
+  {% if request.user.is_authenticated %}
+    {% include "media_manager/picker_modal.html" %}
+  {% endif %}
 
 </body>
 

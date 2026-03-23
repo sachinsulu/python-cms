@@ -152,7 +152,25 @@
         <div class="form-group">
             <label>Image</label>
             <input type="hidden" id="remove_image" name="remove_image" value="0">
+
+            <!-- Hidden fields the picker writes into -->
+            <input type="hidden" name="media_url" id="subMediaUrl" value="">
+            <input type="hidden" name="media_id"  id="subMediaId"  value="">
+
             {{ form.image }}
+
+            <!-- Picker trigger -->
+            <button type="button"
+                    class="btn"
+                    style="margin-top:8px;"
+                    data-media-picker
+                    data-target-url="#subMediaUrl"
+                    data-target-id="#subMediaId"
+                    data-preview="#imagePreview"
+                    data-type="image">
+                <i class="fa-solid fa-photo-film"></i> Choose from Library
+            </button>
+
             <div id="imagePreview" class="mt-2">
                 {% if is_edit and sub.image %}
                     <div class="preview-wrapper" style="position:relative; display:inline-block; margin-top: 10px;">

@@ -71,6 +71,11 @@
         {% if form.banner_image.errors %}
             <div class="error">{{ form.banner_image.errors }}</div>
         {% endif %}
+
+        <!-- Hidden fields the picker writes into -->
+        <input type="hidden" name="banner_media_url" id="blogBannerMediaUrl" value="">
+        <input type="hidden" name="banner_media_id"  id="blogBannerMediaId"  value="">
+
         <div class="input-file-container">
             {% if is_edit and blog.banner_image %}
                 <input type="file" name="banner_image" accept="image/*" id="id_banner_image" data-existing-image="{{ blog.banner_image.url }}">
@@ -81,6 +86,18 @@
         <small class="help-text">
             Allowed formats: JPG, PNG, WebP | Max size: 2MB | Max dimensions: 1920x1280px
         </small>
+
+        <!-- Picker trigger -->
+        <button type="button"
+                class="btn"
+                style="margin-top:8px;"
+                data-media-picker
+                data-target-url="#blogBannerMediaUrl"
+                data-target-id="#blogBannerMediaId"
+                data-preview="#bannerImagePreview"
+                data-type="image">
+            <i class="fa-solid fa-photo-film"></i> Choose from Library
+        </button>
 
         <div id="bannerImagePreview" class="mt-2">
             <p class="no-image text-muted">No banner image selected</p>
@@ -96,6 +113,11 @@
         {% if form.image.errors %}
             <div class="error">{{ form.image.errors }}</div>
         {% endif %}
+
+        <!-- Hidden fields the picker writes into -->
+        <input type="hidden" name="media_url" id="blogMediaUrl" value="">
+        <input type="hidden" name="media_id"  id="blogMediaId"  value="">
+
         <div class="input-file-container">
             {% if is_edit and blog.image %}
                 <input type="file" name="image" accept="image/*" id="id_image" data-existing-image="{{ blog.image.url }}">
@@ -106,6 +128,18 @@
         <small class="help-text">
             Allowed formats: JPG, PNG, WebP | Max size: 2MB | Max dimensions: 1920x1280px
         </small>
+
+        <!-- Picker trigger -->
+        <button type="button"
+                class="btn"
+                style="margin-top:8px;"
+                data-media-picker
+                data-target-url="#blogMediaUrl"
+                data-target-id="#blogMediaId"
+                data-preview="#imagePreview"
+                data-type="image">
+            <i class="fa-solid fa-photo-film"></i> Choose from Library
+        </button>
 
         <div id="imagePreview" class="mt-2">
             <p class="no-image text-muted">No image selected</p>

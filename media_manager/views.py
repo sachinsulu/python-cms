@@ -1,5 +1,6 @@
 import logging
 from django.shortcuts import render, redirect, get_object_or_404
+from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.core.paginator import Paginator
@@ -146,3 +147,71 @@ def delete_media(request, media_id):
 
     # GET — should not happen in normal flow, redirect safely
     return redirect("media_library")
+
+
+@login_required
+@requires_perm("media_manager.view_media")
+def media_picker_api(request):
+    """
+    AJAX endpoint for the picker modal.
+    Returns paginated media JSON filtered by folder/type/search.
+    """
+    PICKER_PAGE_SIZE = 30
+
+    qs = (
+        Media.objects
+        .select_related("folder")
+        .order_by("-created_at")
+    )
+
+    # Filters
+    folder_id = request.GET.get("folder")
+    if folder_id == "root":
+        qs = qs.filter(folder__isnull=True)
+    elif folder_id:
+        try:
+            qs = qs.filter(folder_id=int(folder_id))
+        except (ValueError, TypeError):
+            pass
+
+    type_filter = request.GET.get("type", "")
+    if type_filter in (Media.TYPE_IMAGE, Media.TYPE_VIDEO, Media.TYPE_FILE):
+        qs = qs.filter(type=type_filter)
+
+    q = request.GET.get("q", "").strip()
+    if q:
+        qs = qs.filter(title__icontains=q)
+
+    paginator = Paginator(qs, PICKER_PAGE_SIZE)
+    page = paginator.get_page(request.GET.get("page", 1))
+
+    results = []
+    for m in page.object_list:
+        results.append({
+            "id": m.pk,
+            "title": m.title,
+            "url": m.file.url,
+            "type": m.type,
+            "size_display": m.size_display,
+            "dimensions": f"{m.width}×{m.height}" if m.width else "",
+            "folder": m.folder.name if m.folder else "Root",
+            "is_image": m.is_image,
+            "filename": m.filename,
+        })
+
+    # Folder list for sidebar (one query, flat list)
+    folders = list(
+        MediaFolder.objects
+        .values("id", "name", "parent_id")
+        .order_by("name")
+    )
+
+    return JsonResponse({
+        "results": results,
+        "has_next": page.has_next(),
+        "has_previous": page.has_previous(),
+        "page": page.number,
+        "total_pages": paginator.num_pages,
+        "total_count": paginator.count,
+        "folders": folders,
+    })

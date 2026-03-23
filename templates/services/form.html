@@ -77,6 +77,11 @@
     <div class="form-group">
       <label for="{{ form.image.id_for_label }}">{{ form.image.label }}</label>
       {% if form.image.errors %}<div class="error">{{ form.image.errors }}</div>{% endif %}
+
+      <!-- Hidden fields the picker writes into -->
+      <input type="hidden" name="media_url" id="serviceMediaUrl" value="">
+      <input type="hidden" name="media_id"  id="serviceMediaId"  value="">
+
       <div class="input-file-container">
         {% if is_edit and item.image %}
           <input type="file" name="image" accept="image/*" id="id_image"
@@ -86,6 +91,19 @@
         {% endif %}
       </div>
       <small class="help-text">Allowed: JPG, PNG, WebP | Max 2MB | Max 1920×1280px</small>
+
+      <!-- Picker trigger -->
+      <button type="button"
+              class="btn"
+              style="margin-top:8px;"
+              data-media-picker
+              data-target-url="#serviceMediaUrl"
+              data-target-id="#serviceMediaId"
+              data-preview="#imagePreview"
+              data-type="image">
+          <i class="fa-solid fa-photo-film"></i> Choose from Library
+      </button>
+
       <div id="imagePreview" class="mt-2">
         <p class="no-image text-muted">No image selected</p>
       </div>

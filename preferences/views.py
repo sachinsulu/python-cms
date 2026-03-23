@@ -35,7 +35,16 @@ def preference_edit(request):
                 initial[f'{field}_media'] = media_obj.pk
         form = SitePreferencesForm(instance=instance, initial=initial)
 
+    # Build a flat dict of current media PKs for the template
+    # so the partial can render the correct hidden input value
+    # without needing a custom getitem filter
+    current_media_pks = {}
+    for field in IMAGE_FIELDS:
+        media_obj = getattr(instance, field)
+        current_media_pks[field] = media_obj.pk if media_obj else ''
+
     return render(request, 'preferences/form.html', {
-        'form':     form,
-        'instance': instance,
+        'form':             form,
+        'instance':         instance,
+        'current_media_pks': current_media_pks,
     })

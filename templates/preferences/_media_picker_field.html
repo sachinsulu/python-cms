@@ -1,15 +1,4 @@
-{#
-  Reusable partial — renders one media picker row.
 
-  Required params:
-    field_name  — model field name, e.g. "icon"
-    label       — display label string
-    form        — the SitePreferencesForm instance
-
-  Optional params:
-    help        — additional help text
-    current     — current Media FK instance (instance.<field_name>)
-#}
 
 <div class="mp-field-row" id="row_{{ field_name }}">
 
@@ -38,10 +27,11 @@
       {% endif %}
     </span>
 
-    {# Hidden input — picker writes Media.pk here #}
-    {% with picker_field=field_name|add:"_media" %}
-      {{ form|getitem:picker_field }}
-    {% endwith %}
+    {# Hidden input — value pre-populated from current_media_pks context var #}
+    <input type="hidden"
+           name="{{ field_name }}_media"
+           id="id_{{ field_name }}_media"
+           value="{{ current_media_pks|default_if_none:'' }}">
 
     {# File name / status indicator #}
     <div class="mp-field-name" id="label_{{ field_name }}">

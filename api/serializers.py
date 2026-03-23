@@ -16,10 +16,26 @@ from location.models import Location
 from preferences.models import SitePreferences
 
 
+# Only the ArticleSerializer changes — rest of the file stays identical
+
 class ArticleSerializer(serializers.ModelSerializer):
+    image_url = serializers.SerializerMethodField()
+
     class Meta:
         model = Article
-        fields = ['title', 'content', 'image']
+        fields = ['title', 'content', 'image_url']
+
+    def get_image_url(self, obj):
+        """
+        Resolves image URL via the model property.
+        Handles FK → legacy → None fallback automatically.
+        Builds absolute URL when request context is available.
+        """
+        url = obj.image_url
+        if not url:
+            return None
+        request = self.context.get('request')
+        return request.build_absolute_uri(url) if request else url
 
 
 class BlogSerializer(serializers.ModelSerializer):

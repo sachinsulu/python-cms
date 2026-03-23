@@ -1,13 +1,33 @@
+# media_manager/models.py
 from django.db import models
 from django.contrib.auth import get_user_model
+from django.utils.text import slugify
 import os
 from PIL import Image, UnidentifiedImageError
 
 User = get_user_model()
 
 
+def media_upload_path(instance, filename):
+    """
+    Resolves physical upload path based on assigned folder.
+
+    Results:
+        With folder:    media/{slugified-folder-name}/{filename}
+        Without folder: media/library/{filename}
+
+    NOTE: instance.folder must be set BEFORE save() is called.
+    MediaService.upload() guarantees this by passing folder= at
+    object construction time.
+    """
+    if instance.folder:
+        folder_name = slugify(instance.folder.name)
+        return f'{folder_name}/{filename}'
+    return f'library/{filename}'
+
+
 class MediaFolder(models.Model):
-    name = models.CharField(max_length=255)
+    name   = models.CharField(max_length=255)
     parent = models.ForeignKey(
         "self",
         null=True,
@@ -28,28 +48,33 @@ class MediaFolder(models.Model):
     def get_absolute_path(self):
         """Returns slash-separated path e.g. 'Articles / Hero'."""
         parts = [self.name]
-        node = self
+        node  = self
         while node.parent_id:
             node = node.parent
             parts.insert(0, node.name)
         return " / ".join(parts)
 
+    @property
+    def slug(self):
+        """Filesystem-safe folder name."""
+        return slugify(self.name)
+
 
 class Media(models.Model):
     TYPE_IMAGE = "image"
     TYPE_VIDEO = "video"
-    TYPE_FILE = "file"
+    TYPE_FILE  = "file"
 
     TYPE_CHOICES = [
         (TYPE_IMAGE, "Image"),
         (TYPE_VIDEO, "Video"),
-        (TYPE_FILE, "File"),
+        (TYPE_FILE,  "File"),
     ]
 
     VIDEO_EXTENSIONS = {"mp4", "webm", "ogg", "mov", "avi", "mkv"}
 
-    title = models.CharField(max_length=255, blank=True)
-    file = models.FileField(upload_to="library/")
+    title  = models.CharField(max_length=255, blank=True)
+    file   = models.FileField(upload_to=media_upload_path)  # ← callable now
     folder = models.ForeignKey(
         MediaFolder,
         null=True,
@@ -57,16 +82,16 @@ class Media(models.Model):
         related_name="media",
         on_delete=models.SET_NULL,
     )
-    type = models.CharField(
+    type     = models.CharField(
         max_length=10,
         choices=TYPE_CHOICES,
         default=TYPE_FILE,
         editable=False,
     )
-    alt_text = models.CharField(max_length=255, blank=True)
-    size = models.PositiveIntegerField(default=0, editable=False)
-    width = models.PositiveIntegerField(null=True, blank=True, editable=False)
-    height = models.PositiveIntegerField(null=True, blank=True, editable=False)
+    alt_text    = models.CharField(max_length=255, blank=True)
+    size        = models.PositiveIntegerField(default=0, editable=False)
+    width       = models.PositiveIntegerField(null=True, blank=True, editable=False)
+    height      = models.PositiveIntegerField(null=True, blank=True, editable=False)
     uploaded_by = models.ForeignKey(
         User,
         null=True,
@@ -77,8 +102,8 @@ class Media(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        ordering = ["-created_at"]
-        verbose_name = "Media"
+        ordering   = ["-created_at"]
+        verbose_name        = "Media"
         verbose_name_plural = "Media"
 
     def __str__(self):
@@ -87,35 +112,29 @@ class Media(models.Model):
     def save(self, *args, **kwargs):
         update_fields = kwargs.get("update_fields")
         if self.file and not update_fields:
-            # Size is always available from the file object on new uploads
             if hasattr(self.file, "size"):
                 self.size = self.file.size
 
-            # Auto-detect title from filename if not provided
             if not self.title:
                 self.title = os.path.splitext(
                     os.path.basename(self.file.name)
                 )[0].replace("_", " ").replace("-", " ").title()
 
-            # Detect type from extension first (fast path)
             ext = os.path.splitext(self.file.name)[1].lstrip(".").lower()
             if ext in self.VIDEO_EXTENSIONS:
                 self.type = self.TYPE_VIDEO
             else:
-                # Attempt PIL open to confirm image and extract dimensions
                 try:
                     self.file.seek(0)
                     with Image.open(self.file) as img:
-                        img.verify()  # Confirms it's a valid image
-                    # verify() closes/corrupts the handle — reopen for size
+                        img.verify()
                     self.file.seek(0)
                     with Image.open(self.file) as img:
                         self.width, self.height = img.size
                     self.type = self.TYPE_IMAGE
                     self.file.seek(0)
                 except (IOError, SyntaxError, UnidentifiedImageError):
-                    # Not an image — treat as generic file
-                    self.type = self.TYPE_FILE
+                    self.type  = self.TYPE_FILE
                     self.width = None
                     self.height = None
 
@@ -131,7 +150,6 @@ class Media(models.Model):
 
     @property
     def size_display(self):
-        """Human-readable file size."""
         if self.size < 1024:
             return f"{self.size} B"
         elif self.size < 1024 * 1024:

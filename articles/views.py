@@ -1,3 +1,4 @@
+# articles/views.py
 from django.contrib.auth.decorators import login_required
 from users.decorators import requires_perm
 from .forms import ArticleForm
@@ -5,39 +6,30 @@ from .models import Article
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 from django.views.decorators.csrf import ensure_csrf_cookie
-from django.core.paginator import Paginator
-from django.db.models import Q
-from django.template.loader import render_to_string
-from django.http import HttpResponse
 from django.urls import reverse
 import logging
 
 logger = logging.getLogger(__name__)
 
 
-
 @ensure_csrf_cookie
 @login_required
 @requires_perm('articles.view_article')
 def article_list(request):
-    # Capture the parameter if it exists in the URL
     homepage_param = request.GET.get('homepage')
-    
+
     if homepage_param is not None:
-        # Save the choice to the session (namespaced for articles)
         request.session['articles_homepage_filter'] = homepage_param
-        # Redirect to the clean URL
         return redirect('article_list')
 
-    # Get the value from session, default to '0' (Inner Page)
     current_filter = request.session.get('articles_homepage_filter', '0')
-
-    # Filtering
-    articles = Article.objects.filter(homepage=current_filter).order_by('position')
+    articles = Article.objects.filter(
+        homepage=current_filter
+    ).order_by('position')
 
     return render(request, 'articles/list.html', {
-        'list': articles, 
-        'current_filter': current_filter
+        'list': articles,
+        'current_filter': current_filter,
     })
 
 
@@ -48,10 +40,15 @@ def article_create(request):
     homepage = (session_filter == '1')
 
     if request.method == 'POST':
-        form = ArticleForm(request.POST, request.FILES)
+        form = ArticleForm(request.POST)
         if form.is_valid():
             article = form.save(commit=False)
-            article.homepage = homepage 
+            article.homepage = homepage
+
+            # Handle explicit image removal via the X button
+            if request.POST.get('remove_image') == '1':
+                article.image = None
+
             article.save()
 
             action = request.POST.get('action', 'save')
@@ -60,7 +57,7 @@ def article_create(request):
                 return redirect('article_create')
             elif action == 'save_and_quit':
                 return redirect('article_list')
-            else:  # 'save'
+            else:
                 messages.success(request, "Article saved!")
                 return redirect(reverse('article_edit', args=[article.slug]))
         else:
@@ -70,7 +67,7 @@ def article_create(request):
 
     return render(request, 'articles/form.html', {
         'form': form,
-        'homepage': homepage
+        'homepage': homepage,
     })
 
 
@@ -83,22 +80,33 @@ def article_edit(request, slug):
     homepage = (session_filter == '1')
 
     if request.method == 'POST':
-        form = ArticleForm(request.POST, request.FILES, instance=article)
+        form = ArticleForm(request.POST, instance=article)
         if form.is_valid():
             article = form.save(commit=False)
             article.homepage = homepage
+
+            # Handle explicit image removal via the X button
+            if request.POST.get('remove_image') == '1':
+                article.image = None
+
             article.save()
+
             action = request.POST.get('action', 'save')
             if action == 'save_and_new':
                 return redirect('article_create')
             elif action == 'save_and_quit':
                 return redirect('article_list')
-            else:  # stay on edit
+            else:
+                messages.success(request, "Article saved!")
                 return redirect(reverse('article_edit', args=[article.slug]))
         else:
             logger.warning("Article edit form errors: %s", form.errors)
     else:
-        form = ArticleForm(instance=article)
+        # Pre-populate the hidden picker field with the current Media pk
+        initial = {}
+        if article.image_id:
+            initial['image_media'] = article.image_id
+        form = ArticleForm(instance=article, initial=initial)
 
     return render(request, 'articles/form.html', {
         'form': form,

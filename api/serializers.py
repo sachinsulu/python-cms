@@ -151,12 +151,21 @@ class MenuItemSerializer(serializers.ModelSerializer):
 class ServiceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Service
-        fields = ['id', 'title', 'content', 'image', 'icon', 'active', 'position']
+        fields = ['id', 'title', 'link', 'content', 'icon', 'status', 'position', 'type']
 
 class PopupSerializer(serializers.ModelSerializer):
+    file_url = serializers.SerializerMethodField()
+
     class Meta:
         model = Popup
-        fields = ['id', 'title', 'content', 'image', 'icon', 'active', 'position']
+        fields = ['id', 'title', 'start_date', 'end_date', 'type', 'link', 'status', 'position', 'file_url']
+
+    def get_file_url(self, obj):
+        url = obj.file_url
+        if not url:
+            return None
+        request = self.context.get('request')
+        return request.build_absolute_uri(url) if request else url
 
 class OfferSerializer(serializers.ModelSerializer):
     class Meta:

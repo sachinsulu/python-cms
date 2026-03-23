@@ -5,6 +5,7 @@ from django.core.files.base import ContentFile
 from django.contrib.auth import get_user_model
 from django.core.files.uploadedfile import UploadedFile
 from django.conf import settings
+import shutil
 
 from .models import Media, MediaFolder, media_upload_path
 
@@ -97,15 +98,7 @@ class MediaService:
         os.makedirs(os.path.dirname(new_file_path), exist_ok=True)
 
         try:
-            # Read old file and write to new path
-            with open(old_file_path, 'rb') as f:
-                content = f.read()
-
-            with open(new_file_path, 'wb') as f:
-                f.write(content)
-
-            # Delete old file
-            os.remove(old_file_path)
+            shutil.move(old_file_path, new_file_path)
 
             # Update the file field to point to the new path
             media.file.name = new_file_name

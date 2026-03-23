@@ -53,7 +53,7 @@ MODEL_MAP = {
     "featuregroup": FeatureGroup,
     "popup": Popup,
     "offer": Offer,
-    "service": Service,
+    "services": Service,
 
 }
 
@@ -71,7 +71,7 @@ ACTIVE_FIELD_MAP = {
     "featuregroup": "active",
     "popup": "status",
     "offer": "active",
-    "service": "active",
+    "services": "active",
 }
 
 STAT_COLORS = ['blue', 'orange', 'green', 'cyan', 'red', 'lime', 'purple', 'pink', 'yellow', 'teal']
@@ -89,6 +89,7 @@ _COUNT_MAP = {
     'faq_list': lambda: FAQ.objects.count(),
     'feature_list': lambda: Feature.objects.count(),
     'offer_list': lambda: Offer.objects.count(),
+
 }
 _LABEL_COUNT_MAP = {
     'Sub-Packages': lambda: SubPackage.objects.count(),

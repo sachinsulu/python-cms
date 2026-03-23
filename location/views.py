@@ -7,8 +7,7 @@ from django.views.decorators.http import require_http_methods
 from users.decorators import requires_perm
 from .models import Location
 from .forms import LocationForm
-from core.models import Module, PageMeta
-from core.forms import PageMetaForm
+from core.utils import get_page_meta_context
 
 logger = logging.getLogger(__name__)
 
@@ -30,19 +29,8 @@ def location_edit(request):
     else:
         form = LocationForm(instance=instance)
 
-    module = Module.objects.filter(url_name='location_edit').first()
-    page_meta = None
-    if module:
-        try:
-            page_meta = module.page_meta
-        except PageMeta.DoesNotExist:
-            page_meta = None
-    
-    page_meta_form = PageMetaForm(instance=page_meta)
     return render(request, 'location/form.html', {
-        'form':     form,
+        'form': form,
         'instance': instance,
-        'page_meta': page_meta,
-        'page_meta_form': page_meta_form,
-        'module_url_name': 'location_edit',
+        **get_page_meta_context('location_edit'),
     })

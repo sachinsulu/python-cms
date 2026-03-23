@@ -3,9 +3,11 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 
+
+
+from package.models import Package, SubPackage, SubPackageAmenity
 from articles.models import Article
 from blog.models import Blog
-from package.models import Package, SubPackage
 from testimonials.models import Testimonial
 from social.models import Social
 from nearby.models import Nearby
@@ -46,7 +48,7 @@ from .serializers import (
 @api_view(['GET'])
 def get_article(request, slug):
     try:
-        article = Article.objects.get(slug=slug, active=True)
+        article = Article.objects.select_related('image').get(slug=slug, active=True)
     except Article.DoesNotExist:
         return Response(
             {'error': 'Article not found'},
@@ -58,9 +60,10 @@ def get_article(request, slug):
 
 @api_view(['GET'])
 def get_all_articles(request):
-    articles = Article.objects.filter(active=True)
+    articles = Article.objects.filter(active=True).select_related('image')
     serializer = ArticleSerializer(articles, many=True, context={'request': request})
     return Response(serializer.data)
+
 
 
 # ========================
@@ -70,7 +73,7 @@ def get_all_articles(request):
 @api_view(['GET'])
 def get_blog(request, slug):
     try:
-        blog = Blog.objects.get(slug=slug, active=True)
+        blog = Blog.objects.select_related('image', 'banner_image').get(slug=slug, active=True)
     except Blog.DoesNotExist:
         return Response(
             {'error': 'Blog not found'},
@@ -82,7 +85,7 @@ def get_blog(request, slug):
 
 @api_view(['GET'])
 def get_all_blogs(request):
-    blogs = Blog.objects.filter(active=True)
+    blogs = Blog.objects.filter(active=True).select_related('image', 'banner_image')
     serializer = BlogSerializer(blogs, many=True, context={'request': request})
     return Response(serializer.data)
 
@@ -94,8 +97,16 @@ def get_all_blogs(request):
 @api_view(['GET'])
 def get_all_packages(request):
     """Get all active packages with their sub-packages nested inside."""
-    packages = Package.objects.filter(is_active=True).prefetch_related(
-        Prefetch('sub_packages', queryset=SubPackage.objects.filter(is_active=True))
+    packages = Package.objects.filter(is_active=True).select_related('feature_group').prefetch_related(
+        Prefetch(
+            'sub_packages',
+            queryset=SubPackage.objects.filter(is_active=True).prefetch_related(
+                Prefetch(
+                    'amenity_links',
+                    queryset=SubPackageAmenity.objects.select_related('feature__image').order_by('position'),
+                )
+            )
+        )
     ).order_by('position')
     serializer = PackageSerializer(packages, many=True, context={'request': request})
     return Response(serializer.data)
@@ -105,8 +116,16 @@ def get_all_packages(request):
 def get_package(request, slug):
     """Get a single package by slug with its sub-packages."""
     try:
-        package = Package.objects.prefetch_related(
-            Prefetch('sub_packages', queryset=SubPackage.objects.filter(is_active=True))
+        package = Package.objects.select_related('feature_group').prefetch_related(
+            Prefetch(
+                'sub_packages',
+                queryset=SubPackage.objects.filter(is_active=True).prefetch_related(
+                    Prefetch(
+                        'amenity_links',
+                        queryset=SubPackageAmenity.objects.select_related('feature__image').order_by('position'),
+                    )
+                )
+            )
         ).get(slug=slug, is_active=True)
     except Package.DoesNotExist:
         return Response(
@@ -153,7 +172,7 @@ def get_subpackage(request, slug):
 @api_view(['GET'])
 def get_all_testimonials(request):
     """Get all active testimonials ordered by position."""
-    testimonials = Testimonial.objects.filter(active=True).order_by('position')
+    testimonials = Testimonial.objects.filter(active=True).select_related('image').order_by('position')
     serializer = TestimonialSerializer(testimonials, many=True, context={'request': request})
     return Response(serializer.data)
 
@@ -162,7 +181,7 @@ def get_all_testimonials(request):
 def get_testimonial(request, pk):
     """Get a single testimonial by id."""
     try:
-        testimonial = Testimonial.objects.get(pk=pk, active=True)
+        testimonial = Testimonial.objects.select_related('image').get(pk=pk, active=True)
     except Testimonial.DoesNotExist:
         return Response(
             {'error': 'Testimonial not found'},
@@ -179,14 +198,14 @@ def get_testimonial(request, pk):
 @api_view(['GET'])
 def social_list(request):
     """Get all active social links ordered by position."""
-    socials = Social.objects.filter(active=True).order_by('position')
+    socials = Social.objects.filter(active=True).select_related('image').order_by('position')
     serializer = SocialSerializer(socials, many=True, context={'request': request})
     return Response(serializer.data)
 
 @api_view(['GET'])
 def get_all_socials(request):
     """Get all active social links ordered by position."""
-    socials = Social.objects.filter(active=True, type=Social.TYPE_SOCIAL).order_by('position')
+    socials = Social.objects.filter(active=True, type=Social.TYPE_SOCIAL).select_related('image').order_by('position')
     serializer = SocialSerializer(socials, many=True, context={'request': request})
     return Response(serializer.data)
 
@@ -194,7 +213,7 @@ def get_all_socials(request):
 @api_view(['GET'])
 def get_all_otas(request):
     """Get all active OTA links ordered by position."""
-    otas = Social.objects.filter(active=True, type=Social.TYPE_OTA).order_by('position')
+    otas = Social.objects.filter(active=True, type=Social.TYPE_OTA).select_related('image').order_by('position')
     serializer = SocialSerializer(otas, many=True, context={'request': request})
     return Response(serializer.data)
 
@@ -203,7 +222,7 @@ def get_all_otas(request):
 def get_social(request, pk):
     """Get a single social or OTA entry by id."""
     try:
-        item = Social.objects.get(pk=pk, active=True)
+        item = Social.objects.select_related('image').get(pk=pk, active=True)
     except Social.DoesNotExist:
         return Response(
             {'error': 'Not found'},
@@ -354,7 +373,7 @@ def get_by_slug(request, slug):
 
 @api_view(['GET'])
 def get_all_features(request):
-    features = Feature.objects.filter(status=Feature.STATUS_ACTIVE).order_by('position')
+    features = Feature.objects.filter(status=Feature.STATUS_ACTIVE).select_related('image').order_by('position')
     return Response(FeatureSerializer(features, many=True, context={'request': request}).data)
 
 @api_view(['GET'])
@@ -478,3 +497,16 @@ def get_site_preferences(request):
     preferences = SitePreferences.objects.get_solo()
     serializer = SitePreferenceSerializer(preferences, context={'request': request})
     return Response(serializer.data)
+
+@api_view(['GET'])
+def get_amenities(self, obj):
+    # Use prefetched amenity_links to avoid extra queries.
+    # Falls back gracefully if prefetch wasn't done.
+    if hasattr(obj, '_prefetched_objects_cache') and 'amenity_links' in obj._prefetched_objects_cache:
+        features = [
+            link.feature for link in obj.amenity_links.all()
+            if link.feature.active
+        ]
+    else:
+        features = obj.amenities.filter(active=True).order_by('amenity_links__position')
+    return FeatureSerializer(features, many=True, context=self.context).data

@@ -1,6 +1,8 @@
 # services/models.py
 from django.db import models
 from ckeditor_uploader.fields import RichTextUploadingField
+from django.db import transaction
+from django.db.models import Max
 
 
 class Service(models.Model):

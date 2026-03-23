@@ -9,8 +9,7 @@ from django.views.decorators.csrf import ensure_csrf_cookie
 from users.decorators import requires_perm
 from .forms import TestimonialForm
 from .models import Testimonial
-from core.models import Module, PageMeta
-from core.forms import PageMetaForm
+from core.utils import get_page_meta_context
 
 logger = logging.getLogger(__name__)
 
@@ -20,19 +19,9 @@ logger = logging.getLogger(__name__)
 @requires_perm('testimonials.view_testimonial')
 def testimonial_list(request):
     testimonials = Testimonial.objects.all().order_by('position')
-    module     = Module.objects.filter(url_name='testimonial_list').first()
-    page_meta  = None
-    if module:
-        try:
-            page_meta = module.page_meta
-        except PageMeta.DoesNotExist:
-            pass
-    page_meta_form = PageMetaForm(instance=page_meta)
     return render(request, 'testimonials/list.html', {
-        'list':            testimonials,
-        'page_meta':       page_meta,
-        'page_meta_form':  page_meta_form,
-        'module_url_name': 'testimonial_list',
+        'list': testimonials,
+        **get_page_meta_context('testimonial_list'),
     })
 
 

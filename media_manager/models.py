@@ -4,6 +4,8 @@ from django.contrib.auth import get_user_model
 from django.utils.text import slugify
 import os
 from PIL import Image, UnidentifiedImageError
+from django.db import transaction
+from django.db.models import Max
 
 User = get_user_model()
 

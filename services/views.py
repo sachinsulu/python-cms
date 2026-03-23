@@ -14,8 +14,7 @@ from package.models import Package, SubPackage
 from users.decorators import requires_perm
 from .forms import ServiceForm
 from .models import Service
-from core.models import Module, PageMeta
-from core.forms import PageMetaForm
+from core.utils import get_page_meta_context
 
 logger     = logging.getLogger(__name__)
 SESSION_KEY = 'service_type_filter'
@@ -60,24 +59,12 @@ def service_list(request):
         type=current_filter
     ).order_by('position')
 
-    module    = Module.objects.filter(url_name='service_list').first()
-    page_meta = None
-    if module:
-        try:
-            page_meta = module.page_meta
-        except PageMeta.DoesNotExist:
-            pass
-
-    page_meta_form = PageMetaForm(instance=page_meta)
-
     return render(request, 'services/list.html', {
-        'list':              items,
-        'current_filter':    current_filter,
+        'list': items,
+        'current_filter': current_filter,
         'type_main_service': Service.TYPE_MAIN_SERVICE,
-        'type_service':      Service.TYPE_SERVICE,
-        'page_meta':         page_meta,
-        'page_meta_form':    page_meta_form,
-        'module_url_name':   'service_list',
+        'type_service': Service.TYPE_SERVICE,
+        **get_page_meta_context('service_list'),
     })
 
 

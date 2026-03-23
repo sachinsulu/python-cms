@@ -5,32 +5,15 @@ from django.contrib.auth.decorators import login_required
 from users.decorators import requires_perm
 from django.contrib import messages
 from django.urls import reverse
-from core.models import Module, PageMeta
-from core.forms import PageMetaForm
+from core.utils import get_page_meta_context
 @login_required
 @requires_perm('nearby.view_nearby')
 def nearby_list(request):
     nearby = Nearby.objects.all().order_by('position')
 
-    # Get the Module row for this section
-    module = Module.objects.filter(url_name='nearby_list').first()
-
-    # Get existing PageMeta if it exists
-    page_meta = None
-    if module:
-        try:
-            page_meta = module.page_meta
-        except PageMeta.DoesNotExist:
-            page_meta = None
-
-    # Pre-fill form with existing data
-    page_meta_form = PageMetaForm(instance=page_meta)
-
     return render(request, 'nearby/list.html', {
         'list': nearby,
-        'page_meta': page_meta,
-        'page_meta_form': page_meta_form,
-        'module_url_name': 'nearby_list',
+        **get_page_meta_context('nearby_list'),
     })
 
 

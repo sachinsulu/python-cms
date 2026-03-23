@@ -1,3 +1,4 @@
+# popup/views.py
 import logging
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
@@ -6,8 +7,8 @@ from django.urls import reverse
 from django.views.decorators.csrf import ensure_csrf_cookie
 
 from users.decorators import requires_perm
-from .models import Popup
 from .forms import PopupForm
+from .models import Popup
 
 logger = logging.getLogger(__name__)
 
@@ -24,9 +25,15 @@ def popup_list(request):
 @requires_perm('popup.add_popup')
 def popup_create(request):
     if request.method == 'POST':
-        form = PopupForm(request.POST, request.FILES)
+        form = PopupForm(request.POST)
         if form.is_valid():
-            item = form.save()
+            item = form.save(commit=False)
+
+            if request.POST.get('remove_file') == '1':
+                item.file = None
+
+            item.save()
+
             action = request.POST.get('action', 'save')
             if action == 'save_and_new':
                 messages.success(request, "Saved! You can create a new one.")
@@ -50,12 +57,15 @@ def popup_edit(request, pk):
     item = get_object_or_404(Popup, pk=pk)
 
     if request.method == 'POST':
-        form = PopupForm(request.POST, request.FILES, instance=item)
+        form = PopupForm(request.POST, instance=item)
         if form.is_valid():
             obj = form.save(commit=False)
+
             if request.POST.get('remove_file') == '1':
                 obj.file = None
+
             obj.save()
+
             action = request.POST.get('action', 'save')
             if action == 'save_and_new':
                 return redirect('popup_create')
@@ -67,10 +77,14 @@ def popup_edit(request, pk):
         else:
             logger.warning("Popup edit errors: %s", form.errors)
     else:
-        form = PopupForm(instance=item)
+        # Pre-populate picker with current Media pk
+        initial = {}
+        if item.file_id:
+            initial['file_media'] = item.file_id
+        form = PopupForm(instance=item, initial=initial)
 
     return render(request, 'popup/form.html', {
-        'form': form,
+        'form':    form,
         'is_edit': True,
-        'item': item,
+        'item':    item,
     })

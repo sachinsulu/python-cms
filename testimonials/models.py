@@ -1,3 +1,4 @@
+# testimonials/models.py
 from django.db import models
 from ckeditor_uploader.fields import RichTextUploadingField
 
@@ -8,10 +9,27 @@ class Testimonial(models.Model):
     title    = models.CharField(max_length=255)
     name     = models.CharField(max_length=255)
     content  = RichTextUploadingField()
-    rating   = models.PositiveSmallIntegerField(choices=RATING_CHOICES, default=5)
+    rating   = models.PositiveSmallIntegerField(
+        choices=RATING_CHOICES, default=5
+    )
     active   = models.BooleanField(default=True)
     position = models.PositiveIntegerField(default=0)
-    image    = models.ImageField(upload_to='testimonials/', blank=True, null=True)
+
+    # ── Legacy ────────────────────────────────────────────────────
+    image_legacy = models.ImageField(
+        upload_to='testimonials/',
+        blank=True, null=True,
+        verbose_name='[Legacy] Image',
+    )
+    # ── FK ────────────────────────────────────────────────────────
+    image = models.ForeignKey(
+        'media_manager.Media',
+        null=True, blank=True,
+        on_delete=models.SET_NULL,
+        related_name='testimonial_images',
+        verbose_name='Image',
+    )
+
     linksrc  = models.URLField(blank=True, null=True, verbose_name='Link Source')
     country  = models.CharField(max_length=100, blank=True)
     via_type = models.CharField(max_length=100, blank=True, verbose_name='Via')
@@ -20,9 +38,23 @@ class Testimonial(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
-        ordering = ['position']
-        verbose_name = 'Testimonial'
+        ordering            = ['position']
+        verbose_name        = 'Testimonial'
         verbose_name_plural = 'Testimonials'
+
+    @property
+    def image_url(self):
+        if self.image_id:
+            try:
+                return self.image.file.url
+            except (ValueError, AttributeError):
+                pass
+        if self.image_legacy:
+            try:
+                return self.image_legacy.url
+            except (ValueError, AttributeError):
+                pass
+        return None
 
     def __str__(self):
         return self.title

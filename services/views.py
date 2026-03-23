@@ -1,3 +1,4 @@
+# services/views.py
 import json
 import logging
 from django.contrib.auth.decorators import login_required
@@ -15,8 +16,8 @@ from .forms import ServiceForm
 from .models import Service
 from core.models import Module, PageMeta
 from core.forms import PageMetaForm
-logger = logging.getLogger(__name__)
 
+logger     = logging.getLogger(__name__)
 SESSION_KEY = 'service_type_filter'
 
 
@@ -29,10 +30,18 @@ def _slug_json(queryset, title_field='title'):
 
 def _picker_context():
     return {
-        'articles_json':    _slug_json(Article.objects.filter(active=True).order_by('title')),
-        'blogs_json':       _slug_json(Blog.objects.filter(active=True).order_by('title')),
-        'packages_json':    _slug_json(Package.objects.filter(is_active=True).order_by('title')),
-        'subpackages_json': _slug_json(SubPackage.objects.filter(is_active=True).order_by('title')),
+        'articles_json':    _slug_json(
+            Article.objects.filter(active=True).order_by('title')
+        ),
+        'blogs_json':       _slug_json(
+            Blog.objects.filter(active=True).order_by('title')
+        ),
+        'packages_json':    _slug_json(
+            Package.objects.filter(is_active=True).order_by('title')
+        ),
+        'subpackages_json': _slug_json(
+            SubPackage.objects.filter(is_active=True).order_by('title')
+        ),
     }
 
 
@@ -47,29 +56,28 @@ def service_list(request):
         return redirect('service_list')
 
     current_filter = request.session.get(SESSION_KEY, Service.TYPE_MAIN_SERVICE)
-    items = Service.objects.filter(type=current_filter).order_by('position')
+    items          = Service.objects.filter(
+        type=current_filter
+    ).order_by('position')
 
-    module = Module.objects.filter(url_name='service_list').first()
-
-    # Get existing PageMeta if it exists
+    module    = Module.objects.filter(url_name='service_list').first()
     page_meta = None
     if module:
         try:
             page_meta = module.page_meta
         except PageMeta.DoesNotExist:
-            page_meta = None
+            pass
 
-    # Pre-fill form with existing data
     page_meta_form = PageMetaForm(instance=page_meta)
 
     return render(request, 'services/list.html', {
-        'list': items,
-        'current_filter': current_filter,
+        'list':              items,
+        'current_filter':    current_filter,
         'type_main_service': Service.TYPE_MAIN_SERVICE,
-        'type_service': Service.TYPE_SERVICE,
-        'page_meta':        page_meta,
-        'page_meta_form':   page_meta_form,
-        'module_url_name':  'service_list',
+        'type_service':      Service.TYPE_SERVICE,
+        'page_meta':         page_meta,
+        'page_meta_form':    page_meta_form,
+        'module_url_name':   'service_list',
     })
 
 
@@ -79,10 +87,14 @@ def service_create(request):
     current_type = request.session.get(SESSION_KEY, Service.TYPE_MAIN_SERVICE)
 
     if request.method == 'POST':
-        form = ServiceForm(request.POST, request.FILES)
+        form = ServiceForm(request.POST)
         if form.is_valid():
-            item = form.save(commit=False)
+            item      = form.save(commit=False)
             item.type = current_type
+
+            if request.POST.get('remove_image') == '1':
+                item.image = None
+
             item.save()
 
             action = request.POST.get('action', 'save')
@@ -100,7 +112,7 @@ def service_create(request):
         form = ServiceForm()
 
     return render(request, 'services/form.html', {
-        'form': form,
+        'form':         form,
         'current_type': current_type,
         **_picker_context(),
     })
@@ -109,19 +121,20 @@ def service_create(request):
 @login_required
 @requires_perm('services.change_service')
 def service_edit(request, pk):
-    item = get_object_or_404(Service, pk=pk)
+    item         = get_object_or_404(Service, pk=pk)
     current_type = request.session.get(SESSION_KEY, Service.TYPE_MAIN_SERVICE)
 
     if request.method == 'POST':
-        form = ServiceForm(request.POST, request.FILES, instance=item)
+        form = ServiceForm(request.POST, instance=item)
         if form.is_valid():
-            obj = form.save(commit=False)
+            obj      = form.save(commit=False)
             obj.type = current_type
 
             if request.POST.get('remove_image') == '1':
                 obj.image = None
 
             obj.save()
+
             action = request.POST.get('action', 'save')
             if action == 'save_and_new':
                 return redirect('service_create')
@@ -133,12 +146,15 @@ def service_edit(request, pk):
         else:
             logger.warning("Service edit errors: %s", form.errors)
     else:
-        form = ServiceForm(instance=item)
+        initial = {}
+        if item.image_id:
+            initial['image_media'] = item.image_id
+        form = ServiceForm(instance=item, initial=initial)
 
     return render(request, 'services/form.html', {
-        'form': form,
-        'is_edit': True,
-        'item': item,
+        'form':         form,
+        'is_edit':      True,
+        'item':         item,
         'current_type': current_type,
         **_picker_context(),
     })

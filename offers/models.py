@@ -1,3 +1,4 @@
+# offers/models.py
 from django.db import models, transaction
 from django.db.models import Max
 from ckeditor_uploader.fields import RichTextUploadingField
@@ -19,34 +20,61 @@ class Offer(models.Model):
     title         = models.CharField(max_length=255)
     start_date    = models.DateField()
     end_date      = models.DateField()
-    image         = models.ImageField(upload_to='offers/', blank=True, null=True)
     discount_type = models.CharField(
         max_length=10,
         choices=DISCOUNT_TYPE_CHOICES,
         default=DISCOUNT_NONE,
     )
 
-    # Fixed discount fields
-    fixed_discount = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
-    fixed_rate     = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    fixed_discount = models.DecimalField(
+        max_digits=10, decimal_places=2, null=True, blank=True
+    )
+    fixed_rate     = models.DecimalField(
+        max_digits=10, decimal_places=2, null=True, blank=True
+    )
     fixed_people   = models.PositiveIntegerField(null=True, blank=True)
+    tiers          = models.JSONField(default=list, blank=True)
+    link           = models.CharField(max_length=500, blank=True)
+    content        = RichTextUploadingField(blank=True)
+    active         = models.BooleanField(default=True)
+    position       = models.PositiveIntegerField(default=0)
 
-    # Dynamic / Multi tiers stored as JSON
-    # Structure: [{"pax": 2, "rate": 100.00}, ...]
-    tiers = models.JSONField(default=list, blank=True)
-
-    link    = models.CharField(max_length=500, blank=True)
-    content = RichTextUploadingField(blank=True)
-    active  = models.BooleanField(default=True)
-    position = models.PositiveIntegerField(default=0)
+    # ── Legacy ────────────────────────────────────────────────────
+    image_legacy = models.ImageField(
+        upload_to='offers/',
+        blank=True, null=True,
+        verbose_name='[Legacy] Image',
+    )
+    # ── FK ────────────────────────────────────────────────────────
+    image = models.ForeignKey(
+        'media_manager.Media',
+        null=True, blank=True,
+        on_delete=models.SET_NULL,
+        related_name='offer_images',
+        verbose_name='Image',
+    )
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
-        ordering = ['position']
-        verbose_name = 'Offer'
+        ordering            = ['position']
+        verbose_name        = 'Offer'
         verbose_name_plural = 'Offers'
+
+    @property
+    def image_url(self):
+        if self.image_id:
+            try:
+                return self.image.file.url
+            except (ValueError, AttributeError):
+                pass
+        if self.image_legacy:
+            try:
+                return self.image_legacy.url
+            except (ValueError, AttributeError):
+                pass
+        return None
 
     def save(self, *args, **kwargs):
         with transaction.atomic():

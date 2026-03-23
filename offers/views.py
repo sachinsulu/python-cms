@@ -1,3 +1,4 @@
+# offers/views.py
 import json
 import logging
 
@@ -12,6 +13,7 @@ from .forms import OfferForm
 from .models import Offer
 from core.models import Module, PageMeta
 from core.forms import PageMetaForm
+
 logger = logging.getLogger(__name__)
 
 
@@ -19,25 +21,22 @@ logger = logging.getLogger(__name__)
 @login_required
 @requires_perm('offers.view_offer')
 def offer_list(request):
-    items = Offer.objects.all().order_by('position')
-    module = Module.objects.filter(url_name='offer_list').first()
-
-    # Get existing PageMeta if it exists
+    items     = Offer.objects.all().order_by('position')
+    module    = Module.objects.filter(url_name='offer_list').first()
     page_meta = None
     if module:
         try:
             page_meta = module.page_meta
         except PageMeta.DoesNotExist:
-            page_meta = None
+            pass
 
-    # Pre-fill form with existing data
     page_meta_form = PageMetaForm(instance=page_meta)
 
     return render(request, 'offers/list.html', {
-        'list':             items,
-        'page_meta':        page_meta,
-        'page_meta_form':   page_meta_form,
-        'module_url_name':  'offer_list',
+        'list':            items,
+        'page_meta':       page_meta,
+        'page_meta_form':  page_meta_form,
+        'module_url_name': 'offer_list',
     })
 
 
@@ -45,11 +44,14 @@ def offer_list(request):
 @requires_perm('offers.add_offer')
 def offer_create(request):
     if request.method == 'POST':
-        form = OfferForm(request.POST, request.FILES)
+        form      = OfferForm(request.POST)
         tiers_raw = request.POST.get('tiers_json', '[]')
 
         if form.is_valid():
             offer = form.save(commit=False)
+
+            if request.POST.get('remove_image') == '1':
+                offer.image = None
 
             try:
                 offer.tiers = json.loads(tiers_raw)
@@ -57,6 +59,7 @@ def offer_create(request):
                 offer.tiers = []
 
             offer.save()
+
             action = request.POST.get('action', 'save')
             if action == 'save_and_new':
                 messages.success(request, "Offer saved! You can create a new one.")
@@ -80,7 +83,7 @@ def offer_edit(request, pk):
     offer = get_object_or_404(Offer, pk=pk)
 
     if request.method == 'POST':
-        form = OfferForm(request.POST, request.FILES, instance=offer)
+        form      = OfferForm(request.POST, instance=offer)
         tiers_raw = request.POST.get('tiers_json', '[]')
 
         if form.is_valid():
@@ -95,6 +98,7 @@ def offer_edit(request, pk):
                 obj.tiers = []
 
             obj.save()
+
             action = request.POST.get('action', 'save')
             if action == 'save_and_new':
                 return redirect('offer_create')
@@ -106,11 +110,14 @@ def offer_edit(request, pk):
         else:
             logger.warning("Offer edit errors: %s", form.errors)
     else:
-        form = OfferForm(instance=offer)
+        initial = {}
+        if offer.image_id:
+            initial['image_media'] = offer.image_id
+        form = OfferForm(instance=offer, initial=initial)
 
     return render(request, 'offers/form.html', {
-        'form': form,
-        'is_edit': True,
-        'item': offer,
+        'form':       form,
+        'is_edit':    True,
+        'item':       offer,
         'tiers_json': json.dumps(offer.tiers),
     })

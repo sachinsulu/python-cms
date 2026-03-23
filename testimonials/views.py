@@ -1,3 +1,4 @@
+# testimonials/views.py
 import logging
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
@@ -19,21 +20,18 @@ logger = logging.getLogger(__name__)
 @requires_perm('testimonials.view_testimonial')
 def testimonial_list(request):
     testimonials = Testimonial.objects.all().order_by('position')
-
-    module = Module.objects.filter(url_name='testimonial_list').first()
-    page_meta = None
+    module     = Module.objects.filter(url_name='testimonial_list').first()
+    page_meta  = None
     if module:
         try:
             page_meta = module.page_meta
         except PageMeta.DoesNotExist:
-            page_meta = None
-
+            pass
     page_meta_form = PageMetaForm(instance=page_meta)
-
     return render(request, 'testimonials/list.html', {
-        'list': testimonials,
-        'page_meta': page_meta,
-        'page_meta_form': page_meta_form,
+        'list':            testimonials,
+        'page_meta':       page_meta,
+        'page_meta_form':  page_meta_form,
         'module_url_name': 'testimonial_list',
     })
 
@@ -42,12 +40,15 @@ def testimonial_list(request):
 @requires_perm('testimonials.add_testimonial')
 def testimonial_create(request):
     if request.method == 'POST':
-        form = TestimonialForm(request.POST, request.FILES)
+        form = TestimonialForm(request.POST)
         if form.is_valid():
-            testimonial = form.save()
+            testimonial = form.save(commit=False)
+            if request.POST.get('remove_image') == '1':
+                testimonial.image = None
+            testimonial.save()
             action = request.POST.get('action', 'save')
             if action == 'save_and_new':
-                messages.success(request, "Testimonial saved! You can create a new one now.")
+                messages.success(request, "Testimonial saved!")
                 return redirect('testimonial_create')
             elif action == 'save_and_quit':
                 return redirect('testimonial_list')
@@ -55,10 +56,9 @@ def testimonial_create(request):
                 messages.success(request, "Testimonial saved!")
                 return redirect(reverse('testimonial_edit', args=[testimonial.pk]))
         else:
-            logger.warning("Testimonial create form errors: %s", form.errors)
+            logger.warning("Testimonial create errors: %s", form.errors)
     else:
         form = TestimonialForm()
-
     return render(request, 'testimonials/form.html', {'form': form})
 
 
@@ -66,16 +66,12 @@ def testimonial_create(request):
 @requires_perm('testimonials.change_testimonial')
 def testimonial_edit(request, pk):
     testimonial = get_object_or_404(Testimonial, pk=pk)
-
     if request.method == 'POST':
-        form = TestimonialForm(request.POST, request.FILES, instance=testimonial)
+        form = TestimonialForm(request.POST, instance=testimonial)
         if form.is_valid():
             testimonial = form.save(commit=False)
-
-            # Handle image removal
             if request.POST.get('remove_image') == '1':
                 testimonial.image = None
-
             testimonial.save()
             action = request.POST.get('action', 'save')
             if action == 'save_and_new':
@@ -86,12 +82,14 @@ def testimonial_edit(request, pk):
                 messages.success(request, "Testimonial updated!")
                 return redirect(reverse('testimonial_edit', args=[testimonial.pk]))
         else:
-            logger.warning("Testimonial edit form errors: %s", form.errors)
+            logger.warning("Testimonial edit errors: %s", form.errors)
     else:
-        form = TestimonialForm(instance=testimonial)
-
+        initial = {}
+        if testimonial.image_id:
+            initial['image_media'] = testimonial.image_id
+        form = TestimonialForm(instance=testimonial, initial=initial)
     return render(request, 'testimonials/form.html', {
-        'form': form,
-        'is_edit': True,
+        'form':        form,
+        'is_edit':     True,
         'testimonial': testimonial,
     })

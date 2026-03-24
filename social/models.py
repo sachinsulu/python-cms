@@ -2,7 +2,11 @@ from django.db import models
 from django.db import transaction
 from django.db.models import Max
 
-class Social(models.Model):
+from media_manager.mixins import MediaUsageMixin
+
+
+class Social(MediaUsageMixin, models.Model):
+    media_fields = ['image']
     TYPE_SOCIAL = 'social'
     TYPE_OTA    = 'ota'
     TYPE_CHOICES = [

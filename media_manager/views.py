@@ -120,13 +120,18 @@ def upload_media(request, folder_id=None):
             for file in files:
                 try:
                     form.validate_single_file(file)
+
+                    # For multi-file uploads, append index to the base title if provided
+                    actual_title = title
+                    if len(files) > 1 and title:
+                        actual_title = f"{title} {success_count + 1}"
+
                     MediaService.upload(
                         file=file,
                         folder=folder,
                         user=request.user,
-                        # Only apply manual title/alt to single-file uploads
-                        title=title    if len(files) == 1 else "",
-                        alt_text=alt_text if len(files) == 1 else "",
+                        title=actual_title,
+                        alt_text=alt_text,
                     )
                     success_count += 1
                 except Exception as exc:

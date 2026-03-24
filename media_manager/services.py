@@ -67,13 +67,18 @@ class MediaService:
                 with Image.open(file) as img:
                     img_format = img.format or "JPEG"
                     
-                    if img.mode in ('RGBA', 'P'):
+                    # Preserve transparency for RGBA/LA/P modes
+                    if img.mode in ('RGBA', 'LA') or (img.mode == 'P' and 'transparency' in img.info):
+                        # Ensure we save in a format that supports alpha
+                        if img_format not in ('PNG', 'WEBP'):
+                            img_format = 'PNG'
+                    elif img.mode != 'RGB':
                         img = img.convert('RGB')
                         
                     img.thumbnail((300, 300))
 
                     thumb_io = io.BytesIO()
-                    img.save(thumb_io, format=img_format)
+                    img.save(thumb_io, format=img_format, quality=85)
 
                     filename = os.path.basename(media.file.name)
                     if folder:
@@ -139,15 +144,9 @@ class MediaService:
         """
         Permanently deletes a Media object (DB record + files on disk).
         MediaUsage rows are cascade-deleted automatically by the DB.
-        The post_delete signal in signals.py handles media.file cleanup.
+        The post_delete signal in signals.py handles file cleanup for both
+        the main file and the thumbnail.
         """
-        storage = media.file.storage
-
-        # 1. Delete thumbnail (not covered by the post_delete signal)
-        if media.thumbnail and storage.exists(media.thumbnail.name):
-            storage.delete(media.thumbnail.name)
-
-        # 2. Delete DB record — cascades to MediaUsage rows automatically
         pk = media.pk
         media.delete()
         logger.info("Media permanently deleted: id=%s", pk)

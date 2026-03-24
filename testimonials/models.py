@@ -4,8 +4,11 @@ from ckeditor_uploader.fields import RichTextUploadingField
 from django.db import transaction
 from django.db.models import Max
 
+from media_manager.mixins import MediaUsageMixin
 
-class Testimonial(models.Model):
+
+class Testimonial(MediaUsageMixin, models.Model):
+    media_fields = ['image']
     RATING_CHOICES = [(i, str(i)) for i in range(1, 6)]
 
     title    = models.CharField(max_length=255)

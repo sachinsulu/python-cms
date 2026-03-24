@@ -4,8 +4,11 @@ from ckeditor_uploader.fields import RichTextUploadingField
 from django.db import transaction
 from django.db.models import Max
 
+from media_manager.mixins import MediaUsageMixin
 
-class Service(models.Model):
+
+class Service(MediaUsageMixin, models.Model):
+    media_fields = ['image']
     TYPE_MAIN_SERVICE = 'main-service'
     TYPE_SERVICE      = 'service'
     TYPE_CHOICES      = [

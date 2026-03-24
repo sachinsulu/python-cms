@@ -4,8 +4,11 @@ from django.utils.text import slugify
 from django.db.models import Max
 from ckeditor_uploader.fields import RichTextUploadingField
 
+from media_manager.mixins import MediaUsageMixin
 
-class Blog(models.Model):
+
+class Blog(MediaUsageMixin, models.Model):
+    media_fields = ['banner_image', 'image']
     title  = models.CharField(max_length=255)
     slug   = models.SlugField(unique=True, blank=True)
     author = models.CharField(max_length=255, blank=True)

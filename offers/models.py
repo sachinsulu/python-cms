@@ -3,8 +3,11 @@ from django.db import models, transaction
 from django.db.models import Max
 from ckeditor_uploader.fields import RichTextUploadingField
 
+from media_manager.mixins import MediaUsageMixin
 
-class Offer(models.Model):
+
+class Offer(MediaUsageMixin, models.Model):
+    media_fields = ['image']
     DISCOUNT_NONE    = 'none'
     DISCOUNT_FIXED   = 'fixed'
     DISCOUNT_DYNAMIC = 'dynamic'

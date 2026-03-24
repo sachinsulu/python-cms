@@ -2,8 +2,11 @@
 from django.db import models, transaction
 from django.db.models import Max
 
+from media_manager.mixins import MediaUsageMixin
 
-class Popup(models.Model):
+
+class Popup(MediaUsageMixin, models.Model):
+    media_fields = ['file']
     TYPE_IMAGE = 'image'
     TYPE_VIDEO = 'video'
     TYPE_CHOICES = [

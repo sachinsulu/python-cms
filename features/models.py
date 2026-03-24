@@ -3,6 +3,8 @@ from django.db import models, transaction
 from django.db.models import Max
 from ckeditor_uploader.fields import RichTextUploadingField
 
+from media_manager.mixins import MediaUsageMixin
+
 
 class FeatureGroup(models.Model):
     title    = models.CharField(max_length=255)
@@ -28,7 +30,8 @@ class FeatureGroup(models.Model):
         return self.title
 
 
-class Feature(models.Model):
+class Feature(MediaUsageMixin, models.Model):
+    media_fields = ['image']
     group   = models.ForeignKey(
         FeatureGroup, on_delete=models.CASCADE, related_name='features'
     )

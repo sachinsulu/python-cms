@@ -1,6 +1,8 @@
 from django.db import models
 from django.core.cache import cache
 
+from media_manager.mixins import MediaUsageMixin
+
 PREFS_CACHE_KEY = 'site_preferences_singleton'
 
 
@@ -18,7 +20,12 @@ class BookingType(models.TextChoices):
     ROJAI   = 'rojai',   'Rojai'
 
 
-class SitePreferences(models.Model):
+class SitePreferences(MediaUsageMixin, models.Model):
+    media_fields = [
+        'icon', 'logo', 'fb_sharing', 'twitter_sharing', 
+        'gallery_image', 'contact_image', 'default_image', 
+        'facilities_image', 'offer_image'
+    ]
 
     # ── Status ────────────────────────────────────────────────────────────
     is_maintenance = models.BooleanField(

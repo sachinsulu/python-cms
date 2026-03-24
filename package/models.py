@@ -3,8 +3,11 @@ from django.utils.text import slugify
 from django.db.models import Max
 from ckeditor_uploader.fields import RichTextUploadingField
 
+from media_manager.mixins import MediaUsageMixin
 
-class Package(models.Model):
+
+class Package(MediaUsageMixin, models.Model):
+    media_fields = ['image']
     PACKAGE_TYPE_CHOICES = [
         ('room', 'Room'),
         ('non_room', 'Non-Room'),
@@ -99,7 +102,8 @@ class SubPackageAmenity(models.Model):
         return f"{self.subpackage.title} — {self.feature.title} (pos {self.position})"
 
 
-class SubPackage(models.Model):
+class SubPackage(MediaUsageMixin, models.Model):
+    media_fields = ['image']
     package = models.ForeignKey(Package, on_delete=models.CASCADE, related_name='sub_packages')
     title = models.CharField(max_length=255)
     slug = models.SlugField(unique=True, blank=True)

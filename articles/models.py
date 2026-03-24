@@ -5,8 +5,11 @@ from django.contrib.auth.models import User
 from django.utils.text import slugify
 from ckeditor_uploader.fields import RichTextUploadingField
 
+from media_manager.mixins import MediaUsageMixin
 
-class Article(models.Model):
+
+class Article(MediaUsageMixin, models.Model):
+    media_fields = ['image']
     title    = models.CharField(max_length=255)
     subtitle = models.CharField(max_length=255, blank=True)
     slug     = models.SlugField(unique=True, blank=True)

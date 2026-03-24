@@ -20,6 +20,7 @@ from offers.models import Offer
 from core.models import Module
 from preferences.models import SitePreferences
 from location.models import Location
+from django.utils.text import slugify
 from media_manager.models import Media, MediaFolder
 
 from .serializers import (
@@ -41,6 +42,7 @@ from .serializers import (
     LocationSerializer,
     MediaSerializer,
     MediaFolderSerializer,
+    MediaFolderDetailSerializer,
 )
 
 
@@ -529,10 +531,10 @@ def get_all_media(request):
 
 
 @api_view(['GET'])
-def get_media(request, pk):
-    """Get a single media item by id."""
+def get_media(request, title):
+    """Get a single media item by title."""
     try:
-        media = Media.objects.active().get(pk=pk)
+        media = Media.objects.active().get(title=title)
     except Media.DoesNotExist:
         return Response({'error': 'Media not found'}, status=status.HTTP_404_NOT_FOUND)
     
@@ -546,4 +548,44 @@ def get_all_media_folders(request):
     folders = MediaFolder.objects.all().order_by('name')
     serializer = MediaFolderSerializer(folders, many=True, context={'request': request})
     return Response(serializer.data)
-
+
+
+@api_view(['GET'])
+def get_media_or_folder(request, name):
+    """
+    Dispatcher view that tries to find a media folder by name or slug first,
+    then falls back to finding a single media item by title.
+    """
+    # 1. Try to find a folder
+    folder = MediaFolder.objects.filter(name__iexact=name).first()
+    if not folder:
+        # Fallback to slug match for folder
+        for f in MediaFolder.objects.all():
+            if slugify(f.name) == name:
+                folder = f
+                break
+    
+    if folder:
+        serializer = MediaFolderDetailSerializer(folder, context={'request': request})
+        return Response(serializer.data)
+
+    # 2. If no folder, try to find a media item by title
+    try:
+        media = Media.objects.active().get(title=name)
+        serializer = MediaSerializer(media, context={'request': request})
+        return Response(serializer.data)
+    except Media.DoesNotExist:
+        pass
+
+    # 3. Not found
+    return Response(
+        {'error': f"No folder or media item found with name '{name}'"}, 
+        status=status.HTTP_404_NOT_FOUND
+    )
+
+
+@api_view(['GET'])
+def get_media_folder_content(request, folder_name):
+    """Legacy view, now handled by get_media_or_folder in common cases."""
+    # ... existing implementation ...
+

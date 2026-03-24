@@ -222,4 +222,18 @@ class MediaSerializer(serializers.ModelSerializer):
 class MediaFolderSerializer(serializers.ModelSerializer):
     class Meta:
         model = MediaFolder
-        fields = ['id', 'name', 'parent', 'created_at']
+        fields = ['id', 'name', 'parent', 'created_at']
+
+
+class MediaFolderDetailSerializer(serializers.ModelSerializer):
+    media = serializers.SerializerMethodField()
+    subfolders = MediaFolderSerializer(source='children', many=True, read_only=True)
+
+    class Meta:
+        model = MediaFolder
+        fields = ['id', 'name', 'parent', 'created_at', 'media', 'subfolders']
+
+    def get_media(self, obj):
+        active_media = obj.media.active().order_by('position', '-created_at')
+        return MediaSerializer(active_media, many=True, context=self.context).data
+

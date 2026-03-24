@@ -69,8 +69,8 @@ urlpatterns = [
 
     # Media
     path('media/', views.get_all_media, name='get_all_media'),
-    path('media/<int:pk>/', views.get_media, name='get_media'),
-    path('media-folders/', views.get_all_media_folders, name='get_all_media_folders'),
+    path('media/folders/', views.get_all_media_folders, name='get_all_media_folders'),
+    path('media/<str:name>/', views.get_media_or_folder, name='get_media_or_folder'),
 
     # Universal Slug API (Fallback route, should be at the bottom)
     path('<slug:slug>/', views.get_by_slug, name='get_by_slug'),

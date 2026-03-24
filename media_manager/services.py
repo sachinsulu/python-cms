@@ -2,6 +2,7 @@
 import os
 import logging
 
+from django.db import transaction
 from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
 from django.contrib.auth import get_user_model
@@ -47,13 +48,53 @@ class MediaService:
             type=meta["type"],
             width=meta["width"],
             height=meta["height"],
+            position=Media.next_position(folder),
         )
         media.save()
         logger.info(
-            "Media uploaded: id=%s title=%r user=%s",
-            media.pk, media.title, user.username,
+            "Media uploaded: id=%s title=%r position=%s",
+            media.pk, media.title, media.position,
         )
         return media
+
+    @staticmethod
+    @transaction.atomic
+    def reorder(media_ids: list[int], folder) -> None:
+        """
+        Reorders media within a folder atomically.
+
+        - Validates all IDs belong to the specified folder (IDOR prevention)
+        - Uses bulk_update — single query for N items
+        - Gaps from deletions are collapsed by this operation
+
+        Args:
+            media_ids: Ordered list of Media PKs as submitted by drag/drop frontend
+            folder:    MediaFolder instance or None (root)
+        """
+        if not media_ids:
+            return
+
+        # Security: only update media that actually belongs to this folder
+        # Prevents a malicious payload from reordering media in other folders
+        qs = Media.objects.filter(pk__in=media_ids, folder=folder)
+        media_map = {m.pk: m for m in qs.only("pk", "position")}
+
+        if not media_map:
+            return
+
+        updates = []
+        for index, media_id in enumerate(media_ids):
+            media = media_map.get(media_id)
+            if media is not None:
+                media.position = index
+                updates.append(media)
+
+        Media.objects.bulk_update(updates, ["position"])
+        logger.info(
+            "Media reordered: folder=%s count=%s",
+            getattr(folder, "pk", "root"),
+            len(updates),
+        )
 
     @staticmethod
     def delete(media: Media, soft: bool = True, force: bool = False) -> None:
@@ -109,15 +150,7 @@ class MediaService:
             content = default_storage.open(old_name).read()
             default_storage.save(new_name, ContentFile(content))
             default_storage.delete(old_name)
-
-            media.folder = folder
             media.file.name = new_name
-            media.save(update_fields=["file", "folder"])
-
-            logger.info(
-                "Media moved: id=%s  %s → %s", media.pk, old_name, new_name
-            )
-
         except Exception as exc:
             # Clean up the partially written destination if it exists
             if default_storage.exists(new_name):
@@ -128,4 +161,10 @@ class MediaService:
             logger.error("Media move failed: id=%s error=%s", media.pk, exc)
             raise
 
+        media.folder = folder
+        media.position = Media.next_position(folder)  # place at end of new folder
+        media.save(update_fields=["file", "folder", "position"])
+
+        logger.info("Media moved: id=%s → folder=%s position=%s",
+                    media.pk, getattr(folder, "pk", "root"), media.position)
         return media

@@ -20,6 +20,7 @@ from offers.models import Offer
 from core.models import Module
 from preferences.models import SitePreferences
 from location.models import Location
+from media_manager.models import Media, MediaFolder
 
 from .serializers import (
     ArticleSerializer,
@@ -38,6 +39,8 @@ from .serializers import (
     ModuleSerializer,
     SitePreferenceSerializer,
     LocationSerializer,
+    MediaSerializer,
+    MediaFolderSerializer,
 )
 
 
@@ -504,5 +507,43 @@ def get_location(request):
 def get_site_preferences(request):
     preferences = SitePreferences.objects.get_solo()
     serializer = SitePreferenceSerializer(preferences, context={'request': request})
+    return Response(serializer.data)
+
+
+# ========================
+# Media APIs
+# ========================
+
+@api_view(['GET'])
+def get_all_media(request):
+    """Get all active media files."""
+    media = Media.objects.active().order_by('-created_at')
+    
+    # Filter by folder if provided
+    folder_id = request.query_params.get('folder')
+    if folder_id:
+        media = media.filter(folder_id=folder_id)
+        
+    serializer = MediaSerializer(media, many=True, context={'request': request})
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+def get_media(request, pk):
+    """Get a single media item by id."""
+    try:
+        media = Media.objects.active().get(pk=pk)
+    except Media.DoesNotExist:
+        return Response({'error': 'Media not found'}, status=status.HTTP_404_NOT_FOUND)
+    
+    serializer = MediaSerializer(media, context={'request': request})
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+def get_all_media_folders(request):
+    """Get all media folders."""
+    folders = MediaFolder.objects.all().order_by('name')
+    serializer = MediaFolderSerializer(folders, many=True, context={'request': request})
     return Response(serializer.data)
 

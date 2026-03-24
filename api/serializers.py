@@ -14,6 +14,7 @@ from offers.models import Offer
 from core.models import Module
 from location.models import Location
 from preferences.models import SitePreferences
+from media_manager.models import Media, MediaFolder
 
 
 # Only the ArticleSerializer changes — rest of the file stays identical
@@ -203,3 +204,22 @@ class SitePreferenceSerializer(serializers.ModelSerializer):
     class Meta:
         model = SitePreferences
         fields = '__all__'
+
+
+class MediaSerializer(serializers.ModelSerializer):
+    url = serializers.FileField(source='file', read_only=True)
+    size_display = serializers.CharField(read_only=True)
+
+    class Meta:
+        model = Media
+        fields = [
+            'id', 'title', 'file', 'url', 'folder', 'type',
+            'alt_text', 'size', 'size_display', 'width', 'height',
+            'uploaded_by', 'created_at', 'position'
+        ]
+
+
+class MediaFolderSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = MediaFolder
+        fields = ['id', 'name', 'parent', 'created_at']

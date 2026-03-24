@@ -2,6 +2,7 @@
 import os
 
 from django.db import models
+from django.db.models import Max
 from django.contrib.auth import get_user_model
 from django.utils.text import slugify
 from django.utils import timezone
@@ -126,6 +127,7 @@ class Media(models.Model):
         related_name="uploaded_media",
     )
     created_at = models.DateTimeField(auto_now_add=True)
+    position = models.PositiveIntegerField(default=0, db_index=True)
 
     # ── Soft delete ───────────────────────────────────────────────────────────
     is_deleted = models.BooleanField(default=False, db_index=True)
@@ -134,7 +136,7 @@ class Media(models.Model):
     objects = MediaManager()
 
     class Meta:
-        ordering   = ["-created_at"]
+        ordering = ["position", "-created_at"]
         verbose_name        = "Media"
         verbose_name_plural = "Media"
         indexes = [
@@ -142,8 +144,16 @@ class Media(models.Model):
             models.Index(fields=["-created_at"],      name="media_created_idx"),
             models.Index(fields=["uploaded_by"],      name="media_uploader_idx"),
             models.Index(fields=["type"],             name="media_type_idx"),
+            models.Index(fields=["is_deleted"],       name="media_deleted_idx"),
+            models.Index(fields=["folder", "position"],    name="media_folder_position_idx"),
             models.Index(fields=["folder", "-created_at"], name="media_folder_created_idx"),
         ]
+
+    @classmethod
+    def next_position(cls, folder) -> int:
+        """Returns the next available position for a given folder."""
+        result = cls.objects.filter(folder=folder).aggregate(max_pos=Max("position"))
+        return (result["max_pos"] or 0) + 1
 
     def __str__(self):
         return self.title or (self.file.name if self.file else f"Media #{self.pk}")
@@ -200,6 +210,7 @@ class MediaUsage(models.Model):
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
     object_id    = models.PositiveIntegerField()
     field_name   = models.CharField(max_length=100)
+    position     = models.PositiveIntegerField(default=0)  # Phase 2: per-usage ordering
 
     content_object = GenericForeignKey("content_type", "object_id")
 
@@ -208,6 +219,7 @@ class MediaUsage(models.Model):
         indexes = [
             models.Index(fields=["media"],                     name="usage_media_idx"),
             models.Index(fields=["content_type", "object_id"], name="usage_object_idx"),
+            models.Index(fields=["content_type", "object_id", "position"], name="usage_order_idx"),
         ]
 
     def __str__(self):

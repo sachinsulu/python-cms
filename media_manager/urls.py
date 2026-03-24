@@ -8,6 +8,6 @@ urlpatterns = [
     path("upload/<int:folder_id>/", views.upload_media, name="upload_media_in_folder"),
     path("folder/create/", views.create_folder, name="create_folder"),
     path("delete/<int:media_id>/", views.delete_media, name="delete_media"),
-    # Phase 2
     path("api/picker/", views.media_picker_api, name="media_picker_api"),
+    path("api/reorder/", views.reorder_media, name="reorder_media"),
 ]

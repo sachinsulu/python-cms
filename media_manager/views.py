@@ -1,3 +1,4 @@
+import json
 import logging
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse
@@ -48,7 +49,7 @@ def media_library(request, folder_id=None):
         Media.objects.active()
         .filter(folder=current_folder)
         .select_related("folder", "uploaded_by")
-        .order_by("-created_at")
+        .order_by("position", "-created_at")
     )
 
     # Search
@@ -197,6 +198,46 @@ def delete_media(request, media_id):
     return redirect("media_library")
 
 
+@require_POST
+@login_required
+@requires_perm("media_manager.change_media")
+@ratelimit(key="user", rate="30/m", block=True)
+def reorder_media(request):
+    try:
+        data = json.loads(request.body)
+    except (json.JSONDecodeError, ValueError):
+        return JsonResponse({"error": "Invalid JSON"}, status=400)
+
+    media_ids = data.get("ids", [])
+    folder_id = data.get("folder")  # None = root
+
+    # Validate input types
+    if not isinstance(media_ids, list):
+        return JsonResponse({"error": "ids must be a list"}, status=400)
+
+    if not all(isinstance(i, int) for i in media_ids):
+        return JsonResponse({"error": "ids must be integers"}, status=400)
+
+    if len(media_ids) > 200:
+        return JsonResponse({"error": "Too many ids"}, status=400)
+
+    # Resolve folder
+    folder = None
+    if folder_id is not None:
+        try:
+            folder = MediaFolder.objects.get(pk=int(folder_id))
+        except (MediaFolder.DoesNotExist, ValueError, TypeError):
+            return JsonResponse({"error": "Folder not found"}, status=404)
+
+    try:
+        MediaService.reorder(media_ids, folder)
+    except Exception as exc:
+        logger.error("Reorder failed: %s", exc)
+        return JsonResponse({"error": "Reorder failed"}, status=500)
+
+    return JsonResponse({"status": "ok", "reordered": len(media_ids)})
+
+
 # ── Picker API ────────────────────────────────────────────────────────────────
 
 def _flatten_tree(nodes: list, out: list | None = None) -> list:
@@ -221,7 +262,7 @@ def media_picker_api(request):
     qs = (
         Media.objects.active()          # honours soft delete
         .select_related("folder")
-        .order_by("-created_at")
+        .order_by("position", "-created_at")  # position first, created_at as stable fallback
     )
 
     # --- Filtering ---

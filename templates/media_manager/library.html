@@ -136,10 +136,10 @@
 
     <!-- Media Grid -->
     {% if page_obj.object_list %}
-    <div class="mm-grid">
+    <div class="mm-grid" id="mmSortableGrid">
       {% for m in page_obj %}
-      <div class="mm-card">
-        <div class="mm-thumb">
+      <div class="mm-card" data-id="{{ m.pk }}">
+        <div class="mm-thumb mm-drag-handle" title="Drag to reorder">
           {% if m.is_image %}
             <img src="{{ m.file.url }}" alt="{{ m.alt_text|default:m.title }}" loading="lazy">
           {% elif m.type == 'video' %}
@@ -147,6 +147,9 @@
           {% else %}
             <span class="mm-thumb-icon"><i class="fa-solid fa-file"></i></span>
           {% endif %}
+          <div class="mm-drag-indicator">
+            <i class="fa-solid fa-grip-dots-vertical"></i>
+          </div>
         </div>
         <div class="mm-card-body">
           <div class="mm-filename" title="{{ m.title }}">{{ m.title|truncatechars:22 }}</div>
@@ -165,6 +168,100 @@
       </div>
       {% endfor %}
     </div>
+
+    {# Reorder save indicator #}
+    <div id="mmReorderMsg"
+         style="display:none; position:fixed; bottom:20px; right:20px;
+                background:#10b981; color:white; padding:10px 20px;
+                border-radius:8px; font-size:0.85rem; font-weight:600;
+                box-shadow:0 4px 12px rgba(0,0,0,0.15); z-index:9999;">
+      <i class="fa-solid fa-check"></i> Order saved
+    </div>
+
+    <style>
+    .mm-drag-handle   { cursor: grab; position: relative; }
+    .mm-drag-handle:active { cursor: grabbing; }
+    .mm-drag-indicator {
+      position: absolute; top: 6px; left: 6px;
+      background: rgba(0,0,0,0.45); color: white;
+      border-radius: 4px; padding: 3px 5px;
+      font-size: 0.7rem; opacity: 0;
+      transition: opacity 0.15s;
+      pointer-events: none;
+    }
+    .mm-card:hover .mm-drag-indicator { opacity: 1; }
+    .mm-card.sortable-ghost  { opacity: 0.35; background: #f0fdf4 !important; }
+    .mm-card.sortable-chosen { box-shadow: 0 8px 20px rgba(0,0,0,0.15); transform: scale(1.02); }
+    .mm-card.sortable-drag   { opacity: 1; }
+    </style>
+
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+    <script>
+    (function () {
+      const grid      = document.getElementById('mmSortableGrid');
+      const msgEl     = document.getElementById('mmReorderMsg');
+      const CSRF      = document.body.dataset.csrfToken || "{{ csrf_token }}";
+      const FOLDER_ID = {{ current_folder.pk|default:"null" }};
+      const REORDER_URL = "{% url 'reorder_media' %}";
+
+      // Only enable drag when NOT paginated past page 1
+      // (reorder only makes sense when showing all items in folder)
+      const isPaged = {{ page_obj.paginator.num_pages }} > 1;
+
+      if (!grid || isPaged) return;  // Don't enable drag on paginated views
+
+      let saveTimer = null;
+
+      const sortable = Sortable.create(grid, {
+        handle:      '.mm-drag-handle',
+        animation:   180,
+        ghostClass:  'sortable-ghost',
+        chosenClass: 'sortable-chosen',
+        dragClass:   'sortable-drag',
+        delay:       80,          // small delay prevents accidental drags on click
+        delayOnTouchOnly: true,
+
+        onEnd: function () {
+          // Debounce — only save after user stops dragging for 400ms
+          clearTimeout(saveTimer);
+          saveTimer = setTimeout(saveOrder, 400);
+        },
+      });
+
+      function saveOrder() {
+        const ids = [...grid.querySelectorAll('.mm-card[data-id]')]
+          .map(el => parseInt(el.dataset.id, 10));
+
+        fetch(REORDER_URL, {
+          method:  'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken':  CSRF,
+          },
+          body: JSON.stringify({ ids: ids, folder: FOLDER_ID }),
+        })
+        .then(res => {
+          if (!res.ok) throw new Error('Server error ' + res.status);
+          return res.json();
+        })
+        .then(() => {
+          showMsg();
+        })
+        .catch(err => {
+          console.error('Reorder failed:', err);
+          // Optionally restore original order here
+        });
+      }
+
+      function showMsg() {
+        msgEl.style.display = 'block';
+        clearTimeout(msgEl._hideTimer);
+        msgEl._hideTimer = setTimeout(() => {
+          msgEl.style.display = 'none';
+        }, 2000);
+      }
+    })();
+    </script>
 
     <!-- Pagination -->
     {% if page_obj.has_other_pages %}

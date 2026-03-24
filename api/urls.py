@@ -67,6 +67,11 @@ urlpatterns = [
     # Site Preferences
     path('site-preferences/', views.get_site_preferences, name='get_site_preferences'),
 
+    # Media
+    path('media/', views.get_all_media, name='get_all_media'),
+    path('media/<int:pk>/', views.get_media, name='get_media'),
+    path('media-folders/', views.get_all_media_folders, name='get_all_media_folders'),
+
     # Universal Slug API (Fallback route, should be at the bottom)
     path('<slug:slug>/', views.get_by_slug, name='get_by_slug'),
 ]

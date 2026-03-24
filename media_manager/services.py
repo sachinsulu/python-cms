@@ -1,13 +1,14 @@
 # media_manager/services.py
 import os
 import logging
+
 from django.core.files.base import ContentFile
+from django.core.files.storage import default_storage
 from django.contrib.auth import get_user_model
 from django.core.files.uploadedfile import UploadedFile
-from django.conf import settings
-import shutil
 
 from .models import Media, MediaFolder, media_upload_path
+from .processing import process_upload_file, derive_title
 
 User = get_user_model()
 logger = logging.getLogger(__name__)
@@ -29,94 +30,102 @@ class MediaService:
         can resolve the correct filesystem path at upload time.
         """
         if user is None or not user.is_authenticated:
-            raise PermissionError(
-                "An authenticated user is required to upload media."
-            )
+            raise PermissionError("Authenticated user required.")
+
+        meta = process_upload_file(file)
+
+        resolved_title = title.strip() or derive_title(file.name)
+        resolved_alt   = alt_text.strip() or ""  # Don't silently copy a bad filename
 
         media = Media(
             file=file,
-            folder=folder,   # ← set BEFORE save so upload_to callable sees it
+            folder=folder,          # set BEFORE save so upload_to callable sees it
             uploaded_by=user,
-            title=title,
-            alt_text=alt_text,
+            title=resolved_title,
+            alt_text=resolved_alt,
+            size=meta["size"],
+            type=meta["type"],
+            width=meta["width"],
+            height=meta["height"],
         )
         media.save()
         logger.info(
-            "Media uploaded: id=%s title=%r path=%s user=%s",
-            media.pk,
-            media.title,
-            media.file.name,
-            user.username,
+            "Media uploaded: id=%s title=%r user=%s",
+            media.pk, media.title, user.username,
         )
         return media
 
     @staticmethod
-    def delete(media: Media) -> None:
+    def delete(media: Media, soft: bool = True, force: bool = False) -> None:
         """
-        Delete the Media record AND its physical file from disk.
+        soft=True  → marks is_deleted, preserves file (recoverable until purged)
+        soft=False → permanent deletion including physical file (via post_delete signal)
+        force=True → skips the in-use safety check
         """
-        title = str(media)
-        pk    = media.pk
-        if media.file:
-            try:
-                media.file.delete(save=False)
-            except Exception as exc:
-                logger.error(
-                    "Failed to delete file for Media id=%s: %s", pk, exc
-                )
-        media.delete()
-        logger.info("Media deleted: id=%s title=%r", pk, title)
+        from .tracking import is_media_in_use
+
+        if not force and is_media_in_use(media):
+            usage_count = media.usages.count()
+            raise ValueError(
+                f"Cannot delete Media#{media.pk} — still referenced in "
+                f"{usage_count} place(s). Pass force=True to override or "
+                "remove references first."
+            )
+
+        if soft:
+            media.soft_delete()
+            logger.info("Media soft-deleted: id=%s title=%r", media.pk, str(media))
+        else:
+            title, pk = str(media), media.pk
+            media.delete()  # post_delete signal handles file cleanup
+            logger.info("Media hard-deleted: id=%s title=%r", pk, title)
 
     @staticmethod
-    def move_to_folder(
-        media: Media,
-        folder: MediaFolder | None,
-    ) -> Media:
+    def move_to_folder(media: Media, folder: MediaFolder | None) -> Media:
         """
-        Move a media item to a different folder.
-
-        This physically moves the file on disk to match the new folder path,
-        then updates the FK and file field in the database.
-
-        If the physical move fails, the operation is aborted — the database
-        record is NOT updated so it stays consistent with the filesystem.
+        Moves a media file to a new folder using Django's storage API.
+        Works with local filesystem, S3, GCS, Azure — any backend.
+        Atomic: DB is only updated after a successful file operation.
         """
-        if media.folder == folder:
+        if media.folder_id == (folder.pk if folder else None):
             return media  # nothing to do
 
-        # Calculate the new path using the same callable logic
-        # We temporarily set folder on the instance so upload_to can resolve it
-        old_file_name = media.file.name
-        old_file_path = media.file.path
+        old_name = media.file.name
 
-        # Build new path
-        media.folder = folder
-        new_file_name = media_upload_path(media, os.path.basename(old_file_name))
-        new_file_path = os.path.join(settings.MEDIA_ROOT, new_file_name)
+        # Build new path without mutating the instance prematurely
+        class _Proxy:
+            pass
+        proxy = _Proxy()
+        proxy.folder = folder
+        new_name = media_upload_path(proxy, os.path.basename(old_name))
 
-        # Ensure destination directory exists
-        os.makedirs(os.path.dirname(new_file_path), exist_ok=True)
+        if old_name == new_name:
+            # Path identical (same folder slug), just update FK
+            media.folder = folder
+            media.save(update_fields=["folder"])
+            return media
 
         try:
-            shutil.move(old_file_path, new_file_path)
+            content = default_storage.open(old_name).read()
+            default_storage.save(new_name, ContentFile(content))
+            default_storage.delete(old_name)
 
-            # Update the file field to point to the new path
-            media.file.name = new_file_name
-            media.save(update_fields=['file', 'folder'])
+            media.folder = folder
+            media.file.name = new_name
+            media.save(update_fields=["file", "folder"])
 
             logger.info(
-                "Media moved: id=%s from=%s to=%s",
-                media.pk, old_file_name, new_file_name,
+                "Media moved: id=%s  %s → %s", media.pk, old_name, new_name
             )
 
         except Exception as exc:
-            # Roll back the folder assignment on the instance
-            # so it stays consistent with what's on disk
-            logger.error(
-                "Media move failed: id=%s error=%s", media.pk, exc
-            )
-            # Re-fetch from DB to restore clean state
-            media.refresh_from_db()
+            # Clean up the partially written destination if it exists
+            if default_storage.exists(new_name):
+                try:
+                    default_storage.delete(new_name)
+                except Exception:
+                    pass
+            logger.error("Media move failed: id=%s error=%s", media.pk, exc)
             raise
 
         return media

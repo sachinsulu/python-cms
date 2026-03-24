@@ -1,11 +1,12 @@
 # media_manager/models.py
+import os
+
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.utils.text import slugify
-import os
-from PIL import Image, UnidentifiedImageError
-from django.db import transaction
-from django.db.models import Max
+from django.utils import timezone
+from django.contrib.contenttypes.fields import GenericForeignKey
+from django.contrib.contenttypes.models import ContentType
 
 User = get_user_model()
 
@@ -15,8 +16,8 @@ def media_upload_path(instance, filename):
     Resolves physical upload path based on assigned folder.
 
     Results:
-        With folder:    media/{slugified-folder-name}/{filename}
-        Without folder: media/library/{filename}
+        With folder:    {slugified-folder-name}/{filename}
+        Without folder: library/{filename}
 
     NOTE: instance.folder must be set BEFORE save() is called.
     MediaService.upload() guarantees this by passing folder= at
@@ -29,13 +30,14 @@ def media_upload_path(instance, filename):
 
 
 class MediaFolder(models.Model):
-    name   = models.CharField(max_length=255)
+    name   = models.CharField(max_length=255, db_index=True)
     parent = models.ForeignKey(
         "self",
         null=True,
         blank=True,
         related_name="children",
         on_delete=models.CASCADE,
+        db_index=True,
     )
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -43,6 +45,10 @@ class MediaFolder(models.Model):
         ordering = ["name"]
         verbose_name = "Media Folder"
         verbose_name_plural = "Media Folders"
+        indexes = [
+            models.Index(fields=["parent"], name="folder_parent_idx"),
+            models.Index(fields=["name"],   name="folder_name_idx"),
+        ]
 
     def __str__(self):
         return self.name
@@ -62,6 +68,26 @@ class MediaFolder(models.Model):
         return slugify(self.name)
 
 
+# ── Custom QuerySet / Manager ─────────────────────────────────────────────────
+
+class MediaQuerySet(models.QuerySet):
+    def active(self):
+        return self.filter(is_deleted=False)
+
+    def deleted(self):
+        return self.filter(is_deleted=True)
+
+
+class MediaManager(models.Manager):
+    def get_queryset(self):
+        return MediaQuerySet(self.model, using=self._db)
+
+    def active(self):
+        return self.get_queryset().active()
+
+
+# ── Media ─────────────────────────────────────────────────────────────────────
+
 class Media(models.Model):
     TYPE_IMAGE = "image"
     TYPE_VIDEO = "video"
@@ -73,10 +99,8 @@ class Media(models.Model):
         (TYPE_FILE,  "File"),
     ]
 
-    VIDEO_EXTENSIONS = {"mp4", "webm", "ogg", "mov", "avi", "mkv"}
-
     title  = models.CharField(max_length=255, blank=True)
-    file   = models.FileField(upload_to=media_upload_path)  # ← callable now
+    file   = models.FileField(upload_to=media_upload_path)
     folder = models.ForeignKey(
         MediaFolder,
         null=True,
@@ -103,47 +127,47 @@ class Media(models.Model):
     )
     created_at = models.DateTimeField(auto_now_add=True)
 
+    # ── Soft delete ───────────────────────────────────────────────────────────
+    is_deleted = models.BooleanField(default=False, db_index=True)
+    deleted_at = models.DateTimeField(null=True, blank=True)
+
+    objects = MediaManager()
+
     class Meta:
         ordering   = ["-created_at"]
         verbose_name        = "Media"
         verbose_name_plural = "Media"
+        indexes = [
+            models.Index(fields=["folder"],           name="media_folder_idx"),
+            models.Index(fields=["-created_at"],      name="media_created_idx"),
+            models.Index(fields=["uploaded_by"],      name="media_uploader_idx"),
+            models.Index(fields=["type"],             name="media_type_idx"),
+            models.Index(fields=["folder", "-created_at"], name="media_folder_created_idx"),
+        ]
 
     def __str__(self):
         return self.title or (self.file.name if self.file else f"Media #{self.pk}")
 
     def save(self, *args, **kwargs):
-        update_fields = kwargs.get("update_fields")
-        if self.file and not update_fields:
-            if hasattr(self.file, "size"):
-                self.size = self.file.size
-
-            if not self.title:
-                self.title = os.path.splitext(
-                    os.path.basename(self.file.name)
-                )[0].replace("_", " ").replace("-", " ").title()
-            
-            if not self.alt_text:
-                self.alt_text = self.title
-
-            ext = os.path.splitext(self.file.name)[1].lstrip(".").lower()
-            if ext in self.VIDEO_EXTENSIONS:
-                self.type = self.TYPE_VIDEO
-            else:
-                try:
-                    self.file.seek(0)
-                    with Image.open(self.file) as img:
-                        img.verify()
-                    self.file.seek(0)
-                    with Image.open(self.file) as img:
-                        self.width, self.height = img.size
-                    self.type = self.TYPE_IMAGE
-                    self.file.seek(0)
-                except (IOError, SyntaxError, UnidentifiedImageError):
-                    self.type  = self.TYPE_FILE
-                    self.width = None
-                    self.height = None
-
+        # Processing is handled by MediaService.upload() / processing.py.
+        # Direct saves (update_fields from move_to_folder, restore, etc.) pass through cleanly.
         super().save(*args, **kwargs)
+
+    # ── Soft delete helpers ───────────────────────────────────────────────────
+
+    def soft_delete(self, commit=True):
+        self.is_deleted = True
+        self.deleted_at = timezone.now()
+        if commit:
+            self.save(update_fields=["is_deleted", "deleted_at"])
+
+    def restore(self, commit=True):
+        self.is_deleted = False
+        self.deleted_at = None
+        if commit:
+            self.save(update_fields=["is_deleted", "deleted_at"])
+
+    # ── Properties ────────────────────────────────────────────────────────────
 
     @property
     def is_image(self):
@@ -160,3 +184,34 @@ class Media(models.Model):
         elif self.size < 1024 * 1024:
             return f"{self.size / 1024:.1f} KB"
         return f"{self.size / (1024 * 1024):.1f} MB"
+
+
+# ── MediaUsage ────────────────────────────────────────────────────────────────
+
+class MediaUsage(models.Model):
+    """
+    Tracks every FK/field that references a Media object.
+    Populated via the tracking service layer.
+    Enables: "Used in N places", safe-delete warnings, global replace.
+    """
+    media        = models.ForeignKey(
+        Media, on_delete=models.CASCADE, related_name="usages"
+    )
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+    object_id    = models.PositiveIntegerField()
+    field_name   = models.CharField(max_length=100)
+
+    content_object = GenericForeignKey("content_type", "object_id")
+
+    class Meta:
+        unique_together = [("media", "content_type", "object_id", "field_name")]
+        indexes = [
+            models.Index(fields=["media"],                     name="usage_media_idx"),
+            models.Index(fields=["content_type", "object_id"], name="usage_object_idx"),
+        ]
+
+    def __str__(self):
+        return (
+            f"Media#{self.media_id} → "
+            f"{self.content_type}.{self.field_name} #{self.object_id}"
+        )

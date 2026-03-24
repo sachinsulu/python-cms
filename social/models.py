@@ -27,11 +27,7 @@ class Social(models.Model):
         max_length=10, choices=TYPE_CHOICES, default=TYPE_SOCIAL,
     )
 
-    # Legacy field — kept during transition, removed in Phase 3b
-    image_legacy = models.ImageField(
-        upload_to='social/', blank=True, null=True,
-        verbose_name='[Legacy] Image',
-    )
+
 
     # New FK field
     image = models.ForeignKey(
@@ -52,15 +48,9 @@ class Social(models.Model):
 
     @property
     def image_url(self):
-        """FK takes priority over legacy. Returns None if neither is set."""
         if self.image_id:
             try:
                 return self.image.file.url
-            except (ValueError, AttributeError):
-                pass
-        if self.image_legacy:
-            try:
-                return self.image_legacy.url
             except (ValueError, AttributeError):
                 pass
         return None

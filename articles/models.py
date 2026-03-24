@@ -11,15 +11,6 @@ class Article(models.Model):
     subtitle = models.CharField(max_length=255, blank=True)
     slug     = models.SlugField(unique=True, blank=True)
 
-    # ── Legacy ImageField (kept during transition — DO NOT REMOVE YET) ──
-    # Renamed from the original 'image' to free up the field name for the FK.
-    # Remove this in a future cleanup migration after all data is backfilled.
-    image_legacy = models.ImageField(
-        upload_to='articles/',
-        blank=True,
-        null=True,
-        verbose_name='[Legacy] Image',
-    )
 
     # ── New FK field ─────────────────────────────────────────────────────
     image = models.ForeignKey(
@@ -57,18 +48,11 @@ class Article(models.Model):
     @property
     def image_url(self):
         """
-        FK takes priority over legacy.
-        Returns None if neither is set.
         Templates should always use article.image_url — never article.image directly.
         """
         if self.image_id:
             try:
                 return self.image.file.url
-            except (ValueError, AttributeError):
-                pass
-        if self.image_legacy:
-            try:
-                return self.image_legacy.url
             except (ValueError, AttributeError):
                 pass
         return None

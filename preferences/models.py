@@ -41,18 +41,7 @@ class SitePreferences(models.Model):
         help_text='e.g. © 2025 My Hotel. All rights reserved.',
     )
 
-    # ── Legacy ImageFields (kept during transition — DO NOT REMOVE YET) ───
-    # These are renamed from the originals to free up the field names for FKs.
-    # Remove these in Phase 3b, after MediaUsage tracking is in place.
-    icon_legacy             = models.ImageField(upload_to='prefs/identity/', blank=True, null=True, verbose_name='[Legacy] Icon')
-    logo_legacy             = models.ImageField(upload_to='prefs/identity/', blank=True, null=True, verbose_name='[Legacy] Logo')
-    fb_sharing_legacy       = models.ImageField(upload_to='prefs/social/',   blank=True, null=True, verbose_name='[Legacy] FB Sharing')
-    twitter_sharing_legacy  = models.ImageField(upload_to='prefs/social/',   blank=True, null=True, verbose_name='[Legacy] Twitter Sharing')
-    gallery_image_legacy    = models.ImageField(upload_to='prefs/pages/',    blank=True, null=True, verbose_name='[Legacy] Gallery Image')
-    contact_image_legacy    = models.ImageField(upload_to='prefs/pages/',    blank=True, null=True, verbose_name='[Legacy] Contact Image')
-    default_image_legacy    = models.ImageField(upload_to='prefs/pages/',    blank=True, null=True, verbose_name='[Legacy] Default Image')
-    facilities_image_legacy = models.ImageField(upload_to='prefs/pages/',    blank=True, null=True, verbose_name='[Legacy] Facilities Image')
-    offer_image_legacy      = models.ImageField(upload_to='prefs/pages/',    blank=True, null=True, verbose_name='[Legacy] Offer Image')
+
 
     # ── New FK fields (nullable during transition) ────────────────────────
     icon = models.ForeignKey(
@@ -151,7 +140,7 @@ class SitePreferences(models.Model):
     # FK takes priority over legacy. Templates use these exclusively.
     # Never access .icon.file.url directly in templates — use .icon_url.
 
-    def _resolve_url(self, fk_id, fk_obj, legacy_field):
+    def _resolve_url(self, fk_id, fk_obj):
         """
         Use the _id sentinel to check presence — avoids AttributeError
         on deferred/null FK objects.
@@ -161,48 +150,43 @@ class SitePreferences(models.Model):
                 return fk_obj.file.url
             except (ValueError, AttributeError):
                 pass
-        if legacy_field:
-            try:
-                return legacy_field.url
-            except (ValueError, AttributeError):
-                pass
         return None
 
     @property
     def icon_url(self):
-        return self._resolve_url(self.icon_id, self.icon, self.icon_legacy)
+        return self._resolve_url(self.icon_id, self.icon)
 
     @property
     def logo_url(self):
-        return self._resolve_url(self.logo_id, self.logo, self.logo_legacy)
+        return self._resolve_url(self.logo_id, self.logo)
 
     @property
     def fb_sharing_url(self):
-        return self._resolve_url(self.fb_sharing_id, self.fb_sharing, self.fb_sharing_legacy)
+        return self._resolve_url(self.fb_sharing_id, self.fb_sharing)
 
     @property
     def twitter_sharing_url(self):
-        return self._resolve_url(self.twitter_sharing_id, self.twitter_sharing, self.twitter_sharing_legacy)
+        return self._resolve_url(self.twitter_sharing_id, self.twitter_sharing)
 
     @property
     def gallery_image_url(self):
-        return self._resolve_url(self.gallery_image_id, self.gallery_image, self.gallery_image_legacy)
+        return self._resolve_url(self.gallery_image_id, self.gallery_image)
 
     @property
     def contact_image_url(self):
-        return self._resolve_url(self.contact_image_id, self.contact_image, self.contact_image_legacy)
+        return self._resolve_url(self.contact_image_id, self.contact_image)
 
     @property
     def default_image_url(self):
-        return self._resolve_url(self.default_image_id, self.default_image, self.default_image_legacy)
+        return self._resolve_url(self.default_image_id, self.default_image)
 
     @property
     def facilities_image_url(self):
-        return self._resolve_url(self.facilities_image_id, self.facilities_image, self.facilities_image_legacy)
+        return self._resolve_url(self.facilities_image_id, self.facilities_image)
 
     @property
     def offer_image_url(self):
-        return self._resolve_url(self.offer_image_id, self.offer_image, self.offer_image_legacy)
+        return self._resolve_url(self.offer_image_id, self.offer_image)
 
     # ── Singleton enforcement ─────────────────────────────────────────────
     def save(self, *args, **kwargs):

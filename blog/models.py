@@ -11,17 +11,6 @@ class Blog(models.Model):
     author = models.CharField(max_length=255, blank=True)
     date   = models.DateField(null=True, blank=True)
 
-    # ── Legacy fields ─────────────────────────────────────────────
-    banner_image_legacy = models.ImageField(
-        upload_to='blog/banners/',
-        blank=True, null=True,
-        verbose_name='[Legacy] Banner Image',
-    )
-    image_legacy = models.ImageField(
-        upload_to='blog/',
-        blank=True, null=True,
-        verbose_name='[Legacy] Image',
-    )
 
     # ── New FK fields ──────────────────────────────────────────────
     banner_image = models.ForeignKey(
@@ -60,11 +49,6 @@ class Blog(models.Model):
                 return self.image.file.url
             except (ValueError, AttributeError):
                 pass
-        if self.image_legacy:
-            try:
-                return self.image_legacy.url
-            except (ValueError, AttributeError):
-                pass
         return None
 
     @property
@@ -72,11 +56,6 @@ class Blog(models.Model):
         if self.banner_image_id:
             try:
                 return self.banner_image.file.url
-            except (ValueError, AttributeError):
-                pass
-        if self.banner_image_legacy:
-            try:
-                return self.banner_image_legacy.url
             except (ValueError, AttributeError):
                 pass
         return None

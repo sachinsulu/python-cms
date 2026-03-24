@@ -17,12 +17,7 @@ class Testimonial(models.Model):
     active   = models.BooleanField(default=True)
     position = models.PositiveIntegerField(default=0)
 
-    # ── Legacy ────────────────────────────────────────────────────
-    image_legacy = models.ImageField(
-        upload_to='testimonials/',
-        blank=True, null=True,
-        verbose_name='[Legacy] Image',
-    )
+
     # ── FK ────────────────────────────────────────────────────────
     image = models.ForeignKey(
         'media_manager.Media',
@@ -49,11 +44,6 @@ class Testimonial(models.Model):
         if self.image_id:
             try:
                 return self.image.file.url
-            except (ValueError, AttributeError):
-                pass
-        if self.image_legacy:
-            try:
-                return self.image_legacy.url
             except (ValueError, AttributeError):
                 pass
         return None

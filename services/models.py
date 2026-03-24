@@ -26,12 +26,7 @@ class Service(models.Model):
         max_length=20, choices=TYPE_CHOICES, default=TYPE_MAIN_SERVICE
     )
 
-    # ── Legacy ────────────────────────────────────────────────────
-    image_legacy = models.ImageField(
-        upload_to='services/',
-        blank=True, null=True,
-        verbose_name='[Legacy] Image',
-    )
+
     # ── FK ────────────────────────────────────────────────────────
     image = models.ForeignKey(
         'media_manager.Media',
@@ -54,11 +49,6 @@ class Service(models.Model):
         if self.image_id:
             try:
                 return self.image.file.url
-            except (ValueError, AttributeError):
-                pass
-        if self.image_legacy:
-            try:
-                return self.image_legacy.url
             except (ValueError, AttributeError):
                 pass
         return None

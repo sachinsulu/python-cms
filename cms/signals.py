@@ -83,28 +83,4 @@ def is_image_in_use_anywhere(img_url):
         except LookupError:
             continue
     return False
-
-# ---------------------------------------------------------
-# 2. Cleanup when file is UPDATED (FileFields)
-# ---------------------------------------------------------
-@receiver(pre_save)
-def global_delete_old_files_on_change(sender, instance, **kwargs):
-    if not instance.pk:
-        return False
-
-    try:
-        old_instance = sender.objects.get(pk=instance.pk)
-    except sender.DoesNotExist:
-        return False
-
-    for field in instance._meta.fields:
-        if isinstance(field, FileField):
-            old_file = getattr(old_instance, field.name)
-            new_file = getattr(instance, field.name)
-
-            if old_file and old_file != new_file:
-                if old_file.name and os.path.isfile(old_file.path):
-                    try:
-                        os.remove(old_file.path)
-                    except Exception as e:
-                        logger.error("File update cleanup error: %s", e)
+

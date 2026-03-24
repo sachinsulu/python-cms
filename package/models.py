@@ -14,12 +14,7 @@ class Package(models.Model):
     slug = models.SlugField(unique=True, blank=True)
     content = RichTextUploadingField(blank=True)
 
-    # ── Legacy ImageField (kept during transition — DO NOT REMOVE YET) ──
-    image_legacy = models.ImageField(
-        upload_to='packages/',
-        blank=True, null=True,
-        verbose_name='[Legacy] Image',
-    )
+
     # ── New FK field ─────────────────────────────────────────────────────
     image = models.ForeignKey(
         'media_manager.Media',
@@ -62,11 +57,6 @@ class Package(models.Model):
         if self.image_id:
             try:
                 return self.image.file.url
-            except (ValueError, AttributeError):
-                pass
-        if self.image_legacy:
-            try:
-                return self.image_legacy.url
             except (ValueError, AttributeError):
                 pass
         return None
@@ -115,12 +105,7 @@ class SubPackage(models.Model):
     slug = models.SlugField(unique=True, blank=True)
     content = RichTextUploadingField(blank=True)
 
-    # ── Legacy ImageField (kept during transition — DO NOT REMOVE YET) ──
-    image_legacy = models.ImageField(
-        upload_to='subpackages/',
-        blank=True, null=True,
-        verbose_name='[Legacy] Image',
-    )
+
     # ── New FK field ─────────────────────────────────────────────────────
     image = models.ForeignKey(
         'media_manager.Media',
@@ -157,11 +142,6 @@ class SubPackage(models.Model):
         if self.image_id:
             try:
                 return self.image.file.url
-            except (ValueError, AttributeError):
-                pass
-        if self.image_legacy:
-            try:
-                return self.image_legacy.url
             except (ValueError, AttributeError):
                 pass
         return None

@@ -24,12 +24,7 @@ class Popup(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    # ── Legacy ────────────────────────────────────────────────────
-    file_legacy = models.FileField(
-        upload_to='popups/',
-        blank=True, null=True,
-        verbose_name='[Legacy] File',
-    )
+
     # ── FK — points to Media for both image and video ─────────────
     file = models.ForeignKey(
         'media_manager.Media',
@@ -47,17 +42,11 @@ class Popup(models.Model):
     @property
     def file_url(self):
         """
-        Resolves file URL from FK first, falls back to legacy FileField.
-        Works for both image and video types.
+        Resolves file URL from FK. Works for both image and video types.
         """
         if self.file_id:
             try:
                 return self.file.file.url
-            except (ValueError, AttributeError):
-                pass
-        if self.file_legacy:
-            try:
-                return self.file_legacy.url
             except (ValueError, AttributeError):
                 pass
         return None

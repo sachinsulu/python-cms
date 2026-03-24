@@ -1,0 +1,297 @@
+{% extends "base.html" %}
+{% block content %}
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.8/css/jquery.dataTables.min.css">
+<script src="https://cdn.datatables.net/1.13.8/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+
+<style>
+    .sortable-ghost {
+        opacity: 0.3;
+        background-color: #f0f0f0 !important;
+    }
+    .success-badge {
+        display: none; position: fixed; top: 20px; right: 20px;
+        background: #28a745; color: white; padding: 12px 24px;
+        border-radius: 4px; z-index: 9999; font-weight: bold;
+    }
+    a { text-decoration: none; }
+
+    /* Parent label that is clickable to expand children */
+    .parent-toggle {
+        cursor: pointer;
+        color: #2563eb;
+        font-weight: 600;
+    }
+    .parent-toggle:hover {
+        text-decoration: underline;
+    }
+    .child-count-badge {
+        display: inline-block;
+        background: #e0e7ff;
+        color: #3730a3;
+        font-size: 11px;
+        font-weight: 700;
+        padding: 1px 7px;
+        border-radius: 10px;
+        margin-left: 6px;
+        vertical-align: middle;
+    }
+    .expand-icon {
+        font-size: 11px;
+        color: #6b7280;
+        margin-left: 4px;
+        transition: transform 0.2s;
+    }
+    .expand-icon.open {
+        transform: rotate(90deg);
+    }
+
+    /* Child rows — hidden by default */
+    .child-group {
+        display: none;
+    }
+    .child-group.open {
+        display: table-row;
+    }
+    .child-group td {
+        background: #f8fafc;
+        border-left: 3px solid #c7d2fe;
+    }
+    .child-label {
+        padding-left: 28px !important;
+        font-size: 0.88rem;
+    }
+    .child-arrow {
+        color: #a5b4fc;
+        margin-right: 6px;
+        font-size: 11px;
+    }
+</style>
+
+<header style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+    <div style="display:flex; align-items:center; gap:12px;">
+        <h2 style="margin:0;">Menu Items</h2>
+    </div>
+    <a href="{% url 'menu_create' %}" class="btn">
+        + Add Menu Item
+    </a>
+</header>
+
+<div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
+    <button type="button"
+            class="btn btn-warning"
+            onclick="document.getElementById('bulk-form').querySelector('button[name=action][value=toggle]').click()">
+        Status
+    </button>
+    <button type="button"
+            class="btn btn-danger"
+            onclick="openDeleteModal('menu', null, '/bulk/menu/', true)">
+        Delete
+    </button>
+</div>
+
+<div id="saveMsg" class="success-badge">Order Saved!</div>
+
+<form method="post" action="{% url 'bulk_action' 'menu' %}" id="bulk-form">
+    {% csrf_token %}
+    <table id="listTable" class="display" style="width:100%" data-sort-url="{% url 'sort' 'menu' %}">
+        <thead>
+            <tr>
+                <th style="width:30px;"></th>
+                <th><input type="checkbox" id="select-all"></th>
+                <th>Label</th>
+                <th>URL</th>
+                <th>Position</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in list %}
+
+            {# ── Parent / top-level row ── #}
+            <tr data-id="{{ item.pk }}">
+                <td class="drag-handle" style="cursor:grab; color:#9ca3af;">
+                    <i class="fa-solid fa-grip-vertical"></i>
+                </td>
+                <td>
+                    <input type="checkbox" name="selected_ids" value="{{ item.pk }}" class="row-checkbox">
+                </td>
+                <td>
+                    {% if item.children.exists %}
+                        {# Clickable label to expand/collapse children #}
+                        <span class="parent-toggle" onclick="toggleChildren({{ item.pk }}, this)">
+                            {{ item.label }}
+                            <span class="child-count-badge">{{ item.children.count }}</span>
+                            <i class="fa-solid fa-chevron-right expand-icon" id="icon-{{ item.pk }}"></i>
+                        </span>
+                    {% else %}
+                        <a href="{% url 'menu_edit' item.pk %}">{{ item.label }}</a>
+                    {% endif %}
+                </td>
+                <td><code>{{ item.url|default:"—" }}</code></td>
+                <td>
+                    {% if item.children.exists %}
+                        <span style="font-size:12px; color:#6b7280;">Dropdown</span>
+                    {% else %}
+                        <span style="font-size:12px; color:#9ca3af;">Link</span>
+                    {% endif %}
+                </td>
+                <td id="status-{{ item.pk }}" class="{% if item.active %}status-active{% else %}status-inactive{% endif %}">
+                    {{ item.active|yesno:"Active,Inactive" }}
+                </td>
+                <td class="actions">
+                    <span class="status-toggle"
+                          data-url="{% url 'toggle_status' 'menu' item.pk %}"
+                          data-target="status-{{ item.pk }}"
+                          onclick="event.preventDefault(); toggleStatus(this)">
+                        <i class="fa-solid {% if item.active %}fa-toggle-on{% else %}fa-toggle-off{% endif %}"></i>
+                    </span>
+                    <a href="{% url 'menu_edit' item.pk %}" class="icon edit">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                    </a>
+                    <span class="icon delete"
+                          onclick="openDeleteModal('menu', '{{ item.label }}', '{% url 'delete_object' 'menu' item.pk %}', false)">
+                        <i class="fa-solid fa-trash"></i>
+                    </span>
+                </td>
+            </tr>
+
+            {# ── Child rows — hidden until parent is clicked ── #}
+            {% for child in item.children.all %}
+            <tr class="child-group child-group-{{ item.pk }}" data-id="{{ child.pk }}">
+                <td class="child-drag-handle" style="cursor:grab; color:#c4b5fd;">
+                    <i class="fa-solid fa-grip-vertical"></i>
+                </td>
+                <td>
+                    <input type="checkbox" name="selected_ids" value="{{ child.pk }}" class="row-checkbox">
+                </td>
+                <td class="child-label">
+                    <i class="fa-solid fa-turn-down-right child-arrow"></i>
+                    <a href="{% url 'menu_edit' child.pk %}">{{ child.label }}</a>
+                </td>
+                <td><code>{{ child.url|default:"—" }}</code></td>
+                <td><span style="font-size:12px; color:#9ca3af;">Child</span></td>
+                <td id="status-{{ child.pk }}" class="{% if child.active %}status-active{% else %}status-inactive{% endif %}">
+                    {{ child.active|yesno:"Active,Inactive" }}
+                </td>
+                <td class="actions">
+                    <span class="status-toggle"
+                          data-url="{% url 'toggle_status' 'menu' child.pk %}"
+                          data-target="status-{{ child.pk }}"
+                          onclick="event.preventDefault(); toggleStatus(this)">
+                        <i class="fa-solid {% if child.active %}fa-toggle-on{% else %}fa-toggle-off{% endif %}"></i>
+                    </span>
+                    <a href="{% url 'menu_edit' child.pk %}" class="icon edit">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                    </a>
+                    <span class="icon delete"
+                          onclick="openDeleteModal('menu', '{{ child.label }}', '{% url 'delete_object' 'menu' child.pk %}', false)">
+                        <i class="fa-solid fa-trash"></i>
+                    </span>
+                </td>
+            </tr>
+            {% endfor %}
+
+            {% endfor %}
+        </tbody>
+    </table>
+    <button type="submit" name="action" value="toggle" style="display:none;"></button>
+</form>
+
+{% load static %}
+<script src="{% static 'js/data_tables.js' %}"></script>
+
+<script>
+// ── Toggle children expand/collapse ──────────────────────────────
+function toggleChildren(parentId) {
+    const children = document.querySelectorAll('.child-group-' + parentId);
+    const icon     = document.getElementById('icon-' + parentId);
+    const isOpen   = icon.classList.contains('open');
+
+    children.forEach(row => row.classList.toggle('open', !isOpen));
+    icon.classList.toggle('open', !isOpen);
+}
+
+// ── Child drag-and-drop sort ──────────────────────────────────────
+// We create one Sortable instance per parent group, restricted to
+// rows belonging only to that parent — so children can't be dragged
+// into another parent's group.
+
+const SORT_URL = "{% url 'sort' 'menu' %}";
+const CSRF     = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+function saveChildOrder(parentId) {
+    // Collect the current order of visible child rows for this parent
+    const rows = document.querySelectorAll('.child-group-' + parentId);
+    const ids  = Array.from(rows).map(r => r.dataset.id);
+
+    fetch(SORT_URL, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': CSRF,
+        },
+        body: JSON.stringify({ order: ids }),
+    })
+    .then(res => res.json())
+    .then(() => {
+        const msg = document.getElementById('saveMsg');
+        msg.style.display = 'block';
+        setTimeout(() => msg.style.display = 'none', 2000);
+    })
+    .catch(err => console.error('Child sort error:', err));
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+    // Find all unique parent IDs that have child rows
+    const parentIds = new Set();
+    document.querySelectorAll('[class*="child-group-"]').forEach(row => {
+        row.classList.forEach(cls => {
+            if (cls.startsWith('child-group-') && cls !== 'child-group') {
+                parentIds.add(cls.replace('child-group-', ''));
+            }
+        });
+    });
+
+    // Create a Sortable for each parent's child group
+    parentIds.forEach(parentId => {
+        const childRows = document.querySelectorAll('.child-group-' + parentId);
+        if (childRows.length < 2) return; // nothing to sort if only 1 child
+
+        // Sortable works on a shared parent element (tbody), but we restrict
+        // draggable to only THIS parent's child rows using a filter selector.
+        // We insert a transparent proxy tbody wrapper per group to isolate them.
+
+        // Wrap each child group in a <tbody> so Sortable is scoped correctly
+        const tbody = document.querySelector('#listTable tbody');
+
+        // Insert a sentinel <tr> before first child and after last child
+        // so Sortable knows the boundary. We use a custom ghost instead.
+        new Sortable(tbody, {
+            handle: '.child-drag-handle',
+            draggable: '.child-group-' + parentId,
+            animation: 150,
+            ghostClass: 'sortable-ghost',
+            onEnd: function (evt) {
+                // After drop, ensure the moved row stays within its parent group.
+                // If somehow it escaped, put it back.
+                const movedRow   = evt.item;
+                const movedClass = 'child-group-' + parentId;
+
+                if (!movedRow.classList.contains(movedClass)) {
+                    // Shouldn't happen but safety net
+                    evt.from.insertBefore(movedRow, evt.from.children[evt.oldIndex]);
+                    return;
+                }
+
+                saveChildOrder(parentId);
+            },
+        });
+    });
+});
+</script>
+
+{% endblock %}

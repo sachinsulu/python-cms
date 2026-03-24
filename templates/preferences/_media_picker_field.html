@@ -1,0 +1,71 @@
+
+
+<div class="mp-field-row" id="row_{{ field_name }}">
+
+  {# Thumbnail preview box #}
+  <div class="mp-field-preview" id="preview_box_{{ field_name }}">
+    {% if current and current.file %}
+      <img src="{{ current.file.url }}"
+           alt="{{ current.alt_text|default:label }}"
+           id="preview_img_{{ field_name }}"
+           style="width:100%; height:100%; object-fit:contain;">
+    {% else %}
+      <div class="mp-no-image" id="preview_img_{{ field_name }}">
+        <i class="fa-solid fa-image" style="font-size:1.4rem; color:#d1d5db;"></i>
+        <span>None</span>
+      </div>
+    {% endif %}
+  </div>
+
+  <div class="mp-field-info">
+
+    {# Label #}
+    <span class="mp-field-label">
+      {{ label }}
+      {% if help %}
+        <span class="mp-field-help">— {{ help }}</span>
+      {% endif %}
+    </span>
+
+    {# Hidden input — value pre-populated from current_media_pks context var #}
+    <input type="hidden"
+           name="{{ field_name }}_media"
+           id="id_{{ field_name }}_media"
+           value="{{ current_media_pks|default_if_none:'' }}">
+
+    {# File name / status indicator #}
+    <div class="mp-field-name" id="label_{{ field_name }}">
+      {% if current %}
+        <i class="fa-solid fa-circle-check" style="color:#10b981;"></i>
+        {{ current.title|default:current.filename }}
+      {% else %}
+        <span style="color:#94a3b8;">No image set</span>
+      {% endif %}
+    </div>
+
+    {# Actions #}
+    <div style="display:flex; gap:8px; margin-top:8px; flex-wrap:wrap; align-items:center;">
+
+      <button type="button"
+              class="btn"
+              style="font-size:0.8rem; padding:5px 14px;"
+              data-media-picker
+              data-target-id="#id_{{ field_name }}_media"
+              data-preview="#preview_box_{{ field_name }}"
+              data-type="image"
+              data-field="{{ field_name }}">
+        <i class="fa-solid fa-photo-film"></i>
+        {% if current %}Change{% else %}Choose{% endif %}
+      </button>
+
+      <button type="button"
+              class="mp-clear-btn"
+              style="font-size:0.8rem; padding:5px 12px; {% if not current %}display:none;{% endif %}"
+              id="clear_btn_{{ field_name }}"
+              onclick="clearMediaField('{{ field_name }}')">
+        <i class="fa-solid fa-xmark"></i> Remove
+      </button>
+
+    </div>
+  </div>
+</div>

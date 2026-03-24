@@ -1,0 +1,261 @@
+{% extends "base.html" %}
+{% block content %}
+{{ form.media }}
+
+<h2>{% if is_edit %}Edit{% else %}Create{% endif %} Menu Item</h2>
+
+
+<a href="{% url 'menu_list' %}" class="btn">← Back to Menu Items</a>
+
+<div class="form-container">
+  <form method="post" enctype="multipart/form-data" id="menu-form">
+    {% csrf_token %}
+    <input type="hidden" name="action" id="form-action" value="save">
+
+    {% if form.non_field_errors %}
+      <div class="error">{{ form.non_field_errors }}</div>
+    {% endif %}
+
+    <!-- Label -->
+    <div class="form-group">
+      <label for="{{ form.label.id_for_label }}">
+        {{ form.label.label }} <span style="color: red;">*</span>
+      </label>
+      {{ form.label }}
+      <small class="help-text">Display text shown in the navigation, e.g. "About Us"</small>
+      {% if form.label.errors %}
+        <div class="error">{{ form.label.errors }}</div>
+      {% endif %}
+    </div>
+
+    <!-- URL / Link -->
+    <div class="form-group">
+      <label>URL / Link</label>
+
+      <!-- Mode tabs -->
+      <div class="url-mode-tabs">
+        <button type="button" class="url-mode-tab active" data-mode="manual">
+          <i class="fa-solid fa-keyboard"></i> Manual
+        </button>
+        <button type="button" class="url-mode-tab" data-mode="picker">
+          <i class="fa-solid fa-link"></i> Pick from Content
+        </button>
+      </div>
+
+      <!-- Manual input mode -->
+      <div id="url-manual-mode">
+        {{ form.url }}
+        <small class="help-text">
+          Use relative paths like <code>/about/</code> or full URLs like <code>https://example.com</code>.
+          Leave blank if this item is a dropdown parent with no direct link.
+        </small>
+        {% if form.url.errors %}
+          <div class="error">{{ form.url.errors }}</div>
+        {% endif %}
+      </div>
+
+      <!-- Picker mode -->
+      <div id="url-picker-mode" style="display:none;">
+        <div class="picker-stack">
+
+          <!-- Step 1: choose content type -->
+          <select id="slug-type-select">
+            <option value="">— Choose content type —</option>
+            <option value="article">Articles</option>
+            <option value="blog">Blogs</option>
+            <option value="package">Packages</option>
+            <option value="subpackage">Sub-Packages</option>
+          </select>
+
+          <!-- Step 2: choose specific item (populated by JS) -->
+          <select id="slug-item-select" style="display:none;">
+            <option value="">— Choose item —</option>
+          </select>
+
+          <!-- URL preview -->
+          <div class="url-preview" id="url-preview-text"></div>
+
+          <!-- Apply button -->
+          <button type="button" id="apply-slug-btn" class="btn" style="display:none; align-self:flex-start;">
+            <i class="fa-solid fa-check"></i> Use this URL
+          </button>
+
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Parent -->
+    <div class="form-group">
+      <label for="{{ form.parent.id_for_label }}">
+        {{ form.parent.label }}
+      </label>
+      {{ form.parent }}
+      <small class="help-text">Select a parent to make this a dropdown child. Leave blank for a top-level item.</small>
+      {% if form.parent.errors %}
+        <div class="error">{{ form.parent.errors }}</div>
+      {% endif %}
+    </div>
+
+    <!-- Open in New Tab toggle -->
+    <div class="form-group">
+      <label class="toggle-label-text">{{ form.open_in_new_tab.label }}</label>
+      <label class="toggle-switch" for="{{ form.open_in_new_tab.id_for_label }}">
+        {{ form.open_in_new_tab }}
+        <span class="toggle-track">
+          <span class="toggle-thumb"></span>
+        </span>
+        <span class="toggle-status-text new-tab-text"></span>
+      </label>
+      <small class="help-text" style="display:block; margin-top:6px;">Opens the link in a new browser tab.</small>
+    </div>
+
+    <!-- Active toggle -->
+    <div class="form-group">
+      <label class="toggle-label-text">{{ form.active.label }}</label>
+      <label class="toggle-switch" for="{{ form.active.id_for_label }}">
+        {{ form.active }}
+        <span class="toggle-track">
+          <span class="toggle-thumb"></span>
+        </span>
+        <span class="toggle-status-text active-text"></span>
+      </label>
+    </div>
+
+    <div style="margin-bottom: 20px;"></div>
+
+    <div class="form-actions" style="display: flex; gap: 10px; align-items: center;">
+      <button type="submit" class="btn" onclick="setFormAction('save')">Save</button>
+      <button type="submit" class="btn" onclick="setFormAction('save_and_quit')" style="background: #3b82f6;">Save & Quit</button>
+      <a href="{% url 'menu_list' %}" class="btn-cancel">Cancel</a>
+    </div>
+
+  </form>
+</div>
+
+<script>
+// ─── Form action ───────────────────────────────────────────────
+function setFormAction(action) {
+    document.getElementById('form-action').value = action;
+}
+
+// ─── Active toggle ─────────────────────────────────────────────
+const activeInput = document.querySelector('#{{ form.active.id_for_label }}');
+const activeText  = document.querySelector('.active-text');
+function updateActiveText() {
+    activeText.textContent = activeInput.checked ? 'Active' : 'Inactive';
+}
+if (activeInput) { updateActiveText(); activeInput.addEventListener('change', updateActiveText); }
+
+// ─── New Tab toggle ────────────────────────────────────────────
+const newTabInput = document.querySelector('#{{ form.open_in_new_tab.id_for_label }}');
+const newTabText  = document.querySelector('.new-tab-text');
+function updateNewTabText() {
+    newTabText.textContent = newTabInput.checked ? 'Yes' : 'No';
+}
+if (newTabInput) { updateNewTabText(); newTabInput.addEventListener('change', updateNewTabText); }
+
+// ─── URL mode tabs ─────────────────────────────────────────────
+const tabs         = document.querySelectorAll('.url-mode-tab');
+const manualMode   = document.getElementById('url-manual-mode');
+const pickerMode   = document.getElementById('url-picker-mode');
+
+tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+        tabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+
+        if (tab.dataset.mode === 'manual') {
+            manualMode.style.display = '';
+            pickerMode.style.display = 'none';
+        } else {
+            manualMode.style.display = 'none';
+            pickerMode.style.display = '';
+        }
+    });
+});
+
+// ─── Slug data from Django (server-rendered, no extra API needed) ─
+// Each content type maps to: { title, slug }
+const slugData = {
+    article:    {{ articles_json|safe }},
+    blog:       {{ blogs_json|safe }},
+    package:    {{ packages_json|safe }},
+    subpackage: {{ subpackages_json|safe }},
+};
+
+// URL prefix for each content type (set to / as per user request for direct slug links)
+const urlPrefix = {
+    article:    '/',
+    blog:       '/',
+    package:    '/',
+    subpackage: '/',
+};
+
+const typeSelect    = document.getElementById('slug-type-select');
+const itemSelect    = document.getElementById('slug-item-select');
+const applyBtn      = document.getElementById('apply-slug-btn');
+const previewText   = document.getElementById('url-preview-text');
+const urlInput      = document.getElementById('{{ form.url.id_for_label }}');
+
+typeSelect.addEventListener('change', () => {
+    const type = typeSelect.value;
+    itemSelect.innerHTML = '<option value="">— Choose item —</option>';
+    previewText.innerHTML = '';
+    applyBtn.style.display = 'none';
+
+    if (!type) {
+        itemSelect.style.display = 'none';
+        return;
+    }
+
+    const items = slugData[type] || [];
+    items.forEach(item => {
+        const opt = document.createElement('option');
+        opt.value = item.slug;
+        opt.textContent = item.title;
+        itemSelect.appendChild(opt);
+    });
+
+    itemSelect.style.display = items.length ? '' : 'none';
+});
+
+itemSelect.addEventListener('change', () => {
+    const slug   = itemSelect.value;
+    const type   = typeSelect.value;
+
+    if (!slug) {
+        previewText.innerHTML = '';
+        applyBtn.style.display = 'none';
+        return;
+    }
+
+    const prefix = urlPrefix[type] || '/';
+    const fullUrl = prefix + slug + '/';
+    previewText.innerHTML = 'Preview: <code>' + fullUrl + '</code>';
+    applyBtn.style.display = '';
+    applyBtn.dataset.url = fullUrl;
+});
+
+applyBtn.addEventListener('click', () => {
+    const url = applyBtn.dataset.url;
+    if (url) {
+        urlInput.value = url;
+
+        // Switch back to manual tab so the user can see what was filled in
+        tabs.forEach(t => t.classList.remove('active'));
+        document.querySelector('[data-mode="manual"]').classList.add('active');
+        manualMode.style.display = '';
+        pickerMode.style.display = 'none';
+
+        // Reset picker state
+        typeSelect.value = '';
+        itemSelect.innerHTML = '<option value="">— Choose item —</option>';
+        itemSelect.style.display = 'none';
+        previewText.innerHTML = '';
+        applyBtn.style.display = 'none';
+    }
+});
+</script>
+
+{% endblock %}

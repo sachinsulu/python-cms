@@ -1,0 +1,218 @@
+{% extends "base.html" %}
+{% block content %}
+{{ form.media }}
+
+<h2>{% if is_edit %}Edit{% else %}Create{% endif %} Feature</h2>
+
+<style>
+    .toggle-label-text {
+        display: block;
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: #374151;
+        margin-bottom: 8px;
+    }
+    .toggle-switch {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        cursor: pointer;
+        user-select: none;
+    }
+    .toggle-switch input[type="checkbox"] {
+        position: absolute;
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+    .toggle-track {
+        position: relative;
+        width: 48px;
+        height: 26px;
+        background: #d1d5db;
+        border-radius: 999px;
+        transition: background 0.25s ease;
+        flex-shrink: 0;
+    }
+    .toggle-thumb {
+        position: absolute;
+        top: 3px;
+        left: 3px;
+        width: 20px;
+        height: 20px;
+        background: white;
+        border-radius: 50%;
+        box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+        transition: transform 0.25s ease;
+    }
+    .toggle-switch input:checked ~ .toggle-track {
+        background: #10b981;
+    }
+    .toggle-switch input:checked ~ .toggle-track .toggle-thumb {
+        transform: translateX(22px);
+    }
+    .toggle-status-text {
+        font-size: 0.85rem;
+        font-weight: 500;
+        color: #6b7280;
+    }
+    .toggle-switch input:checked ~ .toggle-status-text {
+        color: #10b981;
+    }
+</style>
+
+<a href="{% url 'feature_list' group.id %}" class="btn">← Back to Features for {{ group.title }}</a>
+
+<div class="form-container">
+  <form method="post" enctype="multipart/form-data" id="feature-form">
+    {% csrf_token %}
+    <input type="hidden" name="action" id="form-action" value="save">
+
+    {% if form.non_field_errors %}
+      <div class="error">{{ form.non_field_errors }}</div>
+    {% endif %}
+
+    <!-- Title -->
+    <div class="form-group">
+      <label for="{{ form.title.id_for_label }}">
+        {{ form.title.label }} <span style="color:red;">*</span>
+      </label>
+      {{ form.title }}
+      {% if form.title.errors %}<div class="error">{{ form.title.errors }}</div>{% endif %}
+    </div>
+
+    <!-- Icon -->
+    <div class="form-group">
+      <label for="{{ form.icon.id_for_label }}">{{ form.icon.label }}</label>
+      {{ form.icon }}
+      <small class="help-text">Font Awesome CSS class, e.g. <code>fa-solid fa-bolt</code></small>
+      {% if form.icon.errors %}<div class="error">{{ form.icon.errors }}</div>{% endif %}
+      <div id="icon-preview" style="margin-top:8px; font-size:1.4rem; color:#374151;"></div>
+    </div>
+
+    <!-- Content -->
+    <div class="form-group">
+      <label for="{{ form.content.id_for_label }}">
+          {{ form.content.label }} <span style="color: red;">*</span>
+      </label>
+      {{ form.content }}
+      <a class="btn medium bg-orange mrg5T"
+        title="Read More"
+        id="readMore"
+        href="javascript:void(0);">
+            <span class="button-content">Read More</span>
+        </a>
+      {% if form.content.errors %}
+          <div class="error">{{ form.content.errors }}</div>
+      {% endif %}
+    </div>
+
+    <!-- Image -->
+    <div class="form-group">
+      <label>Image</label>
+      <input type="hidden" id="remove_image" name="remove_image" value="0">
+
+      <!-- Hidden fields the picker writes into -->
+      <input type="hidden" name="media_url" id="featureMediaUrl" value="">
+      <input type="hidden" name="media_id"  id="featureMediaId"  value="">
+
+      <div class="input-file-container">
+        {% if is_edit and feature.image %}
+          <input type="file" name="image" accept="image/*" id="id_image"
+                 data-existing-image="{{ feature.image.url }}">
+        {% else %}
+          {{ form.image }}
+        {% endif %}
+      </div>
+      <small class="help-text">Allowed: JPG, PNG, WebP | Max 2MB | Max 1920×1280px</small>
+
+      <!-- Picker trigger -->
+      <button type="button"
+              class="btn"
+              style="margin-top:8px;"
+              data-media-picker
+              data-target-url="#featureMediaUrl"
+              data-target-id="#featureMediaId"
+              data-preview="#imagePreview"
+              data-type="image">
+          <i class="fa-solid fa-photo-film"></i> Choose from Library
+      </button>
+
+      <div id="imagePreview" class="mt-2">
+        {% if is_edit and feature.image %}
+          <div class="preview-wrapper" style="position:relative; display:inline-block; margin-top:10px;">
+            <img src="{{ feature.image.url }}" style="max-width:300px; max-height:200px; border:1px solid #e5e7eb; border-radius:4px; display:block;">
+            <span class="remove-image"
+                  style="position:absolute; top:-8px; right:-8px; background:#ef4444; color:white; border-radius:50%; width:24px; height:24px; text-align:center; line-height:24px; cursor:pointer; font-weight:bold; font-size:16px;">×</span>
+            <p style="margin-top:5px; font-size:12px; color:#666;">Current image</p>
+          </div>
+        {% else %}
+          <p class="no-image text-muted">No image selected</p>
+        {% endif %}
+      </div>
+      {% if form.image.errors %}<div class="error">{{ form.image.errors }}</div>{% endif %}
+    </div>
+
+    <!-- Active toggle -->
+    <div class="form-group">
+      <label class="toggle-label-text">{{ form.active.label }}</label>
+      <label class="toggle-switch" for="{{ form.active.id_for_label }}">
+        {{ form.active }}
+        <span class="toggle-track">
+          <span class="toggle-thumb"></span>
+        </span>
+        <span class="toggle-status-text"></span>
+      </label>
+    </div>
+
+    <div style="margin-bottom:20px;"></div>
+
+    <div class="form-actions" style="display:flex; gap:10px; align-items:center;">
+      <button type="submit" class="btn" onclick="setFormAction('save')">Save</button>
+      <button type="submit" class="btn" onclick="setFormAction('save_and_quit')" style="background:#3b82f6;">Save & Quit</button>
+      <a href="{% url 'feature_list' group.id %}" class="btn-cancel">Cancel</a>
+    </div>
+  </form>
+</div>
+
+<script>
+function setFormAction(action) {
+    document.getElementById('form-action').value = action;
+}
+
+// Active toggle label
+const toggleInput = document.querySelector('.toggle-switch input[type="checkbox"]');
+const statusText  = document.querySelector('.toggle-status-text');
+
+function updateToggleText() {
+    if (statusText) statusText.textContent = toggleInput.checked ? 'Active' : 'Inactive';
+}
+if (toggleInput) {
+    updateToggleText();
+    toggleInput.addEventListener('change', updateToggleText);
+}
+
+// Live icon preview
+const iconInput   = document.getElementById('{{ form.icon.id_for_label }}');
+const iconPreview = document.getElementById('icon-preview');
+
+function updateIconPreview() {
+    const val = iconInput.value.trim();
+    iconPreview.innerHTML = val ? `<i class="${val}"></i> <small style="font-size:0.75rem; color:#6b7280;">${val}</small>` : '';
+}
+if (iconInput) {
+    updateIconPreview();
+    iconInput.addEventListener('input', updateIconPreview);
+}
+
+// Image remove button
+document.addEventListener('click', function (e) {
+    if (e.target.classList.contains('remove-image')) {
+        document.getElementById('remove_image').value = '1';
+        e.target.closest('.preview-wrapper').remove();
+        document.getElementById('imagePreview').innerHTML = '<p class="no-image text-muted">No image selected</p>';
+    }
+});
+</script>
+
+{% endblock %}

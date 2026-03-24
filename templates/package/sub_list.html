@@ -1,0 +1,199 @@
+{% extends "base.html" %}
+{% block title %}{{ package.title }} - Sub-Packages{% endblock %}
+{% block content %}
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.8/css/jquery.dataTables.min.css">
+<script src="https://cdn.datatables.net/1.13.8/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+
+<style>
+    .sortable-ghost {
+        opacity: 0.3;
+        background-color: #f0f0f0 !important;
+    }
+    .success-badge {
+        display: none; position: fixed; top: 20px; right: 20px;
+        background: #28a745; color: white; padding: 12px 24px;
+        border-radius: 4px; z-index: 9999; font-weight: bold;
+    }
+    a { text-decoration: none; }
+    .parent-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 4px 12px;
+        border-radius: 6px;
+        font-size: 13px;
+        font-weight: 600;
+    }
+    .parent-badge.room { background: #dbeafe; color: #1d4ed8; }
+    .parent-badge.non-room { background: #ede9fe; color: #6d28d9; }
+</style>
+
+<header style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+    <div style="display:flex; align-items:center; gap:12px;">
+        <a href="{% url 'package_list' %}" class="btn btn-secondary" style="font-size:13px;">← Back</a>
+        <h2 style="margin:0;">{{ package.title }}</h2>
+        <span class="parent-badge {% if package.is_room %}room{% else %}non-room{% endif %}">
+            {% if package.is_room %}🛏 Room{% else %}📦 Non-Room{% endif %}
+        </span>
+    </div>
+    <a href="{% url 'subpackage_create' package.slug %}" class="btn">+ Add Sub-Package</a>
+</header>
+
+<div style="display:flex; align-items:center; gap:8px; margin-bottom:12px;">
+    <button type="button"
+            class="btn btn-warning"
+            onclick="document.getElementById('bulk-form').querySelector('button[name=action][value=toggle]').click()">
+        Status
+    </button>
+    <button type="button"
+            class="btn btn-danger"
+            onclick="openDeleteModal('subpackage', null, '/bulk/subpackage/', true)">
+        Delete
+    </button>
+</div>
+
+<div id="saveMsg" class="success-badge">Order Saved!</div>
+
+<form method="post" action="{% url 'bulk_action' 'subpackage' %}" id="bulk-form">
+    {% csrf_token %}
+
+    <table id="subPackageTable" class="display" style="width:100%">
+        <thead>
+            <tr>
+                <th style="width:30px;"></th>
+                <th style="width:30px;"><input type="checkbox" id="select-all"></th>
+                <th>Title</th>
+                {% if package.is_room %}
+                <th>Price</th>
+                <th>Capacity</th>
+                <th>Beds</th>
+                {% endif %}
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody data-sort-url="{% url 'sort' 'subpackage' %}">
+            {% for s in subpackages %}
+            <tr data-id="{{ s.id }}">
+                <td class="drag-handle" style="cursor: grab; color: #9ca3af;">
+                    <i class="fa-solid fa-grip-vertical"></i>
+                </td>
+                <td><input type="checkbox" name="selected_ids" value="{{ s.id }}" class="row-checkbox"></td>
+                <td>
+                    <a href="{% url 'subpackage_edit' package.slug s.slug %}">{{ s.title }}</a>
+                    <br><small>{{ s.slug }}</small>
+                </td>
+                {% if package.is_room %}
+                <td>{% if s.price %}₹{{ s.price }}{% else %}-{% endif %}</td>
+                <td>{% if s.capacity %}{{ s.capacity }} guests{% else %}-{% endif %}</td>
+                <td>{% if s.beds %}{{ s.beds }}{% else %}-{% endif %}</td>
+                {% endif %}
+                <td id="status-{{ s.id }}" class="{% if s.is_active %}status-active{% else %}status-inactive{% endif %}">
+                    {{ s.is_active|yesno:"Active,Inactive" }}
+                </td>
+                <td class="actions">
+                    <span class="status-toggle"
+                          data-url="{% url 'toggle_status' 'subpackage' s.id %}"
+                          data-target="status-{{ s.id }}"
+                          onclick="event.preventDefault(); toggleStatus(this)">
+                        <i class="fa-solid {% if s.is_active %}fa-toggle-on{% else %}fa-toggle-off{% endif %}"></i>
+                    </span>
+                    <a href="{% url 'subpackage_edit' package.slug s.slug %}" class="icon edit">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                    </a>
+                    <span class="icon delete"
+                          onclick="openDeleteModal('subpackage', '{{ s.title }}', '{% url 'delete_object' 'subpackage' s.id %}', false)">
+                        <i class="fa-solid fa-trash"></i>
+                    </span>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <button type="submit" name="action" value="toggle" style="display:none;"></button>
+</form>
+
+{% load static %}
+<script>
+$(document).ready(function () {
+    var isRoom = {{ package.is_room|yesno:"true,false" }};
+    var nonSortTargets = isRoom ? [0, 1, 7] : [0, 1, 4];
+    var nonSearchTargets = isRoom ? [0, 1, 5, 6, 7] : [0, 1, 3, 4];
+
+    var table = $('#subPackageTable').DataTable({
+        paging: true,
+        pageLength: 10,
+        lengthMenu: [10, 20, 50, 100],
+        ordering: true,
+        order: [], // Default to no sorting, respecting server-side order
+        columnDefs: [
+            { orderable: false, targets: nonSortTargets },
+            { searchable: false, targets: nonSearchTargets }
+        ],
+        language: {
+            emptyTable: "No sub-packages found. Create one!",
+            zeroRecords: "No matching sub-packages found.",
+        }
+    });
+
+    var tbody = document.querySelector('#subPackageTable tbody');
+    if (tbody) {
+        Sortable.create(tbody, {
+            handle: '.drag-handle',
+            animation: 150,
+            ghostClass: 'sortable-ghost',
+            onEnd: function () {
+                var sortUrl = tbody.dataset.sortUrl;
+                if (!sortUrl) return;
+
+                var order = [];
+                tbody.querySelectorAll('tr').forEach(function (row) {
+                    var id = row.getAttribute('data-id');
+                    if (id) order.push(parseInt(id));
+                });
+
+                fetch(sortUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': getCSRFToken(),
+                        'X-Requested-With': 'XMLHttpRequest'
+                    },
+                    body: JSON.stringify({ order: order })
+                })
+                .then(function (res) { return res.json(); })
+                .then(function (data) {
+                    if (data.status === 'success') {
+                        var msg = document.getElementById('saveMsg');
+                        if (msg) {
+                            msg.style.display = 'block';
+                            setTimeout(function () { msg.style.display = 'none'; }, 2000);
+                        }
+                    }
+                })
+                .catch(function (err) { console.error('Sort failed:', err); });
+            }
+        });
+    }
+
+    $('#select-all').on('change', function () {
+        var checked = this.checked;
+        table.rows({ search: 'applied' }).nodes().each(function (row) {
+            $(row).find('.row-checkbox').prop('checked', checked);
+        });
+    });
+
+    $('#subPackageTable').on('change', '.row-checkbox', function () {
+        var allBoxes = table.rows({ search: 'applied' }).nodes().to$().find('.row-checkbox');
+        var checkedBoxes = allBoxes.filter(':checked');
+        var selectAll = $('#select-all');
+        selectAll.prop('checked', allBoxes.length === checkedBoxes.length);
+        selectAll.prop('indeterminate', checkedBoxes.length > 0 && checkedBoxes.length < allBoxes.length);
+    });
+});
+</script>
+{% endblock %}

@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+{% block content %}
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.8/css/jquery.dataTables.min.css">
+<script src="https://cdn.datatables.net/1.13.8/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+
+<style>
+    .sortable-ghost {
+        opacity: 0.3;
+        background-color: #f0f0f0 !important;
+    }
+    .success-badge {
+        display: none; position: fixed; top: 20px; right: 20px;
+        background: #28a745; color: white; padding: 12px 24px;
+        border-radius: 4px; z-index: 9999; font-weight: bold;
+    }
+    a { text-decoration: none; }
+</style>
+
+<header style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+    <div style="display:flex; align-items:center; gap:12px;">
+        <h2 style="margin:0;">Feature Groups</h2>
+    </div>
+    <a href="{% url 'feature_group_create' %}" class="btn">+ Add Group</a>
+</header>
+
+<div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
+    <button type="button"
+            class="btn btn-warning"
+            onclick="document.getElementById('bulk-form').querySelector('button[name=action][value=toggle]').click()">
+        Status
+    </button>
+    <button type="button"
+            class="btn btn-danger"
+            onclick="openDeleteModal('featuregroup', null, '/bulk/featuregroup/', true)">
+        Delete
+    </button>
+</div>
+
+<div id="saveMsg" class="success-badge">Order Saved!</div>
+
+<form method="post" action="{% url 'bulk_action' 'featuregroup' %}" id="bulk-form">
+    {% csrf_token %}
+    <table id="listTable" class="display" style="width:100%" data-sort-url="{% url 'sort' 'featuregroup' %}">
+        <thead>
+            <tr>
+                <th style="width:30px;"></th>
+                <th><input type="checkbox" id="select-all"></th>
+                <th>Group Name</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in groups %}
+            <tr data-id="{{ item.id }}">
+                <td class="drag-handle" style="cursor:grab; color:#9ca3af;">
+                    <i class="fa-solid fa-grip-vertical"></i>
+                </td>
+                <td>
+                    <input type="checkbox" name="selected_ids" value="{{ item.id }}" class="row-checkbox">
+                </td>
+                <td>
+                    <a href="{% url 'feature_list' item.pk %}" style="font-weight:bold; color:#3b82f6;">{{ item.title }}</a>
+                    <br>
+                    <small style="color:#6b7280;">{{ item.features.count }} features</small>
+                </td>   
+                <td id="status-{{ item.id }}" class="{% if item.active %}status-active{% else %}status-inactive{% endif %}">
+                    {{ item.active|yesno:"Active,Inactive" }}
+                </td>
+                <td class="actions">
+                    <span class="status-toggle"
+                          data-url="{% url 'toggle_status' 'featuregroup' item.id %}"
+                          data-target="status-{{ item.id }}"
+                          onclick="event.preventDefault(); toggleStatus(this)">
+                        <i class="fa-solid {% if item.active %}fa-toggle-on{% else %}fa-toggle-off{% endif %}"></i>
+                    </span>
+                    <a href="{% url 'feature_group_edit' item.pk %}" class="icon edit">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                    </a>
+                    <span class="icon delete"
+                          onclick="openDeleteModal('featuregroup', '{{ item.title }}', '{% url 'delete_object' 'featuregroup' item.id %}', false)">
+                        <i class="fa-solid fa-trash"></i>
+                    </span>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <button type="submit" name="action" value="toggle" style="display:none;"></button>
+</form>
+
+{% load static %}
+<script src="{% static 'js/data_tables.js' %}"></script>
+{% endblock %}

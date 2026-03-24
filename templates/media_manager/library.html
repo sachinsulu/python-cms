@@ -1,0 +1,298 @@
+{% extends "base.html" %}
+{% block content %}
+
+<style>
+  .mm-layout { display: flex; gap: 20px; }
+  .mm-sidebar {
+    width: 220px; flex-shrink: 0;
+    background: #f8fafc; border: 1px solid #e2e8f0;
+    border-radius: 10px; padding: 16px;
+  }
+  .mm-main { flex: 1; min-width: 0; }
+  .mm-folder-tree a { display: block; padding: 4px 8px; border-radius: 5px; color: #374151; text-decoration: none; font-size: 0.85rem; }
+  .mm-folder-tree a:hover { background: #e2e8f0; }
+  .mm-folder-tree a.active { background: #0f172a; color: #fff; }
+  .mm-folder-tree ul { list-style: none; padding-left: 14px; margin: 2px 0; }
+  .mm-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; margin-top: 16px; }
+  .mm-card {
+    border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden;
+    background: #fff; font-size: 0.78rem; color: #374151;
+    transition: box-shadow 0.15s;
+  }
+  .mm-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+  .mm-thumb { width: 100%; height: 110px; object-fit: cover; background: #f1f5f9; display: flex; align-items: center; justify-content: center; }
+  .mm-thumb img { width: 100%; height: 110px; object-fit: cover; }
+  .mm-thumb-icon { font-size: 2rem; color: #94a3b8; }
+  .mm-card-body { padding: 8px; }
+  .mm-filename { font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .mm-meta { color: #94a3b8; font-size: 0.7rem; margin-top: 2px; }
+  .mm-folder-card {
+    display: flex; align-items: center; gap: 8px;
+    padding: 10px 14px; border: 1px solid #e2e8f0;
+    border-radius: 8px; background: #f8fafc;
+    text-decoration: none; color: #374151;
+    font-size: 0.85rem; font-weight: 500;
+    transition: background 0.15s;
+  }
+  .mm-folder-card:hover { background: #e2e8f0; }
+  .mm-folders-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+  .mm-topbar { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; margin-bottom: 16px; }
+  .mm-search { padding: 7px 12px; border: 1px solid #d1d5db; border-radius: 7px; font-size: 0.85rem; width: 220px; }
+  .mm-filters { display: flex; gap: 8px; }
+  .mm-filter-btn { padding: 5px 12px; border-radius: 6px; border: 1px solid #d1d5db; background: #fff; font-size: 0.78rem; cursor: pointer; text-decoration: none; color: #374151; }
+  .mm-filter-btn.active { background: #0f172a; color: #fff; border-color: #0f172a; }
+  .mm-breadcrumb { display: flex; align-items: center; gap: 6px; font-size: 0.82rem; color: #6b7280; margin-bottom: 12px; flex-wrap: wrap; }
+  .mm-breadcrumb a { color: #3b82f6; text-decoration: none; }
+  .mm-breadcrumb a:hover { text-decoration: underline; }
+  .mm-delete-btn { display: block; width: 100%; padding: 4px; background: #fee2e2; color: #dc2626; border: none; border-radius: 0 0 8px 8px; font-size: 0.72rem; cursor: pointer; text-align: center; }
+  .mm-delete-btn:hover { background: #fecaca; }
+</style>
+
+<header style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+  <h2 style="margin:0;">
+    <i class="fa-solid fa-photo-film" style="margin-right:8px;"></i>Media Library
+  </h2>
+  <div style="display:flex; gap:8px; align-items:center;">
+    {% if current_folder %}
+    <a href="{% url 'delete_folder' current_folder.pk %}" class="btn" style="background: #fee2e2; color: #dc2626; border-color: #fecaca;" onclick="return confirm('Are you sure you want to delete this folder? It must be empty first.')">
+      <i class="fa-solid fa-trash"></i> Delete Folder
+    </a>
+    {% endif %}
+    <a href="{% url 'create_folder' %}{% if current_folder %}?parent={{ current_folder.pk }}{% endif %}" class="btn">
+      <i class="fa-solid fa-folder-plus"></i> New Folder
+    </a>
+    <a href="{% url 'upload_media' %}{% if current_folder %}{{ current_folder.pk }}/{% endif %}" class="btn">
+      <i class="fa-solid fa-upload"></i> Upload
+    </a>
+  </div>
+</header>
+
+<div class="mm-layout">
+
+  <!-- Sidebar: Folder Tree -->
+  <aside class="mm-sidebar">
+    <p style="font-size:0.7rem; font-weight:700; text-transform:uppercase; color:#94a3b8; margin:0 0 10px;">Folders</p>
+    <div class="mm-folder-tree">
+      <a href="{% url 'media_library' %}" class="{% if not current_folder %}active{% endif %}">
+        <i class="fa-solid fa-house" style="margin-right:5px;"></i> All Media
+      </a>
+      {% include "media_manager/folder_tree.html" with folder_tree=folder_tree current_folder=current_folder %}
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <div class="mm-main">
+
+    <!-- Breadcrumb -->
+    {% if breadcrumbs %}
+    <div class="mm-breadcrumb">
+      <a href="{% url 'media_library' %}">Root</a>
+      {% for crumb in breadcrumbs %}
+        <i class="fa-solid fa-chevron-right" style="font-size:0.6rem;"></i>
+        {% if forloop.last %}
+          <span>{{ crumb.name }}</span>
+        {% else %}
+          <a href="{% url 'media_folder' crumb.pk %}">{{ crumb.name }}</a>
+        {% endif %}
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    <!-- Top Bar: Search + Filters -->
+    <div class="mm-topbar">
+      <form method="get" style="display:flex; gap:8px; align-items:center;">
+        <input type="text" name="q" value="{{ q }}" placeholder="Search files…" class="mm-search">
+        {% if type_filter %}<input type="hidden" name="type" value="{{ type_filter }}">{% endif %}
+        <button type="submit" class="btn">Search</button>
+        {% if q %}<a href="?" class="btn-cancel">Clear</a>{% endif %}
+      </form>
+      <div class="mm-filters">
+        <a href="?" class="mm-filter-btn {% if not type_filter %}active{% endif %}">All</a>
+        <a href="?type=image{% if q %}&q={{ q }}{% endif %}" class="mm-filter-btn {% if type_filter == 'image' %}active{% endif %}">
+          <i class="fa-solid fa-image"></i> Images
+        </a>
+        <a href="?type=video{% if q %}&q={{ q }}{% endif %}" class="mm-filter-btn {% if type_filter == 'video' %}active{% endif %}">
+          <i class="fa-solid fa-video"></i> Videos
+        </a>
+        <a href="?type=file{% if q %}&q={{ q }}{% endif %}" class="mm-filter-btn {% if type_filter == 'file' %}active{% endif %}">
+          <i class="fa-solid fa-file"></i> Files
+        </a>
+      </div>
+    </div>
+
+    <!-- Child Folders -->
+    {% if child_folders %}
+    <div class="mm-folders-row">
+      {% for folder in child_folders %}
+      <a href="{% url 'media_folder' folder.pk %}" class="mm-folder-card">
+        <i class="fa-solid fa-folder" style="color:#f59e0b;"></i>
+        {{ folder.name }}
+        <span style="color:#94a3b8; font-size:0.72rem;">({{ folder.media.count }})</span>
+      </a>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    <!-- Stats -->
+    <p style="font-size:0.8rem; color:#6b7280; margin-bottom:8px;">
+      {{ total_count }} file{{ total_count|pluralize }}
+      {% if q %} matching "{{ q }}"{% endif %}
+    </p>
+
+    <!-- Media Grid -->
+    {% if page_obj.object_list %}
+    <div class="mm-grid" id="mmSortableGrid">
+      {% for m in page_obj %}
+      <div class="mm-card" data-id="{{ m.pk }}">
+        <div class="mm-thumb mm-drag-handle" title="Drag to reorder">
+          {% if m.is_image %}
+            <img src="{{ m.file.url }}" alt="{{ m.alt_text|default:m.title }}" loading="lazy">
+          {% elif m.type == 'video' %}
+            <span class="mm-thumb-icon"><i class="fa-solid fa-video"></i></span>
+          {% else %}
+            <span class="mm-thumb-icon"><i class="fa-solid fa-file"></i></span>
+          {% endif %}
+          <div class="mm-drag-indicator">
+            <i class="fa-solid fa-grip-dots-vertical"></i>
+          </div>
+        </div>
+        <div class="mm-card-body">
+          <div class="mm-filename" title="{{ m.title }}">{{ m.title|truncatechars:22 }}</div>
+          <div class="mm-meta">
+            {{ m.size_display }}
+            {% if m.width %} · {{ m.width }}×{{ m.height }}{% endif %}
+          </div>
+        </div>
+        <form method="post" action="{% url 'delete_media' m.pk %}"
+              onsubmit="return confirm('Delete {{ m.title|escapejs }}?')">
+          {% csrf_token %}
+          <button type="submit" class="mm-delete-btn">
+            <i class="fa-solid fa-trash"></i> Delete
+          </button>
+        </form>
+      </div>
+      {% endfor %}
+    </div>
+
+    {# Reorder save indicator #}
+    <div id="mmReorderMsg"
+         style="display:none; position:fixed; bottom:20px; right:20px;
+                background:#10b981; color:white; padding:10px 20px;
+                border-radius:8px; font-size:0.85rem; font-weight:600;
+                box-shadow:0 4px 12px rgba(0,0,0,0.15); z-index:9999;">
+      <i class="fa-solid fa-check"></i> Order saved
+    </div>
+
+    <style>
+    .mm-drag-handle   { cursor: grab; position: relative; }
+    .mm-drag-handle:active { cursor: grabbing; }
+    .mm-drag-indicator {
+      position: absolute; top: 6px; left: 6px;
+      background: rgba(0,0,0,0.45); color: white;
+      border-radius: 4px; padding: 3px 5px;
+      font-size: 0.7rem; opacity: 0;
+      transition: opacity 0.15s;
+      pointer-events: none;
+    }
+    .mm-card:hover .mm-drag-indicator { opacity: 1; }
+    .mm-card.sortable-ghost  { opacity: 0.35; background: #f0fdf4 !important; }
+    .mm-card.sortable-chosen { box-shadow: 0 8px 20px rgba(0,0,0,0.15); transform: scale(1.02); }
+    .mm-card.sortable-drag   { opacity: 1; }
+    </style>
+
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+    <script>
+    (function () {
+      const grid      = document.getElementById('mmSortableGrid');
+      const msgEl     = document.getElementById('mmReorderMsg');
+      const CSRF      = document.body.dataset.csrfToken || "{{ csrf_token }}";
+      const FOLDER_ID = {{ current_folder.pk|default:"null" }};
+      const REORDER_URL = "{% url 'reorder_media' %}";
+
+      // Only enable drag when NOT paginated past page 1
+      // (reorder only makes sense when showing all items in folder)
+      const isPaged = {{ page_obj.paginator.num_pages }} > 1;
+
+      if (!grid || isPaged) return;  // Don't enable drag on paginated views
+
+      let saveTimer = null;
+
+      const sortable = Sortable.create(grid, {
+        handle:      '.mm-drag-handle',
+        animation:   180,
+        ghostClass:  'sortable-ghost',
+        chosenClass: 'sortable-chosen',
+        dragClass:   'sortable-drag',
+        delay:       80,          // small delay prevents accidental drags on click
+        delayOnTouchOnly: true,
+
+        onEnd: function () {
+          // Debounce — only save after user stops dragging for 400ms
+          clearTimeout(saveTimer);
+          saveTimer = setTimeout(saveOrder, 400);
+        },
+      });
+
+      function saveOrder() {
+        const ids = [...grid.querySelectorAll('.mm-card[data-id]')]
+          .map(el => parseInt(el.dataset.id, 10));
+
+        fetch(REORDER_URL, {
+          method:  'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken':  CSRF,
+          },
+          body: JSON.stringify({ ids: ids, folder: FOLDER_ID }),
+        })
+        .then(res => {
+          if (!res.ok) throw new Error('Server error ' + res.status);
+          return res.json();
+        })
+        .then(() => {
+          showMsg();
+        })
+        .catch(err => {
+          console.error('Reorder failed:', err);
+          // Optionally restore original order here
+        });
+      }
+
+      function showMsg() {
+        msgEl.style.display = 'block';
+        clearTimeout(msgEl._hideTimer);
+        msgEl._hideTimer = setTimeout(() => {
+          msgEl.style.display = 'none';
+        }, 2000);
+      }
+    })();
+    </script>
+
+    <!-- Pagination -->
+    {% if page_obj.has_other_pages %}
+    <div style="display:flex; gap:8px; margin-top:20px; align-items:center; justify-content:center;">
+      {% if page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number }}{% if q %}&q={{ q }}{% endif %}{% if type_filter %}&type={{ type_filter }}{% endif %}" class="btn">← Prev</a>
+      {% endif %}
+      <span style="font-size:0.85rem; color:#6b7280;">
+        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+      </span>
+      {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}{% if q %}&q={{ q }}{% endif %}{% if type_filter %}&type={{ type_filter }}{% endif %}" class="btn">Next →</a>
+      {% endif %}
+    </div>
+    {% endif %}
+
+    {% else %}
+    <div style="text-align:center; padding:60px 20px; color:#94a3b8;">
+      <i class="fa-solid fa-photo-film" style="font-size:2.5rem; display:block; margin-bottom:12px;"></i>
+      <p>No files found.
+        <a href="{% url 'upload_media' %}" style="color:#3b82f6;">Upload one →</a>
+      </p>
+    </div>
+    {% endif %}
+
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,391 @@
+{% extends "base.html" %}
+{% block content %}
+{{ form.media }}
+
+<h2>{% if is_edit %}Edit{% else %}Create{% endif %} Offer</h2>
+
+<a href="{% url 'offer_list' %}" class="btn">← Back to Offers</a>
+
+<style>
+    /* ── Toggle ── */
+    .toggle-label-text { display: block; font-size: 0.85rem; font-weight: 600; color: #374151; margin-bottom: 8px; }
+    .toggle-switch { display: inline-flex; align-items: center; gap: 10px; cursor: pointer; user-select: none; }
+    .toggle-switch input[type="checkbox"] { position: absolute; opacity: 0; width: 0; height: 0; }
+    .toggle-track { position: relative; width: 48px; height: 26px; background: #d1d5db; border-radius: 999px; transition: background 0.25s ease; flex-shrink: 0; }
+    .toggle-thumb { position: absolute; top: 3px; left: 3px; width: 20px; height: 20px; background: white; border-radius: 50%; box-shadow: 0 1px 4px rgba(0,0,0,0.2); transition: transform 0.25s ease; }
+    .toggle-switch input:checked ~ .toggle-track { background: #10b981; }
+    .toggle-switch input:checked ~ .toggle-track .toggle-thumb { transform: translateX(22px); }
+    .toggle-status-text { font-size: 0.85rem; font-weight: 500; color: #6b7280; }
+    .toggle-switch input:checked ~ .toggle-status-text { color: #10b981; }
+
+    /* ── Discount panels ── */
+    .discount-panel {
+        border: 2px solid #e5e7eb;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 4px;
+        display: none;
+        background: #fafafa;
+    }
+    .discount-panel.active { display: block; }
+
+    /* ── Tier rows ── */
+    .tier-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr auto;
+        gap: 10px;
+        align-items: end;
+        margin-bottom: 10px;
+    }
+    .tier-row input { width: 100%; }
+    .btn-remove-tier {
+        background: #fee2e2; color: #dc2626;
+        border: 1px solid #fca5a5; border-radius: 6px;
+        padding: 8px 12px; cursor: pointer; font-size: 0.8rem; font-weight: 600;
+        transition: background 0.15s;
+    }
+    .btn-remove-tier:hover { background: #fecaca; }
+    .btn-add-tier {
+        display: inline-flex; align-items: center; gap: 6px;
+        margin-top: 8px; padding: 8px 16px;
+        background: white; color: #374151;
+        border: 1.5px solid #d1d5db; border-radius: 7px;
+        font-size: 0.82rem; font-weight: 600; cursor: pointer;
+        transition: all 0.15s;
+    }
+    .btn-add-tier:hover { border-color: #10b981; color: #10b981; background: #f0fdf4; }
+    .tier-header {
+        display: grid;
+        grid-template-columns: 1fr 1fr auto;
+        gap: 10px;
+        margin-bottom: 6px;
+    }
+    .tier-header span {
+        font-size: 0.72rem; font-weight: 700;
+        text-transform: uppercase; letter-spacing: 0.06em; color: #6b7280;
+    }
+
+    /* ── Discount type tabs ── */
+    .disc-type-tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 4px; }
+    .disc-type-tab {
+        flex: 1; min-width: 100px; padding: 10px 14px;
+        border-radius: 8px; border: 2px solid #e5e7eb;
+        background: #f9fafb; color: #6b7280;
+        font-size: 0.82rem; font-weight: 600; cursor: pointer;
+        transition: all 0.15s; text-align: center;
+        display: flex; flex-direction: column; align-items: center; gap: 5px;
+    }
+    .disc-type-tab i { font-size: 1.1rem; }
+    .disc-type-tab.active-none    { border-color: #94a3b8; background: #f1f5f9; color: #475569; }
+    .disc-type-tab.active-fixed   { border-color: #3b82f6; background: #eff6ff; color: #1d4ed8; }
+    .disc-type-tab.active-dynamic { border-color: #10b981; background: #f0fdf4; color: #065f46; }
+    .disc-type-tab.active-multi   { border-color: #f59e0b; background: #fffbeb; color: #b45309; }
+</style>
+
+<div class="form-container">
+  <form method="post" enctype="multipart/form-data" id="offer-form">
+    {% csrf_token %}
+    <input type="hidden" name="action"       id="form-action" value="save">
+    <input type="hidden" name="remove_image" id="remove_image" value="0">
+    <input type="hidden" name="tiers_json"   id="tiers_json"  value="{{ tiers_json|default:'[]' }}">
+
+    {% if form.non_field_errors %}
+      <div class="error">{{ form.non_field_errors }}</div>
+    {% endif %}
+
+    <!-- Title -->
+    <div class="form-group">
+      <label for="{{ form.title.id_for_label }}">
+        {{ form.title.label }} <span style="color:red;">*</span>
+      </label>
+      {{ form.title }}
+      {% if form.title.errors %}<div class="error">{{ form.title.errors }}</div>{% endif %}
+    </div>
+
+    <!-- Dates -->
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+      <div class="form-group">
+        <label for="{{ form.start_date.id_for_label }}">
+          {{ form.start_date.label }} <span style="color:red;">*</span>
+        </label>
+        {{ form.start_date }}
+        {% if form.start_date.errors %}<div class="error">{{ form.start_date.errors }}</div>{% endif %}
+      </div>
+      <div class="form-group">
+        <label for="{{ form.end_date.id_for_label }}">
+          {{ form.end_date.label }} <span style="color:red;">*</span>
+        </label>
+        {{ form.end_date }}
+        {% if form.end_date.errors %}<div class="error">{{ form.end_date.errors }}</div>{% endif %}
+      </div>
+    </div>
+
+    <!-- Image -->
+    <div class="form-group">
+      <label>Image</label>
+      {% if form.image.errors %}<div class="error">{{ form.image.errors }}</div>{% endif %}
+
+      <!-- Hidden fields the picker writes into -->
+      <input type="hidden" name="media_url" id="offerMediaUrl" value="">
+      <input type="hidden" name="media_id"  id="offerMediaId"  value="">
+
+      <div class="input-file-container">
+        {% if is_edit and item.image %}
+          <input type="file" name="image" accept="image/*" id="id_image"
+                 data-existing-image="{{ item.image.url }}">
+        {% else %}
+          {{ form.image }}
+        {% endif %}
+      </div>
+      <small class="help-text">Allowed: JPG, PNG, WebP | Max 2MB | Max 1920×1280px</small>
+
+      <!-- Picker trigger -->
+      <button type="button"
+              class="btn"
+              style="margin-top:8px;"
+              data-media-picker
+              data-target-url="#offerMediaUrl"
+              data-target-id="#offerMediaId"
+              data-preview="#imagePreview"
+              data-type="image">
+          <i class="fa-solid fa-photo-film"></i> Choose from Library
+      </button>
+
+      <div id="imagePreview" class="mt-2">
+        <p class="no-image text-muted">No image selected</p>
+      </div>
+    </div>
+
+    <!-- Discount Type -->
+    <div class="form-group">
+      <label class="toggle-label-text">Discount Type <span style="color:red;">*</span></label>
+
+      <!-- Visual tab selector -->
+      <div class="disc-type-tabs" id="disc-tabs">
+        <button type="button" class="disc-type-tab" data-type="none">
+          <i class="fa-solid fa-ban"></i> None
+        </button>
+        <button type="button" class="disc-type-tab" data-type="fixed">
+          <i class="fa-solid fa-tag"></i> Fixed
+        </button>
+        <button type="button" class="disc-type-tab" data-type="dynamic">
+          <i class="fa-solid fa-sliders"></i> Dynamic
+        </button>
+        <button type="button" class="disc-type-tab" data-type="multi">
+          <i class="fa-solid fa-layer-group"></i> Multi
+        </button>
+      </div>
+
+      <!-- Hidden real select (keeps Django form binding) -->
+      <div style="display:none;">{{ form.discount_type }}</div>
+      {% if form.discount_type.errors %}<div class="error">{{ form.discount_type.errors }}</div>{% endif %}
+
+      <!-- None panel -->
+      <div class="discount-panel" id="panel-none">
+        <p style="color:#6b7280; font-size:0.9rem; margin:0;">
+          No discount applied. This offer is informational only.
+        </p>
+      </div>
+
+      <!-- Fixed panel -->
+      <div class="discount-panel" id="panel-fixed">
+        <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px;">
+          <div class="form-group" style="margin:0;">
+            <label for="{{ form.fixed_discount.id_for_label }}">Discount Amount</label>
+            {{ form.fixed_discount }}
+            {% if form.fixed_discount.errors %}<div class="error">{{ form.fixed_discount.errors }}</div>{% endif %}
+          </div>
+          <div class="form-group" style="margin:0;">
+            <label for="{{ form.fixed_rate.id_for_label }}">Rate</label>
+            {{ form.fixed_rate }}
+            {% if form.fixed_rate.errors %}<div class="error">{{ form.fixed_rate.errors }}</div>{% endif %}
+          </div>
+          <div class="form-group" style="margin:0;">
+            <label for="{{ form.fixed_people.id_for_label }}">No. of People</label>
+            {{ form.fixed_people }}
+            {% if form.fixed_people.errors %}<div class="error">{{ form.fixed_people.errors }}</div>{% endif %}
+          </div>
+        </div>
+      </div>
+
+      <!-- Dynamic panel -->
+      <div class="discount-panel" id="panel-dynamic">
+        <p style="font-size:0.8rem; color:#6b7280; margin-bottom:12px;">
+          Add pricing tiers based on number of guests (pax). Each row = one tier.
+        </p>
+        <div class="tier-header">
+          <span>No. of Pax</span>
+          <span>Rate</span>
+          <span style="width:72px;"></span>
+        </div>
+        <div id="dynamic-tiers"></div>
+        <button type="button" class="btn-add-tier" onclick="addTier('dynamic')">
+          <i class="fa-solid fa-plus"></i> Add Tier
+        </button>
+      </div>
+
+      <!-- Multi panel -->
+      <div class="discount-panel" id="panel-multi">
+        <p style="font-size:0.8rem; color:#6b7280; margin-bottom:12px;">
+          Add multiple pricing tiers. Same structure as Dynamic — useful for package combos.
+        </p>
+        <div class="tier-header">
+          <span>No. of Pax</span>
+          <span>Rate</span>
+          <span style="width:72px;"></span>
+        </div>
+        <div id="multi-tiers"></div>
+        <button type="button" class="btn-add-tier" onclick="addTier('multi')">
+          <i class="fa-solid fa-plus"></i> Add Tier
+        </button>
+      </div>
+    </div>
+
+    <!-- Link -->
+    <div class="form-group">
+      <label for="{{ form.link.id_for_label }}">{{ form.link.label }}</label>
+      {{ form.link }}
+      <small class="help-text">Optional. E.g. <code>/packages/summer/</code> or <code>https://example.com</code></small>
+      {% if form.link.errors %}<div class="error">{{ form.link.errors }}</div>{% endif %}
+    </div>
+
+    <!-- Content -->
+    <div class="form-group">
+      <label for="{{ form.content.id_for_label }}">
+          {{ form.content.label }} <span style="color: red;">*</span>
+      </label>
+      {{ form.content }}
+      <a class="btn medium bg-orange mrg5T"
+        title="Read More"
+        id="readMore"
+        href="javascript:void(0);">
+            <span class="button-content">Read More</span>
+        </a>
+      {% if form.content.errors %}
+          <div class="error">{{ form.content.errors }}</div>
+      {% endif %}
+    </div>
+
+    <!-- Active Toggle -->
+    <div class="form-group">
+      <label class="toggle-label-text">{{ form.active.label }}</label>
+      <label class="toggle-switch" for="{{ form.active.id_for_label }}">
+        {{ form.active }}
+        <span class="toggle-track"><span class="toggle-thumb"></span></span>
+        <span class="toggle-status-text status-text"></span>
+      </label>
+    </div>
+
+    <div style="margin-bottom:20px;"></div>
+
+    <div class="form-actions" style="display:flex; gap:10px; align-items:center;">
+      <button type="submit" class="btn"                                              onclick="setFormAction('save')">Save</button>
+      <button type="submit" class="btn" style="background:#10b981;"                 onclick="setFormAction('save_and_new')">Save &amp; New</button>
+      <button type="submit" class="btn" style="background:#3b82f6;"                 onclick="setFormAction('save_and_quit')">Save &amp; Quit</button>
+      <a href="{% url 'offer_list' %}" class="btn-cancel">Cancel</a>
+    </div>
+
+  </form>
+</div>
+
+<script>
+// ─── Helpers ───────────────────────────────────────────────────
+function setFormAction(action) {
+    document.getElementById('form-action').value = action;
+}
+
+// ─── Active toggle ─────────────────────────────────────────────
+const activeInput = document.querySelector('#{{ form.active.id_for_label }}');
+const activeText  = document.querySelector('.status-text');
+function updateActiveText() {
+    activeText.textContent = activeInput.checked ? 'Active' : 'Inactive';
+}
+if (activeInput) { updateActiveText(); activeInput.addEventListener('change', updateActiveText); }
+
+// ─── Discount type tabs ────────────────────────────────────────
+const discSelect = document.getElementById('id_discount_type');
+const tabs       = document.querySelectorAll('.disc-type-tab');
+const panels     = { none: document.getElementById('panel-none'), fixed: document.getElementById('panel-fixed'), dynamic: document.getElementById('panel-dynamic'), multi: document.getElementById('panel-multi') };
+
+function setDiscountType(type) {
+    discSelect.value = type;
+
+    // Update tabs
+    tabs.forEach(t => {
+        t.classList.remove('active-none', 'active-fixed', 'active-dynamic', 'active-multi');
+        if (t.dataset.type === type) t.classList.add('active-' + type);
+    });
+
+    // Show/hide panels
+    Object.entries(panels).forEach(([key, el]) => {
+        el.classList.toggle('active', key === type);
+    });
+
+    syncTiersJSON();
+}
+
+tabs.forEach(tab => {
+    tab.addEventListener('click', () => setDiscountType(tab.dataset.type));
+});
+
+// ─── Tier management ───────────────────────────────────────────
+// tiers loaded from server (edit mode)
+let existingTiers = [];
+try { existingTiers = JSON.parse('{{ tiers_json|default:"[]"|escapejs }}'); } catch(e) {}
+
+function addTier(panel, pax='', rate='') {
+    const container = document.getElementById(panel + '-tiers');
+    const row = document.createElement('div');
+    row.className = 'tier-row';
+    row.innerHTML = `
+        <input type="number" class="tier-pax" placeholder="Pax" min="1" value="${pax}"
+               onchange="syncTiersJSON()">
+        <input type="number" class="tier-rate" placeholder="Rate" step="0.01" value="${rate}"
+               onchange="syncTiersJSON()">
+        <button type="button" class="btn-remove-tier" onclick="removeTier(this)">
+            <i class="fa-solid fa-xmark"></i>
+        </button>`;
+    container.appendChild(row);
+    syncTiersJSON();
+}
+
+function removeTier(btn) {
+    btn.closest('.tier-row').remove();
+    syncTiersJSON();
+}
+
+function syncTiersJSON() {
+    const type = discSelect.value;
+    if (type !== 'dynamic' && type !== 'multi') {
+        document.getElementById('tiers_json').value = '[]';
+        return;
+    }
+
+    const containerId = type + '-tiers';
+    const rows = document.querySelectorAll('#' + containerId + ' .tier-row');
+    const tiers = [];
+    rows.forEach(row => {
+        const pax  = row.querySelector('.tier-pax').value;
+        const rate = row.querySelector('.tier-rate').value;
+        if (pax || rate) tiers.push({ pax: Number(pax), rate: Number(rate) });
+    });
+    document.getElementById('tiers_json').value = JSON.stringify(tiers);
+}
+
+// ─── Init on page load ─────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', function () {
+    const currentType = discSelect.value || 'none';
+
+    // Populate existing tiers into the correct panel
+    if ((currentType === 'dynamic' || currentType === 'multi') && existingTiers.length) {
+        existingTiers.forEach(t => addTier(currentType, t.pax, t.rate));
+    }
+
+    setDiscountType(currentType);
+});
+
+// Sync before form submit
+document.getElementById('offer-form').addEventListener('submit', syncTiersJSON);
+</script>
+
+{% endblock %}

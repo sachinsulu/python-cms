@@ -1,0 +1,184 @@
+{% load static %}
+{% load custom_filters %}
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>{% block title %}Admin Panel{% endblock %}</title>
+
+  <link rel="shortcut icon" type="image/x-icon" href="{% static 'favicon.ico' %}" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="askjdajk">
+
+  <!-- Tailwind CDN -->
+
+
+  <!-- Your existing CSS -->
+  <link rel="stylesheet" href="{% static 'css/admin.css' %}" />
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+  <!-- Phase 2: Media Picker JS -->
+  <script src="{% static 'js/media_picker.js' %}" defer></script>
+</head>
+
+<body data-csrf-token="{{ csrf_token }}">
+  <!-- TOP BAR -->
+  <header class="topbar">
+    <div class="topbar-left">
+      <span class="logo">Python Cms</span>
+      <i class="fa-solid fa-bars" id="toggleSidebar"></i>
+    </div>
+
+    <div class="topbar-right">
+      <i class="fa-solid fa-user"></i>
+      {{ request.user.username }}
+      <form id="logout-form" action="{% url 'logout' %}" method="post" style="display: none;">
+        {% csrf_token %}
+      </form>
+      <a href="#" class="logout" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
+    </div>
+  </header>
+
+  <!-- SIDEBAR -->
+<aside class="sidebar" id="sidebar">
+  <nav>
+    <a href="{% url 'dashboard' %}" class="{% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">
+      <i class="fa-solid fa-gauge"></i>
+      <span>Dashboard</span>
+    </a>
+
+    {% if request.user.is_superuser %}
+      {# Modules - superuser only #}
+      {% with url_name=request.resolver_match.url_name %}
+        <a href="{% url 'module_list' %}" class="{% if 'module' in url_name %}active{% endif %}">
+          <i class="fa-solid fa-cubes"></i>
+          <span>Modules</span>
+        </a>
+      {% endwith %}
+    {% endif %}
+
+    {# Users/Groups - superuser OR users with explicit permission #}
+    {% if request.user.is_superuser or perms.auth.view_user %}
+      {% with url_name=request.resolver_match.url_name %}
+        <a href="#" class="sidebar-parent {% if url_name in 'user_list,user_create,user_edit,user_delete,group_list,group_create,group_edit,group_delete' %}active{% endif %}">
+          <i class="fa-solid fa-user"></i>
+          <span>Users</span>
+          <i class="fa-solid fa-chevron-down submenu-toggle {% if url_name in 'user_list,user_create,user_edit,user_delete,group_list,group_create,group_edit,group_delete' %}rotate{% endif %}"></i>
+        </a>
+
+        <div class="sidebar-submenu {% if url_name in 'user_list,user_create,user_edit,user_delete,group_list,group_create,group_edit,group_delete' %}open{% endif %}">
+          <a href="{% url 'user_list' %}" class="{% if url_name in 'user_list,user_create,user_edit,user_delete' %}active{% endif %}">
+            <i class="fa-solid fa-user"></i> User List
+          </a>
+          <a href="{% url 'group_list' %}" class="{% if url_name in 'group_list,group_create,group_edit,group_delete' %}active{% endif %}">
+            <i class="fa-solid fa-users-gear"></i> Groups
+          </a>
+        </div>
+      {% endwith %}
+    {% endif %}
+
+    {% for item in sidebar_menu %}
+      {% if item.label|lower == 'package' or item.label|lower == 'packages' %}
+        {% with url_name=request.resolver_match.url_name %}
+        <a href="#" class="sidebar-parent {% if 'package' in url_name or 'feature' in url_name %}active{% endif %}">
+          <i class="{{ item.icon }}"></i>
+          <span>{{ item.label }}</span>
+          <i class="fa-solid fa-chevron-down submenu-toggle {% if 'package' in url_name or 'feature' in url_name %}rotate{% endif %}"></i>
+        </a>
+        <div class="sidebar-submenu {% if 'package' in url_name or 'feature' in url_name %}open{% endif %}">
+          <a href="{% url 'package_list' %}" class="{% if 'package' in url_name and 'feature' not in url_name %}active{% endif %}">
+            <i class="fa-solid fa-box"></i> Packages
+          </a>
+          <a href="{% url 'feature_group_list' %}" class="{% if 'feature' in url_name %}active{% endif %}">
+            <i class="fa-solid fa-star"></i> Features
+          </a>
+        </div>
+        {% endwith %}
+      {% elif item.label|lower == 'feature' or item.label|lower == 'features' %}
+        {# Skip rendering standalone feature link since it's already inside the package dropdown #}
+      {% elif item.url_name == 'preference_edit' %}
+        <a href="#" class="sidebar-parent {% if 'preference' in request.resolver_match.url_name or 'location' in request.resolver_match.url_name %}active{% endif %}">
+          <i class="fa-solid fa-gear"></i>
+          <span>Site Settings</span>
+          <i class="fa-solid fa-chevron-down submenu-toggle {% if 'preference' in request.resolver_match.url_name or 'location' in request.resolver_match.url_name %}rotate{% endif %}"></i>
+        </a>
+        <div class="sidebar-submenu {% if 'preference' in request.resolver_match.url_name or 'location' in request.resolver_match.url_name %}open{% endif %}">
+          <a href="{% url 'preference_edit' %}" class="{% if request.resolver_match.url_name == 'preference_edit' %}active{% endif %}">
+            <i class="fa-solid fa-sliders"></i> Site Preferences
+          </a>
+          <a href="{% url 'location_edit' %}" class="{% if request.resolver_match.url_name == 'location_edit' %}active{% endif %}">
+            <i class="fa-solid fa-location-dot"></i> Location
+          </a>
+        </div>
+      {% elif item.url_name == 'location_edit' %}
+        {# Skip rendering standalone location link as it's grouped under Site Settings #}
+      {% else %}
+        {% with keywords=item.url_name_match|split:"," %}
+        <a href="{% url item.url_name %}"
+           class="{% for kw in keywords %}{% if kw and kw in request.resolver_match.url_name %}active{% endif %}{% endfor %}">
+          <i class="{{ item.icon }}"></i>
+          <span>{{ item.label }}</span>
+        </a>
+        {% endwith %}
+      {% endif %}
+    {% endfor %}
+
+  </nav>
+</aside>
+
+
+
+
+  <!-- MAIN CONTENT -->
+  <main class="main" id="main">
+    <div class="messages-container" id="messages-container">
+      {% if messages %}
+      {% for message in messages %}
+      <div class="message {{ message.tags }}">
+        {{ message }}
+      </div>
+      {% endfor %}
+      {% endif %}
+    </div>
+    {% if form and form.non_field_errors %}
+    <div class="messages">
+      {% for error in form.non_field_errors %}
+      <div class="message error">
+        {{ error }}
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    {% block content %}
+    {% endblock %}
+  </main>
+  <div id="deleteModal" class="modal">
+    <div class="modal-content">
+      <h3>Confirm Deletion</h3>
+      <p id="modal-text">Are you sure you want to delete this item?</p>
+      <div class="modal-actions">
+        <form id="deleteForm" method="post">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-danger">Yes, Delete</button>
+        </form>
+        <button onclick="closeDeleteModal()" class="btn btn-cancel">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+
+
+  <script src="{% static 'js/admin.js' %}"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+
+  {% if request.user.is_authenticated %}
+    {% include "media_manager/picker_modal.html" %}
+  {% endif %}
+
+</body>
+
+</html>

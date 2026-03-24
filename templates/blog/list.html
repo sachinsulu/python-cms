@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+{% block content %}
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.8/css/jquery.dataTables.min.css">
+<script src="https://cdn.datatables.net/1.13.8/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+
+<style>
+
+    /* Ghosting effect (the row left behind) */
+    .sortable-ghost {
+        opacity: 0.3;
+        background-color: #f0f0f0 !important;
+    }
+
+    /* Success message badge */
+    .success-badge { 
+        display: none; position: fixed; top: 20px; right: 20px; 
+        background: #28a745; color: white; padding: 12px 24px; 
+        border-radius: 4px; z-index: 9999; font-weight: bold;
+    }
+    a{
+        text-decoration: none;
+    }
+</style>
+
+
+<header style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+    <div style="display:flex; align-items:center; gap:12px;">
+        <h2 style="margin:0;">Blog</h2>
+    </div>
+
+<a href="{% url 'create_blog' %}" class="btn">
+    + Add Blog
+</a>
+
+</header>
+    <div style="display:flex; align-items:center; gap:8px;">
+        <button type="button"
+                class="btn btn-warning"
+                onclick="document.getElementById('bulk-form').querySelector('button[name=action][value=toggle]').click()">
+            Status
+        </button>
+
+        <button type="button"
+                class="btn btn-danger"
+                onclick="openDeleteModal('article', null, '/bulk/blog/', true)">
+            Delete
+        </button>
+    </div>
+<div id="saveMsg" class="success-badge">Order Saved!</div>
+<form method="post" action="{% url 'bulk_action' 'blog' %}" id="bulk-form">
+    {% csrf_token %}
+<table id="listTable" class="display" style="width:100%" data-sort-url="{% url 'sort' 'blog' %}">
+    <thead>
+        <tr>
+            <th style="width: 30px;"></th> 
+            <th><input type="checkbox" id="select-all"></th>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Date</th>
+            <th>Status</th>
+            <th>Actions</th>
+            
+        </tr>
+    </thead>
+    <tbody>
+        {% for b in list %}
+        <tr data-id="{{ b.id }}">
+            <td class="drag-handle" style="cursor: grab; color: #9ca3af;">
+                    <i class="fa-solid fa-grip-vertical"></i>
+                </td>
+            <td><input type="checkbox" name="selected_ids" value="{{ b.id }}" class="row-checkbox"> </td>
+            <td><a href="{% url 'edit_blog' b.slug %}">{{ b.title }}</a><br> <small>{{b.slug}}</small></td>
+            <td>{{ b.author|default:"-" }}</td>
+            <td>{{ b.date|date:"M d, Y"|default:"-" }}</td>
+            <td id="status-{{ b.id }}" class="{% if b.active %}status-active{% else %}status-inactive{% endif %}">
+                    {{ b.active|yesno:"Active,Inactive" }}
+            </td>
+            <td class="actions">
+                    <span class="status-toggle"
+                          data-url="{% url 'toggle_status' 'blog' b.id %}"
+                          data-target="status-{{ b.id }}"
+                          onclick="event.preventDefault(); toggleStatus(this)">
+                        <i class="fa-solid {% if b.active %}fa-toggle-on{% else %}fa-toggle-off{% endif %}"></i>
+                    </span>
+                    <a href="{% url 'edit_blog' b.slug %}" class="icon edit"><i class="fa-solid fa-pen-to-square"></i></a>
+                    <span class="icon delete"
+                        onclick="openDeleteModal('blog', '{{ b.title }}', '{% url 'delete_object' 'blog' b.id %}', false)">
+                        <i class="fa-solid fa-trash"></i>
+                    </span>
+                </td>
+            
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+    <button type="submit" name="action" value="toggle" style="display:none;"></button>
+</form>
+
+{% load static %}
+<script src="{% static 'js/data_tables.js' %}"></script>
+{% endblock %}

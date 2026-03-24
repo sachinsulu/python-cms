@@ -1,0 +1,1 @@
+# App config is auto-discovered in Django 3.2+

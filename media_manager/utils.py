@@ -52,15 +52,26 @@ def bust_folder_tree_cache():
 
 def get_breadcrumbs(folder: Optional[MediaFolder]) -> list[MediaFolder]:
     """
-    Walk up the parent chain for breadcrumb rendering.
-    Worst case: O(depth), typically 3-5 levels max.
-    Returns list from root → current folder.
+    Walk up the parent chain for breadcrumb rendering using the cached O(n) tree.
+    Returns list from root → current folder without extra DB queries.
     """
     if folder is None:
         return []
+
+    tree = get_folder_tree()
+    node_map = {}
+    def _map_nodes(nodes):
+        for n in nodes:
+            node_map[n["folder"].pk] = n["folder"]
+            _map_nodes(n["children"])
+    _map_nodes(tree)
+
     crumbs = []
     node = folder
     while node is not None:
         crumbs.insert(0, node)
-        node = node.parent
+        if hasattr(node, "parent_id") and node.parent_id:
+            node = node_map.get(node.parent_id)
+        else:
+            node = None
     return crumbs

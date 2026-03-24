@@ -52,7 +52,12 @@
   <h2 style="margin:0;">
     <i class="fa-solid fa-photo-film" style="margin-right:8px;"></i>Media Library
   </h2>
-  <div style="display:flex; gap:8px;">
+  <div style="display:flex; gap:8px; align-items:center;">
+    {% if current_folder %}
+    <a href="{% url 'delete_folder' current_folder.pk %}" class="btn" style="background: #fee2e2; color: #dc2626; border-color: #fecaca;" onclick="return confirm('Are you sure you want to delete this folder? It must be empty first.')">
+      <i class="fa-solid fa-trash"></i> Delete Folder
+    </a>
+    {% endif %}
     <a href="{% url 'create_folder' %}{% if current_folder %}?parent={{ current_folder.pk }}{% endif %}" class="btn">
       <i class="fa-solid fa-folder-plus"></i> New Folder
     </a>

@@ -31,14 +31,13 @@ class MediaAdmin(admin.ModelAdmin):
         "preview_thumb", "title", "folder", "type", "size_display",
         "alt_status", "usage_count", "uploaded_by", "created_at",
     ]
-    list_filter    = ["type", "folder", "is_deleted", "created_at"]
+    list_filter    = ["type", "folder", "created_at"]
     search_fields  = ["title", "alt_text"]
     readonly_fields = [
         "type", "size", "width", "height", "created_at",
         "preview_thumb", "usage_list",
     ]
     ordering       = ["-created_at"]
-    actions        = ["soft_delete_selected", "restore_selected"]
 
     def get_queryset(self, request):
         return super().get_queryset(request).annotate(
@@ -83,15 +82,3 @@ class MediaAdmin(admin.ModelAdmin):
         )
         return format_html("<ul>{}</ul>", format_html(items))
     usage_list.short_description = "Used in"
-
-    @admin.action(description="Soft delete selected media")
-    def soft_delete_selected(self, request, queryset):
-        for media in queryset:
-            media.soft_delete()
-        self.message_user(request, f"{queryset.count()} item(s) soft-deleted.")
-
-    @admin.action(description="Restore soft-deleted media")
-    def restore_selected(self, request, queryset):
-        for media in queryset:
-            media.restore()
-        self.message_user(request, f"{queryset.count()} item(s) restored.")

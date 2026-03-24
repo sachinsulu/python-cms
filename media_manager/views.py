@@ -36,18 +36,17 @@ def media_library(request, folder_id=None):
     if folder_id:
         current_folder = get_object_or_404(MediaFolder, pk=folder_id)
 
-    # Direct children folders annotated with non-deleted media counts
+    # Direct children folders annotated with media counts
     child_folders = (
         MediaFolder.objects
         .filter(parent=current_folder)
-        .annotate(media_count=Count("media", filter=models.Q(media__is_deleted=False)))
+        .annotate(media_count=Count("media"))
         .order_by("name")
     )
 
-    # Active media in current folder only (not recursive — intentional for UX)
+    # Media in current folder only (not recursive — intentional for UX)
     media_qs = (
-        Media.objects.active()
-        .filter(folder=current_folder)
+        Media.objects.filter(folder=current_folder)
         .select_related("folder", "uploaded_by")
         .order_by("position", "-created_at")
     )
@@ -276,8 +275,7 @@ def media_picker_api(request):
     PICKER_PAGE_SIZE = 30
 
     qs = (
-        Media.objects.active()          # honours soft delete
-        .select_related("folder")
+        Media.objects.select_related("folder")
         .order_by("position", "-created_at")  # position first, created_at as stable fallback
     )
 

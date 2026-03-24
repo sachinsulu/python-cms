@@ -85,18 +85,6 @@ class MediaUploadForm(forms.Form):
                 f"Allowed: {', '.join(allowed_all)}"
             )
 
-        if ext in ALLOWED_IMAGE_EXTENSIONS:
-            try:
-                file.seek(0)
-                with Image.open(file) as img:
-                    img.verify()
-                file.seek(0)
-            except (IOError, SyntaxError, UnidentifiedImageError):
-                raise ValidationError(
-                    f"'{file.name}' does not appear to be a valid image."
-                )
-            file.seek(0)
-
         return file
 
 

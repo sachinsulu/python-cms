@@ -38,18 +38,16 @@ def process_upload_file(file: UploadedFile) -> dict:
         try:
             file.seek(0)
             with Image.open(file) as img:
-                img.verify()
-            file.seek(0)
-            with Image.open(file) as img:
                 result["width"], result["height"] = img.size
             result["type"] = "image"
-            file.seek(0)
         except (IOError, SyntaxError, UnidentifiedImageError):
             logger.warning(
                 "File %s failed image validation, stored as generic file.",
                 file.name,
             )
             result["type"] = "file"
+        finally:
+            file.seek(0)
 
     return result
 

@@ -28,6 +28,16 @@ def delete_media_file_on_model_delete(sender, instance, **kwargs):
                 instance.file.name,
                 exc,
             )
+    if instance.thumbnail:
+        try:
+            instance.thumbnail.delete(save=False)
+        except Exception as exc:
+            logger.error(
+                "Thumbnail cleanup failed for Media id=%s path=%s: %s",
+                instance.pk,
+                instance.thumbnail.name,
+                exc,
+            )
 
 
 # ── Folder tree cache invalidation ───────────────────────────────────────────

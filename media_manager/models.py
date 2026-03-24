@@ -17,7 +17,7 @@ def media_upload_path(instance, filename):
     Resolves physical upload path based on assigned folder.
 
     Results:
-        With folder:    {slugified-folder-name}/{filename}
+        With folder:    {slug_pk}/{filename}
         Without folder: library/{filename}
 
     NOTE: instance.folder must be set BEFORE save() is called.
@@ -25,8 +25,7 @@ def media_upload_path(instance, filename):
     object construction time.
     """
     if instance.folder:
-        folder_name = slugify(instance.folder.name)
-        return f'{folder_name}/{filename}'
+        return f'{instance.folder.slug}/{filename}'
     return f'library/{filename}'
 
 
@@ -66,26 +65,10 @@ class MediaFolder(models.Model):
     @property
     def slug(self):
         """Filesystem-safe folder name."""
-        return slugify(self.name)
+        return f"{slugify(self.name)}_{self.pk}"
 
 
-# ── Custom QuerySet / Manager ─────────────────────────────────────────────────
-
-class MediaQuerySet(models.QuerySet):
-    def active(self):
-        return self.filter(is_deleted=False)
-
-    def deleted(self):
-        return self.filter(is_deleted=True)
-
-
-class MediaManager(models.Manager):
-    def get_queryset(self):
-        return MediaQuerySet(self.model, using=self._db)
-
-    def active(self):
-        return self.get_queryset().active()
-
+    pass
 
 # ── Media ─────────────────────────────────────────────────────────────────────
 
@@ -134,12 +117,6 @@ class Media(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     position = models.PositiveIntegerField(default=0, db_index=True)
 
-    # ── Soft delete ───────────────────────────────────────────────────────────
-    is_deleted = models.BooleanField(default=False, db_index=True)
-    deleted_at = models.DateTimeField(null=True, blank=True)
-
-    objects = MediaManager()
-
     class Meta:
         ordering = ["position", "-created_at"]
         verbose_name        = "Media"
@@ -149,7 +126,6 @@ class Media(models.Model):
             models.Index(fields=["-created_at"],      name="media_created_idx"),
             models.Index(fields=["uploaded_by"],      name="media_uploader_idx"),
             models.Index(fields=["type"],             name="media_type_idx"),
-            models.Index(fields=["is_deleted"],       name="media_deleted_idx"),
             models.Index(fields=["folder", "position"],    name="media_folder_position_idx"),
             models.Index(fields=["folder", "-created_at"], name="media_folder_created_idx"),
         ]
@@ -167,20 +143,6 @@ class Media(models.Model):
         # Processing is handled by MediaService.upload() / processing.py.
         # Direct saves (update_fields from move_to_folder, restore, etc.) pass through cleanly.
         super().save(*args, **kwargs)
-
-    # ── Soft delete helpers ───────────────────────────────────────────────────
-
-    def soft_delete(self, commit=True):
-        self.is_deleted = True
-        self.deleted_at = timezone.now()
-        if commit:
-            self.save(update_fields=["is_deleted", "deleted_at"])
-
-    def restore(self, commit=True):
-        self.is_deleted = False
-        self.deleted_at = None
-        if commit:
-            self.save(update_fields=["is_deleted", "deleted_at"])
 
     # ── Properties ────────────────────────────────────────────────────────────
 

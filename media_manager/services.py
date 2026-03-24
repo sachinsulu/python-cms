@@ -65,19 +65,22 @@ class MediaService:
         if meta.get("type") == "image":
             try:
                 with Image.open(file) as img:
+                    img_format = img.format or "JPEG"
+                    
+                    if img.mode in ('RGBA', 'P'):
+                        img = img.convert('RGB')
+                        
                     img.thumbnail((300, 300))
 
                     thumb_io = io.BytesIO()
-                    img_format = img.format or "JPEG"
                     img.save(thumb_io, format=img_format)
 
-                    # -------------------------------
-                    # ✅ ONLY filename + thumbnails/
-                    # -------------------------------
-
                     filename = os.path.basename(media.file.name)
-                    thumb_name = os.path.join("thumbnails", filename)
-                    # → thumbnails/a.jpg
+                    if folder:
+                        folder_slug = getattr(folder, 'slug', None) or "root"
+                        thumb_name = f"{folder_slug}/thumbnails/{filename}"
+                    else:
+                        thumb_name = f"root/thumbnails/{filename}"
 
                     media.thumbnail.save(
                         thumb_name,
@@ -87,8 +90,8 @@ class MediaService:
 
                     media.save(update_fields=["thumbnail"])
 
-            except Exception:
-                pass
+            except Exception as e:
+                logger.error("Thumbnail generation failed: %s", e)
 
         return media
 
@@ -149,53 +152,7 @@ class MediaService:
         media.delete()
         logger.info("Media permanently deleted: id=%s", pk)
 
-    @staticmethod
-    def move_to_folder(media: Media, folder: MediaFolder | None) -> Media:
-        """
-        Moves a media file to a new folder using Django's storage API.
-        Works with local filesystem, S3, GCS, Azure — any backend.
-        Atomic: DB is only updated after a successful file operation.
-        """
-        if media.folder_id == (folder.pk if folder else None):
-            return media  # nothing to do
 
-        old_name = media.file.name
-
-        # Build new path without mutating the instance prematurely
-        class _Proxy:
-            pass
-        proxy = _Proxy()
-        proxy.folder = folder
-        new_name = media_upload_path(proxy, os.path.basename(old_name))
-
-        if old_name == new_name:
-            # Path identical (same folder slug), just update FK
-            media.folder = folder
-            media.save(update_fields=["folder"])
-            return media
-
-        try:
-            content = default_storage.open(old_name).read()
-            default_storage.save(new_name, ContentFile(content))
-            default_storage.delete(old_name)
-            media.file.name = new_name
-        except Exception as exc:
-            # Clean up the partially written destination if it exists
-            if default_storage.exists(new_name):
-                try:
-                    default_storage.delete(new_name)
-                except Exception:
-                    pass
-            logger.error("Media move failed: id=%s error=%s", media.pk, exc)
-            raise
-
-        media.folder = folder
-        media.position = Media.next_position(folder)  # place at end of new folder
-        media.save(update_fields=["file", "folder", "position"])
-
-        logger.info("Media moved: id=%s → folder=%s position=%s",
-                    media.pk, getattr(folder, "pk", "root"), media.position)
-        return media
 
 
 class FolderService:

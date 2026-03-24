@@ -36,7 +36,8 @@ class MediaServiceUploadTests(TestCase):
             MediaService.upload(file=_fake_file(), user=None)
 
     def test_upload_unauthenticated_user_raises(self):
-        anon = User()           # unsaved, not authenticated
+        from django.contrib.auth.models import AnonymousUser
+        anon = AnonymousUser()  # is_authenticated = False
         with self.assertRaises(PermissionError):
             MediaService.upload(file=_fake_file(), user=anon)
 
@@ -56,43 +57,35 @@ class MediaServiceDeleteTests(TestCase):
             uploaded_by=self.user,
         )
 
-    def test_soft_delete_marks_flag_and_preserves_db_row(self):
+    def test_hard_delete_removes_db_row(self):
         media = self._create_media()
-        MediaService.delete(media, soft=True, force=True)
-        media.refresh_from_db()
-        self.assertTrue(media.is_deleted)
-        self.assertIsNotNone(media.deleted_at)
+        pk = media.pk
+        with patch("django.db.models.fields.files.FieldFile.delete"):
+            MediaService.delete(media)
+        self.assertFalse(Media.objects.filter(pk=pk).exists())
 
-    def test_soft_deleted_media_excluded_from_active_qs(self):
-        media = self._create_media()
-        MediaService.delete(media, soft=True, force=True)
-        self.assertFalse(Media.objects.active().filter(pk=media.pk).exists())
-
-    def test_hard_delete_blocked_when_in_use(self):
-        from articles.models import Article
-        media   = self._create_media()
-        article = Article.objects.create(title="Test", content="...", image=media)
-        record_media_usage(article, "image", media)
-        with self.assertRaises(ValueError):
-            MediaService.delete(media, soft=False, force=False)
-
-    def test_hard_delete_force_bypasses_usage_check(self):
+    def test_hard_delete_works_even_when_media_in_use(self):
+        """Usage records should NOT block deletion — they cascade automatically."""
         from articles.models import Article
         media   = self._create_media()
         article = Article.objects.create(title="Test", content="...", image=media)
         record_media_usage(article, "image", media)
         pk = media.pk
         with patch("django.db.models.fields.files.FieldFile.delete"):
-            MediaService.delete(media, soft=False, force=True)
+            MediaService.delete(media)  # must not raise
         self.assertFalse(Media.objects.filter(pk=pk).exists())
 
-    def test_restore_clears_soft_delete_flags(self):
-        media = self._create_media()
-        media.soft_delete()
-        media.restore()
-        media.refresh_from_db()
-        self.assertFalse(media.is_deleted)
-        self.assertIsNone(media.deleted_at)
+    def test_hard_delete_clears_usage_records(self):
+        """MediaUsage rows should cascade-delete when the Media row is removed."""
+        from articles.models import Article
+        from .models import MediaUsage
+        media   = self._create_media()
+        article = Article.objects.create(title="Test", content="...", image=media)
+        record_media_usage(article, "image", media)
+        self.assertTrue(MediaUsage.objects.filter(media=media).exists())
+        with patch("django.db.models.fields.files.FieldFile.delete"):
+            MediaService.delete(media)
+        self.assertFalse(MediaUsage.objects.filter(media_id=media.pk).exists())
 
 
 class MediaUsageTrackingTests(TestCase):

@@ -2,6 +2,7 @@
 from django.contrib import admin
 from django.db.models import Count
 from django.utils.html import format_html
+from django.utils.safestring import mark_safe
 
 from .models import Media, MediaFolder
 
@@ -61,7 +62,7 @@ class MediaAdmin(admin.ModelAdmin):
     def alt_status(self, obj):
         if obj.alt_text:
             return format_html('<span style="color:green;">✔</span>')
-        return format_html('<span style="color:red;" title="Missing alt text">✖</span>')
+        return mark_safe('<span style="color:red;" title="Missing alt text">✖</span>')
     alt_status.short_description = "Alt"
 
     def usage_count(self, obj):

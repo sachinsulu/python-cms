@@ -7,6 +7,9 @@ from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
 from django.contrib.auth import get_user_model
 from django.core.files.uploadedfile import UploadedFile
+from django.core.exceptions import ValidationError
+from PIL import Image
+import io
 
 from .models import Media, MediaFolder, media_upload_path
 from .processing import process_upload_file, derive_title
@@ -55,6 +58,38 @@ class MediaService:
             "Media uploaded: id=%s title=%r position=%s",
             media.pk, media.title, media.position,
         )
+
+        # Ensure file pointer is safe
+        file.seek(0)
+
+        if meta.get("type") == "image":
+            try:
+                with Image.open(file) as img:
+                    img.thumbnail((300, 300))
+
+                    thumb_io = io.BytesIO()
+                    img_format = img.format or "JPEG"
+                    img.save(thumb_io, format=img_format)
+
+                    # -------------------------------
+                    # ✅ ONLY filename + thumbnails/
+                    # -------------------------------
+
+                    filename = os.path.basename(media.file.name)
+                    thumb_name = os.path.join("thumbnails", filename)
+                    # → thumbnails/a.jpg
+
+                    media.thumbnail.save(
+                        thumb_name,
+                        ContentFile(thumb_io.getvalue()),
+                        save=False
+                    )
+
+                    media.save(update_fields=["thumbnail"])
+
+            except Exception:
+                pass
+
         return media
 
     @staticmethod
@@ -97,29 +132,22 @@ class MediaService:
         )
 
     @staticmethod
-    def delete(media: Media, soft: bool = True, force: bool = False) -> None:
+    def delete(media: Media) -> None:
         """
-        soft=True  → marks is_deleted, preserves file (recoverable until purged)
-        soft=False → permanent deletion including physical file (via post_delete signal)
-        force=True → skips the in-use safety check
+        Permanently deletes a Media object (DB record + files on disk).
+        MediaUsage rows are cascade-deleted automatically by the DB.
+        The post_delete signal in signals.py handles media.file cleanup.
         """
-        from .tracking import is_media_in_use
+        storage = media.file.storage
 
-        if not force and is_media_in_use(media):
-            usage_count = media.usages.count()
-            raise ValueError(
-                f"Cannot delete Media#{media.pk} — still referenced in "
-                f"{usage_count} place(s). Pass force=True to override or "
-                "remove references first."
-            )
+        # 1. Delete thumbnail (not covered by the post_delete signal)
+        if media.thumbnail and storage.exists(media.thumbnail.name):
+            storage.delete(media.thumbnail.name)
 
-        if soft:
-            media.soft_delete()
-            logger.info("Media soft-deleted: id=%s title=%r", media.pk, str(media))
-        else:
-            title, pk = str(media), media.pk
-            media.delete()  # post_delete signal handles file cleanup
-            logger.info("Media hard-deleted: id=%s title=%r", pk, title)
+        # 2. Delete DB record — cascades to MediaUsage rows automatically
+        pk = media.pk
+        media.delete()
+        logger.info("Media permanently deleted: id=%s", pk)
 
     @staticmethod
     def move_to_folder(media: Media, folder: MediaFolder | None) -> Media:
@@ -168,3 +196,24 @@ class MediaService:
         logger.info("Media moved: id=%s → folder=%s position=%s",
                     media.pk, getattr(folder, "pk", "root"), media.position)
         return media
+
+
+class FolderService:
+
+    @staticmethod
+    def delete(folder: MediaFolder):
+        """
+        Delete folder ONLY if empty.
+        """
+
+        if folder.children.exists():
+            raise ValidationError(
+                "Cannot delete folder: contains subfolders."
+            )
+
+        if folder.media.exists():
+            raise ValidationError(
+                "Cannot delete folder: contains media files."
+            )
+
+        folder.delete()

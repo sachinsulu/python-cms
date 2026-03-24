@@ -14,7 +14,7 @@ from django_ratelimit.decorators import ratelimit
 from users.decorators import requires_perm
 from .models import Media, MediaFolder
 from .forms import MediaUploadForm, FolderCreateForm
-from .services import MediaService
+from .services import MediaService, FolderService
 from .utils import get_folder_tree, get_breadcrumbs
 
 logger = logging.getLogger(__name__)
@@ -184,17 +184,33 @@ def create_folder(request):
     })
 
 
+def delete_folder(request, folder_id):
+    folder = get_object_or_404(MediaFolder, pk=folder_id)
+
+    try:
+        FolderService.delete(folder)
+        messages.success(request, "Folder deleted successfully.")
+    except Exception as e:
+        messages.error(request, str(e))
+
+    return redirect("media_library")
+
+
 @require_POST
 @login_required
 @requires_perm("media_manager.delete_media")
 def delete_media(request, media_id):
-    media  = get_object_or_404(Media, pk=media_id)
-    folder = media.folder
+    media = get_object_or_404(Media, pk=media_id)
+    folder_id = media.folder_id  # capture before deletion
 
-    MediaService.delete(media, soft=True)   # safe default: soft delete
-    messages.success(request, "File deleted.")
-    if folder:
-        return redirect("media_folder", folder_id=folder.pk)
+    try:
+        MediaService.delete(media)
+        messages.success(request, "Media deleted permanently.")
+    except Exception as e:
+        messages.error(request, str(e))
+
+    if folder_id:
+        return redirect("media_folder", folder_id=folder_id)
     return redirect("media_library")
 
 

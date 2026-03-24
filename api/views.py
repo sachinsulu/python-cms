@@ -556,6 +556,7 @@ def get_media_or_folder(request, name):
     Dispatcher view that tries to find a media folder by name or slug first,
     then falls back to finding a single media item by title.
     """
+    name = name.strip()
     # 1. Try to find a folder
     folder = MediaFolder.objects.filter(name__iexact=name).first()
     if not folder:
@@ -570,12 +571,10 @@ def get_media_or_folder(request, name):
         return Response(serializer.data)
 
     # 2. If no folder, try to find a media item by title
-    try:
-        media = Media.objects.active().get(title=name)
+    media = Media.objects.active().filter(title__iexact=name).first()
+    if media:
         serializer = MediaSerializer(media, context={'request': request})
         return Response(serializer.data)
-    except Media.DoesNotExist:
-        pass
 
     # 3. Not found
     return Response(

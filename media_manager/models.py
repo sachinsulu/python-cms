@@ -102,6 +102,11 @@ class Media(models.Model):
 
     title  = models.CharField(max_length=255, blank=True)
     file   = models.FileField(upload_to=media_upload_path)
+    thumbnail = models.FileField(
+        upload_to=media_upload_path,
+        null=True,
+        blank=True
+    )
     folder = models.ForeignKey(
         MediaFolder,
         null=True,

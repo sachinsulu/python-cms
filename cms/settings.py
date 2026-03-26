@@ -211,7 +211,7 @@ USE_TZ = True
 # ========================
 
 # STATIC FILES
-STATIC_URL = "/staticfiles/"
+STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"  # collectstatic will copy everything here
 STATICFILES_DIRS = [BASE_DIR / "static"]  # your source static files
 

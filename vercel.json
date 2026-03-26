@@ -3,23 +3,20 @@
   "builds": [
     {
       "src": "cms/wsgi.py",
-      "use": "@vercel/python",
-      "config": {
-        "runtime": "python3.12"
-      }
+      "use": "@vercel/python"
     },
     {
-      "src": "build_files.sh",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "staticfiles"
-      }
+      "src": "staticfiles/(.*)",
+      "use": "@vercel/static"
     }
   ],
   "routes": [
     {
-      "src": "/static/(.*)",
-      "dest": "/static/$1"
+      "src": "^/static/(.*)",
+      "dest": "/staticfiles/$1"
+    },
+    {
+      "handle": "filesystem"
     },
     {
       "src": "/(.*)",

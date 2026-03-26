@@ -22,6 +22,12 @@ ALLOWED_HOSTS = [
     "127.0.0.1",
     ".vercel.app",
     ".now.sh",
+    ".up.railway.app",
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://*.up.railway.app",
+    "https://*.vercel.app",
 ]
 
 # ========================

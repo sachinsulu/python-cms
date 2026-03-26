@@ -27,7 +27,12 @@ class MediaFKField(forms.IntegerField):
             return None
         from media_manager.models import Media
         try:
-            return Media.objects.get(pk=value)
+            media = Media.objects.get(pk=value)
+            if not media.active:
+                raise ValidationError(
+                    f"Selected media '{media.title}' is inactive and cannot be used here."
+                )
+            return media
         except Media.DoesNotExist:
             raise ValidationError(
                 f"Selected media (id={value}) no longer exists. "

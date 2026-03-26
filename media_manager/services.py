@@ -75,7 +75,7 @@ class MediaService:
                     elif img.mode != 'RGB':
                         img = img.convert('RGB')
                         
-                    img.thumbnail((300, 300))
+                    img.thumbnail((700, 700))
 
                     thumb_io = io.BytesIO()
                     img.save(thumb_io, format=img_format, quality=85)
@@ -163,12 +163,12 @@ class FolderService:
         """
 
         if folder.children.exists():
-            raise ValidationError(
+            raise ValueError(
                 "Cannot delete folder: contains subfolders."
             )
 
         if folder.media.exists():
-            raise ValidationError(
+            raise ValueError(
                 "Cannot delete folder: contains media files."
             )
 

@@ -53,6 +53,12 @@
     <i class="fa-solid fa-photo-film" style="margin-right:8px;"></i>Media Library
   </h2>
   <div style="display:flex; gap:8px; align-items:center;">
+    <button type="submit" form="bulk-action-form" onclick="document.getElementById('bulk-action-type').value='delete'; return confirm('Delete selected media?');" class="btn" style="background: #fee2e2; color: #dc2626; border-color: #fecaca;">
+      <i class="fa-solid fa-trash"></i> Bulk Delete
+    </button>
+    <button type="submit" form="bulk-action-form" onclick="document.getElementById('bulk-action-type').value='toggle';" class="btn" style="background: #e0e7ff; color: #4338ca; border-color: #c7d2fe;">
+      <i class="fa-solid fa-toggle-on"></i> Toggle Status
+    </button>
     {% if current_folder %}
     <a href="{% url 'delete_folder' current_folder.pk %}" class="btn" style="background: #fee2e2; color: #dc2626; border-color: #fecaca;" onclick="return confirm('Are you sure you want to delete this folder? It must be empty first.')">
       <i class="fa-solid fa-trash"></i> Delete Folder
@@ -141,9 +147,35 @@
 
     <!-- Media Grid -->
     {% if page_obj.object_list %}
+    <form id="bulk-action-form" method="post" action="{% url 'bulk_action' 'media' %}">
+      {% csrf_token %}
+      <input type="hidden" name="action" id="bulk-action-type" value="delete">
+      <input type="hidden" name="next" value="{{ request.get_full_path }}">
+      
+      <div style="margin-bottom: 15px; padding-left: 5px;">
+        <label style="font-size: 0.85rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px;">
+          <input type="checkbox" id="selectAllCheckbox" style="width:16px; height:16px; cursor:pointer;" onchange="document.querySelectorAll('.mm-checkbox').forEach(cb => cb.checked = this.checked);">
+          Select All
+        </label>
+      </div>
+
     <div class="mm-grid" id="mmSortableGrid">
       {% for m in page_obj %}
-      <div class="mm-card" data-id="{{ m.pk }}">
+      <div class="mm-card" data-id="{{ m.pk }}" style="position: relative;">
+        <!-- Checkbox -->
+        <div style="position: absolute; top: 6px; right: 6px; z-index: 10;">
+          <input type="checkbox" name="selected_ids" value="{{ m.pk }}" class="mm-checkbox" style="width: 18px; height: 18px; cursor: pointer;">
+        </div>
+        
+        <!-- Status Indicator -->
+        <div style="position: absolute; bottom: 105px; left: 6px; z-index: 10; background: rgba(255,255,255,0.8); padding: 1px 4px; border-radius: 4px; font-size: 0.7rem; display: flex; gap: 4px; align-items: center;">
+          {% if m.active %}
+            <span style="color: green;" title="Active">● Active</span>
+          {% else %}
+            <span style="color: red;" title="Inactive">● Inactive</span>
+          {% endif %}
+        </div>
+
         <div class="mm-thumb mm-drag-handle" title="Drag to reorder">
           {% if m.is_image %}
             <img src="{{ m.file.url }}" alt="{{ m.alt_text|default:m.title }}" loading="lazy">
@@ -173,6 +205,7 @@
       </div>
       {% endfor %}
     </div>
+    </form>
 
     {# Reorder save indicator #}
     <div id="mmReorderMsg"

@@ -29,9 +29,9 @@ class MediaFolderAdmin(admin.ModelAdmin):
 class MediaAdmin(admin.ModelAdmin):
     list_display   = [
         "preview_thumb", "title", "folder", "type", "size_display",
-        "alt_status", "usage_count", "uploaded_by", "created_at",
+        "alt_status", "active", "usage_count", "uploaded_by", "created_at",
     ]
-    list_filter    = ["type", "folder", "created_at"]
+    list_filter    = ["active", "type", "folder", "created_at"]
     search_fields  = ["title", "alt_text"]
     readonly_fields = [
         "type", "size", "width", "height", "created_at",

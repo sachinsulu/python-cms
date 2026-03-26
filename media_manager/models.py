@@ -78,6 +78,19 @@ class MediaFolder(models.Model):
 
 # ── Media ─────────────────────────────────────────────────────────────────────
 
+class MediaQuerySet(models.QuerySet):
+    def active(self):
+        return self.filter(active=True)
+
+
+class MediaManager(models.Manager):
+    def get_queryset(self):
+        return MediaQuerySet(self.model, using=self._db)
+
+    def active(self):
+        return self.get_queryset().active()
+
+
 class Media(models.Model):
     TYPE_IMAGE = "image"
     TYPE_VIDEO = "video"
@@ -120,8 +133,11 @@ class Media(models.Model):
         on_delete=models.SET_NULL,
         related_name="uploaded_media",
     )
+    active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     position = models.PositiveIntegerField(default=0, db_index=True)
+
+    objects = MediaManager()
 
     class Meta:
         ordering = ["position", "-created_at"]

@@ -280,7 +280,7 @@ def media_picker_api(request):
     PICKER_PAGE_SIZE = 30
 
     qs = (
-        Media.objects.select_related("folder")
+        Media.objects.active().select_related("folder")
         .order_by("position", "-created_at")  # position first, created_at as stable fallback
     )
 

@@ -149,3 +149,72 @@ class FolderTreeCacheTests(TestCase):
         self.assertIsNotNone(cache.get(FOLDER_TREE_CACHE_KEY))
         folder.delete()                                      # triggers signal
         self.assertIsNone(cache.get(FOLDER_TREE_CACHE_KEY))
+
+
+class MediaActiveFilteringTests(TestCase):
+    def setUp(self):
+        self.user = User.objects.create_user("activeuser", password="pass")
+        self.active_media = Media.objects.create(
+            title="Active",
+            file=_fake_file("active.jpg"),
+            active=True
+        )
+        self.inactive_media = Media.objects.create(
+            title="Inactive",
+            file=_fake_file("inactive.jpg"),
+            active=False
+        )
+
+    def test_manager_active_filter(self):
+        """Media.objects.active() should only return active items."""
+        active_qs = Media.objects.active()
+        self.assertIn(self.active_media, active_qs)
+        self.assertNotIn(self.inactive_media, active_qs)
+
+    def test_picker_api_filters_inactive(self):
+        """media_picker_api should not return inactive media."""
+        from django.urls import reverse
+        from django.test import Client
+        import json
+        
+        client = Client()
+        client.force_login(self.user)
+        # Add perm
+        from django.contrib.auth.models import Permission
+        from django.contrib.contenttypes.models import ContentType
+        content_type = ContentType.objects.get_for_model(Media)
+        permissions = Permission.objects.filter(content_type=content_type, codename='view_media')
+        self.user.user_permissions.add(*permissions)
+
+        response = client.get(reverse("media_picker_api"))
+        data = json.loads(response.content)
+        
+        results = data.get("results", [])
+        ids = [r["id"] for r in results]
+        
+        self.assertIn(self.active_media.pk, ids)
+        self.assertNotIn(self.inactive_media.pk, ids)
+
+    def test_media_fk_field_validation(self):
+        """MediaFKField should raise ValidationError for inactive media."""
+        from media_manager.fields import MediaFKField
+        field = MediaFKField()
+        
+        # Active media should be fine
+        cleaned = field.clean(self.active_media.pk)
+        self.assertEqual(cleaned.pk, self.active_media.pk)
+        
+        # Inactive media should raise
+        from django.core.exceptions import ValidationError
+        with self.assertRaises(ValidationError):
+            field.clean(self.inactive_media.pk)
+
+    def test_article_image_url_filtering(self):
+        """Article.image_url should return None if the media is inactive."""
+        from articles.models import Article
+        article = Article.objects.create(title="Test", image=self.inactive_media)
+        self.assertIsNone(article.image_url)
+        
+        article.image = self.active_media
+        article.save()
+        self.assertIsNotNone(article.image_url)

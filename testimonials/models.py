@@ -46,7 +46,8 @@ class Testimonial(MediaUsageMixin, models.Model):
     def image_url(self):
         if self.image_id:
             try:
-                return self.image.file.url
+                if self.image.active:
+                    return self.image.file.url
             except (ValueError, AttributeError):
                 pass
         return None

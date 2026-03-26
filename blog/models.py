@@ -49,7 +49,8 @@ class Blog(MediaUsageMixin, models.Model):
     def image_url(self):
         if self.image_id:
             try:
-                return self.image.file.url
+                if self.image.active:
+                    return self.image.file.url
             except (ValueError, AttributeError):
                 pass
         return None
@@ -58,7 +59,8 @@ class Blog(MediaUsageMixin, models.Model):
     def banner_image_url(self):
         if self.banner_image_id:
             try:
-                return self.banner_image.file.url
+                if self.banner_image.active:
+                    return self.banner_image.file.url
             except (ValueError, AttributeError):
                 pass
         return None

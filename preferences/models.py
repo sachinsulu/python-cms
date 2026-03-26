@@ -154,7 +154,8 @@ class SitePreferences(MediaUsageMixin, models.Model):
         """
         if fk_id:
             try:
-                return fk_obj.file.url
+                if fk_obj.active:
+                    return fk_obj.file.url
             except (ValueError, AttributeError):
                 pass
         return None

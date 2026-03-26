@@ -55,7 +55,8 @@ class Article(MediaUsageMixin, models.Model):
         """
         if self.image_id:
             try:
-                return self.image.file.url
+                if self.image.active:
+                    return self.image.file.url
             except (ValueError, AttributeError):
                 pass
         return None

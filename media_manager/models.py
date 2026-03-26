@@ -45,6 +45,7 @@ class MediaFolder(models.Model):
         ordering = ["name"]
         verbose_name = "Media Folder"
         verbose_name_plural = "Media Folders"
+        unique_together = ["parent", "name"]
         indexes = [
             models.Index(fields=["parent"], name="folder_parent_idx"),
             models.Index(fields=["name"],   name="folder_name_idx"),
@@ -64,8 +65,13 @@ class MediaFolder(models.Model):
 
     @property
     def slug(self):
-        """Filesystem-safe folder name."""
-        return f"{slugify(self.name)}_{self.pk}"
+        """Filesystem-safe folder path."""
+        parts = [slugify(self.name)]
+        node = self
+        while node.parent_id:
+            node = node.parent
+            parts.insert(0, slugify(node.name))
+        return "/".join(parts)
 
 
     pass

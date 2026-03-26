@@ -40,6 +40,31 @@ def delete_media_file_on_model_delete(sender, instance, **kwargs):
             )
 
 
+@receiver(post_delete, sender=MediaFolder)
+def delete_folder_directory_on_model_delete(sender, instance, **kwargs):
+    """
+    Cleaner for the physical directory. 
+    Note: MediaFolder.slug depends on PK, which is still available in post_delete.
+    """
+    import shutil
+    from django.conf import settings
+    import os
+
+    # Resolve the physical path
+    # MediaFolder.slug = slugify(name)_pk
+    folder_path = os.path.join(settings.MEDIA_ROOT, instance.slug)
+    
+    if os.path.exists(folder_path):
+        try:
+            # Only delete if empty? Or delete everything? 
+            # FolderService.delete already checks for children/media in DB.
+            # But there might be thumbnail subfolders or stray files.
+            shutil.rmtree(folder_path)
+            logger.info("Physical folder deleted: %s", folder_path)
+        except Exception as exc:
+            logger.error("Failed to delete physical folder %s: %s", folder_path, exc)
+
+
 # ── Folder tree cache invalidation ───────────────────────────────────────────
 
 @receiver(post_save, sender=MediaFolder)

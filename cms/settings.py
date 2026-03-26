@@ -213,7 +213,7 @@ USE_TZ = True
 # STATIC FILES
 STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"  # collectstatic will copy everything here
-STATICFILES_DIRS = [BASE_DIR / "static"]  # your source static files
+STATICFILES_DIRS = [BASE_DIR / "static"] if (BASE_DIR / "static").exists() else []
 
 # Use WhiteNoise for production
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"

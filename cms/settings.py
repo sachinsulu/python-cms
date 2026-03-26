@@ -204,23 +204,15 @@ USE_TZ = True
 # STATIC FILES
 # ========================
 
+# STATIC FILES
 STATIC_URL = "/static/"
-STATICFILES_DIRS = [BASE_DIR / "static"]
-STATIC_ROOT = BASE_DIR / "staticfiles"
+STATIC_ROOT = BASE_DIR / "staticfiles"  # collectstatic will copy everything here
+STATICFILES_DIRS = [BASE_DIR / "static"]  # your source static files
 
-STORAGES = {
-    "default": {
-        "BACKEND": "django.core.files.storage.FileSystemStorage",
-    },
-    "staticfiles": {
-        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
-    },
-}
+# Use WhiteNoise for production
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
-# ========================
-# MEDIA (⚠️ NOT SAFE ON VERCEL)
-# ========================
-
+# Media (optional, Vercel not good for uploaded files)
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 

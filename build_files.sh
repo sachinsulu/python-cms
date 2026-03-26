@@ -1,10 +1,10 @@
-# build_files.sh
+#!/bin/bash
 echo "BUILD START"
 
-# Use the --break-system-packages flag to bypass PEP 668
+# Install dependencies
 python3.12 -m pip install -r requirements.txt --break-system-packages
 
-# Run collectstatic
+# Collect static files
 python3.12 manage.py collectstatic --noinput --clear
 
 echo "BUILD END"

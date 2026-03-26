@@ -1,4 +1,4 @@
-﻿arrow==1.4.0
+arrow
 asgiref==3.11.0
 binaryornot==0.4.4
 bleach==5.0.1

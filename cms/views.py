@@ -31,6 +31,7 @@ from popup.models import Popup
 from offers.models import Offer
 from services.models import Service
 from media_manager.models import Media
+from slideshow.models import Slideshow
 User = get_user_model()
 logger = logging.getLogger(__name__)
 
@@ -56,6 +57,7 @@ MODEL_MAP = {
     "offer": Offer,
     "services": Service,
     "media": Media,
+    "slideshow": Slideshow,
 
 }
 
@@ -75,6 +77,7 @@ ACTIVE_FIELD_MAP = {
     "offer": "active",
     "services": "active",
     "media": "active",
+    "slideshow": "active",
 }
 
 STAT_COLORS = ['blue', 'orange', 'green', 'cyan', 'red', 'lime', 'purple', 'pink', 'yellow', 'teal']

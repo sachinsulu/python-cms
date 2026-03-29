@@ -15,6 +15,7 @@ from core.models import Module
 from location.models import Location
 from preferences.models import SitePreferences
 from media_manager.models import Media, MediaFolder
+from slideshow.models import Slideshow
 
 
 # Only the ArticleSerializer changes — rest of the file stays identical
@@ -236,4 +237,21 @@ class MediaFolderDetailSerializer(serializers.ModelSerializer):
     def get_media(self, obj):
         active_media = obj.media.active().order_by('position', '-created_at')
         return MediaSerializer(active_media, many=True, context=self.context).data
-
+
+
+class SlideshowSerializer(serializers.ModelSerializer):
+    image_url = serializers.SerializerMethodField()
+
+    class Meta:
+        model  = Slideshow
+        fields = [
+            'id', 'title', 'subtitle', 'type',
+            'image_url', 'content', 'active', 'position',
+        ]
+
+    def get_image_url(self, obj):
+        url = obj.image_url
+        if not url:
+            return None
+        request = self.context.get('request')
+        return request.build_absolute_uri(url) if request else url

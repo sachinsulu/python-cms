@@ -1,0 +1,202 @@
+{% extends "base.html" %}
+{% block content %}
+{{ form.media }}
+
+<h2>
+    {% if is_edit %}Edit{% else %}Create{% endif %}
+    {% if current_type == 'video' %}Video{% else %}Image{% endif %} Slide
+</h2>
+
+<a href="{% url 'slideshow_list' %}" class="btn">← Back to Slideshow</a>
+
+<style>
+    .toggle-label-text { display: block; font-size: 0.85rem; font-weight: 600; color: #374151; margin-bottom: 8px; }
+    .toggle-switch { display: inline-flex; align-items: center; gap: 10px; cursor: pointer; user-select: none; }
+    .toggle-switch input[type="checkbox"] { position: absolute; opacity: 0; width: 0; height: 0; }
+    .toggle-track { position: relative; width: 48px; height: 26px; background: #d1d5db; border-radius: 999px; transition: background 0.25s ease; flex-shrink: 0; }
+    .toggle-thumb { position: absolute; top: 3px; left: 3px; width: 20px; height: 20px; background: white; border-radius: 50%; box-shadow: 0 1px 4px rgba(0,0,0,0.2); transition: transform 0.25s ease; }
+    .toggle-switch input:checked ~ .toggle-track { background: #10b981; }
+    .toggle-switch input:checked ~ .toggle-track .toggle-thumb { transform: translateX(22px); }
+    .toggle-status-text { font-size: 0.85rem; font-weight: 500; color: #6b7280; }
+    .toggle-switch input:checked ~ .toggle-status-text { color: #10b981; }
+</style>
+
+<div class="form-container">
+  <form method="post" id="slideshow-form">
+    {% csrf_token %}
+    <input type="hidden" name="action"       id="form-action"  value="save">
+    <input type="hidden" name="remove_image" id="remove_image" value="0">
+
+    {{ form.image_media }}
+
+    {% if form.non_field_errors %}
+      <div class="error">{{ form.non_field_errors }}</div>
+    {% endif %}
+
+    <!-- Title -->
+    <div class="form-group">
+      <label for="{{ form.title.id_for_label }}">
+        {{ form.title.label }} <span style="color:red;">*</span>
+      </label>
+      {{ form.title }}
+      {% if form.title.errors %}<div class="error">{{ form.title.errors }}</div>{% endif %}
+    </div>
+
+    <!-- Subtitle -->
+    <div class="form-group">
+      <label for="{{ form.subtitle.id_for_label }}">{{ form.subtitle.label }}</label>
+      {{ form.subtitle }}
+      {% if form.subtitle.errors %}<div class="error">{{ form.subtitle.errors }}</div>{% endif %}
+    </div>
+
+    <!-- Image / Video — Media Library Picker -->
+    <div class="form-group">
+      <label>{% if current_type == 'video' %}Video{% else %}Image{% endif %}</label>
+
+      {% if form.image_media.errors %}
+        <div class="error">{{ form.image_media.errors }}</div>
+      {% endif %}
+
+      <div id="imagePreview" class="mt-2">
+        {% if is_edit and item.image_url %}
+          <div class="preview-wrapper"
+               style="position:relative; display:inline-block; margin-top:10px;">
+            {% if current_type == 'video' %}
+              <video src="{{ item.image_url }}" controls
+                     style="max-width:300px; max-height:200px; border:1px solid #e5e7eb; border-radius:4px; display:block;"></video>
+            {% else %}
+              <img src="{{ item.image_url }}"
+                   style="max-width:300px; max-height:200px; border:1px solid #e5e7eb; border-radius:4px; display:block;">
+            {% endif %}
+            <span class="remove-media-btn"
+                  style="position:absolute; top:-8px; right:-8px;
+                         background:#ef4444; color:white; border-radius:50%;
+                         width:24px; height:24px; text-align:center;
+                         line-height:24px; cursor:pointer;
+                         font-weight:bold; font-size:16px;">×</span>
+            <p style="margin-top:5px; font-size:12px; color:#666;">
+              Current file
+              <span style="color:#10b981;">
+                <i class="fa-solid fa-circle-check"></i> From library
+              </span>
+            </p>
+          </div>
+        {% else %}
+          <p class="no-image text-muted">No file selected</p>
+        {% endif %}
+      </div>
+
+      <button type="button"
+              class="btn"
+              style="margin-top:8px;"
+              data-media-picker
+              data-target-id="#id_image_media"
+              data-preview="#imagePreview"
+              data-type="{{ current_type }}">
+        <i class="fa-solid fa-photo-film"></i> Choose from Library
+      </button>
+
+      <small class="help-text" style="display:block; margin-top:6px;">
+        Select from the media library.
+        <a href="{% url 'upload_media' %}" target="_blank" style="color:#3b82f6;">Upload new file →</a>
+      </small>
+    </div>
+
+    <!-- Content -->
+    <div class="form-group">
+      <label for="{{ form.content.id_for_label }}">{{ form.content.label }}</label>
+      {{ form.content }}
+      {% if form.content.errors %}<div class="error">{{ form.content.errors }}</div>{% endif %}
+    </div>
+
+    <!-- Active Toggle -->
+    <div class="form-group">
+      <label class="toggle-label-text">{{ form.active.label }}</label>
+      <label class="toggle-switch" for="{{ form.active.id_for_label }}">
+        {{ form.active }}
+        <span class="toggle-track"><span class="toggle-thumb"></span></span>
+        <span class="toggle-status-text status-text"></span>
+      </label>
+    </div>
+
+    <div style="margin-bottom:20px;"></div>
+
+    <div class="form-actions" style="display:flex; gap:10px; align-items:center;">
+      <button type="submit" class="btn" onclick="setFormAction('save')">Save</button>
+      <button type="submit" class="btn" onclick="setFormAction('save_and_new')"
+              style="background:#10b981;">Save &amp; New</button>
+      <button type="submit" class="btn" onclick="setFormAction('save_and_quit')"
+              style="background:#3b82f6;">Save &amp; Quit</button>
+      <a href="{% url 'slideshow_list' %}" class="btn-cancel">Cancel</a>
+    </div>
+
+  </form>
+</div>
+
+<script>
+function setFormAction(action) {
+    document.getElementById('form-action').value = action;
+}
+
+// ── Active toggle text ─────────────────────────────────────────
+const activeInput = document.querySelector('#{{ form.active.id_for_label }}');
+const activeText  = document.querySelector('.status-text');
+function updateActiveText() {
+    if (activeText) activeText.textContent = activeInput.checked ? 'Active' : 'Inactive';
+}
+if (activeInput) { updateActiveText(); activeInput.addEventListener('change', updateActiveText); }
+
+// ── Remove current media ───────────────────────────────────────
+document.addEventListener('click', function (e) {
+    if (e.target.classList.contains('remove-media-btn')) {
+        document.getElementById('remove_image').value   = '1';
+        document.getElementById('id_image_media').value = '';
+        e.target.closest('.preview-wrapper').remove();
+        document.getElementById('imagePreview').innerHTML =
+            '<p class="no-image text-muted">No file selected</p>';
+    }
+});
+
+// ── Picker insertion handler ───────────────────────────────────
+document.addEventListener('mediaPicked', function (e) {
+    const item    = e.detail;
+    const type    = '{{ current_type }}';
+    const preview = document.getElementById('imagePreview');
+
+    document.getElementById('remove_image').value = '0';
+
+    let html = '';
+    if (type === 'video') {
+        html = `
+            <div class="preview-wrapper" style="position:relative; display:inline-block; margin-top:10px;">
+                <video src="${item.url}" controls
+                       style="max-width:300px; max-height:200px; border:1px solid #e5e7eb; border-radius:4px; display:block;"></video>
+                <span class="remove-media-btn"
+                      style="position:absolute; top:-8px; right:-8px; background:#ef4444; color:white;
+                             border-radius:50%; width:24px; height:24px; text-align:center;
+                             line-height:24px; cursor:pointer; font-weight:bold; font-size:16px;">×</span>
+                <p style="margin-top:5px; font-size:12px; color:#666;">
+                    ${item.title}
+                    <span style="color:#10b981;"><i class="fa-solid fa-circle-check"></i> From library</span>
+                </p>
+            </div>`;
+    } else if (item.is_image) {
+        html = `
+            <div class="preview-wrapper" style="position:relative; display:inline-block; margin-top:10px;">
+                <img src="${item.url}"
+                     style="max-width:300px; max-height:200px; border:1px solid #e5e7eb; border-radius:4px; display:block;">
+                <span class="remove-media-btn"
+                      style="position:absolute; top:-8px; right:-8px; background:#ef4444; color:white;
+                             border-radius:50%; width:24px; height:24px; text-align:center;
+                             line-height:24px; cursor:pointer; font-weight:bold; font-size:16px;">×</span>
+                <p style="margin-top:5px; font-size:12px; color:#666;">
+                    ${item.title}
+                    <span style="color:#10b981;"><i class="fa-solid fa-circle-check"></i> From library</span>
+                </p>
+            </div>`;
+    }
+    if (html) preview.innerHTML = html;
+});
+</script>
+
+{% endblock %}

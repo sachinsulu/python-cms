@@ -588,3 +588,17 @@ def get_media_folder_content(request, folder_name):
     """Legacy view, now handled by get_media_or_folder in common cases."""
     # ... existing implementation ...
 
+@api_view(['GET'])
+def get_all_slideshows(request):
+    items = Slideshow.objects.filter(active=True).select_related('image').order_by('position')
+    serializer = SlideshowSerializer(items, many=True, context={'request': request})
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def get_slideshow(request, pk):
+    try:
+        item = Slideshow.objects.select_related('image').get(pk=pk, active=True)
+    except Slideshow.DoesNotExist:
+        return Response({'error': 'Slideshow not found'}, status=status.HTTP_404_NOT_FOUND)
+    serializer = SlideshowSerializer(item, context={'request': request})
+    return Response(serializer.data)

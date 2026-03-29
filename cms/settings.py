@@ -64,6 +64,7 @@ INSTALLED_APPS = [
     "media_manager",
     "api",
     "core",
+    "slideshow",
 
     # third-party
     "ckeditor",
@@ -145,16 +146,24 @@ WSGI_APPLICATION = "cms.wsgi.application"
 
 DATABASE_URL = os.getenv("DATABASE_URL")
 
-if not DATABASE_URL:
-    raise ValueError("DATABASE_URL is required in production")
-
-DATABASES = {
-    "default": dj_database_url.config(
-        default=DATABASE_URL,
-        conn_max_age=600,
-        ssl_require=True,
-    )
-}
+if DEBUG:
+    # Use SQLite for local development (on localhost)
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
+        }
+    }
+elif DATABASE_URL:
+    DATABASES = {
+        "default": dj_database_url.config(
+            default=DATABASE_URL,
+            conn_max_age=600,
+            ssl_require=True,
+        )
+    }
+else:
+    raise ValueError("DATABASE_URL environment variable is required in production")
 
 # ========================
 # PASSWORD VALIDATION

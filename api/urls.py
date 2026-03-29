@@ -72,6 +72,9 @@ urlpatterns = [
     path('media/folders/', views.get_all_media_folders, name='get_all_media_folders'),
     path('media/<str:name>/', views.get_media_or_folder, name='get_media_or_folder'),
 
+    path('slideshows/', views.get_all_slideshows, name='get_all_slideshows'),
+path('slideshows/<int:pk>/', views.get_slideshow, name='get_slideshow'),
+
     # Universal Slug API (Fallback route, should be at the bottom)
     path('<slug:slug>/', views.get_by_slug, name='get_by_slug'),
 ]

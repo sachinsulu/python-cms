@@ -28,9 +28,10 @@ class SocialForm(forms.ModelForm):
 
     def save(self, commit=True):
         instance = super().save(commit=False)
-        media = self.cleaned_data.get('image_media')
-        if media is not None:
-            instance.image = media
+        # Always update instance.image with whatever is in image_media (Media or None)
+        # This allows unsetting/clearing the image.
+        if 'image_media' in self.cleaned_data:
+            instance.image = self.cleaned_data['image_media']
         if commit:
             instance.save()
         return instance

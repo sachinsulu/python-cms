@@ -23,7 +23,7 @@ urlpatterns = [
     path('testimonials/<int:pk>/', views.get_testimonial, name='get_testimonial'),
 
     # Social & OTA
-    path('social_list/', views.social_list, name='social_list'),
+    path('social_list/', views.social_list, name='api_social_links'),
     path('social/', views.get_all_socials, name='get_all_socials'),
     path('ota/', views.get_all_otas, name='get_all_otas'),
     path('social/<int:pk>/', views.get_social, name='get_social'),

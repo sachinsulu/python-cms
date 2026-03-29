@@ -1,0 +1,84 @@
+{% load static %}
+<footer class="footer">
+    <!-- top -->
+    <div class="top">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 mb-30">
+                    <div class="item">
+                        {{site_location.content|safe}}
+                        {% if social_links %}
+                        <div class="social-icons">
+                            <ul class="list-inline">
+                                {% for social in social_links %}
+                                    <li><a href="{{ social.link }}" target="_blank"><i class="{{ social.icon }}"></i></a></li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="col-md-4 offset-md-1 mb-30">
+                    <div class="item">
+                        <h3>Contact us</h3>
+                        <p>{{ site_location.ktm_address|linebreaksbr }}<br>{{site_location.fiscal_address|linebreaksbr}}</p>
+                        <div class="phone">
+                            <a href="tel:{{ site_location.phone }}">{{ site_location.phone }}</a>
+                            {% if site_location.landline %} | <a href="tel:{{ site_location.landline }}">{{ site_location.landline }}</a>{% endif %}
+                        </div>
+                        <div class="mail"><a href="mailto:{{ site_location.email_address }}">{{ site_location.email_address }}</a></div>
+                        {% if site_location.map_embed %}
+                            <p><a href="{{ site_location.map_embed }}" target="_blank">View Google Map</a></p>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="col-md-4 mb-30">
+                    <div class="item">
+                        <h3>Booking Platforms</h3>
+                        <div class="social-icons1">
+                            <ul class="card1 card1a">
+                                {% for ota in ota_links %}
+                                    <li title="{{ ota.title }}">
+                                        {% if ota.image_url %}
+                                            <img src="{{ ota.image_url }}" alt="{{ ota.title }}">
+                                        {% else %}
+                                            <i class="{{ ota.icon }}"></i>
+                                        {% endif %}
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <div class="newsletter">
+                            <h6 style="color: #fff;font-size: 19px;">We accept</h6>
+                        </div>
+                        <div class="social-icons1">
+                            <ul class="card1">
+                                <li><img src="{% static 'img/icon/visa.png' %}" alt="visa"></li>
+                                <li><img src="{% static 'img/icon/paypal.png' %}" alt="paypal"></li>
+                                <li><img src="{% static 'img/icon/mastercard.png' %}" alt="mastercard"></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- bottom -->
+    <div class="bottom">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 text-center">
+                    <p>{{ site_prefs.copyright_text|default:"© Copyright 2025. All Rights Reserved." }} Developed by <a href="https://longtail.info/">Longtail e-media</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<div class="whats_app">
+    <a href="https://wa.me/{{ site_location.whatsapp }}" target="_blank" class="whatsapp">
+        <img src="{% static 'img/icon/whatsapp.png' %}">
+    </a>
+</div>

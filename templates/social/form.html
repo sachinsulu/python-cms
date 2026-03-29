@@ -93,14 +93,13 @@
               {% if item.image or item.image_legacy %}Change{% else %}Choose{% endif %}
             </button>
 
-            {% if item.image or item.image_legacy %}
             <button type="button"
                     class="mp-clear-btn"
                     id="clear_btn_image"
-                    onclick="clearSocialImage()">
+                    onclick="clearSocialImage()"
+                    {% if not item.image and not item.image_legacy %}style="display:none;"{% endif %}>
               <i class="fa-solid fa-xmark"></i> Remove
             </button>
-            {% endif %}
           </div>
         </div>
       </div>

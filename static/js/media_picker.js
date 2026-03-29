@@ -35,7 +35,7 @@
     multiple: false,
     currentTrigger: null,    // The button that opened the picker
     searchTimer: null,
-    apiUrl: "/media/api/picker/",
+    apiUrl: "/apanel/media/api/picker/",
   };
 
   // ── DOM refs (resolved after DOMContentLoaded) ───────────────
@@ -192,9 +192,10 @@
         showLoading(false);
         renderFolders(data.folders);
         renderGrid(data.results);
-        renderPagination(data);
+        renderPagination(data.pagination);
+        const total = data.pagination.total;
         stats.textContent =
-          data.total_count + " file" + (data.total_count !== 1 ? "s" : "") +
+          total + " file" + (total !== 1 ? "s" : "") +
           (state.q ? ' matching "' + state.q + '"' : "");
       })
       .catch(function (err) {
@@ -294,15 +295,15 @@
   }
 
   // ── Render Pagination ─────────────────────────────────────────
-  function renderPagination(data) {
-    if (data.total_pages <= 1) {
+  function renderPagination(pag) {
+    if (pag.total_pages <= 1) {
       pagination.innerHTML = "";
       return;
     }
     pagination.innerHTML =
-      '<button class="mp-page-btn" id="mpPrevPage" ' + (!data.has_previous ? "disabled" : "") + ">← Prev</button>" +
-      '<span class="mp-page-info">Page ' + data.page + " of " + data.total_pages + "</span>" +
-      '<button class="mp-page-btn" id="mpNextPage" ' + (!data.has_next ? "disabled" : "") + ">Next →</button>";
+      '<button class="mp-page-btn" id="mpPrevPage" ' + (!pag.has_prev ? "disabled" : "") + ">← Prev</button>" +
+      '<span class="mp-page-info">Page ' + pag.page + " of " + pag.total_pages + "</span>" +
+      '<button class="mp-page-btn" id="mpNextPage" ' + (!pag.has_next ? "disabled" : "") + ">Next →</button>";
 
     const prev = document.getElementById("mpPrevPage");
     const next = document.getElementById("mpNextPage");

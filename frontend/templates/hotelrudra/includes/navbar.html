@@ -1,0 +1,54 @@
+{% load static %}
+<nav class="navbar navbar-expand-lg">
+    <div class="container-fluid px-5">
+        <!-- Logo -->
+        <div class="logo-wrapper">
+            <a class="logo" href="{% url 'home' %}">
+                {% if site_prefs.logo_url %}
+                    <img src="{{ site_prefs.logo_url }}" class="logo-img" alt="{{ site_prefs.site_name }}">
+                {% else %}
+                    <img src="{% static 'img/logo.png' %}" class="logo-img" alt="">
+                {% endif %}
+            </a>
+        </div>
+        <!-- Button -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation"> 
+            <span class="navbar-toggler-icon"><i class="fa-light fa-bars"></i></span> 
+        </button>
+        <!-- Menu -->
+        <div class="collapse navbar-collapse" id="navbar">
+            <ul class="navbar-nav mx-auto">
+                {% for item in main_menu %}
+                    {% if item.children.exists %}
+                        <li class="nav-item dropdown"> 
+                            <a class="nav-link dropdown-toggle" href="{{ item.url }}" role="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+                                {{ item.label }} <i class="fa-light fa-angle-down"></i>
+                            </a>
+                            <ul class="dropdown-menu">
+                                {% for child in item.children.all %}
+                                    {% if child.active %}
+                                        <li><a href="{{ child.url }}" class="dropdown-item"><span>{{ child.label }}</span></a></li>
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link {% if request.path == item.url %}active{% endif %}" href="{{ item.url }}">
+                                {{ item.label }}
+                            </a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+
+            <div class="navbar-right">
+                <div class="phonex">
+                    <a href="tel:{{ site_location.phone }}">
+                        <i class="fa-solid fa-phone"></i> {{ site_location.phone }}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>

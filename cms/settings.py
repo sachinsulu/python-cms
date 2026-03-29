@@ -66,6 +66,7 @@ INSTALLED_APPS = [
     "core",
     "slideshow",
     "gallery",
+    "frontend",
 
 
     # third-party
@@ -260,9 +261,9 @@ REST_FRAMEWORK = {
 # AUTH REDIRECTS
 # ========================
 
-LOGIN_URL = "/login/"
-LOGIN_REDIRECT_URL = "/"
-LOGOUT_REDIRECT_URL = "/login/"
+LOGIN_URL = "/apanel/login/"
+LOGIN_REDIRECT_URL = "/apanel/"
+LOGOUT_REDIRECT_URL = "/apanel/login/"
 
 # ========================
 # MESSAGES

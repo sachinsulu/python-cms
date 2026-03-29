@@ -37,7 +37,7 @@
         Status
     </button>
     <button type="button" class="btn btn-danger"
-            onclick="openDeleteModal('offer', null, '/bulk/offer/', true)">
+            onclick="openDeleteModal('offer', null, '{% url 'bulk_action' 'offer' %}', true)">
         Delete
     </button>
 </div>

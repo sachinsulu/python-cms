@@ -521,6 +521,7 @@
 <script>
 const CSRF_TOKEN        = document.body.dataset.csrfToken || '{{ csrf_token }}';
 const BULK_ADD_URL      = '{% url "gallery_bulk_add_images" gallery.pk %}';
+const BULK_ACTION_URL   = '{% url "bulk_action" "galleryimage" %}';
 const SORT_URL          = '{% url "sort" "galleryimage" %}';
 const GALLERY_PK        = {{ gallery.pk }};
 
@@ -855,7 +856,7 @@ document.getElementById('bulkToggleBtn').addEventListener('click', async () => {
   ids.forEach(id => form.append('selected_ids', id));
 
   try {
-    await fetch('/bulk/galleryimage/', { method: 'POST', body: form });
+    await fetch(BULK_ACTION_URL, { method: 'POST', body: form });
     showToast('Status toggled — refreshing…');
     setTimeout(() => location.reload(), 800);
   } catch(e) {
@@ -874,7 +875,7 @@ document.getElementById('bulkDeleteBtn').addEventListener('click', async () => {
   form.append('ids', ids.join(','));
 
   try {
-    await fetch('/bulk/galleryimage/', { method: 'POST', body: form });
+    await fetch(BULK_ACTION_URL, { method: 'POST', body: form });
     ids.forEach(id => {
       const card = document.querySelector(`.gi-card[data-id="${id}"]`);
       if (card) card.remove();

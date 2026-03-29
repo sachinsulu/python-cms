@@ -45,7 +45,7 @@
 
         <button type="button"
                 class="btn btn-danger"
-                onclick="openDeleteModal('nearby', null, '/bulk/nearby/', true)">
+                onclick="openDeleteModal('nearby', null, '{% url 'bulk_action' 'nearby' %}', true)">
             Delete
         </button>
     </div>

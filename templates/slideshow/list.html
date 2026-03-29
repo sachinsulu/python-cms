@@ -51,7 +51,7 @@
     </button>
     <button type="button"
             class="btn btn-danger"
-            onclick="openDeleteModal('slideshow', null, '/bulk/slideshow/', true)">
+            onclick="openDeleteModal('slideshow', null, '{% url 'bulk_action' 'slideshow' %}', true)">
         Delete
     </button>
 </div>

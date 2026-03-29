@@ -87,7 +87,7 @@
     </button>
     <button type="button"
             class="btn btn-danger"
-            onclick="openDeleteModal('menu', null, '/bulk/menu/', true)">
+            onclick="openDeleteModal('menu', null, '{% url 'bulk_action' 'menu' %}', true)">
         Delete
     </button>
 </div>

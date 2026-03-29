@@ -14,20 +14,27 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+import os
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, re_path
+from django.views.static import serve as static_serve
+from django.http import HttpResponseNotFound
 from accounts.views import login_view, logout_view
-from .views import dashboard, toggle_status,delete_object,bulk_action,update_order,ajax_check_slug
+from .views import dashboard, toggle_status, delete_object, bulk_action, update_order, ajax_check_slug
 from django.conf import settings
 from django.conf.urls.static import static
 
-urlpatterns = [
+
+
+# ── CMS panel routes (all under /apanel/) ──────────────────────────────────
+cms_patterns = [
     path('', dashboard, name='dashboard'),
+    path('login/', login_view, name='login'),
+    path('logout/', logout_view, name='logout'),
     path('users/', include('users.urls')),
     path('module/', include('core.urls')),
     path('articles/', include('articles.urls')),
     path('blog/', include('blog.urls')),
-    path('api/', include('api.urls')),
     path('packages/', include('package.urls')),
     path('testimonials/', include('testimonials.urls')),
     path('social/', include('social.urls')),
@@ -37,26 +44,43 @@ urlpatterns = [
     path('features/', include('features.urls')),
     path('services/', include('services.urls')),
     path('offers/', include('offers.urls')),
-    path("media/", include("media_manager.urls")),
+    path('media/', include('media_manager.urls')),
     path('popup/', include('popup.urls')),
     path('location/', include('location.urls')),
     path('preferences/', include('preferences.urls')),
     path('slideshow/', include('slideshow.urls')),
     path('gallery/', include('gallery.urls')),
-
-    path('ckeditor/', include('ckeditor_uploader.urls')),
-    path('admin/', admin.site.urls),
-    path("login/", login_view, name="login"),
-    path("logout/", logout_view, name="logout"),
     path('toggle-status/<str:model_name>/<int:pk>/', toggle_status, name='toggle_status'),
-    path("delete_object/<str:model_name>/<int:pk>/", delete_object, name="delete_object"),
+    path('delete_object/<str:model_name>/<int:pk>/', delete_object, name='delete_object'),
     path('bulk/<str:model_name>/', bulk_action, name='bulk_action'),
     path('sort/<str:model_name>/', update_order, name='sort'),
     path('ajax/check-slug/<str:model_name>/', ajax_check_slug, name='ajax_check_slug'),
-    path("__reload__/", include("django_browser_reload.urls")),
+]
+
+# ── Root URL patterns ──────────────────────────────────────────────────────
+urlpatterns = [
+    # CMS admin panel
+    path('apanel/', include(cms_patterns)),
+
+    # REST API (unchanged — used by frontend)
+    path('api/', include('api.urls')),
+
+    # Django built-ins
+    path('admin/', admin.site.urls),
+    path('ckeditor/', include('ckeditor_uploader.urls')),
 ]
 
 
 if settings.DEBUG:
+    urlpatterns += [path('__reload__/', include('django_browser_reload.urls'))]
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+# ── HotelRudra frontend (catch-all — must be LAST) ─────────────────────────
+# Serves the hotelrudra/ directory at the root URL.
+# All /api/, /apanel/, /admin/ routes above take priority.
+
+
+urlpatterns += [
+    path('', include('frontend.urls')),
+]

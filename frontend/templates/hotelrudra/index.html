@@ -1,0 +1,736 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="zxx">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <title>Welcome to Hotel Rudra View</title>
+    <link rel="shortcut icon" href="{% static 'img/favicon.png' %}" />
+    <link rel="stylesheet" href="{% static 'css/plugins.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+</head>
+
+<body>
+    <!-- Progress scroll totop -->
+    <div class="progress-wrap cursor-pointer">
+        <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
+            <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98" />
+        </svg>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid px-5">
+            <!-- Logo -->
+            <div class="logo-wrapper">
+                <a class="logo" href="index.html"> <img src="{% static 'img/logo.png' %}" class="logo-img" alt=""> </a>
+            </div>
+            <!-- Button -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"><i class="fa-light fa-bars"></i></span> </button>
+            <!-- Menu -->
+            <div class="collapse navbar-collapse" id="navbar">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item"><a class="nav-link active" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
+                    <li class="nav-item dropdown"> <a class="nav-link dropdown-toggle" href="rooms.html" role="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">Rooms <i class="fa-light fa-angle-down"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="room-details.html" class="dropdown-item"><span>Deluxe Double</span></a></li>
+                            <li><a href="room-details.html" class="dropdown-item"><span>Deluxe Twin</span></a></li>
+                            <li><a href="room-details.html" class="dropdown-item"><span>Deluxe Triple</span></a></li>
+                            <li><a href="room-details.html" class="dropdown-item"><span>Suite Room</span></a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="hall.html">Hall</a></li>
+                    <li class="nav-item"><a class="nav-link" href="restaurant.html">Restaurant</a></li>
+                    <li class="nav-item"><a class="nav-link" href="amenities.html">Facilities</a></li>
+                    <li class="nav-item"><a class="nav-link" href="gallery.html">Gallery</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+                </ul>
+
+                <div class="navbar-right">
+                    <div class="phonex"><a href="tel:9801303612"><i class="fa-solid fa-phone"></i> +977 9801303612</a></div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Slider -->
+    <header class="header slider-fade">
+        <div class="owl-carousel owl-theme">
+            <!-- The opacity on the image is made with "data-overlay-dark="number". You can change it using the numbers 0-9. -->
+            <div class="item bg-img" data-overlay-dark="5" data-background="{% static 'img/slider/1.jpg' %}">
+                <div class="v-middle caption">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-8 col-md-12 text-center">
+                                <h5>Unique Place to Relax & Enjoy</h5>
+                                <h1>Enjoy a Luxury Experience</h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="item bg-img" data-overlay-dark="5" data-background="{% static 'img/slider/2.jpg' %}">
+                <div class="v-middle caption">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-8 col-md-12 text-center">
+                                <h5>Unique Place to Relax & Enjoy</h5>
+                                <h1>Elegance and comfort</h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="item bg-img" data-overlay-dark="5" data-background="{% static 'img/slider/4.jpg' %}">
+                <div class="v-middle caption">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-8 col-md-12 text-center">
+                                <h5>Unique Place to Relax & Enjoy</h5>
+                                <h1>Your journey to luxury begins</h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Booking Search -->
+    <div class="booking-wrapper">
+        <div class="container">
+            <div class="booking-inner clearfix">
+                <form action="" class="form1 clearfix" target="_blank">
+                    <input type="hidden" name="" value="">
+                    <div class="col1 c1">
+                        <div class="input1_wrapper border-l border-b border-t border-r br-5005">
+                            <label>Check in</label>
+                            <div class="input1_inner">
+                                <input type="text" class="form-control input " id="checkin" placeholder="Check in">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col1 c2">
+                        <div class="input1_wrapper border-l border-b border-t border-r">
+                            <label>Check out</label>
+                            <div class="input1_inner">
+                                <input type="text" class="form-control input " id="checkout" placeholder="Check out">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col3 c6">
+                        <button type="submit" class="btn-form1-submit">Check Availability</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- About -->
+    <section class="about section-padding">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-7">
+                    <div class="image-about2">
+                        <div class="row align-items-center">
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 mb-20"> <img class="rounded-2 mobile-none" src="{% static 'img/about/1.jpg' %}" alt=""> </div>
+                                    <div class="col-lg-12 col-md-12"> <img class="rounded-2 " src="{% static 'img/about/2.jpg' %}" alt=""> </div>
+                                </div>
+                            </div>
+    
+                            <div class="col-md-6">
+                                 <img class="rounded-2 animation-float1" src="{% static 'img/about/3.jpg' %}" alt=""> 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5  mb-15">
+                    <div class="section-subtitle">About Hotel Rudra View</div>
+                    <div class="section-title">Laid-back places for kindred spirits</div>
+                    <p>Welcome to the Hotel Rudra view and spa, a three star luxury city hotel is located near Tribhuwan International Airport, Pashupatinath Temple, and Airport Golf Course. We aspire to be the best at providing best rooms excellent hospitality and a comfortable placeto stay.</p>
+                    <a href="about.html" class="button-3 mb-15">Discover More</a>
+                </div>
+            </div>
+            <img src="{% static 'img/nearby.png' %}" alt="" class="neafby" style="margin-top: -100px;">
+        </div>
+    </section>
+
+    <!-- Rooms 1 -->
+    <section class="rooms1 section-padding">
+        <div class="container">
+            <div class="row mb-30 align-items-center">
+                <div class="col-md-10 text-left">
+                    <div class="section-subtitle">Hotel Rudra View</div>
+                    <div class="section-title mb-0">Rooms & Suites</div>
+                </div>
+                
+                <div class="col-md-2 d-flex justify-content-center justify-content-lg-end">
+                    <div class="my-owl-nav"> 
+                        <span class="my-prev-button">
+                            <i class="fa-light fa-angle-left" aria-hidden="true"></i>
+                        </span> 
+                        <span class="my-next-button">
+                            <i class="fa-light fa-angle-right" aria-hidden="true"></i>
+                        </span> 
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="owl-carousel owl-theme">
+                        <div class="item mt-20">
+                            <div class="img"> <img src="{% static 'img/rooms/1.jpg' %}" alt=""> <span class="discount"><i class="fa-light fa-badge-percent"></i> 25% Off</span> </div>
+                            <div class="wrap">
+                                <div class="cont">
+                                    <div class="price">$150 <span>/ night</span></div>
+                                    <h3><a href="#">Deluxe Double</a></h3>
+                                    <div class="details"> <span><i class="fa-thin fa-bed-front"></i>2 Bed</span> <span><i class="fa-thin fa-expand"></i>15 Sqm</span> <span><i class="fa-thin fa-bath"></i>1 Bathroom</span> </div>
+                                </div>
+                                <div class="arrow"> <a href="room-details.html"><span class="fa-regular fa-arrow-right"></span></a> </div>
+                            </div>
+                        </div>
+                        <div class="item mt-20">
+                            <div class="img"> <img src="{% static 'img/rooms/2.jpg' %}" alt=""> </div>
+                            <div class="wrap">
+                                <div class="cont">
+                                    <div class="price">$200 <span>/ night</span></div>
+                                    <h3><a href="#">Deluxe Twin</a></h3>
+                                    <div class="details"> <span><i class="fa-thin fa-bed-front"></i>2-4 Bed</span> <span><i class="fa-thin fa-expand"></i>20 Sqm</span> <span><i class="fa-thin fa-mug-saucer"></i>Breakfast</span> </div>
+                                </div>
+                                <div class="arrow"> <a href="room-details.html"><span class="fa-regular fa-arrow-right"></span></a> </div>
+                            </div>
+                        </div>
+                        <div class="item mt-20">
+                            <div class="img"> <img src="{% static 'img/rooms/3.jpg' %}" alt=""> </div>
+                            <div class="wrap">
+                                <div class="cont">
+                                    <div class="price">$250 <span>/ night</span></div>
+                                    <h3><a href="#">Double Triple</a></h3>
+                                    <div class="details"> <span><i class="fa-thin fa-bed-front"></i>4 Bed</span> <span><i class="fa-thin fa-expand"></i>25 Sqm</span> <span><i class="fa-thin fa-bath"></i>2 Bathroom</span> </div>
+                                </div>
+                                <div class="arrow"> <a href="room-details.html"><span class="fa-regular fa-arrow-right"></span></a> </div>
+                            </div>
+                        </div>
+                        <div class="item mt-20">
+                            <div class="img"> <img src="{% static 'img/rooms/4.jpg' %}" alt=""> <span class="discount"><i class="fa-light fa-badge-percent"></i> 30% Off</span> </div>
+                            <div class="wrap">
+                                <div class="cont">
+                                    <div class="price">$300 <span>/ night</span></div>
+                                    <h3><a href="#">Suite Room</a></h3>
+                                    <div class="details"> <span><i class="fa-thin fa-bed-front"></i>3 Bed</span> <span><i class="fa-thin fa-expand"></i>30 Sqm</span> <span><i class="fa-thin fa-mug-saucer"></i> 1 Bathroom</span> </div>
+                                </div>
+                                <div class="arrow"> <a href="room-details.html"><span class="fa-regular fa-arrow-right"></span></a> </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Facilities -->
+    <section class="facilities2 bg-lightbrown2">
+        <div class="border-bottom">
+            <div class="container">
+                <ul class="tab-buttons">
+                    <li data-tab="#spa" class="tab-btn active-btn"><span>Spa & Wellness</span></li>
+                    <li data-tab="#sauna" class="tab-btn"><span>Sauna & Jacuzzi</span></li>
+                    <li data-tab="#restaurant" class="tab-btn "><span>Restaurant & Bar</span>
+                    </li>
+                    <li data-tab="#hall" class="tab-btn"><span>Meeting & Halls</span></li>
+                </ul>
+            </div>
+        </div>
+        <div class="container">
+            <div class="tabs-content">
+                <!--tab 1-->
+                <div class="tab active-tab" id="spa">
+                    <div class="bg0">
+                        <div class="row justify-content-center align-items-center">
+                            <div class="col-lg-6 col-md-12">
+                                <img src="{% static 'img/offers/06.jpg' %}" class="img-fluid" alt="">
+                            </div>
+                            <div class="col-lg-5 offset-lg-1 col-md-12">
+                                <div class="section-subtitle">So Many Ways to Unwind</div>
+                                <div class="section-title">Spa & Wellness</div>
+                                <p class="mb-25">Wellness quisque sodales intioni varius estibum miss arman ortiton telus euismod nis the massa nutodio farmention lorem pretium ametis velen fermen.</p>
+                                <ul class="list-unstyled list mb-30">
+                                    <li>
+                                        <div class="list-icon"> <span class="fa-regular fa-check"></span> </div>
+                                        <div class="list-text">
+                                            <p>Overnight de-stress retreat</p>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="list-icon"> <span class="fa-regular fa-check"></span> </div>
+                                        <div class="list-text">
+                                            <p>Wedding spa packages</p>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <a href="spa.html" class="button-3"><i class="fa-solid fa-spa"></i> View details</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--tab 2-->
+                <div class="tab" id="sauna">
+                    <div class="bg0">
+                        <div class="row justify-content-center align-items-center">
+                            <div class="col-lg-6 col-md-12">
+                                <img src="{% static 'img/offers/08.jpg' %}" class="img-fluid" alt="">
+                            </div>
+                            <div class="col-lg-5 offset-lg-1 col-md-12">
+                                <div class="section-subtitle">Training Spaces</div>
+                                <div class="section-title">Sauna & Jacuzzi</div>
+                                <p class="mb-25">Fitness quisque sodales intioni varius estibum miss arman ortiton telus euismod nis the massa nutodio farmention lorem pretium ametis velen fermen.</p>
+                                <ul class="list-unstyled list mb-30">
+                                    <li>
+                                        <div class="list-icon"> <span class="fa-regular fa-check"></span> </div>
+                                        <div class="list-text">
+                                            <p>Cardiovascular equipment</p>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="list-icon"> <span class="fa-regular fa-check"></span> </div>
+                                        <div class="list-text">
+                                            <p>Some dumbells for weight lifting</p>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <a href="spa.html" class="button-3"><i class="fa-solid fa-dumbbell"></i> View details</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--tab 3-->
+                <div class="tab" id="restaurant">
+                    <div class="bg0">
+                        <div class="row justify-content-center align-items-center">
+                            <div class="col-lg-6 col-md-12">
+                                <img src="{% static 'img/offers/05.jpg' %}" class="img-fluid" alt="">
+                            </div>
+                            <div class="col-lg-5 offset-lg-1 col-md-12">
+                                <div class="section-subtitle">Addres of taste</div>
+                                <div class="section-title">Restaurant</div>
+                                <p class="mb-25">Restaurant quisue sodale intion varius estibum miss arman ortiton telus euismod nis the massa fermen.</p>
+                                <ul class="list-unstyled list mb-30">
+                                    <li>
+                                        <div class="list-icon"> <span class="fa-regular fa-check"></span> </div>
+                                        <div class="list-text">
+                                            <p>Breakfast: 7.00 am – 11.00 am (daily)</p>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="list-icon"> <span class="fa-regular fa-check"></span> </div>
+                                        <div class="list-text">
+                                            <p>Lunch: 12.00 pm – 2.00 pm (daily)</p>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="list-icon"> <span class="fa-regular fa-check"></span> </div>
+                                        <div class="list-text">
+                                            <p>Dinne: 6.30 pm – 10.00 pm (daily)</p>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <a href="restaurant.html" class="button-3"><i class="fa-solid fa-user-chef"></i> View menu</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--tab 4-->
+                <div class="tab" id="hall">
+                    <div class="bg0">
+                        <div class="row justify-content-center align-items-center">
+                            <div class="col-lg-6 col-md-12">
+                                <img src="{% static 'img/offers/07.jpg' %}" class="img-fluid" alt="">
+                            </div>
+                            <div class="col-lg-5 offset-lg-1 col-md-12">
+                                <div class="section-subtitle">Meeting & Halls</div>
+                                <div class="section-title">Perfect Space</div>
+                                <p class="mb-25">Swimming quisque sodales intioni varius estibum miss arman ortiton telus euismod nis the massa nutodio farmention lorem pretium ametis velen fermen.</p>
+                                <ul class="list-unstyled list mb-30">
+                                    <li>
+                                        <div class="list-icon"> <span class="fa-regular fa-check"></span> </div>
+                                        <div class="list-text">
+                                            <p>Perfect spacious place</p>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="list-icon"> <span class="fa-regular fa-check"></span> </div>
+                                        <div class="list-text">
+                                            <p>Perfect spacious place</p>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <a href="hall.html" class="button-3"><i class="fa-solid fa-person-swimming"></i> View details</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Amenities -->
+    <section class="amenities section-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 mb-30 text-center">
+                    <div class="section-subtitle">Hotel Services</div>
+                    <div class="section-title">Facilities</div>
+                </div>
+                
+                <div class="col-lg-12 col-md-12">
+                    <div class="row">
+                        <div class="col-lg-3 col-md-6">
+                            <div class="item mb-25">
+                                <div class="cont up">
+                                    <div class="icon">
+                                        <img src="{% static 'img/icon/airport.png' %}"> 
+                                    </div>
+                                    <div class="text">
+                                        <h5>Pick Up & Drop</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6">
+                            <div class="item hover-box mb-25">
+                                <div class="cont up">
+                                    <div class="icon">
+                                        <img src="{% static 'img/icon/park.png' %}">  
+                                    </div>
+                                    <div class="text">
+                                        <h5>Parking Space</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6">
+                            <div class="item hover-box mb-25">
+                                <div class="cont up">
+                                    <div class="icon">
+                                        <img src="{% static 'img/icon/serving-dish.png' %}"> 
+                                    </div>
+                                    <div class="text">
+                                        <h5>Room Service</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6">
+                            <div class="item hover-box mb-25">
+                                <div class="cont up">
+                                    <div class="icon">
+                                        <img src="{% static 'img/icon/wifi.png' %}"> 
+                                    </div>
+                                    <div class="text">
+                                        <h5>Free Internet</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6">
+                            <div class="item hover-box mb-25">
+                                <div class="cont up">
+                                    <div class="icon">
+                                        <img src="{% static 'img/icon/dinner-table.png' %}">
+                                    </div>
+                                    <div class="text">
+                                        <h5>Restaurant & Bar</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-3 col-md-6">
+                            <div class="item hover-box mb-25">
+                                <div class="cont up">
+                                    <div class="icon">
+                                        <img src="{% static 'img/icon/hand.png' %}"> 
+                                    </div>
+                                    <div class="text">
+                                        <h5>Cards Accepted</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6">
+                            <div class="item hover-box mb-25">
+                                <div class="cont up">
+                                    <div class="icon">
+                                        <img src="{% static 'img/icon/no-smoking.png' %}"> 
+                                    </div>
+                                    <div class="text">
+                                        <h5>No Smoking Room</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6">
+                            <div class="item hover-box mb-25">
+                                <div class="cont up">
+                                    <div class="icon">
+                                        <img src="{% static 'img/icon/housekeeping.png' %}"> 
+                                    </div>
+                                    <div class="text">
+                                        <h5>Housekeeeping</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testiominals -->
+    <section class="testimonials">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 mb-30 text-center">
+                    <div class="section-subtitle">Testimonial</div>
+                    <div class="section-title">Words From Our Customers</div>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-md-12 text-center">
+                    <div class="owl-carousel owl-theme">
+                        <div class="item">
+                            <img src="{% static 'img/team/d.jpg' %}" class="testmonial-img">
+                            <span>
+                                <i class="star-rating"></i>
+                                <i class="star-rating"></i>
+                                <i class="star-rating"></i>
+                                <i class="star-rating"></i>
+                                <i class="star-rating"></i>
+                            </span>
+                            <h5>"Hotel was great. Location was excellent. The staff was incredible. A great experience all around!"</h5>
+                            <div class="info">
+                                <div class="cont">
+                                    <h6>Frank E. <i>|</i> <span><a href="#">View on Tripadvisor</a></span></h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <img src="{% static 'img/team/d.jpg' %}" class="testmonial-img">
+                            <span>
+                                <i class="star-rating"></i>
+                                <i class="star-rating"></i>
+                                <i class="star-rating"></i>
+                                <i class="star-rating"></i>
+                                <i class="star-rating"></i>
+                            </span>
+                            <h5>"Location was excellent. The staff was incredible. Hotel was great. A great experience all around!"</h5>
+                            <div class="info">
+                                <div class="cont">
+                                    <h6>Emily F. <i>|</i> <span><a href="#">View on Tripadvisor</a></span></h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <img src="{% static 'img/team/d.jpg' %}" class="testmonial-img">
+                            <span>
+                                <i class="star-rating"></i>
+                                <i class="star-rating"></i>
+                                <i class="star-rating"></i>
+                                <i class="star-rating"></i>
+                                <i class="star-rating"></i>
+                            </span>
+                            <h5>"A great experience all around! Hotel was great. Location was excellent. The staff was incredible."</h5>
+                            <div class="info">
+                                <div class="cont">
+                                    <h6>Enrico T. <i>|</i> <span><a href="#">View on Tripadvisor</a></span></h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Image -->
+    <section class="clients">
+        <div class="container-fluid p-0">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="owl-carousel owl-theme">
+                        <div class="item">
+                            <a href="{% static 'img/gallery/01.jpg' %}" title="" class="gallery-masonry-item-img-link img-zoom">
+                                <div class="img"> <img src="{% static 'img/gallery/home1.jpg' %}" class="img-fluid mx-auto d-block" alt=""> </div>
+                            </a>
+                        </div>
+                        <div class="item">
+                            <a href="{% static 'img/gallery/02.jpg' %}" title="" class="gallery-masonry-item-img-link img-zoom">
+                                <div class="img"> <img src="{% static 'img/gallery/home2.jpg' %}" class="img-fluid mx-auto d-block" alt=""> </div>
+                            </a>
+                        </div>
+                        <div class="item">
+                            <a href="{% static 'img/gallery/05.jpg' %}" title="" class="gallery-masonry-item-img-link img-zoom">
+                                <div class="img"> <img src="{% static 'img/gallery/home3.jpg' %}" class="img-fluid mx-auto d-block" alt=""> </div>
+                            </a>
+                        </div>
+                        <div class="item">
+                            <a href="{% static 'img/gallery/06.jpg' %}" title="" class="gallery-masonry-item-img-link img-zoom">
+                                <div class="img"> <img src="{% static 'img/gallery/hom4.jpg' %}" class="img-fluid mx-auto d-block" alt=""> </div>
+                            </a>
+                        </div>
+                        <div class="item">
+                            <a href="{% static 'img/gallery/07.jpg' %}" title="" class="gallery-masonry-item-img-link img-zoom">
+                                <div class="img"> <img src="{% static 'img/gallery/home5.jpg' %}" class="img-fluid mx-auto d-block" alt=""> </div>
+                            </a>
+                        </div>
+                        <div class="item">
+                            <a href="{% static 'img/gallery/08.jpg' %}" title="" class="gallery-masonry-item-img-link img-zoom">
+                                <div class="img"> <img src="{% static 'img/gallery/home6.jpg' %}" class="img-fluid mx-auto d-block" alt=""> </div>
+                            </a>
+                        </div>
+                        <div class="item">
+                            <a href="{% static 'img/gallery/09.jpg' %}" title="" class="gallery-masonry-item-img-link img-zoom">
+                                <div class="img"> <img src="{% static 'img/gallery/home7.jpg' %}" class="img-fluid mx-auto d-block" alt=""> </div>
+                            </a>
+                        </div>
+                        <div class="item">
+                            <a href="{% static 'img/gallery/10.jpg' %}" title="" class="gallery-masonry-item-img-link img-zoom">
+                                <div class="img"> <img src="{% static 'img/gallery/home8.jpg' %}" class="img-fluid mx-auto d-block" alt=""> </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <!-- top -->
+        <div class="top">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-3  mb-30">
+                        <div class="item">
+                            <h3>Hotel Rudra View</h3>
+                            <p> We aspire to be the best at providing best rooms excellent hospitality and a comfortable placeto stay.</p>
+                            <div class="social-icons">
+                                <ul class="list-inline">
+                                    <li><a href="https://www.facebook.com/hotelrudraview" target="_blank"><i class="fa-brands fa-facebook-f"></i></a></li>
+                                    <li><a href="#"><i class="fa-brands fa-instagram"></i></a></li>
+                                    <li><a href="#"><i class="fa-brands fa-twitter"></i></a></li>
+                                    
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 offset-md-1 mb-30">
+                        <div class="item">
+                            <h3>Contact us</h3>
+                            <p>Airport, Sinamangal, Kathmandu<br>Shambhu Marg Road No. 4 Chowk, Nepal
+                            </p>
+                            <div class="phone"><a href="tel:+977014588242 ">+977 01-4588242</a> | <a href="tel:+977015564880">+977 01-5564880</a></div>
+                            <div class="mail"><a href="mailto:info.hotelrudraviewnp@gmail.com">info.hotelrudraviewnp@gmail.com</a></div>
+                            <p><a href="#" target="_blank">View Google Map</a></p>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 mb-30">
+                        <div class="item">
+                            <h3>Booking Platforms</h3>
+                            <div class="social-icons1">
+                                <ul class="card1 card1a">
+                                    <li><img src="{% static 'img/icon/booking.png' %}" alt="visa"></li>
+                                    <li><img src="{% static 'img/icon/ta.png' %}" alt="paypal"></li>
+                                    <li><img src="{% static 'img/icon/ma.png' %}" alt="mastercard"></li>
+                                </ul>
+                            </div>
+                            <div class="newsletter">
+                                <h6 style="color: #fff;font-size: 19px;">We accepts</h4>
+                            </div>
+                            <div class="social-icons1">
+                                <ul class="card1">
+                                    <li><img src="{% static 'img/icon/visa.png' %}" alt="visa"></li>
+                                    <li><img src="{% static 'img/icon/paypal.png' %}" alt="paypal"></li>
+                                    <li><img src="{% static 'img/icon/mastercard.png' %}" alt="mastercard"></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- bottom -->
+        <div class="bottom">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 text-center">
+                        <p>© Copyright 2025. Hotel Rudra View. All Rights Reserved. Developed by  <a href="https://longtail.info/">Longtail e-media</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <div class="whats_app">
+        <a href="#" target="_blank" class="whatsapp">
+            <img src="{% static 'img/icon/whatsapp.png' %}">
+        </a>
+    </div>
+    <!-- jQuery -->
+    <script src="{% static 'js/jquery-3.7.1.min.js' %}"></script>
+    <script src="{% static 'js/jquery-migrate-3.4.1.min.js' %}"></script>
+    <script src="{% static 'js/modernizr-2.6.2.min.js' %}"></script>
+    <script src="{% static 'js/imagesloaded.pkgd.min.js' %}"></script>
+    <script src="{% static 'js/jquery.isotope.v3.0.2.js' %}"></script>
+    <script src="{% static 'js/popper.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/scrollIt.min.js' %}"></script>
+    <script src="{% static 'js/jquery.waypoints.min.js' %}"></script>
+    <script src="{% static 'js/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'js/jquery.stellar.min.js' %}"></script>
+    <script src="{% static 'js/jquery.magnific-popup.js' %}"></script>
+    <script src="{% static 'js/YouTubePopUp.js' %}"></script>
+    <script src="{% static 'js/select2.js' %}"></script>
+    <script src="{% static 'js/datepicker.js' %}"></script>
+    <script src="{% static 'js/custom.js' %}"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        // Get today's date
+        var today = new Date();
+        var tomorrow = new Date();
+        tomorrow.setDate(today.getDate() + 1);
+
+        // Initialize check-in datepicker
+        $("#checkin").datepicker({
+            dateFormat: 'yy-mm-dd',
+            minDate: today,
+            onSelect: function (dateText) {
+                var selectedDate = new Date(dateText);
+                var nextDay = new Date(selectedDate);
+                nextDay.setDate(selectedDate.getDate() + 1);
+
+                // Update checkout datepicker
+                $("#checkout").datepicker("option", "minDate", nextDay);
+                $("#checkout").datepicker("setDate", nextDay);
+            }
+        }).datepicker("setDate", today);
+
+        // Initialize check-out datepicker
+        $("#checkout").datepicker({
+            dateFormat: 'yy-mm-dd',
+            minDate: tomorrow
+        }).datepicker("setDate", tomorrow);
+    });
+</script>
+</body>
+</html>

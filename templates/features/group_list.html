@@ -34,7 +34,7 @@
     </button>
     <button type="button"
             class="btn btn-danger"
-            onclick="openDeleteModal('featuregroup', null, '/bulk/featuregroup/', true)">
+            onclick="openDeleteModal('featuregroup', null, '{% url 'bulk_action' 'featuregroup' %}', true)">
         Delete
     </button>
 </div>

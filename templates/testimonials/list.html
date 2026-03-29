@@ -32,7 +32,7 @@
         Status
     </button>
     <button type="button" class="btn btn-danger"
-            onclick="openDeleteModal('testimonial', null, '/bulk/testimonial/', true)">
+            onclick="openDeleteModal('testimonial', null, '{% url 'bulk_action' 'testimonial' %}', true)">
         Delete
     </button>
 </div>

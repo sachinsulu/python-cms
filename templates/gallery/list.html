@@ -36,7 +36,7 @@
     <button type="button" class="btn btn-warning" onclick="document.getElementById('bulk-form').querySelector('button[name=action][value=toggle]').click()">
         Status
     </button>
-    <button type="button" class="btn btn-danger" onclick="openDeleteModal('gallery', null, '/bulk/gallery/', true)">
+    <button type="button" class="btn btn-danger" onclick="openDeleteModal('gallery', null, '{% url 'bulk_action' 'gallery' %}', true)">
         Delete
     </button>
 </div>

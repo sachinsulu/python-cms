@@ -402,7 +402,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 return;
             }
 
-            fetch(`/ajax/check-slug/${modelName}/?slug=${encodeURIComponent(slug)}&object_id=${objectId}`)
+            fetch(`/apanel/ajax/check-slug/${modelName}/?slug=${encodeURIComponent(slug)}&object_id=${objectId}`)
                 .then(res => res.json())
                 .then(data => {
                     if (data.error) {

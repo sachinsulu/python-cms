@@ -17,12 +17,18 @@ def is_slug_taken(slug, exclude_obj=None):
         ('blog', 'Blog'),
         ('package', 'Package'),
         ('package', 'SubPackage'),
-        ('gallery', 'Gallery'),
     ]
     
     for app_label, model_name in models_to_check:
         try:
             model = apps.get_model(app_label, model_name)
+            
+            # Robustness: Skip models that don't have a 'slug' field
+            try:
+                model._meta.get_field('slug')
+            except Exception:
+                continue
+
             qs = model.objects.filter(slug=slug)
             
             if exclude_obj and isinstance(exclude_obj, model):

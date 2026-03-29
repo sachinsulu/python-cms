@@ -17,6 +17,7 @@ def is_slug_taken(slug, exclude_obj=None):
         ('blog', 'Blog'),
         ('package', 'Package'),
         ('package', 'SubPackage'),
+        ('gallery', 'Gallery'),
     ]
     
     for app_label, model_name in models_to_check:

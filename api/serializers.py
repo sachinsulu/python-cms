@@ -16,6 +16,7 @@ from location.models import Location
 from preferences.models import SitePreferences
 from media_manager.models import Media, MediaFolder
 from slideshow.models import Slideshow
+from gallery.models import Gallery, GalleryImage
 
 
 # Only the ArticleSerializer changes — rest of the file stays identical
@@ -255,3 +256,32 @@ class SlideshowSerializer(serializers.ModelSerializer):
             return None
         request = self.context.get('request')
         return request.build_absolute_uri(url) if request else url
+
+class GalleryImageSerializer(serializers.ModelSerializer):
+    image_url = serializers.SerializerMethodField()
+
+    class Meta:
+        model = GalleryImage
+        fields = ['id', 'title', 'active', 'position', 'image_url']
+
+    def get_image_url(self, obj):
+        if not obj.image_id:
+            return None
+        try:
+            url = obj.image.file.url
+            request = self.context.get('request')
+            return request.build_absolute_uri(url) if request else url
+        except (ValueError, AttributeError):
+            return None
+
+class GallerySerializer(serializers.ModelSerializer):
+    images = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Gallery
+        fields = ['id', 'title', 'type', 'active', 'position', 'images']
+        
+    def get_images(self, obj):
+        active_images = obj.images.filter(active=True).order_by('position')
+        return GalleryImageSerializer(active_images, many=True, context=self.context).data
+

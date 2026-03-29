@@ -22,6 +22,9 @@ from preferences.models import SitePreferences
 from location.models import Location
 from django.utils.text import slugify
 from media_manager.models import Media, MediaFolder
+from slideshow.models import Slideshow
+from gallery.models import Gallery, GalleryImage
+
 
 from .serializers import (
     ArticleSerializer,
@@ -43,6 +46,8 @@ from .serializers import (
     MediaSerializer,
     MediaFolderSerializer,
     MediaFolderDetailSerializer,
+    SlideshowSerializer,
+    GallerySerializer,
 )
 
 
@@ -602,3 +607,44 @@ def get_slideshow(request, pk):
         return Response({'error': 'Slideshow not found'}, status=status.HTTP_404_NOT_FOUND)
     serializer = SlideshowSerializer(item, context={'request': request})
     return Response(serializer.data)
+
+# ========================
+# Gallery APIs
+# ========================
+
+@api_view(['GET'])
+def get_all_galleries(request):
+    """Get all active galleries with their active images."""
+    galleries = Gallery.objects.filter(active=True).prefetch_related(
+        Prefetch(
+            'images',
+            queryset=GalleryImage.objects.filter(active=True).select_related('image').order_by('position')
+        )
+    ).order_by('position')
+    
+    # Optional type filter
+    type_filter = request.query_params.get('type')
+    if type_filter:
+        galleries = galleries.filter(type=type_filter)
+        
+    serializer = GallerySerializer(galleries, many=True, context={'request': request})
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def get_gallery(request, title):
+    """Get a single gallery by slug with its active images."""
+    try:
+        gallery = Gallery.objects.prefetch_related(
+            Prefetch(
+                'images',
+                queryset=GalleryImage.objects.filter(active=True).select_related('image').order_by('position')
+            )
+        ).get(title=title, active=True)
+    except Gallery.DoesNotExist:
+        return Response(
+            {'error': 'Gallery not found'},
+            status=status.HTTP_404_NOT_FOUND
+        )
+    serializer = GallerySerializer(gallery, context={'request': request})
+    return Response(serializer.data)
+

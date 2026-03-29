@@ -32,6 +32,7 @@ from offers.models import Offer
 from services.models import Service
 from media_manager.models import Media
 from slideshow.models import Slideshow
+from gallery.models import Gallery, GalleryImage
 User = get_user_model()
 logger = logging.getLogger(__name__)
 
@@ -58,7 +59,8 @@ MODEL_MAP = {
     "services": Service,
     "media": Media,
     "slideshow": Slideshow,
-
+    "gallery": Gallery,
+    "galleryimage": GalleryImage,
 }
 
 ACTIVE_FIELD_MAP = {
@@ -78,6 +80,8 @@ ACTIVE_FIELD_MAP = {
     "services": "active",
     "media": "active",
     "slideshow": "active",
+    "gallery": "active",
+    "galleryimage": "active",
 }
 
 STAT_COLORS = ['blue', 'orange', 'green', 'cyan', 'red', 'lime', 'purple', 'pink', 'yellow', 'teal']
@@ -170,6 +174,8 @@ def dashboard(request):
     add_stat('OTA',          Social.objects.filter(type=Social.TYPE_OTA).count(),    'fa-solid fa-globe',       'lime', 'social_list', 'social.view_social')
     add_stat('Nearby',       Nearby.objects.count(),        'fa-solid fa-map-marker-alt',          'orange', 'nearby_list',        'nearby.view_nearby')
     add_stat('FAQ',        FAQ.objects.count(),        'fa-solid fa-question-circle',          'orange', 'faq_list',        'faq.view_faq')
+    add_stat('Gallery',      Gallery.objects.count(),     'fa-solid fa-images',                    'blue',   'gallery_list',     'gallery.view_gallery')
+
 
     if user.is_superuser:
         add_stat('Users',  User.objects.count(),  'fa-solid fa-users',      'red',  'user_list', 'auth.view_user')

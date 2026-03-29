@@ -53,6 +53,10 @@ urlpatterns = [
     path('popups/', views.get_all_popups, name='get_all_popups'),
     path('popups/<int:pk>/', views.get_popup, name='get_popup'),
 
+    # Gallery
+    path('gallery/', views.get_all_galleries, name='get_all_galleries'),
+    path('gallery/<str:title>/', views.get_gallery, name='get_gallery'),
+
     # Offers
     path('offers/', views.get_all_offers, name='get_all_offers'),
     path('offers/<int:pk>/', views.get_offer, name='get_offer'),
@@ -73,7 +77,7 @@ urlpatterns = [
     path('media/<str:name>/', views.get_media_or_folder, name='get_media_or_folder'),
 
     path('slideshows/', views.get_all_slideshows, name='get_all_slideshows'),
-path('slideshows/<int:pk>/', views.get_slideshow, name='get_slideshow'),
+    path('slideshows/<int:pk>/', views.get_slideshow, name='get_slideshow'),
 
     # Universal Slug API (Fallback route, should be at the bottom)
     path('<slug:slug>/', views.get_by_slug, name='get_by_slug'),

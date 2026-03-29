@@ -31,6 +31,8 @@
     type: "",
     folderId: "",
     selectedItem: null,      // { id, url, title, is_image }
+    selectedItems: new Map(),
+    multiple: false,
     currentTrigger: null,    // The button that opened the picker
     searchTimer: null,
     apiUrl: "/media/api/picker/",
@@ -130,6 +132,8 @@
   function openPicker(trigger) {
     state.currentTrigger = trigger;
     state.selectedItem = null;
+    state.selectedItems.clear();
+    state.multiple = trigger.hasAttribute("data-multiple") && trigger.dataset.multiple === "true";
     state.page = 1;
     state.q = "";
     state.folderId = "";
@@ -265,8 +269,11 @@
         ? '<img src="' + escapeHtml(item.url) + '" alt="' + escapeHtml(item.title) + '" loading="lazy">'
         : '<span class="mp-file-icon"><i class="fa-solid ' + getFileIcon(item.type) + '"></i></span>';
 
+      const isSelected = state.multiple ? state.selectedItems.has(String(item.id)) : (state.selectedItem && String(state.selectedItem.id) === String(item.id));
+      const selectedClass = isSelected ? " selected" : "";
+
       return (
-        '<div class="mp-item" ' +
+        '<div class="mp-item' + selectedClass + '" ' +
         'data-id="' + item.id + '" ' +
         'data-url="' + escapeHtml(item.url) + '" ' +
         'data-title="' + escapeHtml(item.title) + '" ' +
@@ -305,36 +312,79 @@
 
   // ── Select Item ───────────────────────────────────────────────
   function selectItem(itemEl) {
-    document.querySelectorAll(".mp-item.selected").forEach(function (el) {
-      el.classList.remove("selected");
-    });
-    itemEl.classList.add("selected");
-
-    state.selectedItem = {
-      id: itemEl.dataset.id,
+    const id = itemEl.dataset.id;
+    const itemData = {
+      id: id,
       url: itemEl.dataset.url,
       title: itemEl.dataset.title,
       is_image: itemEl.dataset.isImage === "true",
     };
 
-    updateInsertButton(state.selectedItem);
+    if (state.multiple) {
+      if (state.selectedItems.has(id)) {
+        state.selectedItems.delete(id);
+        itemEl.classList.remove("selected");
+      } else {
+        state.selectedItems.set(id, itemData);
+        itemEl.classList.add("selected");
+      }
+      updateInsertButtonMultiple();
+    } else {
+      document.querySelectorAll(".mp-item.selected").forEach(function (el) {
+        el.classList.remove("selected");
+      });
+      itemEl.classList.add("selected");
+      state.selectedItem = itemData;
+      updateInsertButton(state.selectedItem);
+    }
+  }
+
+  function updateInsertButtonMultiple() {
+    if (state.selectedItems.size > 0) {
+      insertBtn.disabled = false;
+      insertBtn.innerHTML = '<i class="fa-solid fa-check"></i> Use ' + state.selectedItems.size + ' File' + (state.selectedItems.size > 1 ? 's' : '');
+      selectedInfo.textContent = state.selectedItems.size + " file" + (state.selectedItems.size > 1 ? "s" : "") + " selected";
+    } else {
+      insertBtn.disabled = true;
+      insertBtn.innerHTML = '<i class="fa-solid fa-check"></i> Use This File';
+      selectedInfo.textContent = "No file selected";
+    }
   }
 
   function updateInsertButton(item) {
     if (item) {
       insertBtn.disabled = false;
+      insertBtn.innerHTML = '<i class="fa-solid fa-check"></i> Use This File';
       selectedInfo.textContent = "Selected: " + item.title;
     } else {
       insertBtn.disabled = true;
+      insertBtn.innerHTML = '<i class="fa-solid fa-check"></i> Use This File';
       selectedInfo.textContent = "No file selected";
     }
   }
 
   // ── Insert Selected into Form ─────────────────────────────────
   function insertSelected() {
-    if (!state.selectedItem || !state.currentTrigger) return;
+    if (!state.currentTrigger) return;
 
     const trigger = state.currentTrigger;
+
+    if (state.multiple) {
+      if (state.selectedItems.size === 0) return;
+      
+      state.selectedItems.forEach(function(item) {
+        trigger.dispatchEvent(
+          new CustomEvent("mediaPicked", {
+            bubbles: true,
+            detail: { id: item.id, url: item.url, title: item.title, is_image: item.is_image },
+          })
+        );
+      });
+      closePicker();
+      return;
+    }
+
+    if (!state.selectedItem) return;
     const item = state.selectedItem;
 
     // Write URL to target field
@@ -376,7 +426,7 @@
     trigger.dispatchEvent(
       new CustomEvent("mediaPicked", {
         bubbles: true,
-        detail: { id: item.id, url: item.url, title: item.title },
+        detail: { id: item.id, url: item.url, title: item.title, is_image: item.is_image },
       })
     );
 

@@ -65,6 +65,8 @@ INSTALLED_APPS = [
     "api",
     "core",
     "slideshow",
+    "gallery",
+
 
     # third-party
     "ckeditor",

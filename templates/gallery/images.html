@@ -1,0 +1,939 @@
+{% extends "base.html" %}
+{% block content %}
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+
+<style>
+  /* ── Page header ── */
+  .gi-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .gi-header-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .gi-header-left h2 {
+    margin: 0;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #0f172a;
+  }
+  .gi-header-left small {
+    color: #64748b;
+    font-size: 0.82rem;
+  }
+  .gi-count-badge {
+    background: #f1f5f9;
+    border: 1px solid #e2e8f0;
+    color: #475569;
+    padding: 3px 10px;
+    border-radius: 99px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    font-family: monospace;
+  }
+
+  /* ── Add images panel ── */
+  .gi-add-panel {
+    background: #f8fafc;
+    border: 2px dashed #cbd5e1;
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 28px;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .gi-add-panel.has-selection {
+    border-color: #3b82f6;
+    background: #eff6ff;
+  }
+  .gi-add-panel-title {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .gi-add-panel-title i {
+    color: #3b82f6;
+  }
+
+  /* ── Selected thumbnails strip ── */
+  .gi-selected-strip {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 14px;
+    min-height: 0;
+  }
+  .gi-selected-strip:empty { display: none; }
+  .gi-thumb-chip {
+    position: relative;
+    width: 72px;
+    height: 72px;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 2px solid #3b82f6;
+    flex-shrink: 0;
+  }
+  .gi-thumb-chip img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .gi-thumb-chip-remove {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    width: 18px;
+    height: 18px;
+    background: rgba(239, 68, 68, 0.9);
+    color: white;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    font-size: 0.6rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    padding: 0;
+  }
+  .gi-thumb-chip-remove:hover { background: #dc2626; }
+
+  .gi-add-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .gi-pick-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 9px 18px;
+    background: #0f172a;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s, transform 0.1s;
+  }
+  .gi-pick-btn:hover { background: #1e293b; transform: translateY(-1px); }
+  .gi-add-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 9px 18px;
+    background: #10b981;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .gi-add-btn:hover { background: #059669; }
+  .gi-add-btn:disabled {
+    background: #9ca3af;
+    cursor: not-allowed;
+    transform: none;
+  }
+  .gi-selection-info {
+    font-size: 0.82rem;
+    color: #6b7280;
+  }
+  .gi-selection-info strong { color: #0f172a; }
+
+  /* ── Divider ── */
+  .gi-divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+    color: #94a3b8;
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .gi-divider::before,
+  .gi-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: #e2e8f0;
+  }
+
+  /* ── Bulk actions bar ── */
+  .gi-bulk-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+  }
+  .gi-bulk-bar .btn { font-size: 0.82rem; padding: 6px 14px; }
+
+  /* ── Image grid ── */
+  .gi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 14px;
+  }
+
+  /* ── Image card ── */
+  .gi-card {
+    border: 1.5px solid #e2e8f0;
+    border-radius: 10px;
+    overflow: hidden;
+    background: #fff;
+    transition: box-shadow 0.15s, border-color 0.15s;
+    position: relative;
+  }
+  .gi-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.1); }
+  .gi-card.selected { border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59,130,246,0.18); }
+  .gi-card.sortable-ghost { opacity: 0.35; background: #f0fdf4; }
+  .gi-card.sortable-chosen { box-shadow: 0 8px 20px rgba(0,0,0,0.15); }
+
+  /* Checkbox */
+  .gi-card-checkbox {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    z-index: 5;
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    accent-color: #3b82f6;
+  }
+
+  /* Status dot */
+  .gi-status-dot {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    z-index: 5;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 2px solid white;
+  }
+  .gi-status-dot.active { background: #10b981; }
+  .gi-status-dot.inactive { background: #ef4444; }
+
+  /* Drag handle */
+  .gi-drag-handle {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    z-index: 5;
+    color: rgba(255,255,255,0.8);
+    font-size: 0.8rem;
+    cursor: grab;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+    opacity: 0.6;
+    transition: opacity 0.15s;
+  }
+  .gi-card:hover .gi-drag-handle { opacity: 1; }
+
+  /* Thumbnail */
+  .gi-thumb {
+    width: 100%;
+    height: 130px;
+    object-fit: cover;
+    display: block;
+    background: #f1f5f9;
+  }
+  .gi-thumb-placeholder {
+    width: 100%;
+    height: 130px;
+    background: #f1f5f9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #cbd5e1;
+    font-size: 2rem;
+  }
+
+  /* Card body */
+  .gi-card-body {
+    padding: 8px 10px;
+  }
+  .gi-card-title {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: #374151;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 6px;
+  }
+  .gi-card-actions {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+  }
+  .gi-btn-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    border: 1px solid #e2e8f0;
+    background: white;
+    color: #6b7280;
+    font-size: 0.72rem;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.15s;
+  }
+  .gi-btn-icon:hover { background: #f8fafc; color: #374151; border-color: #94a3b8; }
+  .gi-btn-icon.edit:hover { color: #3b82f6; border-color: #bfdbfe; background: #eff6ff; }
+  .gi-btn-icon.delete:hover { color: #dc2626; border-color: #fca5a5; background: #fee2e2; }
+  .gi-btn-icon.toggle { cursor: pointer; }
+  .gi-btn-icon.toggle.active { color: #10b981; border-color: #bbf7d0; background: #f0fdf4; }
+  .gi-btn-icon.toggle.inactive { color: #9ca3af; }
+
+  /* ── Empty state ── */
+  .gi-empty {
+    text-align: center;
+    padding: 60px 20px;
+    color: #94a3b8;
+  }
+  .gi-empty i { font-size: 3rem; margin-bottom: 12px; display: block; color: #e2e8f0; }
+  .gi-empty p { font-size: 0.9rem; }
+
+  /* ── Toast notification ── */
+  .gi-toast {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: #0f172a;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    display: none;
+    align-items: center;
+    gap: 8px;
+    z-index: 9999;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+    max-width: 320px;
+  }
+  .gi-toast.success { background: #10b981; }
+  .gi-toast.error { background: #ef4444; }
+  .gi-toast.show { display: flex; animation: giToastIn 0.25s ease; }
+  @keyframes giToastIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── Loading overlay ── */
+  .gi-adding-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(255,255,255,0.7);
+    backdrop-filter: blur(2px);
+    z-index: 9998;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 12px;
+    font-size: 0.95rem;
+    color: #374151;
+    font-weight: 600;
+  }
+  .gi-adding-overlay.show { display: flex; }
+  .gi-adding-overlay i { font-size: 2rem; color: #3b82f6; }
+</style>
+
+<div class="gi-header">
+  <div class="gi-header-left">
+    <h2>
+      <i class="fa-solid fa-images" style="color:#3b82f6; margin-right:6px;"></i>
+      {{ gallery.title }}
+    </h2>
+    <span class="gi-count-badge" id="imageCountBadge">{{ images.count }} image{{ images.count|pluralize }}</span>
+  </div>
+  <div style="display:flex; gap:8px;">
+    <a href="{% url 'gallery_edit' gallery.pk %}" class="btn btn-secondary">
+      <i class="fa-solid fa-pen"></i> Edit Gallery
+    </a>
+    <a href="{% url 'gallery_list' %}" class="btn btn-secondary">← Back</a>
+  </div>
+</div>
+
+{# ── Add Images Panel ── #}
+<div class="gi-add-panel" id="addPanel">
+  <div class="gi-add-panel-title">
+    <i class="fa-solid fa-plus-circle"></i>
+    Add Images from Library
+  </div>
+
+  <div class="gi-selected-strip" id="selectedStrip"></div>
+
+  <div class="gi-add-actions">
+    <button type="button" class="gi-pick-btn" id="openPickerBtn">
+      <i class="fa-solid fa-photo-film"></i>
+      Choose Images
+    </button>
+
+    <button type="button" class="gi-add-btn" id="addSelectedBtn" disabled>
+      <i class="fa-solid fa-plus"></i>
+      Add <span id="addCount">0</span> to Gallery
+    </button>
+
+    <span class="gi-selection-info" id="selectionInfo" style="display:none;">
+      <strong id="selectionCount">0</strong> image<span id="selectionPlural">s</span> selected
+      &nbsp;·&nbsp;
+      <a href="#" id="clearSelectionLink" style="color:#ef4444; text-decoration:none;">Clear</a>
+    </span>
+  </div>
+</div>
+
+{# ── Existing Images ── #}
+<div class="gi-divider">Gallery Images</div>
+
+<div class="gi-bulk-bar" id="bulkBar" style="display:none;">
+  <span class="gi-selection-info" style="color:#374151;">
+    <strong id="bulkCount">0</strong> selected
+  </span>
+  <button type="button" class="btn btn-warning" id="bulkToggleBtn">Toggle Status</button>
+  <button type="button" class="btn btn-danger" id="bulkDeleteBtn">Delete</button>
+  <button type="button" class="btn" id="bulkCancelBtn" style="background:#f1f5f9; color:#374151;">Cancel</button>
+</div>
+
+<div style="display:flex; align-items:center; gap:8px; margin-bottom:16px;" id="mainActions">
+  <label style="display:flex; align-items:center; gap:6px; font-size:0.82rem; color:#374151; cursor:pointer;">
+    <input type="checkbox" id="selectAllCards" style="accent-color:#3b82f6;">
+    Select All
+  </label>
+  <span style="color:#e2e8f0;">|</span>
+  <span style="font-size:0.78rem; color:#94a3b8;">
+    <i class="fa-solid fa-grip-vertical"></i> Drag cards to reorder
+  </span>
+</div>
+
+<div class="gi-grid" id="giGrid">
+  {% for img in images %}
+  <div class="gi-card {% if not img.active %}inactive-card{% endif %}"
+       data-id="{{ img.id }}"
+       data-active="{{ img.active|yesno:'true,false' }}">
+
+    <input type="checkbox" class="gi-card-checkbox gi-bulk-checkbox" value="{{ img.id }}">
+    <div class="gi-status-dot {% if img.active %}active{% else %}inactive{% endif %}"
+         id="dot-{{ img.id }}" title="{% if img.active %}Active{% else %}Inactive{% endif %}"></div>
+    <i class="fa-solid fa-grip-vertical gi-drag-handle"></i>
+
+    {% if img.image and img.image.file %}
+      <img class="gi-thumb"
+           src="{% if img.image.thumbnail %}{{ img.image.thumbnail.url }}{% else %}{{ img.image.file.url }}{% endif %}"
+           alt="{{ img.title|default:'Gallery image' }}"
+           loading="lazy" draggable="false">
+    {% else %}
+      <div class="gi-thumb-placeholder">
+        <i class="fa-solid fa-image"></i>
+      </div>
+    {% endif %}
+
+    <div class="gi-card-body">
+      <div class="gi-card-title" title="{{ img.title|default:'-' }}">
+        {{ img.title|default:'—'|truncatechars:20 }}
+      </div>
+      <div class="gi-card-actions">
+        {# Toggle status #}
+        <button type="button"
+                class="gi-btn-icon toggle {% if img.active %}active{% else %}inactive{% endif %}"
+                data-url="{% url 'toggle_status' 'galleryimage' img.id %}"
+                data-id="{{ img.id }}"
+                onclick="toggleCard(this)"
+                title="{% if img.active %}Active — click to deactivate{% else %}Inactive — click to activate{% endif %}">
+          <i class="fa-solid {% if img.active %}fa-toggle-on{% else %}fa-toggle-off{% endif %}"></i>
+        </button>
+
+        {# Edit #}
+        <a href="{% url 'gallery_image_edit' gallery.pk img.id %}"
+           class="gi-btn-icon edit" title="Edit">
+          <i class="fa-solid fa-pen-to-square"></i>
+        </a>
+
+        {# Delete #}
+        <button type="button"
+                class="gi-btn-icon delete"
+                data-url="{% url 'delete_object' 'galleryimage' img.id %}"
+                data-title="{{ img.title|default:'this image'|escapejs }}"
+                data-id="{{ img.id }}"
+                onclick="deleteCard(this)"
+                title="Delete">
+          <i class="fa-solid fa-trash"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+  {% empty %}
+  <div class="gi-empty" id="emptyState" style="grid-column: 1 / -1;">
+    <i class="fa-regular fa-image"></i>
+    <p>No images yet. Add some from the library above.</p>
+  </div>
+  {% endfor %}
+</div>
+
+{# ── Toast ── #}
+<div class="gi-toast" id="giToast">
+  <i class="fa-solid fa-check-circle" id="toastIcon"></i>
+  <span id="toastMsg">Done!</span>
+</div>
+
+{# ── Loading overlay ── #}
+<div class="gi-adding-overlay" id="addingOverlay">
+  <i class="fa-solid fa-spinner fa-spin"></i>
+  <span>Adding images…</span>
+</div>
+
+{# ── Hidden picker trigger (multi-select mode) ── #}
+<button type="button"
+        id="hiddenPickerTrigger"
+        style="display:none;"
+        data-media-picker
+        data-multiple="true"
+        data-target-id="#dummyPickerInput"
+        data-preview="#dummyPreview"
+        data-type="image">
+</button>
+<input type="hidden" id="dummyPickerInput">
+<div id="dummyPreview" style="display:none;"></div>
+
+{% load static %}
+<script>
+const CSRF_TOKEN        = document.body.dataset.csrfToken || '{{ csrf_token }}';
+const BULK_ADD_URL      = '{% url "gallery_bulk_add_images" gallery.pk %}';
+const SORT_URL          = '{% url "sort" "galleryimage" %}';
+const GALLERY_PK        = {{ gallery.pk }};
+
+// ── State ─────────────────────────────────────────────────────────
+// pickerSelection: Map<mediaId, { id, url, thumbnail_url, title }>
+let pickerSelection = new Map();
+let totalImageCount = {{ images.count }};
+
+// ── Update count badge ──────────────────────────────────────────
+function updateCountBadge() {
+  const badge = document.getElementById('imageCountBadge');
+  badge.textContent = `${totalImageCount} image${totalImageCount !== 1 ? 's' : ''}`;
+}
+
+// ── Toast ─────────────────────────────────────────────────────────
+let toastTimer;
+function showToast(msg, type = 'success') {
+  const toast = document.getElementById('giToast');
+  const icon  = document.getElementById('toastIcon');
+  document.getElementById('toastMsg').textContent = msg;
+  toast.className = `gi-toast ${type} show`;
+  icon.className = `fa-solid ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}`;
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toast.classList.remove('show'), 3500);
+}
+
+// ── Picker selection UI ──────────────────────────────────────────
+function updatePickerSelectionUI() {
+  const strip  = document.getElementById('selectedStrip');
+  const addBtn = document.getElementById('addSelectedBtn');
+  const info   = document.getElementById('selectionInfo');
+  const count  = pickerSelection.size;
+  const panel  = document.getElementById('addPanel');
+
+  // Rebuild strip
+  strip.innerHTML = '';
+  pickerSelection.forEach((item, id) => {
+    const chip = document.createElement('div');
+    chip.className = 'gi-thumb-chip';
+    chip.dataset.id = id;
+    chip.innerHTML = `
+      <img src="${item.thumbnail_url || item.url}" alt="${item.title}">
+      <button type="button" class="gi-thumb-chip-remove" onclick="removeFromSelection(${id})">
+        <i class="fa-solid fa-xmark"></i>
+      </button>`;
+    strip.appendChild(chip);
+  });
+
+  // Add button
+  addBtn.disabled = count === 0;
+  document.getElementById('addCount').textContent = count;
+
+  // Info text
+  if (count > 0) {
+    info.style.display = '';
+    document.getElementById('selectionCount').textContent = count;
+    document.getElementById('selectionPlural').textContent = count !== 1 ? 's' : '';
+  } else {
+    info.style.display = 'none';
+  }
+
+  // Panel style
+  panel.classList.toggle('has-selection', count > 0);
+}
+
+function removeFromSelection(id) {
+  pickerSelection.delete(id);
+  updatePickerSelectionUI();
+}
+
+document.getElementById('clearSelectionLink').addEventListener('click', (e) => {
+  e.preventDefault();
+  pickerSelection.clear();
+  updatePickerSelectionUI();
+});
+
+// ── Open picker via the hidden trigger ───────────────────────────
+document.getElementById('openPickerBtn').addEventListener('click', () => {
+  document.getElementById('hiddenPickerTrigger').click();
+});
+
+// ── Listen for mediaPicked events from the picker modal ─────────
+// The built-in picker fires one item at a time when "Use This File" is clicked.
+// We intercept it and accumulate selections instead of writing to a hidden input.
+document.addEventListener('mediaPicked', function(e) {
+  // Only handle events from our hidden trigger
+  if (e.target !== document.getElementById('hiddenPickerTrigger')) return;
+
+  const item = e.detail;
+  if (!item.is_image) {
+    showToast('Only images can be added to a gallery.', 'error');
+    return;
+  }
+
+  if (pickerSelection.has(item.id)) {
+    // Already selected — deselect it
+    pickerSelection.delete(item.id);
+  } else {
+    pickerSelection.set(item.id, {
+      id: item.id,
+      url: item.url,
+      thumbnail_url: item.thumbnail || item.url,
+      title: item.title,
+    });
+  }
+
+  updatePickerSelectionUI();
+});
+
+// ── Add selected images to gallery ──────────────────────────────
+document.getElementById('addSelectedBtn').addEventListener('click', async () => {
+  if (pickerSelection.size === 0) return;
+
+  const ids = Array.from(pickerSelection.keys());
+  const overlay = document.getElementById('addingOverlay');
+  overlay.classList.add('show');
+
+  try {
+    const resp = await fetch(BULK_ADD_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': CSRF_TOKEN,
+      },
+      body: JSON.stringify({ ids }),
+    });
+
+    if (!resp.ok) throw new Error('Server error');
+
+    const data = await resp.json();
+
+    if (data.error) {
+      showToast(data.error, 'error');
+      return;
+    }
+
+    // Inject new cards into grid
+    const grid = document.getElementById('giGrid');
+    const empty = document.getElementById('emptyState');
+    if (empty) empty.remove();
+
+    data.images.forEach(img => {
+      const card = buildCard(img);
+      grid.appendChild(card);
+    });
+
+    totalImageCount += data.added;
+    updateCountBadge();
+
+    // Clear selection
+    pickerSelection.clear();
+    updatePickerSelectionUI();
+
+    const msg = data.added > 0
+      ? `Added ${data.added} image${data.added !== 1 ? 's' : ''}${data.skipped > 0 ? ` (${data.skipped} skipped — already in gallery)` : ''}`
+      : `All images already in gallery`;
+    showToast(msg, data.added > 0 ? 'success' : 'error');
+
+  } catch (err) {
+    console.error(err);
+    showToast('Failed to add images. Please try again.', 'error');
+  } finally {
+    overlay.classList.remove('show');
+  }
+});
+
+// ── Build a card element from JSON ──────────────────────────────
+function buildCard(img) {
+  const card = document.createElement('div');
+  card.className = 'gi-card';
+  card.dataset.id = img.id;
+  card.dataset.active = img.active ? 'true' : 'false';
+
+  const thumbHtml = img.thumbnail_url
+    ? `<img class="gi-thumb" src="${img.thumbnail_url}" alt="${img.title}" loading="lazy" draggable="false">`
+    : `<div class="gi-thumb-placeholder"><i class="fa-solid fa-image"></i></div>`;
+
+  card.innerHTML = `
+    <input type="checkbox" class="gi-card-checkbox gi-bulk-checkbox" value="${img.id}">
+    <div class="gi-status-dot active" id="dot-${img.id}" title="Active"></div>
+    <i class="fa-solid fa-grip-vertical gi-drag-handle"></i>
+    ${thumbHtml}
+    <div class="gi-card-body">
+      <div class="gi-card-title" title="${img.title || '-'}">${(img.title || '—').substring(0, 20)}</div>
+      <div class="gi-card-actions">
+        <button type="button"
+                class="gi-btn-icon toggle active"
+                data-url="${img.toggle_url}"
+                data-id="${img.id}"
+                onclick="toggleCard(this)"
+                title="Active — click to deactivate">
+          <i class="fa-solid fa-toggle-on"></i>
+        </button>
+        <a href="${img.edit_url}" class="gi-btn-icon edit" title="Edit">
+          <i class="fa-solid fa-pen-to-square"></i>
+        </a>
+        <button type="button"
+                class="gi-btn-icon delete"
+                data-url="${img.delete_url}"
+                data-title="${img.title || 'this image'}"
+                data-id="${img.id}"
+                onclick="deleteCard(this)"
+                title="Delete">
+          <i class="fa-solid fa-trash"></i>
+        </button>
+      </div>
+    </div>`;
+
+  // Wire checkbox
+  card.querySelector('.gi-bulk-checkbox').addEventListener('change', onBulkCheckboxChange);
+  return card;
+}
+
+// ── Toggle card status ───────────────────────────────────────────
+async function toggleCard(btn) {
+  const url = btn.dataset.url;
+  const id  = btn.dataset.id;
+  try {
+    const resp = await fetch(url, {
+      method: 'POST',
+      headers: { 'X-CSRFToken': CSRF_TOKEN },
+    });
+    const data = await resp.json();
+    const isActive = data.status;
+    const card = document.querySelector(`.gi-card[data-id="${id}"]`);
+    const dot  = document.getElementById(`dot-${id}`);
+
+    card.dataset.active = isActive ? 'true' : 'false';
+    btn.classList.toggle('active', isActive);
+    btn.classList.toggle('inactive', !isActive);
+    btn.querySelector('i').className = `fa-solid fa-toggle-${isActive ? 'on' : 'off'}`;
+    btn.title = isActive ? 'Active — click to deactivate' : 'Inactive — click to activate';
+    if (dot) {
+      dot.className = `gi-status-dot ${isActive ? 'active' : 'inactive'}`;
+      dot.title = isActive ? 'Active' : 'Inactive';
+    }
+
+    showToast(data.message || (isActive ? 'Activated' : 'Deactivated'));
+  } catch(e) {
+    showToast('Failed to toggle status', 'error');
+  }
+}
+
+// ── Delete card ──────────────────────────────────────────────────
+async function deleteCard(btn) {
+  const url   = btn.dataset.url;
+  const id    = btn.dataset.id;
+  const title = btn.dataset.title;
+  if (!confirm(`Delete "${title}"?`)) return;
+
+  try {
+    const resp = await fetch(url, {
+      method: 'POST',
+      headers: { 'X-CSRFToken': CSRF_TOKEN },
+    });
+    if (resp.ok || resp.redirected) {
+      const card = document.querySelector(`.gi-card[data-id="${id}"]`);
+      if (card) {
+        card.style.transition = 'opacity 0.2s, transform 0.2s';
+        card.style.opacity = '0';
+        card.style.transform = 'scale(0.9)';
+        setTimeout(() => {
+          card.remove();
+          totalImageCount = Math.max(0, totalImageCount - 1);
+          updateCountBadge();
+          checkEmpty();
+        }, 200);
+      }
+      showToast('Image removed from gallery');
+    } else {
+      showToast('Delete failed', 'error');
+    }
+  } catch(e) {
+    showToast('Delete failed', 'error');
+  }
+}
+
+function checkEmpty() {
+  const grid = document.getElementById('giGrid');
+  if (!grid.querySelector('.gi-card')) {
+    const empty = document.createElement('div');
+    empty.className = 'gi-empty';
+    empty.id = 'emptyState';
+    empty.style.gridColumn = '1 / -1';
+    empty.innerHTML = '<i class="fa-regular fa-image"></i><p>No images yet. Add some from the library above.</p>';
+    grid.appendChild(empty);
+  }
+}
+
+// ── Select all ───────────────────────────────────────────────────
+document.getElementById('selectAllCards').addEventListener('change', function() {
+  document.querySelectorAll('.gi-bulk-checkbox').forEach(cb => {
+    cb.checked = this.checked;
+    syncCardSelected(cb);
+  });
+  updateBulkBar();
+});
+
+// ── Bulk checkbox handling ───────────────────────────────────────
+function onBulkCheckboxChange() {
+  syncCardSelected(this);
+  updateBulkBar();
+}
+
+function syncCardSelected(cb) {
+  cb.closest('.gi-card').classList.toggle('selected', cb.checked);
+}
+
+function updateBulkBar() {
+  const checked = document.querySelectorAll('.gi-bulk-checkbox:checked');
+  const bar = document.getElementById('bulkBar');
+  const mainActions = document.getElementById('mainActions');
+  const count = checked.length;
+  document.getElementById('bulkCount').textContent = count;
+  bar.style.display = count > 0 ? 'flex' : 'none';
+}
+
+document.addEventListener('change', function(e) {
+  if (e.target.classList.contains('gi-bulk-checkbox')) {
+    onBulkCheckboxChange.call(e.target);
+  }
+});
+
+// ── Bulk toggle ──────────────────────────────────────────────────
+document.getElementById('bulkToggleBtn').addEventListener('click', async () => {
+  const ids = Array.from(document.querySelectorAll('.gi-bulk-checkbox:checked')).map(cb => cb.value);
+  if (!ids.length) return;
+
+  const form = new FormData();
+  form.append('csrfmiddlewaretoken', CSRF_TOKEN);
+  form.append('action', 'toggle');
+  ids.forEach(id => form.append('selected_ids', id));
+
+  try {
+    await fetch('/bulk/galleryimage/', { method: 'POST', body: form });
+    showToast('Status toggled — refreshing…');
+    setTimeout(() => location.reload(), 800);
+  } catch(e) {
+    showToast('Failed', 'error');
+  }
+});
+
+// ── Bulk delete ──────────────────────────────────────────────────
+document.getElementById('bulkDeleteBtn').addEventListener('click', async () => {
+  const ids = Array.from(document.querySelectorAll('.gi-bulk-checkbox:checked')).map(cb => cb.value);
+  if (!ids.length) return;
+  if (!confirm(`Delete ${ids.length} image${ids.length !== 1 ? 's' : ''}?`)) return;
+
+  const form = new FormData();
+  form.append('csrfmiddlewaretoken', CSRF_TOKEN);
+  form.append('ids', ids.join(','));
+
+  try {
+    await fetch('/bulk/galleryimage/', { method: 'POST', body: form });
+    ids.forEach(id => {
+      const card = document.querySelector(`.gi-card[data-id="${id}"]`);
+      if (card) card.remove();
+    });
+    totalImageCount = Math.max(0, totalImageCount - ids.length);
+    updateCountBadge();
+    checkEmpty();
+    updateBulkBar();
+    document.getElementById('selectAllCards').checked = false;
+    showToast(`Deleted ${ids.length} image${ids.length !== 1 ? 's' : ''}`);
+  } catch(e) {
+    showToast('Delete failed', 'error');
+  }
+});
+
+document.getElementById('bulkCancelBtn').addEventListener('click', () => {
+  document.querySelectorAll('.gi-bulk-checkbox').forEach(cb => {
+    cb.checked = false;
+    syncCardSelected(cb);
+  });
+  document.getElementById('selectAllCards').checked = false;
+  updateBulkBar();
+});
+
+// ── Drag-and-drop reorder ────────────────────────────────────────
+const grid = document.getElementById('giGrid');
+let saveOrderTimer;
+
+Sortable.create(grid, {
+  // handle: '.gi-drag-handle', // Allow grabbing anywhere on the card
+  animation: 180,
+  ghostClass: 'sortable-ghost',
+  chosenClass: 'sortable-chosen',
+  filter: '.gi-card-checkbox, .gi-btn-icon, a',
+  preventOnFilter: false, // Ensure clicking buttons works seamlessly
+  onEnd: () => {
+    clearTimeout(saveOrderTimer);
+    saveOrderTimer = setTimeout(saveOrder, 500);
+  },
+});
+
+async function saveOrder() {
+  const ids = Array.from(grid.querySelectorAll('.gi-card[data-id]'))
+    .map(el => parseInt(el.dataset.id));
+
+  try {
+    const resp = await fetch(SORT_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': CSRF_TOKEN,
+      },
+      body: JSON.stringify({ order: ids }),
+    });
+    if (resp.ok) showToast('Order saved');
+  } catch(e) {
+    console.error('Sort failed:', e);
+  }
+}
+</script>
+
+{% endblock %}

@@ -42,6 +42,8 @@ urlpatterns = [
     path('location/', include('location.urls')),
     path('preferences/', include('preferences.urls')),
     path('slideshow/', include('slideshow.urls')),
+    path('gallery/', include('gallery.urls')),
+
     path('ckeditor/', include('ckeditor_uploader.urls')),
     path('admin/', admin.site.urls),
     path("login/", login_view, name="login"),

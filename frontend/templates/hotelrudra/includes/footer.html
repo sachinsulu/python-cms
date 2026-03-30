@@ -1,4 +1,4 @@
-{% load static %}
+{% load static custom_filters %}
 <footer class="footer">
     <!-- top -->
     <div class="top">
@@ -70,7 +70,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 col-md-12 text-center">
-                    <p>{{ site_prefs.copyright_text|default:"© Copyright 2025. All Rights Reserved." }} Developed by <a href="https://longtail.info/">Longtail e-media</a></p>
+                    <p>{{ site_prefs.copyright_text|default:"© Copyright {year}. All Rights Reserved."|replace_year }} Developed by <a href="https://longtail.info/">Longtail e-media</a></p>
                 </div>
             </div>
         </div>

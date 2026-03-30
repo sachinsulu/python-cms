@@ -1,104 +1,25 @@
+{% extends 'hotelrudra/base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<!DOCTYPE html>
-<html lang="zxx">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <title>Welcome to Hotel Rudra View</title>
-    <link rel="shortcut icon" href="{% static 'img/favicon.png' %}" />
-    <link rel="stylesheet" href="{% static 'css/plugins.css' %}" />
-    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
-    <style>
-        .sidebar {
-            max-height: 100vh;  /* or any height you want */
-            overflow-y: auto;
-        }
-    </style>
-</head>
 
-<body>
-    <!-- Progress scroll totop -->
-    <div class="progress-wrap cursor-pointer">
-        <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
-            <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98" />
-        </svg>
-    </div>
+{% block title %}{{ room.meta_title|default:room.title }} | {{ site_prefs.site_name }}{% endblock %}
 
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg">
-        <div class="container-fluid px-5">
-            <!-- Logo -->
-            <div class="logo-wrapper">
-                <a class="logo" href="index.html"> <img src="{% static 'img/logo.png' %}" class="logo-img" alt=""> </a>
-            </div>
-            <!-- Button -->
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"><i class="fa-light fa-bars"></i></span> </button>
-            <!-- Menu -->
-            <div class="collapse navbar-collapse" id="navbar">
-                <ul class="navbar-nav mx-auto">
-                    <li class="nav-item"><a class="nav-link " href="index.html">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
-                    <li class="nav-item dropdown"> <a class="nav-link dropdown-toggle active" href="rooms.html" role="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">Rooms <i class="fa-light fa-angle-down"></i></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="room-details.html" class="dropdown-item"><span>Deluxe Double</span></a></li>
-                            <li><a href="room-details.html" class="dropdown-item"><span>Deluxe Twin</span></a></li>
-                            <li><a href="room-details.html" class="dropdown-item"><span>Deluxe Triple</span></a></li>
-                            <li><a href="room-details.html" class="dropdown-item"><span>Suite Room</span></a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item"><a class="nav-link" href="hall.html">Hall</a></li>
-                    <li class="nav-item"><a class="nav-link" href="restaurant.html">Restaurant</a></li>
-                    <li class="nav-item"><a class="nav-link" href="amenities.html">Facilities</a></li>
-                    <li class="nav-item"><a class="nav-link" href="gallery.html">Gallery</a></li>
-                    <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
-                </ul>
-
-                <div class="navbar-right">
-                    <div class="phonex"><a href="tel:9801303612"><i class="fa-solid fa-phone"></i> +977 9801303612</a></div>
-                </div>
-            </div>
-        </div>
-    </nav>
-
+{% block content %}
     <!-- Header Banner -->
     <header class="header slider-fade roomdetails23">
         <div class="owl-carousel owl-theme">
             <!-- The opacity on the image is made with "data-overlay-dark="number". You can change it using the numbers 0-9. -->
-            <div class="item bg-img" data-overlay-dark="5" data-background="{% static 'img/rooms/room1.jpg' %}">
+            <div class="item bg-img" data-overlay-dark="5" data-background="{{ room.image_url|default:'{% static "img/rooms/room1.jpg" %}' }}">
                 <div class="v-middle caption">
                     <div class="container">
                         <div class="row justify-content-center">
                             <div class="col-lg-12 col-md-12 text-center">
-                                <h2>Deluxe Twin Room</h2>
+                                <h2>{{ room.title }}</h2>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="item bg-img" data-overlay-dark="5" data-background="{% static 'img/rooms/room2.jpg' %}">
-                <div class="v-middle caption">
-                    <div class="container">
-                        <div class="row justify-content-center">
-                            <div class="col-lg-8 col-md-12 text-center">
-                                <h2>Deluxe Twin Room</h2>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="item bg-img" data-overlay-dark="5" data-background="{% static 'img/rooms/room3.jpg' %}">
-                <div class="v-middle caption">
-                    <div class="container">
-                        <div class="row justify-content-center">
-                            <div class="col-lg-8 col-md-12 text-center">
-                                <h2>Deluxe Twin Room</h2>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <!-- Additional items can be added here if SubPackage supports multiple images -->
         </div>
     </header>
 
@@ -110,10 +31,10 @@
                     <div class="row mb-30">
                         <div class="col-md-9">
                             <div class="section-subtitle">Laid-back places</div>
-                            <div class="section-title">Deluxe Room</div>
+                            <div class="section-title">{{ room.title }}</div>
                         </div>
                          <div class="col-md-3 mt-45">
-                            <h4>$150 <span style="font-size:23px">/ Night</span></h4>
+                            <h4>{% if room.price %}${{ room.price|floatformat:0 }}{% else %}Call for Price{% endif %} <span style="font-size:23px">/ Night</span></h4>
                         </div>
                         <div class="col-md-12">
                             <p>Our Deluxe Single Room is perfect for solo travelers. It features a comfortable queen-sized bed, air conditioning, a flat-screen TV, a mini-fridge, and a private bathroom with complimentary toiletries. Enjoy the convenience of free WiFi, daily housekeeping, and 24/7 room service to make your stay as pleasant as possible.</p>
@@ -164,18 +85,24 @@
                 </div>
                 <div class="col-lg-4 offset-lg-1 col-md-12">
                     <div class="sidebar position-sticky" style="top: 80px; z-index: 2;">
-                    <a href="#" target="_blank" class="button-3 w-100 mb-15"><i class="fa-solid fa-thumbs-up"></i> Book Your Stay</a>
+                    <a href="tel:{{ site_location.phone }}" class="button-3 w-100 mb-15"><i class="fa-solid fa-thumbs-up"></i> Book Your Stay</a>
                     <div class="cont">
                         <h5>Room Amenities</h5>
                         <ul class="list">
-                            <li><span><img src="{% static 'img/icon/working.png' %}"></span><span>Workdesk</span></li>
-                            <li><span><img src="{% static 'img/icon/shower.png' %}"></span><span>Shower</span></li>
-                            <li><span><i class="fa-light fa-air-conditioner"></i></span><span>Air Conditioner</span></li>
-                            <li><span><i class="fa-light fa-tv"></i></span><span>Television</span></li>
-                            <li><span><i class="fa-light fa-wifi"></i></span><span>Free Wi-Fi</span></li>
-                            <li><span><img src="{% static 'img/icon/hair.png' %}"></span><span>Hair Dryer</span></li>
-                            <li><span><img src="{% static 'img/icon/locker.png' %}"></span><span>Deposit Locker</span></li>
-                            <li><span><img src="{% static 'img/icon/power.png' %}"></span><span>Power Backup</span></li>
+                            {% for link in room.amenity_links.all %}
+                            <li>
+                                <span>
+                                    {% if link.feature.icon_url %}
+                                        <img src="{{ link.feature.icon_url }}" alt="{{ link.feature.title }}">
+                                    {% else %}
+                                        <i class="fa-light fa-check"></i>
+                                    {% endif %}
+                                </span>
+                                <span>{{ link.feature.title }}</span>
+                            </li>
+                            {% empty %}
+                                <li><span><i class="fa-light fa-info"></i></span><span>Standard Amenities</span></li>
+                            {% endfor %}
                         </ul>
                     </div>
                 </div>
@@ -183,7 +110,7 @@
         </div>
     </section>
 
-    <!-- Gallery Image -->
+    <!-- Other Rooms section (could be made dynamic later) -->
     <section class="galleryscroll mb-90">
         <div class="container-fluid p-0">
             <div class="row justify-content-center">
@@ -194,141 +121,29 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="owl-carousel owl-theme rooms1" style="padding-top:0px;">
-                        <div class="item">
-                            <div class="img"> 
-                                <img src="{% static 'img/rooms/1.jpg' %}" alt=""> 
-                            </div>
-                            <div class="wrap">
-                                <div class="cont">
-                                    <div class="price">$150 <span>/ night</span></div>
-                                    <h3><a href="#">Deluxe Double</a></h3>
-                                    <div class="details"> <span><i class="fa-thin fa-bed-front"></i>2 Bed</span> <span><i class="fa-thin fa-expand"></i>15 Sqm</span> <span><i class="fa-thin fa-bath"></i>1 Bathroom</span> </div>
+                        {% for other_room in room.package.sub_packages.all %}
+                            {% if other_room.pk != room.pk and other_room.is_active %}
+                            <div class="item">
+                                <div class="img"> 
+                                    <img src="{{ other_room.image_url|default:'{% static "img/rooms/1.jpg" %}' }}" alt="{{ other_room.title }}"> 
                                 </div>
-                                <div class="arrow"> <a href="room-details.html"><span class="fa-regular fa-arrow-right"></span></a> </div>
-                            </div>
-                        </div>
-                       
-                        <div class="item">
-                            <div class="img"> 
-                                <img src="{% static 'img/rooms/2.jpg' %}" alt=""> 
-                            </div>
-                            <div class="wrap">
-                                <div class="cont">
-                                    <div class="price">$200 <span>/ night</span></div>
-                                    <h3><a href="#">Deluxe Twin</a></h3>
-                                    <div class="details"> <span><i class="fa-thin fa-bed-front"></i>2-4 Bed</span> <span><i class="fa-thin fa-expand"></i>20 Sqm</span> <span><i class="fa-thin fa-mug-saucer"></i>Breakfast</span> </div>
+                                <div class="wrap">
+                                    <div class="cont">
+                                        <div class="price">{% if other_room.price %}${{ other_room.price|floatformat:0 }}{% else %}Call{% endif %} <span>/ night</span></div>
+                                        <h3><a href="{% url 'room_details' other_room.slug %}">{{ other_room.title }}</a></h3>
+                                        <div class="details"> 
+                                            {% if other_room.beds %}<span><i class="fa-thin fa-bed-front"></i>{{ other_room.beds }} Bed</span>{% endif %}
+                                            {% if other_room.capacity %}<span><i class="fa-thin fa-user"></i>{{ other_room.capacity }} Guests</span>{% endif %}
+                                        </div>
+                                    </div>
+                                    <div class="arrow"> <a href="{% url 'room_details' other_room.slug %}"><span class="fa-regular fa-arrow-right"></span></a> </div>
                                 </div>
-                                <div class="arrow"> <a href="room-details.html"><span class="fa-regular fa-arrow-right"></span></a> </div>
                             </div>
-                        </div>
-                    
-                        <div class="item">
-                            <div class="img"> <img src="{% static 'img/rooms/3.jpg' %}" alt=""> </div>
-                            <div class="wrap">
-                                <div class="cont">
-                                    <div class="price">$250 <span>/ night</span></div>
-                                    <h3><a href="#">Double Triple</a></h3>
-                                    <div class="details"> <span><i class="fa-thin fa-bed-front"></i>4 Bed</span> <span><i class="fa-thin fa-expand"></i>25 Sqm</span> <span><i class="fa-thin fa-bath"></i>2 Bathroom</span> </div>
-                                </div>
-                                <div class="arrow"> <a href="room-details.html"><span class="fa-regular fa-arrow-right"></span></a> </div>
-                            </div>
-                        </div>
+                            {% endif %}
+                        {% endfor %}
                     </div>
                 </div>
             </div>
         </div>
     </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <!-- top -->
-        <div class="top">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-3  mb-30">
-                        <div class="item">
-                            <h3>Hotel Rudra View</h3>
-                            <p> We aspire to be the best at providing best rooms excellent hospitality and a comfortable placeto stay.</p>
-                            <div class="social-icons">
-                                <ul class="list-inline">
-                                    <li><a href="https://www.facebook.com/hotelrudraview" target="_blank"><i class="fa-brands fa-facebook-f"></i></a></li>
-                                    <li><a href="#"><i class="fa-brands fa-instagram"></i></a></li>
-                                    <li><a href="#"><i class="fa-brands fa-twitter"></i></a></li>
-                                    
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-4 offset-md-1 mb-30">
-                        <div class="item">
-                            <h3>Contact us</h3>
-                            <p>Airport, Sinamangal, Kathmandu<br>Shambhu Marg Road No. 4 Chowk, Nepal
-                            </p>
-                            <div class="phone"><a href="tel:+977014588242 ">+977 01-4588242</a> | <a href="tel:+977015564880">+977 01-5564880</a></div>
-                            <div class="mail"><a href="mailto:info.hotelrudraviewnp@gmail.com">info.hotelrudraviewnp@gmail.com</a></div>
-                            <p><a href="#" target="_blank">View Google Map</a></p>
-                        </div>
-                    </div>
-
-                    <div class="col-md-4 mb-30">
-                        <div class="item">
-                            <h3>Booking Platforms</h3>
-                            <div class="social-icons1">
-                                <ul class="card1 card1a">
-                                    <li><img src="{% static 'img/icon/booking.png' %}" alt="visa"></li>
-                                    <li><img src="{% static 'img/icon/ta.png' %}" alt="paypal"></li>
-                                    <li><img src="{% static 'img/icon/ma.png' %}" alt="mastercard"></li>
-                                </ul>
-                            </div>
-                            <div class="newsletter">
-                                <h6 style="color: #fff;font-size: 19px;">We accepts</h4>
-                            </div>
-                            <div class="social-icons1">
-                                <ul class="card1">
-                                    <li><img src="{% static 'img/icon/visa.png' %}" alt="visa"></li>
-                                    <li><img src="{% static 'img/icon/paypal.png' %}" alt="paypal"></li>
-                                    <li><img src="{% static 'img/icon/mastercard.png' %}" alt="mastercard"></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- bottom -->
-        <div class="bottom">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-12 col-md-12 text-center">
-                        <p>© Copyright 2025. Hotel Rudra View. All Rights Reserved. Developed by  <a href="https://longtail.info/">Longtail e-media</a></p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>
-
-    <div class="whats_app">
-        <a href="#" target="_blank" class="whatsapp">
-            <img src="{% static 'img/icon/whatsapp.png' %}">
-        </a>
-    </div>
-    <!-- jQuery -->
-    <script src="{% static 'js/jquery-3.7.1.min.js' %}"></script>
-    <script src="{% static 'js/jquery-migrate-3.4.1.min.js' %}"></script>
-    <script src="{% static 'js/modernizr-2.6.2.min.js' %}"></script>
-    <script src="{% static 'js/imagesloaded.pkgd.min.js' %}"></script>
-    <script src="{% static 'js/jquery.isotope.v3.0.2.js' %}"></script>
-    <script src="{% static 'js/popper.min.js' %}"></script>
-    <script src="{% static 'js/bootstrap.min.js' %}"></script>
-    <script src="{% static 'js/scrollIt.min.js' %}"></script>
-    <script src="{% static 'js/jquery.waypoints.min.js' %}"></script>
-    <script src="{% static 'js/owl.carousel.min.js' %}"></script>
-    <script src="{% static 'js/jquery.stellar.min.js' %}"></script>
-    <script src="{% static 'js/jquery.magnific-popup.js' %}"></script>
-    <script src="{% static 'js/YouTubePopUp.js' %}"></script>
-    <script src="{% static 'js/select2.js' %}"></script>
-    <script src="{% static 'js/datepicker.js' %}"></script>
-    <script src="{% static 'js/custom.js' %}"></script>
-</body>
-</html>
+{% endblock %}

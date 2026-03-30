@@ -1,17 +1,21 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
+from package.models import SubPackage
 
 # Create your views here.
 def home(request):
-    return render(request, 'hotelrudra/index.html')
+    featured_rooms = SubPackage.objects.filter(is_active=True).order_by('position')[:4]
+    return render(request, 'hotelrudra/index.html', {'featured_rooms': featured_rooms})
 
 def about(request):
     return render(request, 'hotelrudra/about.html')
 
 def rooms(request):
-    return render(request, 'hotelrudra/rooms.html')
+    all_rooms = SubPackage.objects.filter(is_active=True).order_by('position')
+    return render(request, 'hotelrudra/rooms.html', {'all_rooms': all_rooms})
 
-def room_details(request):
-    return render(request, 'hotelrudra/room-details.html')
+def room_details(request, slug):
+    room = get_object_or_404(SubPackage, slug=slug, is_active=True)
+    return render(request, 'hotelrudra/room-details.html', {'room': room})
 
 def hall(request):
     return render(request, 'hotelrudra/hall.html')

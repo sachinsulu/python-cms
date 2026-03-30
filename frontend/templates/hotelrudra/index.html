@@ -129,50 +129,27 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="owl-carousel owl-theme">
-                        <div class="item mt-20">
-                            <div class="img"> <img src="{% static 'img/rooms/1.jpg' %}" alt=""> <span class="discount"><i class="fa-light fa-badge-percent"></i> 25% Off</span> </div>
-                            <div class="wrap">
-                                <div class="cont">
-                                    <div class="price">$150 <span>/ night</span></div>
-                                    <h3><a href="#">Deluxe Double</a></h3>
-                                    <div class="details"> <span><i class="fa-thin fa-bed-front"></i>2 Bed</span> <span><i class="fa-thin fa-expand"></i>15 Sqm</span> <span><i class="fa-thin fa-bath"></i>1 Bathroom</span> </div>
+                        {% for room in featured_rooms %}
+                            <div class="item mt-20">
+                                <div class="img"> 
+                                    <img src="{{ room.image_url|default:'{% static "img/rooms/1.jpg" %}' }}" alt="{{ room.title }}"> 
+                                    {% if forloop.first %}<span class="discount"><i class="fa-light fa-badge-percent"></i> 25% Off</span>{% endif %}
                                 </div>
-                                <div class="arrow"> <a href="{% url 'room_details' %}"><span class="fa-regular fa-arrow-right"></span></a> </div>
-                            </div>
-                        </div>
-                        <div class="item mt-20">
-                            <div class="img"> <img src="{% static 'img/rooms/2.jpg' %}" alt=""> </div>
-                            <div class="wrap">
-                                <div class="cont">
-                                    <div class="price">$200 <span>/ night</span></div>
-                                    <h3><a href="#">Deluxe Twin</a></h3>
-                                    <div class="details"> <span><i class="fa-thin fa-bed-front"></i>2-4 Bed</span> <span><i class="fa-thin fa-expand"></i>20 Sqm</span> <span><i class="fa-thin fa-mug-saucer"></i>Breakfast</span> </div>
+                                <div class="wrap">
+                                    <div class="cont">
+                                        <div class="price">{% if room.price %}${{ room.price|floatformat:0 }}{% else %}Call{% endif %} <span>/ night</span></div>
+                                        <h3><a href="{% url 'room_details' room.slug %}">{{ room.title }}</a></h3>
+                                        <div class="details"> 
+                                            {% if room.beds %}<span><i class="fa-thin fa-bed-front"></i>{{ room.beds }} Bed</span>{% endif %}
+                                            {% if room.capacity %}<span><i class="fa-thin fa-user"></i>{{ room.capacity }} Guests</span>{% endif %}
+                                        </div>
+                                    </div>
+                                    <div class="arrow"> <a href="{% url 'room_details' room.slug %}"><span class="fa-regular fa-arrow-right"></span></a> </div>
                                 </div>
-                                <div class="arrow"> <a href="{% url 'room_details' %}"><span class="fa-regular fa-arrow-right"></span></a> </div>
                             </div>
-                        </div>
-                        <div class="item mt-20">
-                            <div class="img"> <img src="{% static 'img/rooms/3.jpg' %}" alt=""> </div>
-                            <div class="wrap">
-                                <div class="cont">
-                                    <div class="price">$250 <span>/ night</span></div>
-                                    <h3><a href="#">Double Triple</a></h3>
-                                    <div class="details"> <span><i class="fa-thin fa-bed-front"></i>4 Bed</span> <span><i class="fa-thin fa-expand"></i>25 Sqm</span> <span><i class="fa-thin fa-bath"></i>2 Bathroom</span> </div>
-                                </div>
-                                <div class="arrow"> <a href="{% url 'room_details' %}"><span class="fa-regular fa-arrow-right"></span></a> </div>
-                            </div>
-                        </div>
-                        <div class="item mt-20">
-                            <div class="img"> <img src="{% static 'img/rooms/4.jpg' %}" alt=""> <span class="discount"><i class="fa-light fa-badge-percent"></i> 30% Off</span> </div>
-                            <div class="wrap">
-                                <div class="cont">
-                                    <div class="price">$300 <span>/ night</span></div>
-                                    <h3><a href="#">Suite Room</a></h3>
-                                    <div class="details"> <span><i class="fa-thin fa-bed-front"></i>3 Bed</span> <span><i class="fa-thin fa-expand"></i>30 Sqm</span> <span><i class="fa-thin fa-mug-saucer"></i> 1 Bathroom</span> </div>
-                                </div>
-                                <div class="arrow"> <a href="{% url 'room_details' %}"><span class="fa-regular fa-arrow-right"></span></a> </div>
-                            </div>
-                        </div>
+                        {% empty %}
+                            <p>No rooms available.</p>
+                        {% endfor %}
                     </div>
                 </div>
             </div>

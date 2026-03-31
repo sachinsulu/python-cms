@@ -1,9 +1,13 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
+from django.core.mail import send_mail
+from django.conf import settings
+from django.http import JsonResponse
 from package.models import SubPackage
 from articles.models import Article
 from gallery.models import Gallery , GalleryImage
 from location.models import Location
 from preferences.models import SitePreferences
+
 
 
 # Create your views here.
@@ -47,19 +51,30 @@ def contact(request):
     tel = [p.strip() for p in site_location.landline.split(',')]
 
     if request.method == 'POST':
-        name = request.POST.get('name')
+        name = request.POST.get('fullname')
         email = request.POST.get('email')
+        phone = request.POST.get('phone')
+        address = request.POST.get('address')
         message = request.POST.get('message')
         
         # Send email
-        send_mail(
-            'New Contact Form Submission',
-            f'Name: {name}\nEmail: {email}\nMessage: {message}',
-            settings.DEFAULT_FROM_EMAIL,
-            [settings.DEFAULT_FROM_EMAIL],
-            fail_silently=False,
-        )
+        try:
+            send_mail(
+                'New Contact Form Submission',
+                f'Name: {name}\nEmail: {email}\nPhone: {phone}\nAddress: {address}\nMessage: {message}',
+                settings.DEFAULT_FROM_EMAIL,
+                [settings.DEFAULT_FROM_EMAIL],  # Admin email address to receive contacts
+                fail_silently=False,
+            )
+            if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+                return JsonResponse({'status': 'success', 'message': 'Thank you! Your message has been sent.'})
+        except Exception as e:
+            if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+                return JsonResponse({'status': 'error', 'message': 'Failed to send email. Please try again later.'})
         
+        if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+             return JsonResponse({'status': 'success', 'message': 'Form processed.'})
+
         return redirect('contact')
     return render(request, 'hotelrudra/contact.html', {'site_location': site_location, 'site_prefs': site_prefs, 'phones': phones, 'tel': tel})
 

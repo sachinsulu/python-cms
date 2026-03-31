@@ -282,3 +282,8 @@ MESSAGE_TAGS = {
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 SESSION_COOKIE_SECURE = not DEBUG
 CSRF_COOKIE_SECURE = not DEBUG
+
+# ========================
+# EMAIL SETTINGS
+# ========================
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

@@ -62,8 +62,8 @@
                                 <div class="front">
                                     <div class="contents"> <span class="fa-regular fa-envelope"></span>
                                         <h2 class="title">Email us</h2>
-                                        <p class="text"><a href="mailto:info.hotelrudraviewnp@gmail.com">info.hotelrudraviewnp@gmail.com</a></p>
-                                        <p class="text"><a href="mailto:hrm.hotelrudraviewnp@gmail.com">hrm.hotelrudraviewnp@gmail.com</a></p>
+                                        <p class="text"><a href="mailto:{{ site_location.email_address }}">{{ site_location.email_address }}</a></p>
+                                        <p class="text"><a href="mailto:{{ site_location.ktm_email }}">{{ site_location.ktm_email }}</a></p>
                                     </div>
                                 </div>
                             </div>
@@ -74,18 +74,19 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="map">
-                                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14129.974345388413!2d85.34702985531146!3d27.702042668966257!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb1a266b342bc5%3A0x73bbfa829a89af1b!2sTribhuvan%20International%20Airport!5e0!3m2!1sen!2snp!4v1766393514942!5m2!1sen!2snp" width="100%" height="700" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                                <iframe src="{{ site_location.map_embed|safe }}" width="100%" height="700" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-5 col-md-12">
                     <div class="form2-sidebar">
-                        <form id="contactform" class="form2">
+                       <form id="contactform" class="form2" method="POST" action="{% url 'contact' %}">
                             <div class="head">
                                 <div class="row">
                                     <div class="col-md-12">
                                         <h5>Get in Touch!</h5>
+                                        {% csrf_token %}
                                     </div>
                                 </div>
                             </div>
@@ -106,12 +107,13 @@
                                     <div class="col-md-12 form-group">
                                         <textarea name="message" id="message" cols="30" rows="4" placeholder="Message"></textarea>
                                     </div>
-                                     <div class="col-sm-12" style="margin: 10px 0px;">
-                                        <div id="g-recaptcha-response" class="g-recaptcha" data-sitekey="6Lf1CysqAAAAAIgmN0_09HdspdNsgi6359cuvp4j"></div>
-                                    </div>
+                                     
                                     <div id="result_msg"></div>
                                     <div class="col-md-12">
                                         <button class="button-3" id="submit"><i class="fa-light fa-paper-plane"></i> Submit</button>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="g-recaptcha" data-sitekey="6LcsZ58sAAAAAI_ZSpNbV7YGweQAk8IELXoBsudC"></div>
                                     </div>
                                 </div>
                             </div>
@@ -122,6 +124,10 @@
         </div>
     </section>
 
+    {% endblock %}
+
+
+    {% block extra_js %}
     <script>
             // var base_url = $('base').attr('url');
             $(document).ready(function () {
@@ -142,25 +148,32 @@
                         email: {required: "Please enter your Email Address."},
                         message: {required: "Please enter your Message."}
                     },
-                    submitHandler: function (form) {
-                        var recaptcha = $("#g-recaptcha-response").val();
-                    if (recaptcha === "") {
+                    submitHandler: function (form, event) {
                         event.preventDefault();
-                        alert("Please check the recaptcha");
-                        return false;
-                    }
+                        var csrfmiddlewaretoken = $("input[name='csrfmiddlewaretoken']").val();
                         var Frmval = $("form#contactform").serialize();
                         $("button#submit").attr("disabled", "true").text('Processing...');
                         $.ajax({
                             type: "POST",
                             dataType: "JSON",
-                            url: "enquery_mail.php",
-                            data: "action=forHall&" + Frmval,
+                            url: "{% url 'contact' %}",
+                            data: Frmval,
+                            headers: {
+                                'X-CSRFToken': csrfmiddlewaretoken,
+                                'X-Requested-With': 'XMLHttpRequest'
+                            },
                             success: function (data) {
-                                var msg = eval(data);
                                 $("button#submit").removeAttr("disabled").text('Submit');
-                                $('div#result_msg').html(msg.message).css('display', 'block').fadeOut(8000);
-                                $("form#contactform")[0].reset();
+                                if (data.status === 'success') {
+                                    $('div#result_msg').html("<div class='alert alert-success'>" + data.message + "</div>").css('display', 'block').fadeOut(8000);
+                                    $("form#contactform")[0].reset();
+                                } else {
+                                    $('div#result_msg').html("<div class='alert alert-danger'>" + data.message + "</div>").css('display', 'block').fadeOut(8000);
+                                }
+                            },
+                            error: function () {
+                                $("button#submit").removeAttr("disabled").text('Submit');
+                                $('div#result_msg').html("<div class='alert alert-danger'>An error occurred. Please try again later.</div>").css('display', 'block').fadeOut(8000);
                             }
                         });
                         return false;
@@ -169,5 +182,6 @@
             });
     </script>
 
+    {% endblock %}
 
-{% endblock %}
+

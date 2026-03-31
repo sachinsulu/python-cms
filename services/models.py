@@ -47,14 +47,6 @@ class Service(MediaUsageMixin, models.Model):
         verbose_name        = 'Service'
         verbose_name_plural = 'Services'
 
-    @property
-    def image_url(self):
-        if self.image_id:
-            try:
-                return self.image.file.url
-            except (ValueError, AttributeError):
-                pass
-        return None
 
     def __str__(self):
         return self.title
@@ -67,3 +59,11 @@ class Service(MediaUsageMixin, models.Model):
                 )['position__max']
                 self.position = (last or 0) + 1
             super().save(*args, **kwargs)
+
+    @property
+    def image_url(self):
+        """Return the file URL of the linked Media object, or None."""
+        try:
+            return self.image.file.url if self.image_id else None
+        except (ValueError, AttributeError):
+            return None

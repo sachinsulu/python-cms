@@ -72,12 +72,12 @@
 
       <!-- Hidden fields the picker writes into -->
       <input type="hidden" name="media_url" id="testimonialMediaUrl" value="">
-      <input type="hidden" name="media_id"  id="testimonialMediaId"  value="">
+      <input type="hidden" name="image_media"  id="testimonialMediaId"  value="{{ form.image_media.value|default_if_none:'' }}">
 
-      <div class="input-file-container">
+      <div class="input-file-container" style="display:none;">
         {% if is_edit and testimonial.image %}
           <input type="file" name="image" accept="image/*" id="id_image"
-                 data-existing-image="{{ testimonial.image.url }}">
+                 data-existing-image="{{ testimonial.image_url }}">
         {% else %}
           {{ form.image }}
         {% endif %}
@@ -170,6 +170,14 @@
 function setFormAction(action) {
     document.getElementById('form-action').value = action;
 }
+
+// Reset remove_image flag when picking a new image from the library
+document.addEventListener("mediaPicked", function(e) {
+    const removeInput = document.getElementById("remove_image");
+    if (removeInput) {
+        removeInput.value = "0";
+    }
+});
 </script>
 
 {% endblock %}

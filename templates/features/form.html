@@ -114,12 +114,12 @@
 
       <!-- Hidden fields the picker writes into -->
       <input type="hidden" name="media_url" id="featureMediaUrl" value="">
-      <input type="hidden" name="media_id"  id="featureMediaId"  value="">
+      <input type="hidden" name="image_media"  id="featureMediaId"  value="{{ form.image_media.value|default_if_none:'' }}">
 
-      <div class="input-file-container">
+      <div class="input-file-container" style="display:none;">
         {% if is_edit and feature.image %}
           <input type="file" name="image" accept="image/*" id="id_image"
-                 data-existing-image="{{ feature.image.url }}">
+                 data-existing-image="{{ feature.image_url }}">
         {% else %}
           {{ form.image }}
         {% endif %}
@@ -215,4 +215,13 @@ document.addEventListener('click', function (e) {
 });
 </script>
 
+<script>
+// Reset remove_image flag when picking a new image from the library
+document.addEventListener("mediaPicked", function(e) {
+    const removeInput = document.getElementById("remove_image");
+    if (removeInput) {
+        removeInput.value = "0";
+    }
+});
+</script>
 {% endblock %}

@@ -21,147 +21,18 @@
     <section class="amenities section-padding">
         <div class="container">
             <div class="row">
+                {% for amenity in amenities %}
                 <div class="col-lg-3 col-md-4">
                     <div class="item mb-25">
                         <div class="cont up">
-                            <div class="icon"> <img src="{% static 'img/icon/wifi.png' %}"> </div>
+                            <div class="icon"> <img src="{{ amenity.image_url }}"> </div>
                             <div class="text">
-                                <h5>High-Speed Wifi</h5>
+                                <h5>{{ amenity.title }}</h5>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-4">
-                    <div class="item mb-25">
-                        <div class="cont up">
-                            <div class="icon"> <img src="{% static 'img/icon/housekeeping.png' %}"> </div>
-                            <div class="text">
-                                <h5>Daily Housekeeping</h5>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-4">
-                    <div class="item mb-25">
-                        <div class="cont up">
-                            <div class="icon"><img src="{% static 'img/icon/romservice.png' %}"></div>
-                            <div class="text">
-                                <h5>Prompt Room Service</h5>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-4">
-                    <div class="item mb-25">
-                        <div class="cont up">
-                            <div class="icon"><img src="{% static 'img/icon/iron.png' %}"></div>
-                            <div class="text">
-                                <h5>Laundry and Ironing</h5>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-4">
-                    <div class="item mb-25">
-                        <div class="cont up">
-                            <div class="icon"><img src="{% static 'img/icon/concierge.png' %}"></div>
-                            <div class="text">
-                                <h5>Concierge</h5>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-4">
-                    <div class="item  mb-25">
-                        <div class="cont up">
-                            <div class="icon"><img src="{% static 'img/icon/doctor.png' %}"></div>
-                            <div class="text">
-                                <h5>Doctor/Nurse on Call</h5>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-4">
-                    <div class="item mb-25">
-                        <div class="cont up">
-                            <div class="icon"><img src="{% static 'img/icon/elevator.png' %}"></div>
-                            <div class="text">
-                                <h5>Elevator</h5>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-4">
-                    <div class="item mb-25">
-                        <div class="cont up">
-                            <div class="icon"><img src="{% static 'img/icon/casino.png' %}"></div>
-                            <div class="text">
-                                <h5>Mini Casino</h5>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-4">
-                    <div class="item mb-25">
-                        <div class="cont up">
-                            <div class="icon"><img src="{% static 'img/icon/airport.png' %}"></div>
-                            <div class="text">
-                                <h5>Airport Transfer on Request</h5>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-4">
-                    <div class="item  mb-25">
-                        <div class="cont up">
-                            <div class="icon"><img src="{% static 'img/icon/vehicle.png' %}"></div>
-                            <div class="text">
-                                <h5>Vehicle Hiring on Request</h5>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-4">
-                    <div class="item mb-25">
-                        <div class="cont up">
-                            <div class="icon"><img src="{% static 'img/icon/post.png' %}"></div>
-                            <div class="text">
-                                <h5>Postal Service on Request</h5>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="col-lg-3 col-md-4">
-                    <div class="item mb-25">
-                        <div class="cont up">
-                            <div class="icon"><img src="{% static 'img/icon/gym.png' %}"></div>
-                            <div class="text">
-                                <h5>Gymnasium</h5>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-4">
-                    <div class="item mb-25">
-                        <div class="cont up">
-                            <div class="icon"><img src="{% static 'img/icon/park.png' %}"></div>
-                            <div class="text">
-                                <h5>Parking Space</h5>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-4">
-                    <div class="item mb-25">
-                        <div class="cont up">
-                            <div class="icon"><img src="{% static 'img/icon/pool.png' %}"></div>
-                            <div class="text">
-                                <h5>Swimming Pool</h5>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                {% endfor %}
             </div>
         </div>
     </section>

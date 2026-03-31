@@ -127,12 +127,12 @@
 
       <!-- Hidden fields the picker writes into -->
       <input type="hidden" name="media_url" id="offerMediaUrl" value="">
-      <input type="hidden" name="media_id"  id="offerMediaId"  value="">
+      <input type="hidden" name="image_media"  id="offerMediaId"  value="{{ form.image_media.value|default_if_none:'' }}">
 
-      <div class="input-file-container">
+      <div class="input-file-container" style="display:none;">
         {% if is_edit and item.image %}
           <input type="file" name="image" accept="image/*" id="id_image"
-                 data-existing-image="{{ item.image.url }}">
+                 data-existing-image="{{ item.image_url }}">
         {% else %}
           {{ form.image }}
         {% endif %}
@@ -293,6 +293,14 @@
 function setFormAction(action) {
     document.getElementById('form-action').value = action;
 }
+
+// Reset remove_image flag when picking a new image from the library
+document.addEventListener("mediaPicked", function(e) {
+    const removeInput = document.getElementById("remove_image");
+    if (removeInput) {
+        removeInput.value = "0";
+    }
+});
 
 // ─── Active toggle ─────────────────────────────────────────────
 const activeInput = document.querySelector('#{{ form.active.id_for_label }}');

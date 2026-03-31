@@ -24,8 +24,7 @@
             {% if form.image_media.errors %}<div class="error">{{ form.image_media.errors }}</div>{% endif %}
 
             <input type="hidden" name="media_url" id="galleryMediaUrl" value="">
-            <input type="hidden" name="media_id"  id="galleryMediaId"  value="{{ form.image_media.value|default_if_none:'' }}">
-            <input type="hidden" name="{{ form.image_media.name }}" id="{{ form.image_media.id_for_label }}" value="{{ form.image_media.value|default_if_none:'' }}">
+            <input type="hidden" name="image_media" id="{{ form.image_media.id_for_label }}" value="{{ form.image_media.value|default_if_none:'' }}">
 
             <!-- Picker trigger -->
             <button type="button"
@@ -44,7 +43,7 @@
                 <img id="media-preview-img" style="max-width: 200px; max-height: 200px; object-fit: cover; border-radius: 4px;" src="{% if image.image_url %}{{ image.image_url }}{% endif %}">
             </div>
             
-            <input type="hidden" name="remove_image" id="remove_image_input" value="0">
+            <input type="hidden" name="remove_image" id="remove_image" value="0">
         </div>
 
         <div class="form-group" style="display: flex; align-items: center; gap: 10px;">
@@ -67,13 +66,13 @@
         document.getElementById("media-preview-container").style.display = "none";
         document.getElementById("media-preview-img").src = "";
         document.getElementById("remove-image-btn").style.display = "none";
-        document.getElementById("remove_image_input").value = "1";
+        document.getElementById("remove_image").value = "1";
     }
 
     // Show remove button when new image picked
     document.addEventListener("mediaPicked", function(e) {
         document.getElementById("remove-image-btn").style.display = "inline-block";
-        document.getElementById("remove_image_input").value = "0";
+        document.getElementById("remove_image").value = "0";
     });
 </script>
 {% endblock %}

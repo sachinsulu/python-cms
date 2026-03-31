@@ -7,6 +7,7 @@ from articles.models import Article
 from gallery.models import Gallery , GalleryImage
 from location.models import Location
 from preferences.models import SitePreferences
+from services.models import Service
 
 
 
@@ -35,7 +36,8 @@ def restaurant(request):
     return render(request, 'hotelrudra/restaurant.html')
 
 def amenities(request):
-    return render(request, 'hotelrudra/amenities.html')
+    amenities = Service.objects.filter(status=True, type='service').order_by('position')
+    return render(request, 'hotelrudra/amenities.html', {'amenities': amenities})
 
 def gallery(request):
     gallery = Gallery.objects.filter(active=True, type='Innerpage').order_by('position')

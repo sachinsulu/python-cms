@@ -5,41 +5,20 @@
 
 {% block content %}
     <!-- Header Banner -->
-    <section class="banner-header bg-img" data-overlay-dark="5" data-background="{% static 'img/default.jpg' %}">
+    {% if article.image_url %}
+    <section class="banner-header bg-img" data-overlay-dark="5" data-background="{{ article.image_url }}">
         <div class="container">
             <div class="row">
                 <div class="col-md-12 text-center">
-                    <div class="title">About Hotel</div>
+                    <div class="title">{{article.title}}</div>
                 </div>
             </div>
         </div>
     </section>
+    {% endif %}
+    
 
-    <section class="page-details section-padding">
-        <div class="container">
-           <div class="row">
-                <div class="col-md-12">
-                    <div class="section-title">Hotel Rudra View</div>
-                </div>
-            </div>
-            <div class="row mb-30">
-                <div class="col-md-12">
-                    <p>Welcome to the Hotel Rudra view and spa, a three star luxury city hotel is located near Tribhuwan International Airport, Pashupatinath Temple, and Airport Golf Course. We aspire to be the best at providing best rooms excellent hospitality and a comfortable placeto stay.</p>
+    {{article.content | safe}}
 
-                    <p>Nestibulum tristique posuere magna quis elementum neque luctus non aenean sed arcu efficitur commodo justo the accumsan massa. Nivamus ac risus in imperdiet mollis id sit amet odio vestibulum dignissim finibus diam this a fermen.</p>
-                </div>
-            </div>
-            <div class="row justify-content-center">
-                <div class="col-lg-4 col-md-12 mb-15">
-                    <img src="{% static 'img/gallery/01.jpg' %}" class="img-fluid rounded-2" alt="">
-                </div>
-                <div class="col-lg-4 col-md-12 mb-15">
-                    <img src="{% static 'img/gallery/08.jpg' %}" class="img-fluid rounded-2" alt="">
-                </div>
-                <div class="col-lg-4 col-md-12 mb-15">
-                    <img src="{% static 'img/gallery/11.jpg' %}" class="img-fluid rounded-2" alt="">
-                </div>
-            </div>
-        </div>
-    </section>
+
 {% endblock %}

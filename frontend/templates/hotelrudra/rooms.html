@@ -23,7 +23,7 @@
                     <div class="col-lg-6 col-md-12 mb-30">
                         <div class="item">
                             <div class="img"> 
-                                <img src="{{ room.image_url|default:'{% static "img/rooms/1.jpg" %}' }}" alt="{{ room.title }}"> 
+                                <img src="{% if room.image_url %}{{ room.image_url }}{% else %}{% static 'img/rooms/1.jpg' %}{% endif %}" alt="{{ room.title }}"> 
                             </div>
                             <div class="wrap">
                                 <div class="cont">

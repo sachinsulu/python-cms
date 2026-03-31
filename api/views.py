@@ -632,19 +632,30 @@ def get_all_galleries(request):
 
 @api_view(['GET'])
 def get_gallery(request, title):
-    """Get a single gallery by slug with its active images."""
-    try:
-        gallery = Gallery.objects.prefetch_related(
-            Prefetch(
-                'images',
-                queryset=GalleryImage.objects.filter(active=True).select_related('image').order_by('position')
-            )
-        ).get(title=title, active=True)
-    except Gallery.DoesNotExist:
+    """Get a single gallery by title/slug with its active images."""
+    # 1. Try exact match (case-insensitive)
+    gallery = Gallery.objects.filter(title__iexact=title, active=True).first()
+    
+    # 2. Fallback: match by slugified title
+    if not gallery:
+        for g in Gallery.objects.filter(active=True):
+            if slugify(g.title) == title:
+                gallery = g
+                break
+                
+    if not gallery:
         return Response(
             {'error': 'Gallery not found'},
             status=status.HTTP_404_NOT_FOUND
         )
+
+    # Re-fetch with optimized prefetch for the specific gallery
+    gallery = Gallery.objects.prefetch_related(
+        Prefetch(
+            'images',
+            queryset=GalleryImage.objects.filter(active=True).select_related('image').order_by('position')
+        )
+    ).get(pk=gallery.pk)
+
     serializer = GallerySerializer(gallery, context={'request': request})
     return Response(serializer.data)
-

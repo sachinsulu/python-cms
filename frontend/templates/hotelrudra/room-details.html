@@ -8,7 +8,7 @@
     <header class="header slider-fade roomdetails23">
         <div class="owl-carousel owl-theme">
             <!-- The opacity on the image is made with "data-overlay-dark="number". You can change it using the numbers 0-9. -->
-            <div class="item bg-img" data-overlay-dark="5" data-background="{{ room.image_url|default:'{% static "img/rooms/room1.jpg" %}' }}">
+            <div class="item bg-img" data-overlay-dark="5" data-background="{% if room.image_url %}{{ room.image_url }}{% else %}{% static 'img/rooms/room1.jpg' %}{% endif %}">
                 <div class="v-middle caption">
                     <div class="container">
                         <div class="row justify-content-center">
@@ -125,7 +125,7 @@
                             {% if other_room.pk != room.pk and other_room.is_active %}
                             <div class="item">
                                 <div class="img"> 
-                                    <img src="{{ other_room.image_url|default:'{% static "img/rooms/1.jpg" %}' }}" alt="{{ other_room.title }}"> 
+                                    <img src="{% if other_room.image_url %}{{ other_room.image_url }}{% else %}{% static 'img/rooms/1.jpg' %}{% endif %}" alt="{{ other_room.title }}"> 
                                 </div>
                                 <div class="wrap">
                                     <div class="cont">

@@ -62,5 +62,13 @@ class GalleryImage(MediaUsageMixin, models.Model):
     class Meta:
         ordering = ['position']
 
+    @property
+    def image_url(self):
+        """Return the file URL of the linked Media object, or None."""
+        try:
+            return self.image.file.url if self.image_id else None
+        except (ValueError, AttributeError):
+            return None
+
     def __str__(self):
         return self.title or f"Image for {self.gallery.title}"

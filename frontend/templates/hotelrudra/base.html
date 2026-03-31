@@ -15,6 +15,7 @@
 
     <link rel="stylesheet" href="{% static 'css/plugins.css' %}" />
     <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/lightgallery.min.css' %}">
     
     {% block extra_css %}{% endblock %}
 </head>
@@ -52,6 +53,14 @@
     <script src="{% static 'js/select2.js' %}"></script>
     <script src="{% static 'js/datepicker.js' %}"></script>
     <script src="{% static 'js/custom.js' %}"></script>
+    <script src='https://www.google.com/recaptcha/api.js' async defer></script>
+
+     <!-- Gallery -->
+    <script src="{% static 'js/function.js' %}"></script>
+    <script src="{% static 'js/lightgallery.min.js' %}"></script>
+    <script src="{% static 'js/lg-share.min.js' %}"></script>
+    <script src="{% static 'js/lg-fullscreen.min.js' %}"></script>
+    <script src="{% static 'js/lg-zoom.min.js' %}"></script>
 
     {% block extra_js %}{% endblock %}
 </body>

@@ -262,7 +262,7 @@ class GalleryImageSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = GalleryImage
-        fields = ['id', 'title', 'active', 'position', 'image_url']
+        fields = '__all__'
 
     def get_image_url(self, obj):
         if not obj.image_id:
@@ -279,9 +279,12 @@ class GallerySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Gallery
-        fields = ['id', 'title', 'type', 'active', 'position', 'images']
-        
+        fields = '__all__'
     def get_images(self, obj):
-        active_images = obj.images.filter(active=True).order_by('position')
-        return GalleryImageSerializer(active_images, many=True, context=self.context).data
+        # Try to use prefetched data if available
+        if hasattr(obj, '_prefetched_objects_cache') and 'images' in obj._prefetched_objects_cache:
+            images = obj.images.all()
+        else:
+            images = obj.images.filter(active=True).order_by('position')
+        return GalleryImageSerializer(images, many=True, context=self.context).data
 

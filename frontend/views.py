@@ -9,6 +9,7 @@ from gallery.models import Gallery , GalleryImage
 from location.models import Location
 from preferences.models import SitePreferences
 from services.models import Service
+from testimonials.models import Testimonial
 
 
 
@@ -18,7 +19,10 @@ def home(request):
     articles = Article.objects.filter(active=True, homepage=True, slug='hotel-rudra').first()
     amenities = Service.objects.filter(status=True, type='service').order_by('position')[:8]
     main_services = Service.objects.filter(status=True, type='main-service').order_by('position')[:4]
-    return render(request, 'hotelrudra/index.html', {'featured_rooms': featured_rooms, 'article': articles, 'amenities': amenities, 'main_services': main_services})
+    testimonials = Testimonial.objects.filter(active=True).order_by('position')[:4]
+    gallery = Gallery.objects.filter(active=True, type='Homepage').order_by('position')[:8]
+    gallery_images = GalleryImage.objects.filter(active=True, gallery__type='Homepage').order_by('?')
+    return render(request, 'hotelrudra/index.html', {'featured_rooms': featured_rooms, 'article': articles, 'amenities': amenities, 'main_services': main_services, 'testimonials': testimonials, 'gallery': gallery, 'gallery_images': gallery_images})
 
 
 

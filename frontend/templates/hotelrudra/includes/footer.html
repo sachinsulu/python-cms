@@ -24,8 +24,19 @@
                         <h3>Contact us</h3>
                         <p>{{ site_location.ktm_address|linebreaksbr }}<br>{{site_location.fiscal_address|linebreaksbr}}</p>
                         <div class="phone">
-                            <a href="tel:{{ site_location.phone }}">{{ site_location.phone }}</a>
-                            {% if site_location.landline %} | <a href="tel:{{ site_location.landline }}">{{ site_location.landline }}</a>{% endif %}
+                            {% with phones=site_location.phone|split:"," %}
+                                {% for p in phones %}
+                                    <a href="tel:{{ p }}">{{ p }}</a>{% if not forloop.last %}, {% endif %}
+                                {% endfor %}
+                            {% endwith %}
+                            {% if site_location.landline %}
+                                | 
+                                {% with landlines=site_location.landline|split:"," %}
+                                    {% for l in landlines %}
+                                        <a href="tel:{{ l }}">{{ l }}</a>{% if not forloop.last %}, {% endif %}
+                                    {% endfor %}
+                                {% endwith %}
+                            {% endif %}
                         </div>
                         <div class="mail"><a href="mailto:{{ site_location.email_address }}">{{ site_location.email_address }}</a></div>
                         {% if site_location.map_embed %}

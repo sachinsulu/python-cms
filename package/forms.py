@@ -1,7 +1,7 @@
 from django import forms
 from django.core.exceptions import ValidationError
 from features.models import FeatureGroup, Feature
-from .models import Package, SubPackage
+from .models import Package, SubPackage, SubPackageImage
 from ckeditor_uploader.widgets import CKEditorUploadingWidget
 from media_manager.fields import MediaFKField
 
@@ -94,3 +94,15 @@ class SubPackageForm(forms.ModelForm):
         if commit:
             instance.save()
         return instance
+
+
+class SubPackageImageForm(forms.ModelForm):
+    image_media = MediaFKField()
+
+    class Meta:
+        model = SubPackageImage
+        fields = ['title', 'active']
+        widgets = {
+            'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter image title (optional)'}),
+            'active': forms.CheckboxInput(attrs={'class': 'form-check-input'})
+        }

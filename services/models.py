@@ -2,6 +2,7 @@
 from django.db import models
 from ckeditor_uploader.fields import RichTextUploadingField
 from django.db import transaction
+from django.utils.text import slugify
 from django.db.models import Max
 
 from media_manager.mixins import MediaUsageMixin
@@ -59,6 +60,10 @@ class Service(MediaUsageMixin, models.Model):
                 )['position__max']
                 self.position = (last or 0) + 1
             super().save(*args, **kwargs)
+
+    @property
+    def slug(self):
+        return slugify(self.title)
 
     @property
     def image_url(self):

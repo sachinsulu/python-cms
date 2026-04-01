@@ -133,145 +133,31 @@
         <div class="border-bottom">
             <div class="container">
                 <ul class="tab-buttons">
-                    <li data-tab="#spa" class="tab-btn active-btn"><span>Spa & Wellness</span></li>
-                    <li data-tab="#sauna" class="tab-btn"><span>Sauna & Jacuzzi</span></li>
-                    <li data-tab="#restaurant" class="tab-btn "><span>Restaurant & Bar</span>
-                    </li>
-                    <li data-tab="#hall" class="tab-btn"><span>Meeting & Halls</span></li>
+                    {% for service in main_services %}
+                    <li data-tab="#{{ service.title|slugify }}" class="tab-btn{% if forloop.first %} active-btn{% endif %}"><span>{{ service.title }}</span></li>
+                    {% endfor %}
                 </ul>
             </div>
         </div>
         <div class="container">
             <div class="tabs-content">
-                <!--tab 1-->
-                <div class="tab active-tab" id="spa">
+                {% for service in main_services %}
+                <div class="tab{% if forloop.first %} active-tab{% endif %}" id="{{ service.title|slugify }}">
                     <div class="bg0">
                         <div class="row justify-content-center align-items-center">
                             <div class="col-lg-6 col-md-12">
-                                <img src="{% static 'img/offers/06.jpg' %}" class="img-fluid" alt="">
+                                <img src="{{ service.image_url }}" class="img-fluid" alt="">
                             </div>
                             <div class="col-lg-5 offset-lg-1 col-md-12">
                                 <div class="section-subtitle">So Many Ways to Unwind</div>
-                                <div class="section-title">Spa & Wellness</div>
-                                <p class="mb-25">Wellness quisque sodales intioni varius estibum miss arman ortiton telus euismod nis the massa nutodio farmention lorem pretium ametis velen fermen.</p>
-                                <ul class="list-unstyled list mb-30">
-                                    <li>
-                                        <div class="list-icon"> <span class="fa-regular fa-check"></span> </div>
-                                        <div class="list-text">
-                                            <p>Overnight de-stress retreat</p>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="list-icon"> <span class="fa-regular fa-check"></span> </div>
-                                        <div class="list-text">
-                                            <p>Wedding spa packages</p>
-                                        </div>
-                                    </li>
-                                </ul>
-                                <a href="{% url 'dynamic_detail' 'spa' %}" class="button-3"><i class="fa-solid fa-spa"></i> View details</a>
+                                <div class="section-title">{{ service.title }}</div>
+                               {{ service.content|safe }}
+                               <a href="{% url 'service_detail' service.slug %}" class="button-3"><i class="fa-solid fa-spa"></i> View details</a>
                             </div>
                         </div>
                     </div>
                 </div>
-
-                <!--tab 2-->
-                <div class="tab" id="sauna">
-                    <div class="bg0">
-                        <div class="row justify-content-center align-items-center">
-                            <div class="col-lg-6 col-md-12">
-                                <img src="{% static 'img/offers/08.jpg' %}" class="img-fluid" alt="">
-                            </div>
-                            <div class="col-lg-5 offset-lg-1 col-md-12">
-                                <div class="section-subtitle">Training Spaces</div>
-                                <div class="section-title">Sauna & Jacuzzi</div>
-                                <p class="mb-25">Fitness quisque sodales intioni varius estibum miss arman ortiton telus euismod nis the massa nutodio farmention lorem pretium ametis velen fermen.</p>
-                                <ul class="list-unstyled list mb-30">
-                                    <li>
-                                        <div class="list-icon"> <span class="fa-regular fa-check"></span> </div>
-                                        <div class="list-text">
-                                            <p>Cardiovascular equipment</p>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="list-icon"> <span class="fa-regular fa-check"></span> </div>
-                                        <div class="list-text">
-                                            <p>Some dumbells for weight lifting</p>
-                                        </div>
-                                    </li>
-                                </ul>
-                                <a href="{% url 'dynamic_detail' 'spa' %}" class="button-3"><i class="fa-solid fa-dumbbell"></i> View details</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!--tab 3-->
-                <div class="tab" id="restaurant">
-                    <div class="bg0">
-                        <div class="row justify-content-center align-items-center">
-                            <div class="col-lg-6 col-md-12">
-                                <img src="{% static 'img/offers/05.jpg' %}" class="img-fluid" alt="">
-                            </div>
-                            <div class="col-lg-5 offset-lg-1 col-md-12">
-                                <div class="section-subtitle">Addres of taste</div>
-                                <div class="section-title">Restaurant</div>
-                                <p class="mb-25">Restaurant quisue sodale intion varius estibum miss arman ortiton telus euismod nis the massa fermen.</p>
-                                <ul class="list-unstyled list mb-30">
-                                    <li>
-                                        <div class="list-icon"> <span class="fa-regular fa-check"></span> </div>
-                                        <div class="list-text">
-                                            <p>Breakfast: 7.00 am – 11.00 am (daily)</p>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="list-icon"> <span class="fa-regular fa-check"></span> </div>
-                                        <div class="list-text">
-                                            <p>Lunch: 12.00 pm – 2.00 pm (daily)</p>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="list-icon"> <span class="fa-regular fa-check"></span> </div>
-                                        <div class="list-text">
-                                            <p>Dinne: 6.30 pm – 10.00 pm (daily)</p>
-                                        </div>
-                                    </li>
-                                </ul>
-                                <a href="{% url 'dynamic_detail' 'restaurant' %}" class="button-3"><i class="fa-solid fa-user-chef"></i> View menu</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!--tab 4-->
-                <div class="tab" id="hall">
-                    <div class="bg0">
-                        <div class="row justify-content-center align-items-center">
-                            <div class="col-lg-6 col-md-12">
-                                <img src="{% static 'img/offers/07.jpg' %}" class="img-fluid" alt="">
-                            </div>
-                            <div class="col-lg-5 offset-lg-1 col-md-12">
-                                <div class="section-subtitle">Meeting & Halls</div>
-                                <div class="section-title">Perfect Space</div>
-                                <p class="mb-25">Swimming quisque sodales intioni varius estibum miss arman ortiton telus euismod nis the massa nutodio farmention lorem pretium ametis velen fermen.</p>
-                                <ul class="list-unstyled list mb-30">
-                                    <li>
-                                        <div class="list-icon"> <span class="fa-regular fa-check"></span> </div>
-                                        <div class="list-text">
-                                            <p>Perfect spacious place</p>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="list-icon"> <span class="fa-regular fa-check"></span> </div>
-                                        <div class="list-text">
-                                            <p>Perfect spacious place</p>
-                                        </div>
-                                    </li>
-                                </ul>
-                                <a href="{% url 'dynamic_detail' 'hall' %}" class="button-3"><i class="fa-solid fa-person-swimming"></i> View details</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                {% endfor %}
             </div>
         </div>
     </section>

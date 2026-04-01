@@ -1,7 +1,8 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.core.mail import send_mail
 from django.conf import settings
-from django.http import JsonResponse
+from django.http import JsonResponse, Http404
+from django.utils.text import slugify
 from package.models import Package, SubPackage
 from articles.models import Article
 from gallery.models import Gallery , GalleryImage
@@ -17,7 +18,7 @@ def home(request):
     articles = Article.objects.filter(active=True, homepage=True, slug='hotel-rudra').first()
     amenities = Service.objects.filter(status=True, type='service').order_by('position')[:8]
     main_services = Service.objects.filter(status=True, type='main-service').order_by('position')[:4]
-    return render(request, 'hotelrudra/index.html', {'featured_rooms': featured_rooms, 'article': articles, 'amenities': amenities})
+    return render(request, 'hotelrudra/index.html', {'featured_rooms': featured_rooms, 'article': articles, 'amenities': amenities, 'main_services': main_services})
 
 
 
@@ -70,3 +71,13 @@ def contact(request):
         return redirect('contact')
     return render(request, 'hotelrudra/contact.html', {'site_location': site_location, 'site_prefs': site_prefs, 'phones': phones, 'tel': tel})
 
+def Main_Service(request):
+    main_services = Service.objects.filter(status=True, type='main-service').order_by('position')
+    return render(request, 'hotelrudra/spa.html', {'main_services': main_services})
+
+def service_detail(request, slug):
+    services = Service.objects.filter(status=True)
+    service = next((s for s in services if s.slug == slug), None)
+    if not service:
+        raise Http404("Service not found")
+    return render(request, 'hotelrudra/service-detail.html', {'service': service})

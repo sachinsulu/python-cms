@@ -172,3 +172,40 @@ class SubPackage(MediaUsageMixin, models.Model):
 
     def __str__(self):
         return f"{self.title} → {self.package.title}"
+
+
+class SubPackageImage(MediaUsageMixin, models.Model):
+    media_fields = ['image']
+
+    subpackage = models.ForeignKey(
+        SubPackage,
+        on_delete=models.CASCADE,
+        related_name='images',
+        verbose_name='Sub-Package'
+    )
+    image = models.ForeignKey(
+        'media_manager.Media',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='subpackage_gallery_images'
+    )
+    title = models.CharField(max_length=255, blank=True)
+    active = models.BooleanField(default=True)
+    position = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        ordering = ['position']
+        verbose_name = 'Sub-Package Image'
+        verbose_name_plural = 'Sub-Package Images'
+
+    @property
+    def image_url(self):
+        """Return the file URL of the linked Media object, or None."""
+        try:
+            return self.image.file.url if self.image_id else None
+        except (ValueError, AttributeError):
+            return None
+
+    def __str__(self):
+        return self.title or f"Image for {self.subpackage.title}"

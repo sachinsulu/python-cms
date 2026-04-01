@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from articles.models import Article
 from blog.models import Blog
-from package.models import Package, SubPackage, SubPackageAmenity
+from package.models import Package, SubPackage, SubPackageAmenity, SubPackageImage
 from testimonials.models import Testimonial
 from social.models import Social
 from nearby.models import Nearby
@@ -61,14 +61,33 @@ class FeatureSerializer(serializers.ModelSerializer):
         fields = ['id', 'title', 'image', 'content', 'icon', 'active', 'position']
 
 
+class SubPackageImageSerializer(serializers.ModelSerializer):
+    image_url = serializers.SerializerMethodField()
+
+    class Meta:
+        model = SubPackageImage
+        fields = ['id', 'title', 'active', 'position', 'image_url']
+
+    def get_image_url(self, obj):
+        if not obj.image_id:
+            return None
+        try:
+            url = obj.image.file.url
+            request = self.context.get('request')
+            return request.build_absolute_uri(url) if request else url
+        except (ValueError, AttributeError):
+            return None
+
+
 class SubPackageSerializer(serializers.ModelSerializer):
     amenities = serializers.SerializerMethodField()
+    images = serializers.SerializerMethodField()
 
     class Meta:
         model = SubPackage
         fields = [
             'id', 'title', 'slug', 'content', 'image',
-            'price', 'capacity', 'beds', 'amenities',
+            'price', 'capacity', 'beds', 'amenities', 'images',
             'is_active', 'position',
         ]
 
@@ -83,6 +102,13 @@ class SubPackageSerializer(serializers.ModelSerializer):
         else:
             features = obj.amenities.filter(active=True).order_by('amenity_links__position')
         return FeatureSerializer(features, many=True, context=self.context).data
+
+    def get_images(self, obj):
+        if hasattr(obj, '_prefetched_objects_cache') and 'images' in obj._prefetched_objects_cache:
+            images = [img for img in obj.images.all() if img.active]
+        else:
+            images = obj.images.filter(active=True).order_by('position')
+        return SubPackageImageSerializer(images, many=True, context=self.context).data
 
 
 class PackageSerializer(serializers.ModelSerializer):

@@ -66,11 +66,7 @@
                 <th style="width:30px;"></th>
                 <th style="width:30px;"><input type="checkbox" id="select-all"></th>
                 <th>Title</th>
-                {% if package.is_room %}
-                <th>Price</th>
-                <th>Capacity</th>
-                <th>Beds</th>
-                {% endif %}
+                <th>Images</th>
                 <th>Status</th>
                 <th>Actions</th>
             </tr>
@@ -86,11 +82,11 @@
                     <a href="{% url 'subpackage_edit' package.slug s.slug %}">{{ s.title }}</a>
                     <br><small>{{ s.slug }}</small>
                 </td>
-                {% if package.is_room %}
-                <td>{% if s.price %}₹{{ s.price }}{% else %}-{% endif %}</td>
-                <td>{% if s.capacity %}{{ s.capacity }} guests{% else %}-{% endif %}</td>
-                <td>{% if s.beds %}{{ s.beds }}{% else %}-{% endif %}</td>
-                {% endif %}
+                <td>
+                    <a href="{% url 'subpackage_images' package.slug s.slug %}" class="btn btn-secondary btn-sm" style="font-size:12px; padding:4px 8px;">
+                        <i class="fa-solid fa-images"></i> Manage Gallery ({{ s.images_count|default:"0" }})
+                    </a>
+                </td>
                 <td id="status-{{ s.id }}" class="{% if s.is_active %}status-active{% else %}status-inactive{% endif %}">
                     {{ s.is_active|yesno:"Active,Inactive" }}
                 </td>
@@ -101,7 +97,7 @@
                           onclick="event.preventDefault(); toggleStatus(this)">
                         <i class="fa-solid {% if s.is_active %}fa-toggle-on{% else %}fa-toggle-off{% endif %}"></i>
                     </span>
-                    <a href="{% url 'subpackage_edit' package.slug s.slug %}" class="icon edit">
+                    <a href="{% url 'subpackage_edit' package.slug s.slug %}" class="icon edit" title="Edit">
                         <i class="fa-solid fa-pen-to-square"></i>
                     </a>
                     <span class="icon delete"
@@ -120,10 +116,6 @@
 {% load static %}
 <script>
 $(document).ready(function () {
-    var isRoom = {{ package.is_room|yesno:"true,false" }};
-    var nonSortTargets = isRoom ? [0, 1, 7] : [0, 1, 4];
-    var nonSearchTargets = isRoom ? [0, 1, 5, 6, 7] : [0, 1, 3, 4];
-
     var table = $('#subPackageTable').DataTable({
         paging: true,
         pageLength: 10,
@@ -131,8 +123,8 @@ $(document).ready(function () {
         ordering: true,
         order: [], // Default to no sorting, respecting server-side order
         columnDefs: [
-            { orderable: false, targets: nonSortTargets },
-            { searchable: false, targets: nonSearchTargets }
+            { orderable: false, targets: [0, 1, 5] },
+            { searchable: false, targets: [0, 1, 3, 4, 5] }
         ],
         language: {
             emptyTable: "No sub-packages found. Create one!",

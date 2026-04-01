@@ -5,7 +5,7 @@ from rest_framework import status
 
 
 
-from package.models import Package, SubPackage, SubPackageAmenity
+from package.models import Package, SubPackage, SubPackageAmenity, SubPackageImage
 from articles.models import Article
 from blog.models import Blog
 from testimonials.models import Testimonial
@@ -114,8 +114,13 @@ def get_all_packages(request):
                 Prefetch(
                     'amenity_links',
                     queryset=SubPackageAmenity.objects.select_related('feature__image').order_by('position'),
+                ),
+                Prefetch(
+                    'images',
+                    queryset=SubPackageImage.objects.filter(active=True).select_related('image').order_by('position')
                 )
             )
+
         )
     ).order_by('position')
     serializer = PackageSerializer(packages, many=True, context={'request': request})
@@ -133,6 +138,10 @@ def get_package(request, slug):
                     Prefetch(
                         'amenity_links',
                         queryset=SubPackageAmenity.objects.select_related('feature__image').order_by('position'),
+                    ),
+                    Prefetch(
+                        'images',
+                        queryset=SubPackageImage.objects.filter(active=True).select_related('image').order_by('position')
                     )
                 )
             )
@@ -354,6 +363,10 @@ def get_by_slug(request, slug):
                     Prefetch(
                         'amenity_links',
                         queryset=SubPackageAmenity.objects.select_related('feature__image').order_by('position'),
+                    ),
+                    Prefetch(
+                        'images',
+                        queryset=SubPackageImage.objects.filter(active=True).select_related('image').order_by('position')
                     )
                 )
             )

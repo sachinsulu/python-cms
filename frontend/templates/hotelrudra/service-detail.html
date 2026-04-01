@@ -1,0 +1,39 @@
+{% extends 'hotelrudra/base.html' %}
+{% load static %}
+
+{% block content %}
+    <!-- Header Banner -->
+    <header class="header slider-fade roomdetails23">
+        <div class="owl-carousel owl-theme">
+            <div class="item bg-img" data-overlay-dark="5" data-background="{% if service.image_url %}{{ service.image_url }}{% else %}{% static 'img/banner/04.jpg' %}{% endif %}">
+                <div class="v-middle caption">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-12 col-md-12 text-center">
+                                <h2>{{ service.title }}</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </header>
+
+    <!-- Page Details -->
+    <section class="page-details section-padding">
+        <div class="container">
+           <div class="row">
+                <div class="col-md-12">
+                    <div class="section-subtitle">Hotel Rudra View</div>
+                    <div class="section-title">{{ service.title }}</div>
+                </div>
+            </div>
+            <div class="row mb-30">
+                <div class="col-md-12">
+                    {{ service.content|safe }}
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

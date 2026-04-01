@@ -6,6 +6,7 @@ from django.views.decorators.csrf import ensure_csrf_cookie
 from django.views.decorators.http import require_POST
 from django.urls import reverse
 from django.http import JsonResponse
+from django.db.models import Count
 
 from users.decorators import requires_perm
 from media_manager.models import Media
@@ -31,7 +32,7 @@ def gallery_list(request):
 
     galleries = Gallery.objects.filter(
         type=current_filter
-    ).order_by('position')
+    ).annotate(images_count=Count('images', distinct=True)).order_by('position')
 
     return render(request, 'gallery/list.html', {
         'list': galleries,

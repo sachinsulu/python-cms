@@ -11,4 +11,7 @@ urlpatterns = [
     path('<slug:package_slug>/sub/', views.subpackage_list, name='subpackage_list'),
     path('<slug:package_slug>/sub/create/', views.subpackage_create, name='subpackage_create'),
     path('<slug:package_slug>/sub/edit/<slug:slug>/', views.subpackage_edit, name='subpackage_edit'),
+    path('<slug:package_slug>/sub/edit/<slug:slug>/images/', views.subpackage_images, name='subpackage_images'),
+    path('<slug:package_slug>/sub/edit/<slug:slug>/images/bulk-add/', views.subpackage_bulk_add_images, name='subpackage_bulk_add_images'),
+    path('<slug:package_slug>/sub/edit/<slug:slug>/images/edit/<int:img_pk>/', views.subpackage_image_edit, name='subpackage_image_edit'),
 ]

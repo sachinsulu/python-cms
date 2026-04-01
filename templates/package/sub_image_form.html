@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% block content %}
+<header>
+    <h2>Edit Image: {{ sub.title }}</h2>
+    <div style="display: flex; gap: 8px;">
+        <a href="{% url 'subpackage_images' package.slug sub.slug %}" class="btn btn-secondary">Back to Images</a>
+    </div>
+</header>
+<br>
+
+<div class="form-container">
+    <form method="post">
+        {% csrf_token %}
+
+        <div class="form-group">
+            <label for="{{ form.title.id_for_label }}">Title (Optional)</label>
+            {{ form.title }}
+            {{ form.title.errors }}
+        </div>
+
+        <div class="form-group">
+            <label>Image Selection</label>
+            
+            {% if form.image_media.errors %}<div class="error">{{ form.image_media.errors }}</div>{% endif %}
+
+            <input type="hidden" name="media_url" id="galleryMediaUrl" value="">
+            <input type="hidden" name="image_media" id="{{ form.image_media.id_for_label }}" value="{{ form.image_media.value|default_if_none:'' }}">
+
+            <!-- Picker trigger -->
+            <button type="button"
+                    class="btn"
+                    style="margin-top:8px;"
+                    data-media-picker
+                    data-target-url="#galleryMediaUrl"
+                    data-target-id="#{{ form.image_media.id_for_label }}"
+                    data-preview="#media-preview-container"
+                    data-type="image">
+                <i class="fa-solid fa-photo-film"></i> Choose from Library
+            </button>
+            <button type="button" class="btn btn-danger" id="remove-image-btn" style="margin-top: 8px; display: {% if form.image_media.value %}inline-block{% else %}none{% endif %};" onclick="removeImage()">Remove Image</button>
+
+            <div id="media-preview-container" style="display: {% if form.image_media.value %}block{% else %}none{% endif %}; margin-top:10px;">
+                <img id="media-preview-img" style="max-width: 200px; max-height: 200px; object-fit: cover; border-radius: 4px;" src="{% if image.image_url %}{{ image.image_url }}{% endif %}">
+            </div>
+            
+            <input type="hidden" name="remove_image" id="remove_image" value="0">
+        </div>
+
+        <div class="form-group" style="display: flex; align-items: center; gap: 10px;">
+            <label for="{{ form.active.id_for_label }}" style="margin: 0;">Active:</label>
+            {{ form.active }}
+            {{ form.active.errors }}
+        </div>
+
+        <div class="form-actions" style="margin-top:20px; display:flex; gap:10px;">
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+            <a href="{% url 'subpackage_images' package.slug sub.slug %}" class="btn">Cancel</a>
+        </div>
+    </form>
+</div>
+
+<script>
+    // Remove button functionality
+    function removeImage() {
+        document.getElementById("{{ form.image_media.id_for_label }}").value = "";
+        document.getElementById("media-preview-container").style.display = "none";
+        document.getElementById("media-preview-img").src = "";
+        document.getElementById("remove-image-btn").style.display = "none";
+        document.getElementById("remove_image").value = "1";
+    }
+
+    // Show remove button when new image picked
+    document.addEventListener("mediaPicked", function(e) {
+        document.getElementById("remove-image-btn").style.display = "inline-block";
+        document.getElementById("remove_image").value = "0";
+    });
+</script>
+{% endblock %}

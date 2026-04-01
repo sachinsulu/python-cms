@@ -64,7 +64,11 @@
             <td>
                 <a href="{% url 'gallery_edit' b.pk %}">{{ b.title }}</a><br>
             </td>
-            <td><span class="badge">{{ b.images.count }}</span></td>
+            <td>
+                <a href="{% url 'gallery_images' b.pk %}" class="btn btn-secondary btn-sm" style="font-size:12px; padding:4px 8px;">
+                    <i class="fa-solid fa-images"></i> Manage Gallery ({{ b.images_count|default:"0" }})
+                </a>
+            </td>
             <td id="status-{{ b.id }}" class="{% if b.active %}status-active{% else %}status-inactive{% endif %}">
                 {{ b.active|yesno:"Active,Inactive" }}
             </td>
@@ -72,7 +76,6 @@
                 <span class="status-toggle" data-url="{% url 'toggle_status' 'gallery' b.id %}" data-target="status-{{ b.id }}" onclick="event.preventDefault(); toggleStatus(this)">
                     <i class="fa-solid {% if b.active %}fa-toggle-on{% else %}fa-toggle-off{% endif %}"></i>
                 </span>
-                <a href="{% url 'gallery_images' b.pk %}" class="icon edit" title="Manage Images"><i class="fa-solid fa-images"></i></a>
                 <a href="{% url 'gallery_edit' b.pk %}" class="icon edit"><i class="fa-solid fa-pen-to-square"></i></a>
                 <span class="icon delete" onclick="openDeleteModal('gallery', '{{ b.title|escapejs }}', '{% url 'delete_object' 'gallery' b.id %}', false)">
                     <i class="fa-solid fa-trash"></i>

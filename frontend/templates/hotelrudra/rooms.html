@@ -31,14 +31,14 @@
                                         {% if room.price %}${{ room.price|floatformat:0 }}{% else %}Call{% endif %} 
                                         <span>/ night</span>
                                     </div>
-                                    <h3><a href="{% url 'room_details' room.slug %}">{{ room.title }}</a></h3>
+                                    <h3><a href="{% url 'dynamic_detail' room.slug %}">{{ room.title }}</a></h3>
                                     <div class="details"> 
                                         {% if room.beds %}<span><i class="fa-thin fa-bed-front"></i>{{ room.beds }} Bed</span>{% endif %}
                                         {% if room.capacity %}<span><i class="fa-thin fa-user"></i>{{ room.capacity }} Guests</span>{% endif %}
                                         <span><i class="fa-thin fa-expand"></i>15 Sqm</span> 
                                     </div>
                                 </div>
-                                <div class="arrow"> <a href="{% url 'room_details' room.slug %}"><span class="fa-regular fa-arrow-right"></span></a> </div>
+                                <div class="arrow"> <a href="{% url 'dynamic_detail' room.slug %}"><span class="fa-regular fa-arrow-right"></span></a> </div>
                             </div>
                         </div>
                     </div>

@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <title>Welcome to Hotel Rudra View</title>
+    <title>{% if room %}{{ room.title }}{% else %}Meeting & Hall{% endif %} - Hotel Rudra View</title>
     <link rel="shortcut icon" href="{% static 'img/favicon.png' %}" />
     <link rel="stylesheet" href="{% static 'css/plugins.css' %}" />
     <link rel="stylesheet" href="{% static 'css/style.css' %}" />
@@ -108,10 +108,14 @@
                 <div class="col-lg-7 col-md-12 mb-30">
                     <div class="row mb-30">
                         <div class="col-md-12">
-                            <div class="section-subtitle">Elegant Hall</div>
-                            <div class="section-title">About Hall</div>
+                            <div class="section-subtitle">{% if room %}{{ room.package.title }}{% else %}Elegant Hall{% endif %}</div>
+                            <div class="section-title">{{ room.title|default:"About Hall" }}</div>
+                            {% if room.content %}
+                            {{ room.content|safe }}
+                            {% else %}
                             <p>Our hotel hall offers a grand and welcoming space for guests. The elegant decor, featuring luxurious furnishings and tasteful accents, creates a sophisticated ambiance. Whether you're arriving for check-in or waiting to meet friends, the spacious hall provides a comfortable and inviting atmosphere. It's the perfect place to relax, socialize, enjoy stylish surroundings.</p>
-                            <p>Our hotel hall is designed with guest convenience in mind. With plenty of seating areas, you can comfortably rest while you wait for your room or your companions. The hall also offers complimentary refreshments and a selection of magazines and newspapers for your enjoyment.Our attentive staff is always available to assist with any inquiries or offer recommendations to enhance your stay.</p>
+                            <p>Our hotel hall is designed with guest convenience in mind. With plenty of seating areas, you can comfortably rest while you wait for your room or your companions. The hall also offers complimentary refreshments and a selection of magazines and newspapers for your enjoyment. Our attentive staff is always available to assist with any inquiries or offer recommendations to enhance your stay.</p>
+                            {% endif %}
                         </div>
                     </div>
 

@@ -1,0 +1,126 @@
+{% extends 'hotelrudra/base.html' %}
+{% load static %}
+
+{% block title %}{{ room.meta_title|default:room.title }} | {{ site_prefs.site_name }}{% endblock %}
+
+{% block content %}
+    <!-- Header Banner -->
+    <header class="header slider-fade roomdetails23">
+        <div class="owl-carousel owl-theme">
+            <div class="item bg-img" data-overlay-dark="5" data-background="{% if room.image_url %}{{ room.image_url }}{% else %}{% static 'img/default.jpg' %}{% endif %}">
+                <div class="v-middle caption">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-12 col-md-12 text-center">
+                                <h2>{{ room.title }}</h2>
+                                <p>{{ room.package.title }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Page Details -->
+    <section class="page-details section-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-7 col-md-12 mb-30">
+                    <div class="row mb-30">
+                        <div class="col-md-12">
+                            <div class="section-subtitle">{{ room.package.title }}</div>
+                            <div class="section-title">{{ room.title }}</div>
+
+                            {% if room.content %}
+                                {{ room.content|safe }}
+                            {% else %}
+                                <p>Contact us for more information about this option.</p>
+                            {% endif %}
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <a href="#" class="button-3" data-bs-toggle="modal" data-bs-target="#enquiryModal">
+                                <i class="fa-solid fa-thumbs-up"></i> Enquiry Now
+                            </a>
+                            <a href="{% url 'dynamic_detail' room.package.slug %}" class="button-4 ms-2">
+                                <i class="fa-solid fa-arrow-left"></i> Back to {{ room.package.title }}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                {% if room.amenities == True %}
+                <div class="col-lg-4 offset-lg-1 col-md-12">
+                    <div class="cont position-sticky" style="top: 80px; z-index: 2;">
+                        <h5>Amenities</h5>
+                        <ul class="list">
+                            {% for link in room.amenity_links.all %}
+                            <li>
+                                <span>
+                                    {% if link.feature.icon_url %}
+                                        <img src="{{ link.feature.icon_url }}" alt="{{ link.feature.title }}">
+                                    {% else %}
+                                        <i class="fa-light fa-check"></i>
+                                    {% endif %}
+                                </span>
+                                <span>{{ link.feature.title }}</span>
+                            </li>
+                            {% empty %}
+                                <li><span><i class="fa-light fa-info"></i></span><span>Contact us for details</span></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+
+    <!-- Enquiry Modal -->
+    <div class="modal fade" id="enquiryModal" tabindex="-1" aria-labelledby="enquiryModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="enquiryModalLabel">{{ room.title }} Enquiry</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="enquiry_form" method="post" action="{% url 'contact' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="subject" value="{{ room.title }} Enquiry">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <input name="fullname" class="form-control" type="text" placeholder="Full Name*" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <input name="email" class="form-control" type="email" placeholder="Email Address*" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <input name="phone" class="form-control" type="text" placeholder="Phone Number*" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <input name="address" class="form-control" type="text" placeholder="Address">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <input name="form_eventDate" class="form-control" type="date" placeholder="Event Date">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <input name="form_pax" class="form-control" type="number" min="1" placeholder="Number of Guests">
+                            </div>
+                            <div class="col-md-12 mb-3">
+                                <textarea name="message" class="form-control" rows="4" placeholder="Special requirements..."></textarea>
+                            </div>
+                            <div class="col-md-12">
+                                <button type="submit" class="button-3">Submit Enquiry</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

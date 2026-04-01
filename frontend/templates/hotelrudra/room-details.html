@@ -36,57 +36,17 @@
                          <div class="col-md-3 mt-45">
                             <h4>{% if room.price %}${{ room.price|floatformat:0 }}{% else %}Call for Price{% endif %} <span style="font-size:23px">/ Night</span></h4>
                         </div>
-                        <div class="col-md-12">
-                            <p>Our Deluxe Single Room is perfect for solo travelers. It features a comfortable queen-sized bed, air conditioning, a flat-screen TV, a mini-fridge, and a private bathroom with complimentary toiletries. Enjoy the convenience of free WiFi, daily housekeeping, and 24/7 room service to make your stay as pleasant as possible.</p>
-                        </div>
+                        {{ room.content|safe }}
+
                     </div>
-                    <div class="row">
-                        <div class="col-lg-6 col-md-12 mb-30">
-                            <h5>Check-in</h5>
-                            <ul class="list-unstyled page-list">
-                                <li>
-                                    <div class="page-list-icon"> <span class="ti-check"></span> </div>
-                                    <div class="page-list-text">
-                                        <p>Check-in from 9:00 AM - anytime</p>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="page-list-icon"> <span class="ti-check"></span> </div>
-                                    <div class="page-list-text">
-                                        <p>Early check-in subject to availability</p>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="col-lg-6 col-md-12 mb-30">
-                            <h5>Check-out</h5>
-                            <ul class="list-unstyled page-list mb-30">
-                                <li>
-                                    <div class="page-list-icon"> <span class="ti-check"></span> </div>
-                                    <div class="page-list-text">
-                                        <p>Check-out before noon</p>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="page-list-icon"> <span class="ti-check"></span> </div>
-                                    <div class="page-list-text">
-                                        <p>Express check-out</p>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <h5>Children and extra beds</h5>
-                            <p>Children are welcome Kids stay free! Children stay free when using existing bedding; children may not be eligible for complimentary breakfast Rollaway/extra beds are available for $ 10 per day.</p>
-                        </div>
-                    </div>
-                </div>
+
                 <div class="col-lg-4 offset-lg-1 col-md-12">
                     <div class="sidebar position-sticky" style="top: 80px; z-index: 2;">
                     <a href="tel:{{ site_location.phone }}" class="button-3 w-100 mb-15"><i class="fa-solid fa-thumbs-up"></i> Book Your Stay</a>
+                    {% if room.amenities == True %}
                     <div class="cont">
+                        
                         <h5>Room Amenities</h5>
                         <ul class="list">
                             {% for link in room.amenity_links.all %}
@@ -104,7 +64,9 @@
                                 <li><span><i class="fa-light fa-info"></i></span><span>Standard Amenities</span></li>
                             {% endfor %}
                         </ul>
+                       
                     </div>
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -130,13 +92,13 @@
                                 <div class="wrap">
                                     <div class="cont">
                                         <div class="price">{% if other_room.price %}${{ other_room.price|floatformat:0 }}{% else %}Call{% endif %} <span>/ night</span></div>
-                                        <h3><a href="{% url 'room_details' other_room.slug %}">{{ other_room.title }}</a></h3>
+                                        <h3><a href="{% url 'dynamic_detail' other_room.slug %}">{{ other_room.title }}</a></h3>
                                         <div class="details"> 
                                             {% if other_room.beds %}<span><i class="fa-thin fa-bed-front"></i>{{ other_room.beds }} Bed</span>{% endif %}
                                             {% if other_room.capacity %}<span><i class="fa-thin fa-user"></i>{{ other_room.capacity }} Guests</span>{% endif %}
                                         </div>
                                     </div>
-                                    <div class="arrow"> <a href="{% url 'room_details' other_room.slug %}"><span class="fa-regular fa-arrow-right"></span></a> </div>
+                                    <div class="arrow"> <a href="{% url 'dynamic_detail' other_room.slug %}"><span class="fa-regular fa-arrow-right"></span></a> </div>
                                 </div>
                             </div>
                             {% endif %}

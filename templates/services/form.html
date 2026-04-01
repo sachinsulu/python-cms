@@ -119,6 +119,17 @@
     </div>
 
     {% if current_type == 'main-service' %}
+    <!-- Content -->
+    <div class="form-group">
+      <label for="{{ form.content.id_for_label }}">
+          {{ form.content.label }}
+      </label>
+      {{ form.content }}
+      {% if form.content.errors %}
+          <div class="error">{{ form.content.errors }}</div>
+      {% endif %}
+    </div>
+
     <!-- Link -->
     <div class="form-group">
       <label>{{ form.link.label }}</label>
@@ -161,23 +172,6 @@
           </button>
         </div>
       </div>
-    </div>
-    {% else %}
-    <!-- Content -->
-    <div class="form-group">
-      <label for="{{ form.content.id_for_label }}">
-          {{ form.content.label }} <span style="color: red;">*</span>
-      </label>
-      {{ form.content }}
-      <a class="btn medium bg-orange mrg5T"
-        title="Read More"
-        id="readMore"
-        href="javascript:void(0);">
-            <span class="button-content">Read More</span>
-        </a>
-      {% if form.content.errors %}
-          <div class="error">{{ form.content.errors }}</div>
-      {% endif %}
     </div>
     {% endif %}
 
@@ -292,6 +286,7 @@ applyBtn.addEventListener('click', () => {
         itemSelect.style.display = 'none';
         previewText.innerHTML = '';
         applyBtn.style.display = 'none';
+    }
 });
 {% endif %}
 

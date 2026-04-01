@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.core.mail import send_mail
 from django.conf import settings
 from django.http import JsonResponse
-from package.models import SubPackage
+from package.models import Package, SubPackage
 from articles.models import Article
 from gallery.models import Gallery , GalleryImage
 from location.models import Location
@@ -13,27 +13,35 @@ from services.models import Service
 
 # Create your views here.
 def home(request):
-    featured_rooms = SubPackage.objects.filter(is_active=True).order_by('position')[:4]
+    featured_rooms = SubPackage.objects.filter(is_active=True, package__package_type='room').order_by('position')[:4]
     articles = Article.objects.filter(active=True, homepage=True, slug='hotel-rudra').first()
-    return render(request, 'hotelrudra/index.html', {'featured_rooms': featured_rooms, 'article': articles})
+    amenities = Service.objects.filter(status=True, type='service').order_by('position')[:8]
+    main_services = Service.objects.filter(status=True, type='main-service').order_by('position')[:4]
+    return render(request, 'hotelrudra/index.html', {'featured_rooms': featured_rooms, 'article': articles, 'amenities': amenities})
 
 def about(request):
     article = Article.objects.filter(active=True, slug='about-us').first()
     return render(request, 'hotelrudra/about.html', {'article': article})
 
 def rooms(request):
-    all_rooms = SubPackage.objects.filter(is_active=True).order_by('position')
+    all_rooms = SubPackage.objects.filter(is_active=True, package__package_type='room').order_by('position')
     return render(request, 'hotelrudra/rooms.html', {'all_rooms': all_rooms})
 
-def room_details(request, slug):
-    room = get_object_or_404(SubPackage, slug=slug, is_active=True)
-    return render(request, 'hotelrudra/room-details.html', {'room': room})
-
-def hall(request):
-    return render(request, 'hotelrudra/hall.html')
-
-def restaurant(request):
-    return render(request, 'hotelrudra/restaurant.html')
+def dynamic_detail(request, slug):
+    # Try finding a non-room Package first
+    package = Package.objects.filter(slug=slug, is_active=True, package_type='non_room').first()
+    if package:
+        sub_packages = package.sub_packages.filter(is_active=True).order_by('position')
+        return render(request, 'hotelrudra/package-detail.html', {
+            'package': package, 
+            'sub_packages': sub_packages
+        })
+    
+    # Otherwise, try finding a SubPackage (e.g. specific Room or Hall detail)
+    sub = get_object_or_404(SubPackage, slug=slug, is_active=True)
+    if sub.package.package_type == 'non_room':
+        return render(request, 'hotelrudra/sub-detail.html', {'room': sub})
+    return render(request, 'hotelrudra/room-details.html', {'room': sub})
 
 def amenities(request):
     amenities = Service.objects.filter(status=True, type='service').order_by('position')
@@ -80,8 +88,6 @@ def contact(request):
         return redirect('contact')
     return render(request, 'hotelrudra/contact.html', {'site_location': site_location, 'site_prefs': site_prefs, 'phones': phones, 'tel': tel})
 
-def nearby(request):
-    return render(request, 'hotelrudra/nearby.html')
 
 def spa(request):
     return render(request, 'hotelrudra/spa.html')

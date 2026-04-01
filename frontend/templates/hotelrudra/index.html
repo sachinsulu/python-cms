@@ -110,13 +110,13 @@
                                 <div class="wrap">
                                     <div class="cont">
                                         <div class="price">{% if room.price %}${{ room.price|floatformat:0 }}{% else %}Call{% endif %} <span>/ night</span></div>
-                                        <h3><a href="{% url 'room_details' room.slug %}">{{ room.title }}</a></h3>
+                                        <h3><a href="{% url 'dynamic_detail' room.slug %}">{{ room.title }}</a></h3>
                                         <div class="details"> 
                                             {% if room.beds %}<span><i class="fa-thin fa-bed-front"></i>{{ room.beds }} Bed</span>{% endif %}
                                             {% if room.capacity %}<span><i class="fa-thin fa-user"></i>{{ room.capacity }} Guests</span>{% endif %}
                                         </div>
                                     </div>
-                                    <div class="arrow"> <a href="{% url 'room_details' room.slug %}"><span class="fa-regular fa-arrow-right"></span></a> </div>
+                                    <div class="arrow"> <a href="{% url 'dynamic_detail' room.slug %}"><span class="fa-regular fa-arrow-right"></span></a> </div>
                                 </div>
                             </div>
                         {% empty %}
@@ -168,7 +168,7 @@
                                         </div>
                                     </li>
                                 </ul>
-                                <a href="{% url 'spa' %}" class="button-3"><i class="fa-solid fa-spa"></i> View details</a>
+                                <a href="{% url 'dynamic_detail' 'spa' %}" class="button-3"><i class="fa-solid fa-spa"></i> View details</a>
                             </div>
                         </div>
                     </div>
@@ -199,7 +199,7 @@
                                         </div>
                                     </li>
                                 </ul>
-                                <a href="{% url 'spa' %}" class="button-3"><i class="fa-solid fa-dumbbell"></i> View details</a>
+                                <a href="{% url 'dynamic_detail' 'spa' %}" class="button-3"><i class="fa-solid fa-dumbbell"></i> View details</a>
                             </div>
                         </div>
                     </div>
@@ -236,7 +236,7 @@
                                         </div>
                                     </li>
                                 </ul>
-                                <a href="{% url 'restaurant' %}" class="button-3"><i class="fa-solid fa-user-chef"></i> View menu</a>
+                                <a href="{% url 'dynamic_detail' 'restaurant' %}" class="button-3"><i class="fa-solid fa-user-chef"></i> View menu</a>
                             </div>
                         </div>
                     </div>
@@ -267,7 +267,7 @@
                                         </div>
                                     </li>
                                 </ul>
-                                <a href="{% url 'hall' %}" class="button-3"><i class="fa-solid fa-person-swimming"></i> View details</a>
+                                <a href="{% url 'dynamic_detail' 'hall' %}" class="button-3"><i class="fa-solid fa-person-swimming"></i> View details</a>
                             </div>
                         </div>
                     </div>
@@ -287,103 +287,20 @@
                 
                 <div class="col-lg-12 col-md-12">
                     <div class="row">
+                        {% for amenity in amenities %}
                         <div class="col-lg-3 col-md-6">
                             <div class="item mb-25">
                                 <div class="cont up">
                                     <div class="icon">
-                                        <img src="{% static 'img/icon/airport.png' %}"> 
+                                        <img src="{{ amenity.image_url }}"> 
                                     </div>
                                     <div class="text">
-                                        <h5>Pick Up & Drop</h5>
+                                        <h5>{{ amenity.title }}</h5>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-3 col-md-6">
-                            <div class="item hover-box mb-25">
-                                <div class="cont up">
-                                    <div class="icon">
-                                        <img src="{% static 'img/icon/park.png' %}">  
-                                    </div>
-                                    <div class="text">
-                                        <h5>Parking Space</h5>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-6">
-                            <div class="item hover-box mb-25">
-                                <div class="cont up">
-                                    <div class="icon">
-                                        <img src="{% static 'img/icon/serving-dish.png' %}"> 
-                                    </div>
-                                    <div class="text">
-                                        <h5>Room Service</h5>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-6">
-                            <div class="item hover-box mb-25">
-                                <div class="cont up">
-                                    <div class="icon">
-                                        <img src="{% static 'img/icon/wifi.png' %}"> 
-                                    </div>
-                                    <div class="text">
-                                        <h5>Free Internet</h5>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-6">
-                            <div class="item hover-box mb-25">
-                                <div class="cont up">
-                                    <div class="icon">
-                                        <img src="{% static 'img/icon/dinner-table.png' %}">
-                                    </div>
-                                    <div class="text">
-                                        <h5>Restaurant & Bar</h5>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="col-lg-3 col-md-6">
-                            <div class="item hover-box mb-25">
-                                <div class="cont up">
-                                    <div class="icon">
-                                        <img src="{% static 'img/icon/hand.png' %}"> 
-                                    </div>
-                                    <div class="text">
-                                        <h5>Cards Accepted</h5>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-6">
-                            <div class="item hover-box mb-25">
-                                <div class="cont up">
-                                    <div class="icon">
-                                        <img src="{% static 'img/icon/no-smoking.png' %}"> 
-                                    </div>
-                                    <div class="text">
-                                        <h5>No Smoking Room</h5>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-6">
-                            <div class="item hover-box mb-25">
-                                <div class="cont up">
-                                    <div class="icon">
-                                        <img src="{% static 'img/icon/housekeeping.png' %}"> 
-                                    </div>
-                                    <div class="text">
-                                        <h5>Housekeeeping</h5>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        {% endfor %}
                     </div>
                 </div>
             </div>

@@ -1,0 +1,127 @@
+{% extends 'hotelrudra/base.html' %}
+{% load static %}
+
+{% block title %}{{ package.title }} - {{ site_prefs.site_name }}{% endblock %}
+
+{% block content %}
+    <!-- Header Banner -->
+    <header class="header slider-fade roomdetails23">
+        <div class="owl-carousel owl-theme">
+            <div class="item bg-img" data-overlay-dark="5" data-background="{% if package.image_url %}{{ package.image_url }}{% else %}{% static 'img/default.jpg' %}{% endif %}">
+                <div class="v-middle caption">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-12 col-md-12 text-center">
+                                <h2>{{ package.title }}</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Page Details -->
+    <section class="page-details section-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-md-12 mb-30">
+                    <div class="row mb-30">
+                        <div class="col-md-12">
+                            <div class="section-subtitle">{{ package.title }}</div>
+                            <div class="section-title">Overview</div>
+                            <div class="package-content">
+                                {{ package.content|safe }}
+                            </div>
+                        </div>
+                    </div>
+
+                    {% if sub_packages %}
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="section-subtitle">Options</div>
+                            <div class="section-title">Our {{ package.title }} Varieties</div>
+                            <div class="row">
+                                {% for sub in sub_packages %}
+                                <div class="col-md-6 mb-30">
+                                    <div class="item">
+                                        <div class="img">
+                                            <img src="{% if sub.image_url %}{{ sub.image_url }}{% else %}{% static 'img/default.jpg' %}{% endif %}" alt="{{ sub.title }}" class="img-fluid">
+                                        </div>
+                                        <div class="cont mt-15">
+                                            <h4>{{ sub.title }}</h4>
+                                            <div class="sub-content">
+                                                {{ sub.content|safe|truncatewords_html:30 }}
+                                            </div>
+                                            {% if sub.price %}
+                                            <p class="price mt-10">Starting from <strong>${{ sub.price|floatformat:0 }}</strong></p>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                    
+                    <div class="row mt-30">
+                        <div class="col-md-12">
+                            <a href="#" class="button-3" data-bs-toggle="modal" data-bs-target="#enquiryModal"><i class="fa-solid fa-thumbs-up"></i> Enquiry Now</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-12">
+                    <div class="cont position-sticky" style="top: 80px; z-index: 2;">
+                        <h5>Contact Information</h5>
+                        <p>Need more information? Feel free to contact us.</p>
+                        <ul class="list-unstyled">
+                            <li class="mb-2"><i class="fa-solid fa-phone me-2"></i> {{ site_location.phone }}</li>
+                            <li class="mb-2"><i class="fa-solid fa-envelope me-2"></i> {{ site_location.email }}</li>
+                            <li class="mb-2"><i class="fa-solid fa-location-dot me-2"></i> {{ site_location.address }}</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Enquiry Modal -->
+    <div class="modal fade" id="enquiryModal" tabindex="-1" aria-labelledby="enquiryModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="enquiryModalLabel">{{ package.title }} Enquiry</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="enquiry_form" method="post" action="{% url 'contact' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="subject" value="{{ package.title }} Enquiry">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <input name="fullname" class="form-control" type="text" placeholder="Full Name*" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <input name="email" class="form-control" type="email" placeholder="Email Address*" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <input name="phone" class="form-control" type="text" placeholder="Phone Number*" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <input name="address" class="form-control" type="text" placeholder="Address">
+                            </div>
+                            <div class="col-md-12 mb-3">
+                                <textarea name="message" class="form-control" rows="4" placeholder="How can we help you?"></textarea>
+                            </div>
+                            <div class="col-md-12">
+                                <button type="submit" class="button-3">Submit Enquiry</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

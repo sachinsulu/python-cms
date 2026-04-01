@@ -3,7 +3,7 @@ from django.db.models import Model
 
 def is_slug_taken(slug, exclude_obj=None):
     """
-    Checks if a slug is taken across Article, Blog, Package, and SubPackage models.
+    Checks if a slug is taken across tracked models via the GlobalSlug database.
     
     Args:
         slug (str): The slug to check.
@@ -12,31 +12,13 @@ def is_slug_taken(slug, exclude_obj=None):
     Returns:
         bool: True if the slug is taken, False otherwise.
     """
-    models_to_check = [
-        ('articles', 'Article'),
-        ('blog', 'Blog'),
-        ('package', 'Package'),
-        ('package', 'SubPackage'),
-    ]
-    
-    for app_label, model_name in models_to_check:
-        try:
-            model = apps.get_model(app_label, model_name)
-            
-            # Robustness: Skip models that don't have a 'slug' field
-            try:
-                model._meta.get_field('slug')
-            except Exception:
-                continue
+    from core.models import GlobalSlug
+    from django.contrib.contenttypes.models import ContentType
 
-            qs = model.objects.filter(slug=slug)
-            
-            if exclude_obj and isinstance(exclude_obj, model):
-                qs = qs.exclude(pk=exclude_obj.pk)
-                
-            if qs.exists():
-                return True
-        except (LookupError, AttributeError):
-            continue
-            
-    return False
+    qs = GlobalSlug.objects.filter(slug=slug)
+
+    if exclude_obj and exclude_obj.pk:
+        content_type = ContentType.objects.get_for_model(exclude_obj)
+        qs = qs.exclude(content_type=content_type, object_id=exclude_obj.pk)
+
+    return qs.exists()

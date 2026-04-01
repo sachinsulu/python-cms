@@ -1,5 +1,7 @@
 # core/models.py
 from django.db import models
+from django.contrib.contenttypes.models import ContentType
+from django.contrib.contenttypes.fields import GenericForeignKey
 
 class Module(models.Model):
     label = models.CharField(max_length=100)
@@ -53,3 +55,31 @@ class PageMeta(models.Model):
 
     def __str__(self):
         return f"Meta → {self.module.label}"
+
+class GlobalSlug(models.Model):
+    slug = models.CharField(max_length=255, unique=True, db_index=True)
+    
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+    object_id = models.PositiveIntegerField()
+    content_object = GenericForeignKey('content_type', 'object_id')
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=['content_type', 'object_id'],
+                name='unique_content_object_slug'
+            )
+        ]
+        indexes = [
+            models.Index(fields=['content_type', 'object_id']),
+        ]
+
+    @classmethod
+    def resolve(cls, slug):
+        try:
+            return cls.objects.select_related('content_type').get(slug=slug).content_object
+        except cls.DoesNotExist:
+            return None
+
+    def __str__(self):
+        return f"{self.slug} [{self.content_type.model}]"

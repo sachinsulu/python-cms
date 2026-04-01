@@ -19,29 +19,55 @@ def home(request):
     main_services = Service.objects.filter(status=True, type='main-service').order_by('position')[:4]
     return render(request, 'hotelrudra/index.html', {'featured_rooms': featured_rooms, 'article': articles, 'amenities': amenities})
 
-def about(request):
-    article = Article.objects.filter(active=True, slug='about-us').first()
+def about(request, slug):
+    article = Article.objects.filter(active=True, slug=slug).first()
     return render(request, 'hotelrudra/about.html', {'article': article})
 
 def rooms(request):
     all_rooms = SubPackage.objects.filter(is_active=True, package__package_type='room').order_by('position')
     return render(request, 'hotelrudra/rooms.html', {'all_rooms': all_rooms})
 
+from django.http import Http404
+from core.models import GlobalSlug
+
 def dynamic_detail(request, slug):
-    # Try finding a non-room Package first
-    package = Package.objects.filter(slug=slug, is_active=True, package_type='non_room').first()
-    if package:
-        sub_packages = package.sub_packages.filter(is_active=True).order_by('position')
+    obj = GlobalSlug.resolve(slug)
+    
+    if not obj:
+        raise Http404("Page not found")
+        
+    model_name = obj._meta.model_name
+    
+    if model_name == 'article':
+        if getattr(obj, 'active', True) == False:
+            raise Http404("Page not found")
+        return render(request, 'hotelrudra/about.html', {'article': obj})
+        
+    elif model_name == 'blog':
+        if getattr(obj, 'active', True) == False:
+            raise Http404("Page not found")
+        return render(request, 'hotelrudra/blog-detail.html', {'blog': obj})
+        
+    elif model_name == 'package':
+        if getattr(obj, 'is_active', True) == False:
+            raise Http404("Page not found")
+            
+        sub_packages = obj.sub_packages.filter(is_active=True).order_by('position')
         return render(request, 'hotelrudra/package-detail.html', {
-            'package': package, 
+            'package': obj, 
             'sub_packages': sub_packages
         })
-    
-    # Otherwise, try finding a SubPackage (e.g. specific Room or Hall detail)
-    sub = get_object_or_404(SubPackage, slug=slug, is_active=True)
-    if sub.package.package_type == 'non_room':
-        return render(request, 'hotelrudra/sub-detail.html', {'room': sub})
-    return render(request, 'hotelrudra/room-details.html', {'room': sub})
+        
+    elif model_name == 'subpackage':
+        if getattr(obj, 'is_active', True) == False:
+            raise Http404("Page not found")
+            
+        if obj.package.package_type == 'room':
+            return render(request, 'hotelrudra/room-details.html', {'room': obj})
+        else:
+            return render(request, 'hotelrudra/sub-detail.html', {'room': obj})
+            
+    raise Http404("Content not found")
 
 def amenities(request):
     amenities = Service.objects.filter(status=True, type='service').order_by('position')

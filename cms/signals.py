@@ -2,7 +2,7 @@
 import os
 import re
 import logging
-from django.db.models.signals import post_delete, pre_save
+from django.db.models.signals import post_delete, pre_save, post_save
 from django.dispatch import receiver
 from django.db.models import FileField, TextField
 from django.conf import settings
@@ -83,4 +83,37 @@ def is_image_in_use_anywhere(img_url):
         except LookupError:
             continue
     return False
+
+# ---------------------------------------------------------
+# 2. GlobalSlug Synchronization
+# ---------------------------------------------------------
+TRACKED_SLUG_MODELS = ['Article', 'Blog', 'Package', 'SubPackage']
+
+@receiver(post_save)
+def update_global_slug_on_save(sender, instance, created, **kwargs):
+    model_name = sender.__name__
+    if model_name in TRACKED_SLUG_MODELS and hasattr(instance, 'slug') and instance.slug:
+        from core.models import GlobalSlug
+        from django.contrib.contenttypes.models import ContentType
+        
+        content_type = ContentType.objects.get_for_model(sender)
+        GlobalSlug.objects.update_or_create(
+            content_type=content_type,
+            object_id=instance.id,
+            defaults={'slug': instance.slug}
+        )
+
+@receiver(post_delete)
+def delete_global_slug_on_delete(sender, instance, **kwargs):
+    model_name = sender.__name__
+    if model_name in TRACKED_SLUG_MODELS:
+        from core.models import GlobalSlug
+        from django.contrib.contenttypes.models import ContentType
+        
+        content_type = ContentType.objects.get_for_model(sender)
+        GlobalSlug.objects.filter(
+            content_type=content_type,
+            object_id=instance.id
+        ).delete()
+
 

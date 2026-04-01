@@ -19,9 +19,7 @@ def home(request):
     main_services = Service.objects.filter(status=True, type='main-service').order_by('position')[:4]
     return render(request, 'hotelrudra/index.html', {'featured_rooms': featured_rooms, 'article': articles, 'amenities': amenities})
 
-def about(request, slug):
-    article = Article.objects.filter(active=True, slug=slug).first()
-    return render(request, 'hotelrudra/about.html', {'article': article})
+
 
 def rooms(request):
     all_rooms = SubPackage.objects.filter(is_active=True, package__package_type='room').order_by('position')
@@ -72,6 +70,3 @@ def contact(request):
         return redirect('contact')
     return render(request, 'hotelrudra/contact.html', {'site_location': site_location, 'site_prefs': site_prefs, 'phones': phones, 'tel': tel})
 
-
-def spa(request):
-    return render(request, 'hotelrudra/spa.html')

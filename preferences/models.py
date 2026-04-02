@@ -196,6 +196,42 @@ class SitePreferences(MediaUsageMixin, models.Model):
     def offer_image_url(self):
         return self._resolve_url(self.offer_image_id, self.offer_image)
 
+    # ── Banner Image Fallbacks ────────────────────────────────────────────
+    # These return the final URL to be used in templates.
+
+    def _banner_fallback(self, specific_url):
+        from django.templatetags.static import static
+        if specific_url:
+            return specific_url
+        if self.default_image_url:
+            return self.default_image_url
+        return static('img/default.jpg')
+
+    @property
+    def facilities_banner(self):
+        return self._banner_fallback(self.facilities_image_url)
+
+    @property
+    def contact_banner(self):
+        return self._banner_fallback(self.contact_image_url)
+
+    @property
+    def gallery_banner(self):
+        return self._banner_fallback(self.gallery_image_url)
+
+    @property
+    def offer_banner(self):
+        return self._banner_fallback(self.offer_image_url)
+
+    @property
+    def default_banner(self):
+        return self._banner_fallback(self.default_image_url)
+
+    @property
+    def banner(self):
+        """Generic banner for any page without a specific one."""
+        return self.default_banner
+
     # ── Singleton enforcement ─────────────────────────────────────────────
     def save(self, *args, **kwargs):
         self.pk = 1

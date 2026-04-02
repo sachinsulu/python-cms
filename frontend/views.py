@@ -38,7 +38,7 @@ def amenities(request):
 
 def gallery(request):
     gallery = Gallery.objects.filter(active=True, type='Innerpage').order_by('position')
-    gallery_images = GalleryImage.objects.filter(active=True).order_by('?')
+    gallery_images = GalleryImage.objects.filter(active=True, gallery__type='Innerpage').order_by('?')
     return render(request, 'hotelrudra/gallery.html', {'gallery': gallery, 'gallery_images': gallery_images})
 
 def contact(request):

@@ -27,7 +27,7 @@
                 {% endfor %}
             {% else %}
                 <!-- The opacity on the image is made with "data-overlay-dark="number". You can change it using the numbers 0-9. -->
-                <div class="item bg-img" data-overlay-dark="5" data-background="{% if room.image_url %}{{ room.image_url }}{% else %}{% static 'img/rooms/room1.jpg' %}{% endif %}">
+                <div class="item bg-img" data-overlay-dark="5" data-background="{% if room.image_url %}{{ room.image_url }}{% else %}{{ site_prefs.banner }}{% endif %}">
                     <div class="v-middle caption">
                         <div class="container">
                             <div class="row justify-content-center">

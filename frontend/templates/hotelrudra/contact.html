@@ -6,7 +6,7 @@
 {% block content %}
 
     <!-- Header Banner -->
-    <section class="banner-header bg-img bg-fixed" data-overlay-dark="5" data-background="{% static 'img/default.jpg' %}">
+    <section class="banner-header bg-img bg-fixed" data-overlay-dark="5" data-background="{{ site_prefs.contact_banner }}">
         <div class="container">
             <div class="row">
                 <div class="col-md-12 text-center">
@@ -74,7 +74,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="map">
-                                <iframe src="{{ site_location.map_embed|safe }}" width="100%" height="700" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                                {{ site_location.map_embed|safe }}
                             </div>
                         </div>
                     </div>

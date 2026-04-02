@@ -7,7 +7,7 @@
     <!-- Header Banner -->
     <header class="header slider-fade roomdetails23">
         <div class="owl-carousel owl-theme">
-            <div class="item bg-img" data-overlay-dark="5" data-background="{% if package.image_url %}{{ package.image_url }}{% else %}{% static 'img/default.jpg' %}{% endif %}">
+            <div class="item bg-img" data-overlay-dark="5" data-background="{% if package.image_url %}{{ package.image_url }}{% else %}{{ site_prefs.banner }}{% endif %}">
                 <div class="v-middle caption">
                     <div class="container">
                         <div class="row justify-content-center">

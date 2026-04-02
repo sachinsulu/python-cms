@@ -5,8 +5,7 @@
 
 {% block content %}
     <!-- Header Banner -->
-    {% if article.image_url %}
-    <section class="banner-header bg-img" data-overlay-dark="5" data-background="{{ article.image_url }}">
+    <section class="banner-header bg-img" data-overlay-dark="5" data-background="{% if article.image_url %}{{ article.image_url }}{% else %}{{ site_prefs.banner }}{% endif %}">
         <div class="container">
             <div class="row">
                 <div class="col-md-12 text-center">
@@ -15,7 +14,6 @@
             </div>
         </div>
     </section>
-    {% endif %}
     
 
     {{article.content | safe}}

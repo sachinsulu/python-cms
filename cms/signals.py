@@ -64,8 +64,8 @@ _CKEDITOR_CONTENT_FIELDS = [
     ('offers',   'Offer',       'content'),
     ('features', 'Feature',     'content'),
     ('services', 'Service',     'content'),
-    ('package',  'Package',     'description'),
-    ('package',  'SubPackage',  'description'),
+    ('package',  'Package',     'content'),
+    ('package',  'SubPackage',  'content'),
     ('location', 'Location',    'content'),
 ]
 
@@ -116,4 +116,4 @@ def delete_global_slug_on_delete(sender, instance, **kwargs):
             object_id=instance.id
         ).delete()
 
-
+

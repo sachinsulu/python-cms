@@ -48,7 +48,7 @@ class Slideshow(MediaUsageMixin, models.Model):
 
     def save(self, *args, **kwargs):
         with transaction.atomic():
-            if not self.pk or self.position == 0:
+            if not self.pk:
                 last = Slideshow.objects.select_for_update().aggregate(
                     Max('position')
                 )['position__max']

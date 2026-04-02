@@ -129,8 +129,11 @@ def user_delete(request, id):
         user.delete()
         messages.success(request, "User deleted successfully!")
         return redirect('user_list')
-
-    return render(request, 'users/delete.html', {'user': user})
+    else:
+        referer = request.META.get('HTTP_REFERER')
+        if not referer or 'users' not in referer:
+            return redirect('user_list')
+        return render(request, 'users/delete.html', {'user': user})
 
 # ------------------------------
 # GROUP VIEWS

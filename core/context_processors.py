@@ -1,10 +1,15 @@
+from django.core.cache import cache
 from .models import Module
 
 def sidebar_menu(request):
     if not request.user.is_authenticated:
         return {}
 
-    items = Module.objects.filter(is_active=True)
+    items = cache.get('sidebar_modules')
+    if items is None:
+        items = list(Module.objects.filter(is_active=True))
+        cache.set('sidebar_modules', items, 60)
+
     visible = []
 
     for item in items:

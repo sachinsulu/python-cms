@@ -19,13 +19,7 @@ logger = logging.getLogger(__name__)
 @login_required
 @requires_perm('gallery.view_gallery')
 def gallery_list(request):
-    type_param = request.GET.get('type')
-
-    if type_param is not None:
-        request.session['gallery_type_filter'] = type_param
-        return redirect('gallery_list')
-
-    current_filter = request.session.get('gallery_type_filter', Gallery.TYPE_INNERPAGE)
+    current_filter = request.GET.get('type', Gallery.TYPE_INNERPAGE)
     
     if current_filter not in [Gallery.TYPE_HOMEPAGE, Gallery.TYPE_INNERPAGE]:
         current_filter = Gallery.TYPE_INNERPAGE
@@ -43,7 +37,7 @@ def gallery_list(request):
 @login_required
 @requires_perm('gallery.add_gallery')
 def gallery_create(request):
-    session_filter = request.session.get('gallery_type_filter', Gallery.TYPE_INNERPAGE)
+    session_filter = request.GET.get('type', Gallery.TYPE_INNERPAGE)
 
     if request.method == 'POST':
         form = GalleryForm(request.POST)
@@ -157,7 +151,8 @@ def gallery_bulk_add_images(request, pk):
     )
 
     # Determine starting position
-    last_pos = gallery.images.count()
+    from django.db.models import Max
+    last_pos = (gallery.images.aggregate(Max('position'))['position__max'] or 0) + 1
 
     added = 0
     skipped = 0

@@ -46,8 +46,8 @@ def contact(request):
     site_location = Location.objects.get_solo()
     site_prefs = SitePreferences.objects.get_solo()
 
-    phones = [p.strip() for p in site_location.phone.split(',')]
-    tel = [p.strip() for p in site_location.landline.split(',')]
+    phones = [p.strip() for p in site_location.phone.split(',') if p.strip()]
+    tel = [p.strip() for p in site_location.landline.split(',') if p.strip()]
 
     if request.method == 'POST':
         name = request.POST.get('fullname')
@@ -82,8 +82,10 @@ def Main_Service(request):
     return render(request, 'hotelrudra/spa.html', {'main_services': main_services})
 
 def service_detail(request, slug):
-    services = Service.objects.filter(status=True)
-    service = next((s for s in services if s.slug == slug), None)
+    service = next(
+        (s for s in Service.objects.filter(status=True) if s.slug == slug),
+        None
+    )
     if not service:
         raise Http404("Service not found")
     return render(request, 'hotelrudra/service-detail.html', {'service': service})

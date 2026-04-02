@@ -16,15 +16,10 @@ logger = logging.getLogger(__name__)
 @login_required
 @requires_perm('articles.view_article')
 def article_list(request):
-    homepage_param = request.GET.get('homepage')
-
-    if homepage_param is not None:
-        request.session['articles_homepage_filter'] = homepage_param
-        return redirect('article_list')
-
-    current_filter = request.session.get('articles_homepage_filter', '0')
+    current_filter = request.GET.get('homepage', '0')
+    homepage_bool = (current_filter == '1')
     articles = Article.objects.filter(
-        homepage=current_filter
+        homepage=homepage_bool
     ).order_by('position')
 
     return render(request, 'articles/list.html', {
@@ -36,14 +31,13 @@ def article_list(request):
 @login_required
 @requires_perm('articles.add_article')
 def article_create(request):
-    session_filter = request.session.get('articles_homepage_filter', '0')
+    session_filter = request.GET.get('homepage', '0')
     homepage = (session_filter == '1')
 
     if request.method == 'POST':
         form = ArticleForm(request.POST)
         if form.is_valid():
             article = form.save(commit=False)
-            article.homepage = homepage
 
             # Handle explicit image removal via the X button
             if request.POST.get('remove_image') == '1':
@@ -76,14 +70,15 @@ def article_create(request):
 def article_edit(request, slug):
     article = get_object_or_404(Article, slug=slug)
 
-    session_filter = request.session.get('articles_homepage_filter', '0')
+    session_filter = request.GET.get('homepage', '0')
     homepage = (session_filter == '1')
 
     if request.method == 'POST':
         form = ArticleForm(request.POST, instance=article)
         if form.is_valid():
             article = form.save(commit=False)
-            article.homepage = homepage
+            # Bug fix: do NOT overwrite homepage from session — the form/model owns this value.
+            # article.homepage = homepage  ← was silently corrupting homepage field on every edit
 
             # Handle explicit image removal via the X button
             if request.POST.get('remove_image') == '1':

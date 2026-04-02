@@ -28,6 +28,11 @@ def media_upload_path(instance, filename):
         return f'{instance.folder.slug}/{filename}'
     return f'library/{filename}'
 
+def thumbnail_upload_path(instance, filename):
+    if instance.folder:
+        return f'{instance.folder.slug}/thumbnails/{filename}'
+    return f'library/thumbnails/{filename}'
+
 
 class MediaFolder(models.Model):
     name   = models.CharField(max_length=255, db_index=True)
@@ -105,7 +110,7 @@ class Media(models.Model):
     title  = models.CharField(max_length=255, blank=True)
     file   = models.FileField(upload_to=media_upload_path)
     thumbnail = models.FileField(
-        upload_to=media_upload_path,
+        upload_to=thumbnail_upload_path,
         null=True,
         blank=True
     )

@@ -100,7 +100,7 @@ class SubPackageSerializer(serializers.ModelSerializer):
                 if link.feature.active
             ]
         else:
-            features = obj.amenities.filter(active=True).order_by('amenity_links__position')
+            features = obj.amenities.filter(active=True).order_by('amenity_links__position').distinct()
         return FeatureSerializer(features, many=True, context=self.context).data
 
     def get_images(self, obj):

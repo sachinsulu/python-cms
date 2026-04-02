@@ -12,23 +12,25 @@ from django.urls import reverse
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.db.models import Count
 import json
+from django.db import transaction
 
 
 def _save_amenities(sub, selected_ids, ordered_ids):
     position_map = {int(pk): idx for idx, pk in enumerate(ordered_ids)}
-    sub.amenity_links.all().delete()
-    links = []
-    for pk in selected_ids:
-        pk = int(pk)
-        links.append(SubPackageAmenity(
-            subpackage=sub,
-            feature_id=pk,
-            position=position_map.get(pk, 9999),
-        ))
-    links.sort(key=lambda x: x.position)
-    for idx, link in enumerate(links):
-        link.position = idx
-    SubPackageAmenity.objects.bulk_create(links)
+    with transaction.atomic():
+        sub.amenity_links.all().delete()
+        links = []
+        for pk in selected_ids:
+            pk = int(pk)
+            links.append(SubPackageAmenity(
+                subpackage=sub,
+                feature_id=pk,
+                position=position_map.get(pk, 9999),
+            ))
+        links.sort(key=lambda x: x.position)
+        for idx, link in enumerate(links):
+            link.position = idx
+        SubPackageAmenity.objects.bulk_create(links)
 
 
 # ========================
@@ -259,7 +261,8 @@ def subpackage_bulk_add_images(request, package_slug, slug):
         sub.images.filter(image_id__in=media_ids).values_list('image_id', flat=True)
     )
 
-    last_pos = sub.images.count()
+    from django.db.models import Max
+    last_pos = (sub.images.aggregate(Max('position'))['position__max'] or 0) + 1
 
     added = 0
     skipped = 0

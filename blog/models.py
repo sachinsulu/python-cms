@@ -67,7 +67,7 @@ class Blog(MediaUsageMixin, models.Model):
 
     def save(self, *args, **kwargs):
         with transaction.atomic():
-            if not self.id or self.position == 0:
+            if not self.id:
                 last_pos = Blog.objects.select_for_update().aggregate(
                     Max('position')
                 )['position__max']

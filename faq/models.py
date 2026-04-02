@@ -16,7 +16,7 @@ class FAQ(models.Model):
     def save(self, *args, **kwargs):
         # ✅ FIX: Wrap position logic in atomic transaction
         with transaction.atomic():
-            if not self.id or self.position == 0:
+            if not self.id:
                 # ✅ FIX: Use select_for_update() to lock and prevent race condition
                 last_pos = FAQ.objects.select_for_update().aggregate(
                     Max('position')

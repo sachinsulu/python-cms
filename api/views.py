@@ -404,13 +404,13 @@ def get_by_slug(request, slug):
 
 @api_view(['GET'])
 def get_all_features(request):
-    features = Feature.objects.filter(status=Feature.STATUS_ACTIVE).select_related('image').order_by('position')
+    features = Feature.objects.filter(active=True).select_related('image').order_by('position')
     return Response(FeatureSerializer(features, many=True, context={'request': request}).data)
 
 @api_view(['GET'])
 def get_feature(request, pk):
     try:
-        feature = Feature.objects.get(pk=pk, status=Feature.STATUS_ACTIVE)
+        feature = Feature.objects.get(pk=pk, active=True)
     except Feature.DoesNotExist:
         return Response({'error': 'Feature not found'}, status=status.HTTP_404_NOT_FOUND)
     return Response(FeatureSerializer(feature, context={'request': request}).data)
@@ -440,13 +440,13 @@ def get_service(request, pk):
 
 @api_view(['GET'])
 def get_all_popups(request):
-    popups = Popup.objects.filter(active=True).order_by('position')
+    popups = Popup.objects.filter(status=True).order_by('position')
     return Response(PopupSerializer(popups, many=True, context={'request': request}).data)
 
 @api_view(['GET'])
 def get_popup(request, pk):
     try:
-        popup = Popup.objects.get(pk=pk, active=True)
+        popup = Popup.objects.get(pk=pk, status=True)
     except Popup.DoesNotExist:
         return Response({'error': 'Popup not found'}, status=status.HTTP_404_NOT_FOUND)
     return Response(PopupSerializer(popup, context={'request': request}).data)

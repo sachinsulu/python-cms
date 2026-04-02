@@ -25,7 +25,10 @@ def route_slug(request, slug):
     if model_name == 'package':
         if not getattr(obj, 'is_active', True):
             raise Http404("Page not found")
-        sub_packages = obj.sub_packages.filter(is_active=True).order_by('position')
+        sub_packages = obj.sub_packages.filter(is_active=True)\
+            .select_related('image')\
+            .prefetch_related('amenity_links__feature__image')\
+            .order_by('position')
         return render(request, 'hotelrudra/package-detail.html', {
             'package': obj,
             'sub_packages': sub_packages,

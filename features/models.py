@@ -18,7 +18,7 @@ class FeatureGroup(models.Model):
         ordering = ['position']
 
     def save(self, *args, **kwargs):
-        if not self.pk or self.position == 0:
+        if not self.pk:
             with transaction.atomic():
                 last = FeatureGroup.objects.select_for_update().aggregate(
                     Max('position')
@@ -70,7 +70,7 @@ class Feature(MediaUsageMixin, models.Model):
         return None
 
     def save(self, *args, **kwargs):
-        if not self.pk or self.position == 0:
+        if not self.pk:
             with transaction.atomic():
                 last = Feature.objects.select_for_update().filter(
                     group=self.group

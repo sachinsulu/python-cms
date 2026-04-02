@@ -66,7 +66,7 @@ class Package(MediaUsageMixin, models.Model):
 
     def save(self, *args, **kwargs):
         with transaction.atomic():
-            if not self.id or self.position == 0:
+            if not self.id:
                 last_pos = Package.objects.select_for_update().aggregate(
                     Max('position')
                 )['position__max']
@@ -159,7 +159,7 @@ class SubPackage(MediaUsageMixin, models.Model):
 
     def save(self, *args, **kwargs):
         with transaction.atomic():
-            if not self.id or self.position == 0:
+            if not self.id:
                 last_pos = SubPackage.objects.select_for_update().filter(
                     package=self.package
                 ).aggregate(Max('position'))['position__max']

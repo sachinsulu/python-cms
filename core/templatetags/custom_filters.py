@@ -31,3 +31,12 @@ def render_template(value):
     except Exception:
         return value
 
+@register.filter
+def get_range(value):
+    """
+    Returns a range from 0 to value - 1. Safe to use in for loops.
+    """
+    try:
+        return range(int(value))
+    except (ValueError, TypeError):
+        return []

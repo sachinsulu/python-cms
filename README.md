@@ -17,6 +17,10 @@ A modern, lightweight, and highly customizable **Content Management System** bui
   - `services` & `features`: Showcase your offerings effectively.
   - `testimonials` & `social`: Build trust and social proof.
   - `faq` & `menu`: Intuitive navigation and support management.
+  - `gallery` & `slideshow`: Visual media presentation and hero banners.
+  - `package` & `offers`: Booking packages, special deals, and promotions.
+  - `location` & `nearby`: Maps, location details, and nearby attractions.
+  - `popup` & `preferences`: Promotional popups and global site settings (SEO, contacts).
 
 ---
 
@@ -76,12 +80,14 @@ python manage.py runserver
 python-cms/
 ├── accounts/      # User authentication and accounts
 ├── api/           # REST API endpoints
-├── articles/      # Article management system
-├── blog/          # Blog engine logic
 ├── cms/           # Core project settings and configuration
 ├── core/          # Shared components and utilities
+├── frontend/      # Frontend templates and specific site themes
+├── media_manager/ # Centralized file upload and image validations
+├── package/       # Service packages and room offerings
+├── preferences/   # Global site settings, SEO, content variables
 ├── requirements/  # Project dependencies
-└── templates/     # Global HTML templates
+└── [other apps]/  # Feature apps like blog, gallery, offers, etc.
 ```
 
 ---

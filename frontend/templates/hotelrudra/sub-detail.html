@@ -1,5 +1,7 @@
 {% extends 'hotelrudra/base.html' %}
 {% load static %}
+{% load custom_filters %}
+
 
 {% block title %}{{ room.meta_title|default:room.title }} | {{ site_prefs.site_name }}{% endblock %}
 
@@ -7,18 +9,37 @@
     <!-- Header Banner -->
     <header class="header slider-fade roomdetails23">
         <div class="owl-carousel owl-theme">
-            <div class="item bg-img" data-overlay-dark="5" data-background="{% if room.image_url %}{{ room.image_url }}{% else %}{% static 'img/default.jpg' %}{% endif %}">
-                <div class="v-middle caption">
-                    <div class="container">
-                        <div class="row justify-content-center">
-                            <div class="col-lg-12 col-md-12 text-center">
-                                <h2>{{ room.title }}</h2>
-                                <p>{{ room.package.title }}</p>
+            {% if room.images.all %}
+                {% for gallery_image in room.images.all %}
+                    {% if gallery_image.active %}
+                    <div class="item bg-img" data-overlay-dark="5" data-background="{{ gallery_image.image_url }}">
+                        <div class="v-middle caption">
+                            <div class="container">
+                                <div class="row justify-content-center">
+                                    <div class="col-lg-12 col-md-12 text-center">
+                                        <h2>{% if gallery_image.title %}{{ gallery_image.title }}{% else %}{{ room.title }}{% endif %}</h2>
+                                        <p>{{ room.package.title }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                {% endfor %}
+            {% else %}
+                <div class="item bg-img" data-overlay-dark="5" data-background="{% if room.image_url %}{{ room.image_url }}{% else %}{% static 'img/default.jpg' %}{% endif %}">
+                    <div class="v-middle caption">
+                        <div class="container">
+                            <div class="row justify-content-center">
+                                <div class="col-lg-12 col-md-12 text-center">
+                                    <h2>{{ room.title }}</h2>
+                                    <p>{{ room.package.title }}</p>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            {% endif %}
         </div>
     </header>
 
@@ -33,22 +54,70 @@
                             <div class="section-title">{{ room.title }}</div>
 
                             {% if room.content %}
-                                {{ room.content|safe }}
+                                {% with content_parts=room.content|split:'<hr class="read-more-separator" style="border: 1px dashed #f60;" />' %}
+                                    {{ content_parts.0|safe }}
+                                    
+                                    {% if content_parts|length > 1 %}
+                                        <div class="row mt-30">
+                                            <div class="col-md-12">
+                                                {{ content_parts.1|safe }}
+                                            </div>
+                                        </div>
+                                    {% endif %}
+                                {% endwith %}
                             {% else %}
                                 <p>Contact us for more information about this option.</p>
                             {% endif %}
                         </div>
                     </div>
 
-
                     <div class="row">
                         <div class="col-md-12">
-                            <a href="#" class="button-3" data-bs-toggle="modal" data-bs-target="#enquiryModal">
-                                <i class="fa-solid fa-thumbs-up"></i> Enquiry Now
-                            </a>
-                            <a href="{% url 'dynamic_detail' room.package.slug %}" class="button-4 ms-2">
-                                <i class="fa-solid fa-arrow-left"></i> Back to {{ room.package.title }}
-                            </a>
+                            {{if }}
+                            <div class="table-responsive">
+                            <table class="table table-bordered border border-danger mb-30" style="box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;">
+                                <thead>
+                                    <tr>
+                                        {% if room.hall_size %}
+                                        <th scope="col"><img src="{% static 'img/icon/area.png' %}">Hall Size</th>
+                                        {% endif %}
+                                        {% if room.u_shape %}
+                                        <th scope="col"><img src="{% static 'img/icon/u-shaped.png' %}">U Shape</th>
+                                        {% endif %}
+                                        {% if room.classroom %}
+                                        <th scope="col"><img src="{% static 'img/icon/class.png' %}">Classroom</th>
+                                        {% endif %}
+                                        {% if room.theatre %}
+                                        <th scope="col"><img src="{% static 'img/icon/seats-map.png' %}">Theatre</th>
+                                        {% endif %}
+                                        {% if room.round_table %}
+                                        <th scope="col"><img src="{% static 'img/icon/round-table.png' %}">Round Table</th>
+                                        {% endif %}
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        {% if room.hall_size %}
+                                        <td>{{ room.hall_size }}</td>
+                                        {% endif %}
+                                        {% if room.u_shape %}
+                                        <td>{{ room.u_shape }}</td>
+                                        {% endif %}
+                                        {% if room.classroom %}
+                                        <td>{{ room.classroom }}</td>
+                                        {% endif %}
+                                        {% if room.theatre %}
+                                        <td>{{ room.theatre }}</td>
+                                        {% endif %}
+                                        {% if room.round_table %}
+                                        <td>{{ room.round_table }}</td>
+                                        {% endif %}
+                                    </tr>
+                                </tbody>
+                            </table>
+                            </div>
+
+                            <a href="#" class="button-3" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fa-solid fa-thumbs-up"></i> Enquiry Now</a>
                         </div>
                     </div>
                 </div>

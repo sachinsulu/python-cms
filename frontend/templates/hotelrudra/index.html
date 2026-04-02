@@ -6,42 +6,20 @@
     <header class="header slider-fade">
         <div class="owl-carousel owl-theme">
             <!-- The opacity on the image is made with "data-overlay-dark="number". You can change it using the numbers 0-9. -->
-            <div class="item bg-img" data-overlay-dark="5" data-background="{% static 'img/slider/1.jpg' %}">
+            {% for slide in slideshow %}
+            <div class="item bg-img" data-overlay-dark="5" data-background="{% if slide.image_url %}{{ slide.image_url }}{% else %}{% static 'img/slider/1.jpg' %}{% endif %}">
                 <div class="v-middle caption">
                     <div class="container">
                         <div class="row justify-content-center">
                             <div class="col-lg-8 col-md-12 text-center">
-                                <h5>Unique Place to Relax & Enjoy</h5>
-                                <h1>Enjoy a Luxury Experience</h1>
+                                <h5>{{ slide.subtitle }}</h5>
+                                <h1>{{ slide.title }}</h1>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="item bg-img" data-overlay-dark="5" data-background="{% static 'img/slider/2.jpg' %}">
-                <div class="v-middle caption">
-                    <div class="container">
-                        <div class="row justify-content-center">
-                            <div class="col-lg-8 col-md-12 text-center">
-                                <h5>Unique Place to Relax & Enjoy</h5>
-                                <h1>Elegance and comfort</h1>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="item bg-img" data-overlay-dark="5" data-background="{% static 'img/slider/4.jpg' %}">
-                <div class="v-middle caption">
-                    <div class="container">
-                        <div class="row justify-content-center">
-                            <div class="col-lg-8 col-md-12 text-center">
-                                <h5>Unique Place to Relax & Enjoy</h5>
-                                <h1>Your journey to luxury begins</h1>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            {% endfor %}
         </div>
     </header>
 
@@ -77,6 +55,7 @@
 
     <!-- About -->
     {{ article.content|safe }}
+    
 
     <!-- Rooms 1 -->
     <section class="rooms1 section-padding">

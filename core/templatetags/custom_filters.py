@@ -5,6 +5,8 @@ register = template.Library()
 
 @register.filter
 def split(value, delimiter=','):
+    if not value:
+        return []
     return [v.strip() for v in value.split(delimiter)]
 
 @register.filter

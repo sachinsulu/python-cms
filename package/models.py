@@ -123,6 +123,13 @@ class SubPackage(MediaUsageMixin, models.Model):
     capacity = models.PositiveIntegerField(null=True, blank=True, help_text="Max guests")
     beds = models.PositiveIntegerField(null=True, blank=True)
 
+    # Hall specific fields
+    hall_size = models.CharField(max_length=255, null=True, blank=True)
+    u_shape = models.CharField(max_length=255, null=True, blank=True)
+    classroom = models.CharField(max_length=255, null=True, blank=True)
+    theatre = models.CharField(max_length=255, null=True, blank=True)
+    round_table = models.CharField(max_length=255, null=True, blank=True)
+
     amenities = models.ManyToManyField(
         'features.Feature',
         through=SubPackageAmenity,

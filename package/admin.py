@@ -56,8 +56,23 @@ class SubPackageAdmin(admin.ModelAdmin):
     list_display = ('title', 'package', 'price', 'capacity', 'is_active', 'position')
     list_display_links = ('title',)
     list_filter = ('is_active', 'package')
-    search_fields = ('title', 'description')
+    search_fields = ('title', 'content')
     prepopulated_fields = {"slug": ("title",)}
+    
+    fieldsets = (
+        (None, {
+            'fields': ('package', 'title', 'slug', 'content', 'image', 'price', 'capacity', 'beds', 'is_active', 'position')
+        }),
+        ('Hall Details (Non-Room)', {
+            'fields': ('hall_size', 'u_shape', 'classroom', 'theatre', 'round_table'),
+            'description': 'Use these fields for Meeting Halls and other non-room sub-packages.'
+        }),
+        ('Meta Data', {
+            'fields': ('meta_title', 'meta_description', 'meta_keywords'),
+            'classes': ('collapse',),
+        }),
+    )
+    
     inlines = [SubPackageAmenityInline, SubPackageImageInline]
 
 

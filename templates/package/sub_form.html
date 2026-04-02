@@ -99,6 +99,54 @@
         </fieldset>
         {% endif %}
 
+        {% if not package.is_room %}
+        <fieldset style="border: 2px solid #fee2e2; border-radius: 8px; padding: 20px; margin: 20px 0;">
+            <legend style="color: #b91c1c; font-weight: 600; padding: 0 10px;">🏛 Hall details</legend>
+
+            <div class="form-group">
+                <label for="{{ form.hall_size.id_for_label }}">Hall Size</label>
+                {{ form.hall_size }}
+                {% if form.hall_size.errors %}
+                    <div class="error">{{ form.hall_size.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+                <div class="form-group" style="flex:1; min-width: 200px;">
+                    <label for="{{ form.u_shape.id_for_label }}">U Shape</label>
+                    {{ form.u_shape }}
+                    {% if form.u_shape.errors %}
+                        <div class="error">{{ form.u_shape.errors }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="form-group" style="flex:1; min-width: 200px;">
+                    <label for="{{ form.classroom.id_for_label }}">Classroom</label>
+                    {{ form.classroom }}
+                    {% if form.classroom.errors %}
+                        <div class="error">{{ form.classroom.errors }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="form-group" style="flex:1; min-width: 200px;">
+                    <label for="{{ form.theatre.id_for_label }}">Theatre</label>
+                    {{ form.theatre }}
+                    {% if form.theatre.errors %}
+                        <div class="error">{{ form.theatre.errors }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="form-group" style="flex:1; min-width: 200px;">
+                    <label for="{{ form.round_table.id_for_label }}">Round Table</label>
+                    {{ form.round_table }}
+                    {% if form.round_table.errors %}
+                        <div class="error">{{ form.round_table.errors }}</div>
+                    {% endif %}
+                </div>
+            </div>
+        </fieldset>
+        {% endif %}
+
         <fieldset style="border: 2px solid #d1fae5; border-radius: 8px; padding: 20px; margin: 20px 0;">
             <legend style="color: #065f46; font-weight: 600; padding: 0 10px;">✅ Amenities</legend>
 

@@ -1,4 +1,6 @@
 {% load static %}
+{% load custom_filters %}
+
 <!DOCTYPE html>
 <html lang="zxx">
 <head>
@@ -111,7 +113,17 @@
                             <div class="section-subtitle">{% if room %}{{ room.package.title }}{% else %}Elegant Hall{% endif %}</div>
                             <div class="section-title">{{ room.title|default:"About Hall" }}</div>
                             {% if room.content %}
-                            {{ room.content|safe }}
+                                {% with content_parts=room.content|split:'<hr class="read-more-separator" style="border: 1px dashed #f60;" />' %}
+                                    {{ content_parts.0|safe }}
+                                    
+                                    {% if content_parts|length > 1 %}
+                                        <div class="row mt-30">
+                                            <div class="col-md-12">
+                                                {{ content_parts.1|safe }}
+                                            </div>
+                                        </div>
+                                    {% endif %}
+                                {% endwith %}
                             {% else %}
                             <p>Our hotel hall offers a grand and welcoming space for guests. The elegant decor, featuring luxurious furnishings and tasteful accents, creates a sophisticated ambiance. Whether you're arriving for check-in or waiting to meet friends, the spacious hall provides a comfortable and inviting atmosphere. It's the perfect place to relax, socialize, enjoy stylish surroundings.</p>
                             <p>Our hotel hall is designed with guest convenience in mind. With plenty of seating areas, you can comfortably rest while you wait for your room or your companions. The hall also offers complimentary refreshments and a selection of magazines and newspapers for your enjoyment. Our attentive staff is always available to assist with any inquiries or offer recommendations to enhance your stay.</p>

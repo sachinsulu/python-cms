@@ -63,7 +63,9 @@ class SubPackageForm(forms.ModelForm):
         model = SubPackage
         fields = [
             'title', 'slug', 'content',
-            'price', 'capacity', 'beds', 'is_active',
+            'price', 'capacity', 'beds',
+            'hall_size', 'u_shape', 'classroom', 'theatre', 'round_table',
+            'is_active',
             'meta_title', 'meta_description', 'meta_keywords',
         ]
         widgets = {
@@ -72,6 +74,11 @@ class SubPackageForm(forms.ModelForm):
             'price': forms.NumberInput(attrs={'placeholder': '0.00', 'step': '0.01'}),
             'capacity': forms.NumberInput(attrs={'placeholder': 'Max guests'}),
             'beds': forms.NumberInput(attrs={'placeholder': 'Number of beds'}),
+            'hall_size': forms.TextInput(attrs={'placeholder': 'e.g. 2200 sq. ft'}),
+            'u_shape': forms.TextInput(attrs={'placeholder': 'e.g. 60 pax'}),
+            'classroom': forms.TextInput(attrs={'placeholder': 'e.g. 150 pax'}),
+            'theatre': forms.TextInput(attrs={'placeholder': 'e.g. 250 chairs'}),
+            'round_table': forms.TextInput(attrs={'placeholder': 'e.g. 90 pax'}),
             'meta_title': forms.TextInput(attrs={'placeholder': 'Meta title (max 60 chars)', 'maxlength': '60'}),
             'meta_description': forms.Textarea(attrs={'rows': 3, 'placeholder': 'Meta description (max 160 chars)', 'maxlength': '160'}),
             'meta_keywords': forms.TextInput(attrs={'placeholder': 'Meta keywords (max 250 chars)', 'maxlength': '250'}),

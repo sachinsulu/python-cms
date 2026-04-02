@@ -1,5 +1,6 @@
 import datetime
 from django import template
+from django.template import Template, Context
 
 register = template.Library()
 
@@ -18,6 +19,15 @@ def replace_year(value):
         return value
     return value.replace('{year}', str(datetime.datetime.now().year))
 
-
-
+@register.filter
+def render_template(value):
+    """
+    Renders a string as a Django template.
+    """
+    if not isinstance(value, str):
+        return value
+    try:
+        return Template(value).render(Context({}))
+    except Exception:
+        return value
 

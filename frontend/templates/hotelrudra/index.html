@@ -1,5 +1,6 @@
 {% extends 'hotelrudra/base.html' %}
 {% load static %}
+{% load custom_filters %}
 
 {% block content %}
     <!-- Slider -->
@@ -54,7 +55,7 @@
     </div>
 
     <!-- About -->
-    {{ article.content|safe }}
+    {{ article.content|render_template|safe }}
     
 
     <!-- Rooms 1 -->

@@ -68,8 +68,12 @@ def contact(request):
             if request.headers.get('x-requested-with') == 'XMLHttpRequest':
                 return JsonResponse({'status': 'success', 'message': 'Thank you! Your message has been sent.'})
         except Exception as e:
+            # Log the actual error
+            print(f"Mail Error: {e}") 
             if request.headers.get('x-requested-with') == 'XMLHttpRequest':
                 return JsonResponse({'status': 'error', 'message': 'Failed to send email. Please try again later.'})
+            else:
+                messages.error(request, 'Failed to send your message. Please try again later.')
         
         if request.headers.get('x-requested-with') == 'XMLHttpRequest':
              return JsonResponse({'status': 'success', 'message': 'Form processed.'})
@@ -82,10 +86,5 @@ def Main_Service(request):
     return render(request, 'hotelrudra/spa.html', {'main_services': main_services})
 
 def service_detail(request, slug):
-    service = next(
-        (s for s in Service.objects.filter(status=True) if s.slug == slug),
-        None
-    )
-    if not service:
-        raise Http404("Service not found")
+    service = get_object_or_404(Service, slug=slug, status=True)
     return render(request, 'hotelrudra/service-detail.html', {'service': service})

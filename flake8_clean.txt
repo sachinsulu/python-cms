@@ -1,0 +1,193 @@
+﻿.\accounts\admin.py:1:1: F401 'django.contrib.admin' imported but unused
+from django.contrib import admin
+^
+.\accounts\models.py:1:1: F401 'django.db.models' imported but unused
+from django.db import models
+^
+.\accounts\tests.py:1:1: F401 'django.test.TestCase' imported but unused
+from django.test import TestCase
+^
+.\api\admin.py:1:1: F401 'django.contrib.admin' imported but unused
+from django.contrib import admin
+^
+.\api\serializers.py:4:1: F401 'package.models.SubPackageAmenity' imported but unused
+from package.models import Package, SubPackage, SubPackageAmenity, SubPackageImage
+^
+.\articles\forms.py:5:1: F401 'ckeditor_uploader.widgets.CKEditorUploadingWidget' imported but unused
+from ckeditor_uploader.widgets import CKEditorUploadingWidget
+^
+.\articles\tests.py:1:1: F401 'django.test.TestCase' imported but unused
+from django.test import TestCase
+^
+.\blog\tests.py:1:1: F401 'django.test.TestCase' imported but unused
+from django.test import TestCase
+^
+.\cms\apps.py:9:9: F401 'cms.signals' imported but unused
+        import cms.signals         ^
+.\cms\signals.py:5:1: F401 'django.db.models.signals.pre_save' imported but unused
+from django.db.models.signals import post_delete, pre_save, post_save
+^
+.\cms\signals.py:9:1: F401 'django.apps.apps' imported but unused
+from django.apps import apps
+^
+.\cms\urls.py:17:1: F401 'os' imported but unused
+import os
+^
+.\cms\urls.py:19:1: F401 'django.urls.re_path' imported but unused
+from django.urls import path, include, re_path
+^
+.\cms\urls.py:20:1: F401 'django.views.static.serve as static_serve' imported but unused
+from django.views.static import serve as static_serve
+^
+.\cms\urls.py:21:1: F401 'django.http.HttpResponseNotFound' imported but unused
+from django.http import HttpResponseNotFound
+^
+.\cms\utils.py:1:1: F401 'django.apps.apps' imported but unused
+from django.apps import apps
+^
+.\cms\utils.py:2:1: F401 'django.db.models.Model' imported but unused
+from django.db.models import Model
+^
+.\cms\views.py:2:1: F401 'random' imported but unused
+import random
+^
+.\core\apps.py:8:9: F401 'core.signals' imported but unused
+        import core.signals
+        ^
+.\core\tests.py:1:1: F401 'django.test.TestCase' imported but unused
+from django.test import TestCase
+^
+.\faq\tests.py:1:1: F401 'django.test.TestCase' imported but unused
+from django.test import TestCase
+^
+.\features\tests.py:1:1: F401 'django.test.TestCase' imported but unused
+from django.test import TestCase
+^
+.\frontend\admin.py:1:1: F401 'django.contrib.admin' imported but unused
+from django.contrib import admin
+^
+.\frontend\models.py:1:1: F401 'django.db.models' imported but unused
+from django.db import models
+^
+.\frontend\tests.py:1:1: F401 'django.test.TestCase' imported but unused
+from django.test import TestCase
+^
+.\frontend\views.py:1:1: F401 'django.shortcuts.get_object_or_404' imported but unused
+from django.shortcuts import render, get_object_or_404, redirect
+^
+.\frontend\views.py:5:1: F401 'django.utils.text.slugify' imported but unused
+from django.utils.text import slugify
+^
+.\frontend\views.py:6:1: F401 'package.models.Package' imported but unused
+from package.models import Package, SubPackage
+^
+.\frontend\views.py:70:9: F841 local variable 'e' is assigned to but never used
+        except Exception as e:
+        ^
+.\gallery\forms.py:4:1: F401 'media_manager.models.Media' imported but unused
+from media_manager.models import Media
+^
+.\gallery\models.py:3:1: F401 'django.utils.text.slugify' imported but unused
+from django.utils.text import slugify
+^
+.\gallery\views.py:14:1: F401 '.forms.ImageAddForm' imported but unused
+from .forms import GalleryForm, GalleryImageForm, ImageAddForm
+^
+.\location\tests.py:1:1: F401 'django.test.TestCase' imported but unused
+from django.test import TestCase
+^
+.\media_manager\forms.py:5:1: F401 'PIL.Image' imported but unused
+from PIL import Image, UnidentifiedImageError
+^
+.\media_manager\forms.py:5:1: F401 'PIL.UnidentifiedImageError' imported but unused
+from PIL import Image, UnidentifiedImageError
+^
+.\media_manager\mixins.py:2:1: F401 'django.db.models' imported but unused
+from django.db import models
+^
+.\media_manager\models.py:8:1: F401 'django.utils.timezone' imported but unused
+from django.utils import timezone
+^
+.\media_manager\services.py:7:1: F401 'django.core.files.storage.default_storage' imported but unused
+from django.core.files.storage import default_storage
+^
+.\media_manager\services.py:10:1: F401 'django.core.exceptions.ValidationError' imported but unused
+from django.core.exceptions import ValidationError
+^
+.\media_manager\services.py:14:1: F401 '.models.media_upload_path' imported but unused
+from .models import Media, MediaFolder, media_upload_path
+^
+.\media_manager\views.py:8:1: F401 'django.db.models' imported but unused
+from django.db import models
+^
+.\menu\admin.py:2:1: F401 'django.utils.html.format_html' imported but unused
+from django.utils.html import format_html, mark_safe
+^
+.\menu\admin.py:4:1: F401 'django.contrib.admin.ModelAdmin' imported but unused
+from django.contrib.admin import ModelAdmin
+^
+.\menu\tests.py:1:1: F401 'django.test.TestCase' imported but unused
+from django.test import TestCase
+^
+.\nearby\admin.py:1:1: F401 'django.contrib.admin' imported but unused
+from django.contrib import admin
+^
+.\nearby\tests.py:1:1: F401 'django.test.TestCase' imported but unused
+from django.test import TestCase
+^
+.\offers\tests.py:1:1: F401 'django.test.TestCase' imported but unused
+from django.test import TestCase
+^
+.\package\forms.py:2:1: F401 'django.core.exceptions.ValidationError' imported but unused
+from django.core.exceptions import ValidationError
+^
+.\package\tests.py:1:1: F401 'django.test.TestCase' imported but unused
+from django.test import TestCase
+^
+.\package\views.py:9:1: F401 'features.models.Feature' imported but unused
+from features.models import Feature
+^
+.\popup\tests.py:1:1: F401 'django.test.TestCase' imported but unused
+from django.test import TestCase
+^
+.\preferences\tests.py:1:1: F401 'django.test.TestCase' imported but unused
+from django.test import TestCase
+^
+.\services\tests.py:1:1: F401 'django.test.TestCase' imported but unused
+from django.test import TestCase
+^
+.\slideshow\tests.py:1:1: F401 'django.test.TestCase' imported but unused
+from django.test import TestCase
+^
+.\social\models.py:2:1: F401 'django.db.transaction' imported but unused
+from django.db import transaction
+^
+.\social\models.py:3:1: F401 'django.db.models.Max' imported but unused
+from django.db.models import Max
+^
+.\social\tests.py:1:1: F401 'django.test.TestCase' imported but unused
+from django.test import TestCase
+^
+.\testimonials\forms.py:5:1: F401 'django.core.exceptions.ValidationError' imported but unused
+from django.core.exceptions import ValidationError
+^
+.\testimonials\models.py:4:1: F401 'django.db.transaction' imported but unused
+from django.db import transaction
+^
+.\testimonials\models.py:5:1: F401 'django.db.models.Max' imported but unused
+from django.db.models import Max
+^
+.\testimonials\tests.py:1:1: F401 'django.test.TestCase' imported but unused
+from django.test import TestCase
+^
+.\users\models.py:1:1: F401 'django.db.models' imported but unused
+from django.db import models
+^
+.\users\tests.py:1:1: F401 'django.test.TestCase' imported but unused
+from django.test import TestCase
+^
+.\users\views.py:6:1: F401 'django.contrib.auth.decorators.permission_required' imported but unused
+from django.contrib.auth.decorators import permission_required
+^
+63    F401 'django.contrib.admin' imported but unused
+1     F841 local variable 'e' is assigned to but never used

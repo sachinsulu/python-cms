@@ -46,8 +46,8 @@ class SitePreferencesForm(forms.ModelForm):
     def save(self, commit=True):
         instance = super().save(commit=False)
         for field in IMAGE_FIELDS:
-            media_obj = self.cleaned_data.get(f'{field}_media')
-            if media_obj is not None:
+            if f'{field}_media' in self.cleaned_data:
+                media_obj = self.cleaned_data[f'{field}_media']
                 setattr(instance, field, media_obj)
         if commit:
             instance.save()

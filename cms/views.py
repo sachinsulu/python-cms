@@ -19,7 +19,7 @@ from core.models import Module
 
 from articles.models import Article
 from blog.models import Blog
-from package.models import Package, SubPackage
+from package.models import Package, SubPackage, SubPackageImage
 from nearby.models import Nearby
 from faq.models import FAQ
 from testimonials.models import Testimonial
@@ -61,6 +61,7 @@ MODEL_MAP = {
     "slideshow": Slideshow,
     "gallery": Gallery,
     "galleryimage": GalleryImage,
+    "subpackageimage": SubPackageImage,
 }
 
 ACTIVE_FIELD_MAP = {
@@ -77,11 +78,12 @@ ACTIVE_FIELD_MAP = {
     "featuregroup": "active",
     "popup": "status",
     "offer": "active",
-    "services": "active",
+    "services": "status",
     "media": "active",
     "slideshow": "active",
     "gallery": "active",
     "galleryimage": "active",
+    "subpackageimage": "active",
 }
 
 STAT_COLORS = ['blue', 'orange', 'green', 'cyan', 'red', 'lime', 'purple', 'pink', 'yellow', 'teal']
@@ -325,6 +327,11 @@ def update_order(request, model_name):
 
     if not check_user_permission(request, model_class, action="change"):
         return JsonResponse({'status': 'error', 'message': 'You don\'t have permission to do that'}, status=403)
+
+    try:
+        model_class._meta.get_field('position')
+    except FieldDoesNotExist:
+        return JsonResponse({'status': 'error', 'message': 'This model does not support sorting'}, status=400)
 
     try:
         data = json.loads(request.body)

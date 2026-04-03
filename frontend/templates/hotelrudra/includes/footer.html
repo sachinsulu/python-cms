@@ -40,8 +40,7 @@
                         </div>
                         <div class="mail"><a href="mailto:{{ site_location.email_address }}">{{ site_location.email_address }}</a></div>
                         {% if site_location.map_embed %}
-                            <p><a href="{{ site_location.map_embed }}" target="_blank">View Google Map</a></p>
-                            
+                            <p><a href="{{ site_location.map_embed|extract_src }}" target="_blank">View Google Map</a></p>
                         {% endif %}
                     </div>
                 </div>
@@ -53,11 +52,13 @@
                             <ul class="card1 card1a">
                                 {% for ota in ota_links %}
                                     <li title="{{ ota.title }}">
-                                        {% if ota.image_url %}
-                                            <img src="{{ ota.image_url }}" alt="{{ ota.title }}">
-                                        {% else %}
-                                            <i class="{{ ota.icon }}"></i>
-                                        {% endif %}
+                                        {% if ota.link %}<a href="{{ ota.link }}" target="_blank">{% endif %}
+                                            {% if ota.image_url %}
+                                                <img src="{{ ota.image_url }}" alt="{{ ota.title }}">
+                                            {% else %}
+                                                <i class="{{ ota.icon }}"></i>
+                                            {% endif %}
+                                        {% if ota.link %}</a>{% endif %}
                                     </li>
                                 {% endfor %}
                             </ul>
@@ -90,7 +91,7 @@
 </footer>
 
 <div class="whats_app">
-    <a href="https://wa.me/{{ site_location.whatsapp }}" target="_blank" class="whatsapp">
+    <a href="https://wa.me/{{ primary_phone }}" target="_blank" class="whatsapp">
         <img src="{% static 'img/icon/whatsapp.png' %}">
     </a>
 </div>

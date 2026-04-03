@@ -40,3 +40,33 @@ def get_range(value):
         return range(int(value))
     except (ValueError, TypeError):
         return []
+@register.filter
+def extract_src(value):
+    """
+    Extracts the 'src' attribute from an HTML tag string (e.g. <iframe>).
+    If no src is found, returns the original value.
+    """
+    if not isinstance(value, str) or '<' not in value:
+        return value
+    import re
+    match = re.search(r'src=["\']([^"\']+)["\']', value)
+    if match:
+        return match.group(1)
+    return value
+
+
+@register.filter
+def split_read_more(value):
+    """
+    Splits content by the 'Read More' separator.
+    Returns a dictionary with 'main' and 'extra' parts.
+    """
+    if not isinstance(value, str):
+        return {'main': value, 'extra': None}
+    
+    separator = '<hr class="read-more-separator" style="border: 1px dashed #f60;" />'
+    parts = value.split(separator)
+    return {
+        'main': parts[0],
+        'extra': parts[1] if len(parts) > 1 else None
+    }

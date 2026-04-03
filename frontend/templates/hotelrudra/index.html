@@ -186,7 +186,9 @@
                     <div class="owl-carousel owl-theme">
                         {% for testimonial in testimonials %}
                         <div class="item">
-                            <img src="{{ testimonial.image_url }}" class="testmonial-img">
+                            <a href="{{ testimonial.link }}">
+                                <img src="{{ testimonial.image_url }}" class="testmonial-img">
+                            </a>
                             <span>
                                 {% for i in testimonial.rating|get_range %}
                                 <i class="star-rating"></i>
@@ -195,7 +197,7 @@
                             {{ testimonial.content|safe }}
                             <div class="info">
                                 <div class="cont">
-                                    <h6>{{ testimonial.name }} <i>|</i> <span><a href="#">View on {{testimonial.via_type}}</a></span></h6>
+                                    <h6>{{ testimonial.name }} <i>|</i> <span><a href="{{ testimonial.link }}">View on {{testimonial.via_type}}</a></span></h6>
                                 </div>
                             </div>
                         </div>

@@ -31,7 +31,7 @@
 
                 <div class="container-fluid" id="gallery">  
                     {% for gallery_image in gallery_images %}
-                        <div class="col-md-4 images" data-class="{{ gallery_image.gallery.title }}" data-src="{{ gallery_image.image_url }}" style="display: block;">
+                        <div class="col-md-4 images" data-class="{{ gallery_image.gallery.title }}" data-src="{{ gallery_image.image_url }}" data-position="{{ gallery_image.position }}" data-original-order="{{ forloop.counter0 }}" style="display: block;">
                             <img src="{{ gallery_image.image_url }}" alt="{{ gallery_image.title }}">
                         </div>
                     {% endfor %}

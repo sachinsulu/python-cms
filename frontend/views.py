@@ -1,8 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.core.mail import send_mail
 from django.conf import settings
-from django.http import JsonResponse, Http404
-from django.utils.text import slugify
+from django.http import JsonResponse
 from package.models import Package, SubPackage
 from articles.models import Article
 from gallery.models import Gallery , GalleryImage
@@ -39,7 +38,7 @@ def amenities(request):
 
 def gallery(request):
     gallery = Gallery.objects.filter(active=True, type='Innerpage').order_by('position')
-    gallery_images = GalleryImage.objects.filter(active=True, gallery__type='Innerpage').order_by('?')
+    gallery_images = GalleryImage.objects.filter(active=True, gallery__type='Innerpage').order_by('position')
     return render(request, 'hotelrudra/gallery.html', {'gallery': gallery, 'gallery_images': gallery_images})
 
 def send_enquiry_email(data):
@@ -134,5 +133,9 @@ def Main_Service(request):
     return render(request, 'hotelrudra/spa.html', {'main_services': main_services})
 
 def service_detail(request, slug):
-    service = get_object_or_404(Service, slug=slug, status=True)
+    services = Service.objects.filter(status=True)
+    service = next((s for s in services if s.slug == slug), None)
+    if not service:
+        from django.http import Http404
+        raise Http404("Service not found")
     return render(request, 'hotelrudra/service-detail.html', {'service': service})

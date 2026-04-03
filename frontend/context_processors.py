@@ -20,10 +20,10 @@ def frontend_context(request):
     if site_location and site_location.phone:
         primary_phone = site_location.phone.split(',')[0].strip().replace(' ', '')
 
-    social_links = Social.objects.filter(active=True, type=Social.TYPE_SOCIAL)
-    ota_links = Social.objects.filter(active=True, type=Social.TYPE_OTA)
+    social_links = Social.objects.filter(active=True, type=Social.TYPE_SOCIAL).order_by('position')
+    ota_links = Social.objects.filter(active=True, type=Social.TYPE_OTA).order_by('position')
     
-    main_menu = MenuItem.objects.filter(active=True, parent=None).prefetch_related('children')
+    main_menu = MenuItem.objects.filter(active=True, parent=None).order_by('position').prefetch_related('children')
 
     return {
         'site_prefs': site_prefs,

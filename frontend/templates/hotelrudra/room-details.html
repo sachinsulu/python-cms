@@ -55,12 +55,12 @@
                          <div class="col-md-3 mt-45">
                             <h4>{% if room.price %}${{ room.price|floatformat:0 }} <span style="font-size:23px">/ Night</span>{% endif %}</h4>
                         </div>
-                        {% with content_parts=room.content|split:'<hr class="read-more-separator" style="border: 1px dashed #f60;" />' %}
-                            {{ content_parts.0|safe }}
+                        {% with content=room.content|split_read_more %}
+                            {{ content.main|safe }}
                             
-                            {% if content_parts.1 %}
+                            {% if content.extra %}
                                 <div class="room-extra-content mt-30">
-                                    {{ content_parts.1|safe }}
+                                    {{ content.extra|safe }}
                                 </div>
                             {% endif %}
                         {% endwith %}
@@ -70,7 +70,7 @@
 
                 <div class="col-lg-4 offset-lg-1 col-md-12">
                     <div class="sidebar position-sticky" style="top: 80px; z-index: 2;">
-                    <a href="tel:{{ site_location.phone }}" class="button-3 w-100 mb-15"><i class="fa-solid fa-thumbs-up"></i> Book Your Stay</a>
+                    <a href="https://wa.me/{{ primary_phone }}" class="button-3 w-100 mb-15"><i class="fa-solid fa-thumbs-up"></i> Book Your Stay</a>
                     {% if room.amenity_links.all %}
                     <div class="cont">
                         
@@ -120,7 +120,7 @@
                                 </div>
                                 <div class="wrap">
                                     <div class="cont">
-                                        <div class="price">{% if other_room.price %}${{ other_room.price|floatformat:0 }}{% else %}Call{% endif %} <span>/ night</span></div>
+                                        <div class="price">{% if other_room.price %}${{ other_room.price|floatformat:0 }}<span>/ night</span>{% endif %}</div>
                                         <h3><a href="{% url 'dynamic_detail' other_room.slug %}">{{ other_room.title }}</a></h3>
                                         <div class="details"> 
                                             {% if other_room.beds %}<span><i class="fa-thin fa-bed-front"></i>{{ other_room.beds }} Bed</span>{% endif %}

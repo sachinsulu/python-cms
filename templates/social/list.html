@@ -72,9 +72,6 @@
                 </td>
                 <td><input type="checkbox" name="selected_ids" value="{{ item.id }}" class="row-checkbox"></td>
                 <td>
-                    {% if item.image %}
-                        <img src="{{ item.image.url }}" style="width:28px; height:28px; object-fit:cover; border-radius:4px; vertical-align:middle; margin-right:6px;">
-                    {% endif %}
                     <a href="{% url 'social_edit' item.pk %}">{{ item.title }}</a>
                 </td>
                 <td>

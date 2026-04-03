@@ -81,14 +81,9 @@ class MediaService:
                     img.save(thumb_io, format=img_format, quality=85)
 
                     filename = os.path.basename(media.file.name)
-                    if folder:
-                        folder_slug = getattr(folder, 'slug', None) or "root"
-                        thumb_name = f"{folder_slug}/thumbnails/{filename}"
-                    else:
-                        thumb_name = f"root/thumbnails/{filename}"
 
                     media.thumbnail.save(
-                        thumb_name,
+                        filename,
                         ContentFile(thumb_io.getvalue()),
                         save=False
                     )

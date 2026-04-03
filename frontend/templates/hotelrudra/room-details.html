@@ -71,7 +71,7 @@
                 <div class="col-lg-4 offset-lg-1 col-md-12">
                     <div class="sidebar position-sticky" style="top: 80px; z-index: 2;">
                     <a href="tel:{{ site_location.phone }}" class="button-3 w-100 mb-15"><i class="fa-solid fa-thumbs-up"></i> Book Your Stay</a>
-                    {% if room.amenities == True %}
+                    {% if room.amenity_links.all %}
                     <div class="cont">
                         
                         <h5>Room Amenities</h5>
@@ -79,8 +79,10 @@
                             {% for link in room.amenity_links.all %}
                             <li>
                                 <span>
-                                    {% if link.feature.icon_url %}
-                                        <img src="{{ link.feature.icon_url }}" alt="{{ link.feature.title }}">
+                                    {% if link.feature.image_url %}
+                                        <img src="{{ link.feature.image_url }}" alt="{{ link.feature.title }}">
+                                    {% elif link.feature.icon %}
+                                        <i class="{{ link.feature.icon }}"></i>
                                     {% else %}
                                         <i class="fa-light fa-check"></i>
                                     {% endif %}

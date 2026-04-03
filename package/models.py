@@ -14,6 +14,7 @@ class Package(MediaUsageMixin, models.Model):
     ]
 
     title = models.CharField(max_length=255)
+    subtitle = models.CharField(max_length=255, blank=True)
     slug = models.SlugField(unique=True, blank=True)
     content = RichTextUploadingField(blank=True)
 
@@ -106,6 +107,7 @@ class SubPackage(MediaUsageMixin, models.Model):
     media_fields = ['image']
     package = models.ForeignKey(Package, on_delete=models.CASCADE, related_name='sub_packages')
     title = models.CharField(max_length=255)
+    subtitle = models.CharField(max_length=255, blank=True)
     slug = models.SlugField(unique=True, blank=True)
     content = RichTextUploadingField(blank=True)
 

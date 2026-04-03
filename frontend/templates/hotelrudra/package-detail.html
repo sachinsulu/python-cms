@@ -28,7 +28,7 @@
                 <div class="col-lg-8 col-md-12 mb-30">
                     <div class="row mb-30">
                         <div class="col-md-12">
-                            <div class="section-subtitle">{{ package.title }}</div>
+                            <div class="section-subtitle">{{ package.subtitle|default:package.title }}</div>
                             <div class="section-title">Overview</div>
                             <div class="package-content">
                                 {{ package.content|safe }}

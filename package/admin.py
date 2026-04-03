@@ -6,7 +6,7 @@ from .models import Package, SubPackage, SubPackageAmenity, SubPackageImage
 class SubPackageInline(admin.TabularInline):
     model = SubPackage
     extra = 0
-    fields = ('title', 'slug', 'price', 'capacity', 'beds', 'is_active', 'position')
+    fields = ('title', 'subtitle', 'slug', 'price', 'capacity', 'beds', 'is_active', 'position')
     prepopulated_fields = {"slug": ("title",)}
 
 
@@ -29,7 +29,7 @@ class PackageAdmin(admin.ModelAdmin):
     list_display = ('title', 'slug', 'package_type_display', 'sub_count', 'is_active_icon', 'position', 'created_at')
     list_display_links = ('title', 'slug')
     list_filter = ('is_active', 'package_type')
-    search_fields = ('title', 'description')
+    search_fields = ('title', 'subtitle', 'description')
     prepopulated_fields = {"slug": ("title",)}
     inlines = [SubPackageInline]
 
@@ -53,15 +53,15 @@ class PackageAdmin(admin.ModelAdmin):
 
 @admin.register(SubPackage)
 class SubPackageAdmin(admin.ModelAdmin):
-    list_display = ('title', 'package', 'price', 'capacity', 'is_active', 'position')
+    list_display = ('title', 'subtitle', 'package', 'price', 'capacity', 'is_active', 'position')
     list_display_links = ('title',)
     list_filter = ('is_active', 'package')
-    search_fields = ('title', 'content')
+    search_fields = ('title', 'subtitle', 'content')
     prepopulated_fields = {"slug": ("title",)}
     
     fieldsets = (
         (None, {
-            'fields': ('package', 'title', 'slug', 'content', 'image', 'price', 'capacity', 'beds', 'is_active', 'position')
+            'fields': ('package', 'title', 'subtitle', 'slug', 'content', 'image', 'price', 'capacity', 'beds', 'is_active', 'position')
         }),
         ('Hall Details (Non-Room)', {
             'fields': ('hall_size', 'u_shape', 'classroom', 'theatre', 'round_table'),

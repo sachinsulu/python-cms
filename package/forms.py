@@ -17,12 +17,13 @@ class PackageForm(forms.ModelForm):
     class Meta:
         model = Package
         fields = [
-            'title', 'slug', 'content',
+            'title', 'subtitle', 'slug', 'content',
             'package_type', 'feature_group', 'is_active',
             'meta_title', 'meta_description', 'meta_keywords',
         ]
         widgets = {
             'title': forms.TextInput(attrs={'placeholder': 'Package Title'}),
+            'subtitle': forms.TextInput(attrs={'placeholder': 'Package Subtitle (Optional)'}),
             'content': CKEditorUploadingWidget(),
             'package_type': forms.RadioSelect(),
             'feature_group': forms.Select(attrs={'class': 'form-control'}),
@@ -62,7 +63,7 @@ class SubPackageForm(forms.ModelForm):
     class Meta:
         model = SubPackage
         fields = [
-            'title', 'slug', 'content',
+            'title', 'subtitle', 'slug', 'content',
             'price', 'capacity', 'beds',
             'hall_size', 'u_shape', 'classroom', 'theatre', 'round_table',
             'is_active',
@@ -70,6 +71,7 @@ class SubPackageForm(forms.ModelForm):
         ]
         widgets = {
             'title': forms.TextInput(attrs={'placeholder': 'Sub-Package Title'}),
+            'subtitle': forms.TextInput(attrs={'placeholder': 'Sub-Package Subtitle (Optional)'}),
             'content': CKEditorUploadingWidget(),
             'price': forms.NumberInput(attrs={'placeholder': '0.00', 'step': '0.01'}),
             'capacity': forms.NumberInput(attrs={'placeholder': 'Max guests'}),

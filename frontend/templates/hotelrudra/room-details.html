@@ -49,11 +49,11 @@
                 <div class="col-lg-7 col-md-12 mb-30">
                     <div class="row mb-30">
                         <div class="col-md-9">
-                            <div class="section-subtitle">Laid-back places</div>
+                            <div class="section-subtitle">{{ room.subtitle|default:"Laid-back places" }}</div>
                             <div class="section-title">{{ room.title }}</div>
                         </div>
                          <div class="col-md-3 mt-45">
-                            <h4>{% if room.price %}${{ room.price|floatformat:0 }}{% else %}Call for Price{% endif %} <span style="font-size:23px">/ Night</span></h4>
+                            <h4>{% if room.price %}${{ room.price|floatformat:0 }} <span style="font-size:23px">/ Night</span>{% endif %}</h4>
                         </div>
                         {% with content_parts=room.content|split:'<hr class="read-more-separator" style="border: 1px dashed #f60;" />' %}
                             {{ content_parts.0|safe }}

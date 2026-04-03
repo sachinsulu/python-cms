@@ -85,11 +85,10 @@
                             <div class="item mt-20">
                                 <div class="img"> 
                                     <img src="{% if room.image_url %}{{ room.image_url }}{% else %}{% static 'img/rooms/1.jpg' %}{% endif %}" alt="{{ room.title }}"> 
-                                    {% if forloop.first %}<span class="discount"><i class="fa-light fa-badge-percent"></i> 25% Off</span>{% endif %}
                                 </div>
                                 <div class="wrap">
                                     <div class="cont">
-                                        <div class="price">{% if room.price %}${{ room.price|floatformat:0 }}{% else %}Call{% endif %} <span>/ night</span></div>
+                                        <div class="price">{% if room.price %}${{ room.price|floatformat:0 }} <span style="font-size:23px">/ Night</span>{% endif %}</div>
                                         <h3><a href="{% url 'dynamic_detail' room.slug %}">{{ room.title }}</a></h3>
                                         <div class="details"> 
                                             {% if room.beds %}<span><i class="fa-thin fa-bed-front"></i>{{ room.beds }} Bed</span>{% endif %}

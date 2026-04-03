@@ -37,6 +37,12 @@
         </div>
 
         <div class="form-group">
+            <label for="{{ form.subtitle.id_for_label }}">Subtitle</label>
+            {{ form.subtitle }}
+            {% if form.subtitle.errors %}<div class="error">{{ form.subtitle.errors }}</div>{% endif %}
+        </div>
+
+        <div class="form-group">
             <label for="{{ form.slug.id_for_label }}">Slug <span style="color:red;">*</span></label>
             {{ form.slug }}
             <small id="slug-message" class="help-text"></small>

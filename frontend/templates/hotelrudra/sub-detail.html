@@ -50,7 +50,7 @@
                 <div class="col-lg-7 col-md-12 mb-30">
                     <div class="row mb-30">
                         <div class="col-md-12">
-                            <div class="section-subtitle">{{ room.package.title }}</div>
+                            <div class="section-subtitle">{{ room.subtitle|default:room.package.title }}</div>
                             <div class="section-title">{{ room.title }}</div>
 
                             {% if room.content %}

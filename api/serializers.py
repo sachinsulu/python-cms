@@ -86,7 +86,7 @@ class SubPackageSerializer(serializers.ModelSerializer):
     class Meta:
         model = SubPackage
         fields = [
-            'id', 'title', 'slug', 'content', 'image',
+            'id', 'title', 'subtitle', 'slug', 'content', 'image',
             'price', 'capacity', 'beds', 'amenities', 'images',
             'is_active', 'position',
         ]
@@ -118,7 +118,7 @@ class PackageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Package
         fields = [
-            'id', 'title', 'slug', 'content', 'image',
+            'id', 'title', 'subtitle', 'slug', 'content', 'image',
             'package_type', 'feature_group',
             'is_active', 'position',
             'sub_packages',

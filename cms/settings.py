@@ -234,8 +234,14 @@ MEDIA_ROOT = BASE_DIR / "media"
 # CKEDITOR
 # ========================
 
+# Upload path kept for ckeditor_uploader internals (browse view etc.)
+# Actual file storage is handled by our custom view → MediaService.
 CKEDITOR_UPLOAD_PATH = "uploads/"
-CKEDITOR_RESTRICT_BY_DATE = False
+CKEDITOR_RESTRICT_BY_DATE = False  # No date-based subfolders — Media Manager owns organisation
+
+# Folder name in Media Manager where CKEditor uploads are stored.
+# Can be overridden per-environment without changing code.
+CKEDITOR_MEDIA_FOLDER = "ckeditor"
 
 CKEDITOR_CONFIGS = {
     "default": {
@@ -244,6 +250,11 @@ CKEDITOR_CONFIGS = {
         "width": "100%",
         "allowedContent": True,
         "extraPlugins": "uploadimage,image2,sourcearea",
+        # Point the uploader at our custom view
+        "filebrowserUploadUrl": "/ckeditor/upload/",
+        "filebrowserImageUploadUrl": "/ckeditor/upload/",
+        "filebrowserBrowseUrl": "/ckeditor/upload/browse/",
+        "filebrowserImageBrowseUrl": "/ckeditor/upload/browse/",
     }
 }
 
@@ -287,3 +298,5 @@ CSRF_COOKIE_SECURE = not DEBUG
 # EMAIL SETTINGS
 # ========================
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+RECAPTCHA_SITE_KEY = os.environ.get("RECAPTCHA_SITE_KEY")
+RECAPTCHA_SECRET_KEY = os.environ.get("RECAPTCHA_SECRET_KEY")

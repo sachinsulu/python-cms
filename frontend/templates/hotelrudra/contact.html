@@ -113,7 +113,7 @@
                                         <button class="button-3" id="submit"><i class="fa-light fa-paper-plane"></i> Submit</button>
                                     </div>
                                     <div class="col-md-12">
-                                        <div class="g-recaptcha" data-sitekey="6LcsZ58sAAAAAI_ZSpNbV7YGweQAk8IELXoBsudC"></div>
+                                        <div class="g-recaptcha" data-sitekey="{{ RECAPTCHA_SITE_KEY }}"></div>
                                     </div>
                                 </div>
                             </div>
@@ -167,13 +167,16 @@
                                 if (data.status === 'success') {
                                     $('div#result_msg').html("<div class='alert alert-success'>" + data.message + "</div>").css('display', 'block').fadeOut(8000);
                                     $("form#contactform")[0].reset();
+                                    grecaptcha.reset();
                                 } else {
                                     $('div#result_msg').html("<div class='alert alert-danger'>" + data.message + "</div>").css('display', 'block').fadeOut(8000);
+                                    grecaptcha.reset();
                                 }
                             },
                             error: function () {
                                 $("button#submit").removeAttr("disabled").text('Submit');
                                 $('div#result_msg').html("<div class='alert alert-danger'>An error occurred. Please try again later.</div>").css('display', 'block').fadeOut(8000);
+                                grecaptcha.reset();
                             }
                         });
                         return false;

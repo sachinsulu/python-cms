@@ -67,6 +67,10 @@ urlpatterns = [
 
     # Django built-ins
     path('admin/', admin.site.urls),
+    # ── CKEditor upload: override with our custom view ─────────────────────────
+    # This MUST come before include('ckeditor_uploader.urls') so Django matches
+    # the upload path first and routes it through MediaService.
+    path('ckeditor/upload/', include('media_manager.urls_ckeditor')),
     path('ckeditor/', include('ckeditor_uploader.urls')),
 ]
 

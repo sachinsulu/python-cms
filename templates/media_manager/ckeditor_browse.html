@@ -1,0 +1,98 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Media Library - CKEditor</title>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    
+    <!-- Base Styles (extracted from base.html/admin.css if needed, but picker_modal.html has its own styles) -->
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: #f1f5f9;
+        }
+        
+        /* Ensure the picker overlay is always visible and takes full screen */
+        #mediaPickerOverlay {
+            position: fixed !important;
+            inset: 0 !important;
+            background: #fff !important; /* White background for better standalone look */
+            display: flex !important;
+            backdrop-filter: none !important;
+        }
+        
+        #mediaPickerModal {
+            width: 100% !important;
+            height: 100% !important;
+            max-width: none !important;
+            max-height: none !important;
+            border-radius: 0 !important;
+            box-shadow: none !important;
+        }
+
+        /* Hide close button as this is a standalone window */
+        #mediaPickerClose {
+            display: none !important;
+        }
+        
+        /* Adjust footer for CKEditor context */
+        .mp-footer {
+            padding: 15px 25px !important;
+        }
+    </style>
+
+    <script src="{% static 'js/media_picker.js' %}" defer></script>
+</head>
+<body data-csrf-token="{{ csrf_token }}">
+
+    {% include "media_manager/picker_modal.html" %}
+
+    <!-- Hidden trigger to auto-open the picker via media_picker.js logic -->
+    <button id="autoTrigger" 
+            data-media-picker 
+            data-type="image" 
+            style="display:none;"></button>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Wait for media_picker.js to be ready
+            const checkReady = setInterval(() => {
+                const trigger = document.getElementById('autoTrigger');
+                if (window.mediaPickerInitialized || (typeof openPicker !== 'undefined') || trigger) {
+                    clearInterval(checkReady);
+                    
+                    // Trigger the picker
+                    trigger.click();
+                    
+                    // Listen for the selection event
+                    trigger.addEventListener('mediaPicked', function(e) {
+                        const fileUrl = e.detail.url;
+                        const funcNum = "{{ CKEditorFuncNum }}";
+                        
+                        if (window.opener && window.opener.CKEDITOR) {
+                            window.opener.CKEDITOR.tools.callFunction(funcNum, fileUrl);
+                        } else if (window.parent && window.parent.CKEDITOR) {
+                            // In case it's in an iframe/dialog
+                            window.parent.CKEDITOR.tools.callFunction(funcNum, fileUrl);
+                        }
+                        
+                        window.close();
+                    });
+                    
+                    // Handle cancel/close
+                    const cancelBtn = document.getElementById('mediaPickerCancel');
+                    if (cancelBtn) {
+                        cancelBtn.addEventListener('click', () => window.close());
+                    }
+                }
+            }, 50);
+        });
+    </script>
+</body>
+</html>

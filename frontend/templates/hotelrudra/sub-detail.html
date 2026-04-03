@@ -73,7 +73,6 @@
 
                     <div class="row">
                         <div class="col-md-12">
-                            {{if }}
                             <div class="table-responsive">
                             <table class="table table-bordered border border-danger mb-30" style="box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;">
                                 <thead>
@@ -117,7 +116,13 @@
                             </table>
                             </div>
 
-                            <a href="#" class="button-3" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fa-solid fa-thumbs-up"></i> Enquiry Now</a>
+                            {% if room.package.id == 2 %}
+                            <a href="#" class="button-3" data-bs-toggle="modal" data-bs-target="#enquiryModal"><i class="fa-solid fa-thumbs-up"></i> Enquiry Now</a>
+                            {% elif room.package.id == 3 %}
+                            <a href="https://wa.me/{{ primary_phone }}" target="_blank" class="button-3"><i class="fab fa-whatsapp"></i>Inquiry Now</a>
+                            {% else %}
+                            <a href="#" class="button-3" data-bs-toggle="modal" data-bs-target="#enquiryModal"><i class="fa-solid fa-thumbs-up"></i> Enquiry Now</a>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
@@ -158,7 +163,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="enquiry_form" method="post" action="{% url 'contact' %}">
+                    <form id="enquiry_form" method="post" action="{% url 'enquiry' %}">
                         {% csrf_token %}
                         <input type="hidden" name="subject" value="{{ room.title }} Enquiry">
                         <div class="row">
@@ -183,8 +188,12 @@
                             <div class="col-md-12 mb-3">
                                 <textarea name="message" class="form-control" rows="4" placeholder="Special requirements..."></textarea>
                             </div>
+                            <div class="col-md-12 mb-3" id="result_msg"></div>
                             <div class="col-md-12">
-                                <button type="submit" class="button-3">Submit Enquiry</button>
+                                <div class="g-recaptcha" data-sitekey="{{ RECAPTCHA_SITE_KEY }}"></div>
+                            </div>
+                            <div class="col-md-12">
+                                <button type="submit" id="submit_enquiry" class="button-3">Submit Enquiry</button>
                             </div>
                         </div>
                     </form>
@@ -192,4 +201,58 @@
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    $(document).ready(function () {
+        $('#enquiry_form').validate({
+            errorElement: 'span',
+            errorClass: 'validate-has-error',
+            rules: {
+                fullname: {required: true},
+                phone: {required: true},
+                email: {required: true, email: true}
+            },
+            messages: {
+                fullname: {required: "Please enter your Full Name."},
+                phone: {required: "Please enter your Phone Number."},
+                email: {required: "Please enter a valid Email Address."}
+            },
+            submitHandler: function (form, event) {
+                event.preventDefault();
+                var csrfmiddlewaretoken = $("input[name='csrfmiddlewaretoken']").val();
+                var Frmval = $("form#enquiry_form").serialize();
+                $("button#submit_enquiry").attr("disabled", "true").text('Processing...');
+                $.ajax({
+                    type: "POST",
+                    dataType: "JSON",
+                    url: "{% url 'enquiry' %}",
+                    data: Frmval,
+                    headers: {
+                        'X-CSRFToken': csrfmiddlewaretoken,
+                        'X-Requested-With': 'XMLHttpRequest'
+                    },
+                    success: function (data) {
+                        $("button#submit_enquiry").removeAttr("disabled").text('Submit Enquiry');
+                        if (data.status === 'success') {
+                            $('div#result_msg').html("<div class='alert alert-success'>" + data.message + "</div>").css('display', 'block').fadeOut(8000);
+                            $("form#enquiry_form")[0].reset();
+                            grecaptcha.reset();
+                        } else {
+                            $('div#result_msg').html("<div class='alert alert-danger'>" + data.message + "</div>").css('display', 'block').fadeOut(8000);
+                            grecaptcha.reset();
+                        }
+                    },
+                    error: function () {
+                        $("button#submit_enquiry").removeAttr("disabled").text('Submit Enquiry');
+                        $('div#result_msg').html("<div class='alert alert-danger'>An error occurred. Please try again later.</div>").css('display', 'block').fadeOut(8000);
+                        grecaptcha.reset();
+                    }
+                });
+                return false;
+            }
+        });
+    });
+</script>
 {% endblock %}

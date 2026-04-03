@@ -1,3 +1,4 @@
+import os
 from preferences.models import SitePreferences
 from location.models import Location
 from social.models import Social
@@ -31,4 +32,5 @@ def frontend_context(request):
         'social_links': social_links,
         'ota_links': ota_links,
         'main_menu': main_menu,
+        'RECAPTCHA_SITE_KEY': os.environ.get("RECAPTCHA_SITE_KEY"),
     }

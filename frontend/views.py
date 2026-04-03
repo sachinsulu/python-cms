@@ -11,6 +11,7 @@ from preferences.models import SitePreferences
 from services.models import Service
 from testimonials.models import Testimonial 
 from slideshow.models import Slideshow
+import requests
 
 
 
@@ -41,8 +42,68 @@ def gallery(request):
     gallery_images = GalleryImage.objects.filter(active=True, gallery__type='Innerpage').order_by('?')
     return render(request, 'hotelrudra/gallery.html', {'gallery': gallery, 'gallery_images': gallery_images})
 
-def contact(request):
+def send_enquiry_email(data):
+    """Helper function to send enquiry/contact emails"""
+    name = data.get('fullname')
+    email = data.get('email')
+    phone = data.get('phone')
+    address = data.get('address')
+    message = data.get('message')
+    subject = data.get('subject', 'New Contact Form Submission')
+    event_date = data.get('form_eventDate')
+    pax = data.get('form_pax')
+    recaptcha_response = data.get('g-recaptcha-response')
 
+    # Verify reCAPTCHA
+    if not recaptcha_response:
+        return False, "Please complete the reCAPTCHA."
+    
+    verify_url = "https://www.google.com/recaptcha/api/siteverify"
+    payload = {
+        'secret': settings.RECAPTCHA_SECRET_KEY,
+        'response': recaptcha_response
+    }
+    try:
+        response = requests.post(verify_url, data=payload)
+        result = response.json()
+        if not result.get('success'):
+            return False, "reCAPTCHA verification failed. Please try again."
+    except Exception as e:
+        print(f"reCAPTCHA Error: {e}")
+        return False, "Could not verify reCAPTCHA. Please try again later."
+    
+    # Construct email body
+    body = f'Name: {name}\nEmail: {email}\nPhone: {phone}\nAddress: {address}\n'
+    if event_date:
+        body += f'Event Date: {event_date}\n'
+    if pax:
+        body += f'Number of Guests: {pax}\n'
+    body += f'\nMessage:\n{message}'
+
+    try:
+        send_mail(
+            subject,
+            body,
+            settings.DEFAULT_FROM_EMAIL,
+            [settings.DEFAULT_FROM_EMAIL],
+            fail_silently=False,
+        )
+        return True, "Thank you! Your enquiry has been sent."
+    except Exception as e:
+        print(f"Mail Error: {e}") 
+        return False, "Failed to send enquiry. Please try again later."
+
+def enquiry(request):
+    """Dedicated view for AJAX-based enquiries from modals"""
+    if request.method == 'POST' and request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        success, message = send_enquiry_email(request.POST)
+        if success:
+            return JsonResponse({'status': 'success', 'message': message})
+        else:
+            return JsonResponse({'status': 'error', 'message': message})
+    return JsonResponse({'status': 'error', 'message': 'Invalid request.'}, status=400)
+
+def contact(request):
     site_location = Location.objects.get_solo()
     site_prefs = SitePreferences.objects.get_solo()
 
@@ -50,33 +111,20 @@ def contact(request):
     tel = [p.strip() for p in site_location.landline.split(',') if p.strip()]
 
     if request.method == 'POST':
-        name = request.POST.get('fullname')
-        email = request.POST.get('email')
-        phone = request.POST.get('phone')
-        address = request.POST.get('address')
-        message = request.POST.get('message')
-        
-        # Send email
-        try:
-            send_mail(
-                'New Contact Form Submission',
-                f'Name: {name}\nEmail: {email}\nPhone: {phone}\nAddress: {address}\nMessage: {message}',
-                settings.DEFAULT_FROM_EMAIL,
-                [settings.DEFAULT_FROM_EMAIL],  # Admin email address to receive contacts
-                fail_silently=False,
-            )
-            if request.headers.get('x-requested-with') == 'XMLHttpRequest':
-                return JsonResponse({'status': 'success', 'message': 'Thank you! Your message has been sent.'})
-        except Exception as e:
-            # Log the actual error
-            print(f"Mail Error: {e}") 
-            if request.headers.get('x-requested-with') == 'XMLHttpRequest':
-                return JsonResponse({'status': 'error', 'message': 'Failed to send email. Please try again later.'})
-            else:
-                messages.error(request, 'Failed to send your message. Please try again later.')
+        success, message = send_enquiry_email(request.POST)
         
         if request.headers.get('x-requested-with') == 'XMLHttpRequest':
-             return JsonResponse({'status': 'success', 'message': 'Form processed.'})
+            if success:
+                return JsonResponse({'status': 'success', 'message': message})
+            else:
+                return JsonResponse({'status': 'error', 'message': message})
+        
+        if success:
+             from django.contrib import messages
+             messages.success(request, message)
+        else:
+             from django.contrib import messages
+             messages.error(request, message)
 
         return redirect('contact')
     return render(request, 'hotelrudra/contact.html', {'site_location': site_location, 'site_prefs': site_prefs, 'phones': phones, 'tel': tel})

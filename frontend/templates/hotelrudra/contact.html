@@ -1,5 +1,5 @@
 {% extends 'hotelrudra/base.html' %}
-{% load static %}
+{% load static custom_filters %}
 
 {% block title %}Contact Us | {{ site_prefs.site_name }}{% endblock %}
 
@@ -41,15 +41,15 @@
                                         <h2 class="title">Let's talk with us</h2>
                                         <p class="text">
                                         Phone:
-                                        {% for phone in phones %}
-                                            <a href="tel:{{ phone }}">{{ phone }}</a>
+                                        {% for phone in site_location.phone|split_phones %}
+                                            <a href="tel:{{ phone|clean_tel }}">{{ phone }}</a>
                                             {% if not forloop.last %} | {% endif %}
                                         {% endfor %}
                                         </p>
                                         <p class="text">
-                                        Phone:
-                                        {% for tel in tel %}
-                                            <a href="tel:{{ tel }}">{{ tel }}</a>
+                                        Landline:
+                                        {% for tel_num in site_location.landline|split_phones %}
+                                            <a href="tel:{{ tel_num|clean_tel }}">{{ tel_num }}</a>
                                             {% if not forloop.last %} | {% endif %}
                                         {% endfor %}
                                         </p>

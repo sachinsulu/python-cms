@@ -74,7 +74,7 @@
                     {% if room.amenity_links.all %}
                     <div class="cont">
                         
-                        <h5>Room Amenities</h5>
+                        <h5>{{room.title}} Amenities</h5>
                         <ul class="list">
                             {% for link in room.amenity_links.all %}
                             <li>

@@ -23,7 +23,10 @@ def home(request):
     testimonials = Testimonial.objects.filter(active=True).order_by('position')[:4]
     gallery = Gallery.objects.filter(active=True, type='Homepage').order_by('position')[:8]
     gallery_images = GalleryImage.objects.filter(active=True, gallery__type='Homepage').order_by('?')
-    slideshow = Slideshow.objects.filter(active=True, type='image').order_by('position')
+    if Slideshow.objects.filter(active=True, type='video').exists():
+        slideshow = Slideshow.objects.filter(active=True, type='video').order_by('position')
+    else:
+        slideshow = Slideshow.objects.filter(active=True, type='image').order_by('position')
     return render(request, 'hotelrudra/index.html', {'featured_rooms': featured_rooms, 'article': articles, 'amenities': amenities, 'main_services': main_services, 'testimonials': testimonials, 'gallery': gallery, 'gallery_images': gallery_images, 'slideshow': slideshow})
 
 
@@ -79,12 +82,16 @@ def send_enquiry_email(data):
         body += f'Number of Guests: {pax}\n'
     body += f'\nMessage:\n{message}'
 
+    # Get recipient email dynamically from Location settings
+    location = Location.objects.get_solo()
+    recipient_email = location.email_address or settings.DEFAULT_FROM_EMAIL
+
     try:
         send_mail(
             subject,
             body,
             settings.DEFAULT_FROM_EMAIL,
-            [settings.DEFAULT_FROM_EMAIL],
+            [recipient_email],
             fail_silently=False,
         )
         return True, "Thank you! Your enquiry has been sent."
@@ -106,8 +113,9 @@ def contact(request):
     site_location = Location.objects.get_solo()
     site_prefs = SitePreferences.objects.get_solo()
 
-    phones = [p.strip() for p in site_location.phone.split(',') if p.strip()]
-    tel = [p.strip() for p in site_location.landline.split(',') if p.strip()]
+    from core.phone_utils import split_and_normalize_phones
+    phones = split_and_normalize_phones(site_location.phone)
+    tel = split_and_normalize_phones(site_location.landline)
 
     if request.method == 'POST':
         success, message = send_enquiry_email(request.POST)

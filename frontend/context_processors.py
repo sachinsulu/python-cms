@@ -18,7 +18,11 @@ def frontend_context(request):
     # ✅ Extract first phone number
     primary_phone = None
     if site_location and site_location.phone:
-        primary_phone = site_location.phone.split(',')[0].strip().replace(' ', '')
+        from core.phone_utils import split_and_normalize_phones, normalize_phone
+        first_phone = split_and_normalize_phones(site_location.phone)[0]
+        # Clean for WhatsApp link (digits only)
+        import re
+        primary_phone = re.sub(r'[^\d+]', '', first_phone)
 
     social_links = Social.objects.filter(active=True, type=Social.TYPE_SOCIAL).order_by('position')
     ota_links = Social.objects.filter(active=True, type=Social.TYPE_OTA).order_by('position')

@@ -11,6 +11,27 @@ def split(value, delimiter=','):
     return [v.strip() for v in value.split(delimiter)]
 
 @register.filter
+def split_phones(value):
+    """
+    Splits a string by multiple delimiters (comma, pipe, semicolon),
+    normalizes each number (removes internal spaces, adds +977 if missing),
+    and returns a list of formatted strings.
+    """
+    from core.phone_utils import split_and_normalize_phones
+    return split_and_normalize_phones(value)
+
+@register.filter
+def clean_tel(value):
+    """
+    Removes all non-digit characters except '+' for valid tel: links.
+    """
+    if not value:
+        return ""
+    import re
+    # Keep only digits and '+'
+    return re.sub(r'[^\d+]', '', str(value))
+
+@register.filter
 def replace_year(value):
     """
     Replaces {year} in a string with the current year.

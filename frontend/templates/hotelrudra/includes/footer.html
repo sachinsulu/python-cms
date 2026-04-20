@@ -11,7 +11,11 @@
                         <div class="social-icons">
                             <ul class="list-inline">
                                 {% for social in social_links %}
-                                    <li><a href="{{ social.link }}" target="_blank"><i class="{{ social.icon }}"></i></a></li>
+                                    {% if social.link %}
+                                        <li><a href="{{ social.link }}" target="_blank"><i class="{{ social.icon }}"></i></a></li>
+                                    {% else %}
+                                        <li><i class="{{ social.icon }}"></i></li>
+                                    {% endif %}
                                 {% endfor %}
                             </ul>
                         </div>

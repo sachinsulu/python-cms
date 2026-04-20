@@ -1,11 +1,11 @@
 from django import forms
-from django.contrib.auth.models import Group
-from .models import User
+from django.contrib.auth.models import User, Group
 
 class UserForm(forms.ModelForm):
     password = forms.CharField(
         widget=forms.PasswordInput,
-        required=False
+        required=False,
+        help_text="Leave blank to keep existing password."
     )
     role = forms.ModelChoiceField(
         queryset=Group.objects.all(),
@@ -15,7 +15,7 @@ class UserForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ['username', 'email', 'is_active', 'password']
+        fields = ['username', 'email', 'is_active']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

@@ -9,7 +9,11 @@ from django.contrib.auth.decorators import permission_required
 # USER FORMS
 # ------------------------------
 class UserCreateForm(forms.ModelForm):
-    password = forms.CharField(widget=forms.PasswordInput, required=False)
+    password = forms.CharField(
+        widget=forms.PasswordInput,
+        required=False,
+        help_text="Leave blank to keep existing password."
+    )
     groups = forms.ModelMultipleChoiceField(
         queryset=Group.objects.all(),
         required=False,
@@ -18,7 +22,7 @@ class UserCreateForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ['username', 'email', 'password', 'is_active', 'groups']
+        fields = ['username', 'email', 'is_active', 'groups']
 
     def save(self, commit=True):
         user = super().save(commit=False)

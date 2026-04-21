@@ -52,7 +52,7 @@
 
         <div class="mp-field-preview" id="preview_box_image">
           {% if item.image and item.image.file %}
-            <img src="{{ item.image.file.url }}"
+            <img src="{{ item.thumbnail_url }}"
                  alt="{{ item.image.alt_text|default:item.title }}"
                  style="width:100%;height:100%;object-fit:contain;">
           {% elif item.image_legacy %}

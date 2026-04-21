@@ -40,7 +40,7 @@
             <button type="button" class="btn btn-danger" id="remove-image-btn" style="margin-top: 8px; display: {% if form.image_media.value %}inline-block{% else %}none{% endif %};" onclick="removeImage()">Remove Image</button>
 
             <div id="media-preview-container" style="display: {% if form.image_media.value %}block{% else %}none{% endif %}; margin-top:10px;">
-                <img id="media-preview-img" style="max-width: 200px; max-height: 200px; object-fit: cover; border-radius: 4px;" src="{% if image.image_url %}{{ image.image_url }}{% endif %}">
+                <img id="media-preview-img" style="max-width: 200px; max-height: 200px; object-fit: cover; border-radius: 4px;" src="{% if image.thumbnail_url %}{{ image.thumbnail_url }}{% endif %}">
             </div>
             
             <input type="hidden" name="remove_image" id="remove_image" value="0">

@@ -65,6 +65,15 @@ class Package(MediaUsageMixin, models.Model):
                 pass
         return None
 
+    @property
+    def thumbnail_url(self):
+        if self.image_id:
+            try:
+                return self.image.thumbnail_url
+            except (ValueError, AttributeError):
+                pass
+        return None
+
     def save(self, *args, **kwargs):
         with transaction.atomic():
             if not self.id:
@@ -159,6 +168,15 @@ class SubPackage(MediaUsageMixin, models.Model):
                 pass
         return None
 
+    @property
+    def thumbnail_url(self):
+        if self.image_id:
+            try:
+                return self.image.thumbnail_url
+            except (ValueError, AttributeError):
+                pass
+        return None
+
     def save(self, *args, **kwargs):
         with transaction.atomic():
             if not self.id:
@@ -216,5 +234,13 @@ class SubPackageImage(MediaUsageMixin, models.Model):
         except (ValueError, AttributeError):
             return None
 
+    @property
+    def thumbnail_url(self):
+        """Return the thumbnail URL of the linked Media object, or None."""
+        try:
+            return self.image.thumbnail_url if self.image_id else None
+        except (ValueError, AttributeError):
+            return None
+
     def __str__(self):
-        return self.title or f"Image for {self.subpackage.title}"
+        return self.title or f"Image for {self.subpackage.title}"

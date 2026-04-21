@@ -69,6 +69,15 @@ class Offer(MediaUsageMixin, models.Model):
                 pass
         return None
 
+    @property
+    def thumbnail_url(self):
+        if self.image_id:
+            try:
+                return self.image.thumbnail_url
+            except (ValueError, AttributeError):
+                pass
+        return None
+
     def save(self, *args, **kwargs):
         with transaction.atomic():
             if not self.pk:

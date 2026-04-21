@@ -193,6 +193,18 @@ class Media(models.Model):
         return os.path.basename(self.file.name)
 
     @property
+    def thumbnail_url(self):
+        """
+        Returns thumbnail URL if available, fallback to full image.
+        """
+        if self.is_image and self.thumbnail:
+            try:
+                return self.thumbnail.url
+            except (ValueError, AttributeError):
+                pass
+        return self.file.url if self.file else None
+
+    @property
     def size_display(self):
         if self.size < 1024:
             return f"{self.size} B"

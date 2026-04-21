@@ -140,7 +140,7 @@
           <div class="preview-wrapper"
                style="position:relative; display:inline-block; margin-top:10px;">
             {% if item.is_image %}
-              <img src="{{ item.file_url }}" alt="{{ item.title }}">
+              <img src="{{ item.thumbnail_url }}" alt="{{ item.title }}">
             {% else %}
               <video src="{{ item.file_url }}" controls></video>
             {% endif %}

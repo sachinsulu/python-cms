@@ -97,7 +97,14 @@
       </button>
 
       <div id="imagePreview" class="mt-2">
-        <p class="no-image text-muted">No image selected</p>
+        {% if is_edit and testimonial.image %}
+          <div class="preview-wrapper" style="position:relative; display:inline-block; margin-top:10px;">
+            <img src="{{ testimonial.thumbnail_url }}" style="max-width:300px; max-height:200px; border:1px solid #e5e7eb; border-radius:4px; display:block;">
+            <p style="margin-top:5px; font-size:12px; color:#666;">Current image</p>
+          </div>
+        {% else %}
+          <p class="no-image text-muted">No image selected</p>
+        {% endif %}
       </div>
       <input type="hidden" name="remove_image" id="remove_image" value="0">
     </div>

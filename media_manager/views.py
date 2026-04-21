@@ -311,7 +311,8 @@ def media_picker_api(request):
         {
             "id":         m.pk,
             "title":      m.title,
-            "url":        m.file.url,
+            "url":        m.thumbnail_url,  # Use thumbnail if available
+            "original_url": m.file.url,      # Keep original for insert
             "type":       m.type,
             "size":       m.size_display,
             "dimensions": f"{m.width}×{m.height}" if m.width else "",

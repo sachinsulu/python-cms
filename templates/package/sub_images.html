@@ -441,7 +441,7 @@
 
     {% if img.image and img.image.file %}
       <img class="gi-thumb"
-           src="{% if img.image.thumbnail %}{{ img.image.thumbnail.url }}{% else %}{{ img.image.file.url }}{% endif %}"
+           src="{{ img.thumbnail_url|default:'' }}"
            alt="{{ img.title|default:'Gallery image' }}"
            loading="lazy" draggable="false">
     {% else %}

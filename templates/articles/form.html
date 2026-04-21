@@ -70,10 +70,10 @@
 
       <!-- Current image preview -->
       <div id="imagePreview" class="mt-2">
-        {% if is_edit and article.image_url %}
+        {% if is_edit and article.thumbnail_url %}
           <div class="preview-wrapper"
                style="position:relative; display:inline-block; margin-top:10px;">
-            <img src="{{ article.image_url }}"
+            <img src="{{ article.thumbnail_url }}"
                  style="max-width:300px; max-height:200px;
                         border:1px solid #e5e7eb; border-radius:4px; display:block;">
             <span class="remove-image"

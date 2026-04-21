@@ -141,7 +141,7 @@
       <div id="imagePreview" class="mt-2">
         {% if is_edit and feature.image %}
           <div class="preview-wrapper" style="position:relative; display:inline-block; margin-top:10px;">
-            <img src="{{ feature.image.url }}" style="max-width:300px; max-height:200px; border:1px solid #e5e7eb; border-radius:4px; display:block;">
+            <img src="{{ feature.thumbnail_url }}" style="max-width:300px; max-height:200px; border:1px solid #e5e7eb; border-radius:4px; display:block;">
             <span class="remove-image"
                   style="position:absolute; top:-8px; right:-8px; background:#ef4444; color:white; border-radius:50%; width:24px; height:24px; text-align:center; line-height:24px; cursor:pointer; font-weight:bold; font-size:16px;">×</span>
             <p style="margin-top:5px; font-size:12px; color:#666;">Current image</p>

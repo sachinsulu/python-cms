@@ -56,11 +56,31 @@ class Blog(MediaUsageMixin, models.Model):
         return None
 
     @property
+    def thumbnail_url(self):
+        if self.image_id:
+            try:
+                if self.image.active:
+                    return self.image.thumbnail_url
+            except (ValueError, AttributeError):
+                pass
+        return None
+
+    @property
     def banner_image_url(self):
         if self.banner_image_id:
             try:
                 if self.banner_image.active:
                     return self.banner_image.file.url
+            except (ValueError, AttributeError):
+                pass
+        return None
+
+    @property
+    def banner_thumbnail_url(self):
+        if self.banner_image_id:
+            try:
+                if self.banner_image.active:
+                    return self.banner_image.thumbnail_url
             except (ValueError, AttributeError):
                 pass
         return None

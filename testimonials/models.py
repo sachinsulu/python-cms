@@ -52,5 +52,15 @@ class Testimonial(MediaUsageMixin, models.Model):
                 pass
         return None
 
+    @property
+    def thumbnail_url(self):
+        if self.image_id:
+            try:
+                if self.image.active:
+                    return self.image.thumbnail_url
+            except (ValueError, AttributeError):
+                pass
+        return None
+
     def __str__(self):
         return self.title

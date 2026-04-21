@@ -267,7 +267,7 @@
 
     const html = results.map(function (item) {
       const thumb = item.is_image
-        ? '<img src="' + escapeHtml(item.url) + '" alt="' + escapeHtml(item.title) + '" loading="lazy">'
+        ? '<img src="' + escapeHtml(item.thumbnail_url || item.url) + '" alt="' + escapeHtml(item.title) + '" loading="lazy">'
         : '<span class="mp-file-icon"><i class="fa-solid ' + getFileIcon(item.type) + '"></i></span>';
 
       const isSelected = state.multiple ? state.selectedItems.has(String(item.id)) : (state.selectedItem && String(state.selectedItem.id) === String(item.id));
@@ -277,6 +277,7 @@
         '<div class="mp-item' + selectedClass + '" ' +
         'data-id="' + item.id + '" ' +
         'data-url="' + escapeHtml(item.url) + '" ' +
+        'data-thumbnail-url="' + escapeHtml(item.thumbnail_url || item.url) + '" ' +
         'data-title="' + escapeHtml(item.title) + '" ' +
         'data-is-image="' + item.is_image + '" ' +
         'title="' + escapeHtml(item.title) + '">' +
@@ -317,6 +318,7 @@
     const itemData = {
       id: id,
       url: itemEl.dataset.url,
+      thumbnail: itemEl.dataset.thumbnailUrl,
       title: itemEl.dataset.title,
       is_image: itemEl.dataset.isImage === "true",
     };

@@ -72,3 +72,11 @@ class Service(MediaUsageMixin, models.Model):
             return self.image.file.url if self.image_id else None
         except (ValueError, AttributeError):
             return None
+
+    @property
+    def thumbnail_url(self):
+        """Return the thumbnail URL of the linked Media object, or None."""
+        try:
+            return self.image.thumbnail_url if self.image_id else None
+        except (ValueError, AttributeError):
+            return None

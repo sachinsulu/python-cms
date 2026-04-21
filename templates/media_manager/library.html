@@ -178,8 +178,8 @@
 
         <div class="mm-thumb mm-drag-handle" title="Drag to reorder">
           {% if m.is_image %}
-            <img src="{{ m.file.url }}" alt="{{ m.alt_text|default:m.title }}" loading="lazy">
-          {% elif m.type == 'video' %}
+            <img src="{{ m.thumbnail_url }}" alt="{{ m.alt_text|default:m.title }}" loading="lazy">
+{% elif m.type == 'video' %}
             <span class="mm-thumb-icon"><i class="fa-solid fa-video"></i></span>
           {% else %}
             <span class="mm-thumb-icon"><i class="fa-solid fa-file"></i></span>

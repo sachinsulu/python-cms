@@ -59,5 +59,14 @@ class Social(MediaUsageMixin, models.Model):
                 pass
         return None
 
+    @property
+    def thumbnail_url(self):
+        if self.image_id:
+            try:
+                return self.image.thumbnail_url
+            except (ValueError, AttributeError):
+                pass
+        return None
+
     def __str__(self):
         return self.title

@@ -54,6 +54,18 @@ class Popup(MediaUsageMixin, models.Model):
                 pass
         return None
 
+    @property
+    def thumbnail_url(self):
+        """
+        Resolves thumbnail URL from FK.
+        """
+        if self.file_id:
+            try:
+                return self.file.thumbnail_url
+            except (ValueError, AttributeError):
+                pass
+        return None
+
     def save(self, *args, **kwargs):
         with transaction.atomic():
             if not self.pk:

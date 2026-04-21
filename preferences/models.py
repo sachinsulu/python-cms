@@ -160,41 +160,86 @@ class SitePreferences(MediaUsageMixin, models.Model):
                 pass
         return None
 
+    def _resolve_thumbnail_url(self, fk_id, fk_obj):
+        if fk_id:
+            try:
+                if fk_obj.active:
+                    return fk_obj.thumbnail_url
+            except (ValueError, AttributeError):
+                pass
+        return None
+
     @property
     def icon_url(self):
         return self._resolve_url(self.icon_id, self.icon)
+
+    @property
+    def icon_thumbnail_url(self):
+        return self._resolve_thumbnail_url(self.icon_id, self.icon)
 
     @property
     def logo_url(self):
         return self._resolve_url(self.logo_id, self.logo)
 
     @property
+    def logo_thumbnail_url(self):
+        return self._resolve_thumbnail_url(self.logo_id, self.logo)
+
+    @property
     def fb_sharing_url(self):
         return self._resolve_url(self.fb_sharing_id, self.fb_sharing)
+
+    @property
+    def fb_sharing_thumbnail_url(self):
+        return self._resolve_thumbnail_url(self.fb_sharing_id, self.fb_sharing)
 
     @property
     def twitter_sharing_url(self):
         return self._resolve_url(self.twitter_sharing_id, self.twitter_sharing)
 
     @property
+    def twitter_sharing_thumbnail_url(self):
+        return self._resolve_thumbnail_url(self.twitter_sharing_id, self.twitter_sharing)
+
+    @property
     def gallery_image_url(self):
         return self._resolve_url(self.gallery_image_id, self.gallery_image)
+
+    @property
+    def gallery_image_thumbnail_url(self):
+        return self._resolve_thumbnail_url(self.gallery_image_id, self.gallery_image)
 
     @property
     def contact_image_url(self):
         return self._resolve_url(self.contact_image_id, self.contact_image)
 
     @property
+    def contact_image_thumbnail_url(self):
+        return self._resolve_thumbnail_url(self.contact_image_id, self.contact_image)
+
+    @property
     def default_image_url(self):
         return self._resolve_url(self.default_image_id, self.default_image)
+
+    @property
+    def default_image_thumbnail_url(self):
+        return self._resolve_thumbnail_url(self.default_image_id, self.default_image)
 
     @property
     def facilities_image_url(self):
         return self._resolve_url(self.facilities_image_id, self.facilities_image)
 
     @property
+    def facilities_image_thumbnail_url(self):
+        return self._resolve_thumbnail_url(self.facilities_image_id, self.facilities_image)
+
+    @property
     def offer_image_url(self):
         return self._resolve_url(self.offer_image_id, self.offer_image)
+
+    @property
+    def offer_image_thumbnail_url(self):
+        return self._resolve_thumbnail_url(self.offer_image_id, self.offer_image)
 
     # ── Banner Image Fallbacks ────────────────────────────────────────────
     # These return the final URL to be used in templates.

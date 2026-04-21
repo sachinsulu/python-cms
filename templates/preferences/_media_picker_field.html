@@ -5,7 +5,7 @@
   {# Thumbnail preview box #}
   <div class="mp-field-preview" id="preview_box_{{ field_name }}">
     {% if current and current.file %}
-      <img src="{{ current.file.url }}"
+      <img src="{{ current.thumbnail_url }}"
            alt="{{ current.alt_text|default:label }}"
            id="preview_img_{{ field_name }}"
            style="width:100%; height:100%; object-fit:contain;">

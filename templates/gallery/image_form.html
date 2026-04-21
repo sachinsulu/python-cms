@@ -37,12 +37,16 @@
                     data-type="image">
                 <i class="fa-solid fa-photo-film"></i> Choose from Library
             </button>
-            <button type="button" class="btn btn-danger" id="remove-image-btn" style="margin-top: 8px; display: {% if form.image_media.value %}inline-block{% else %}none{% endif %};" onclick="removeImage()">Remove Image</button>
 
-            <div id="media-preview-container" style="display: {% if form.image_media.value %}block{% else %}none{% endif %}; margin-top:10px;">
-                <img id="media-preview-img" style="max-width: 200px; max-height: 200px; object-fit: cover; border-radius: 4px;" src="{% if image.thumbnail_url %}{{ image.thumbnail_url }}{% endif %}">
-            </div>
+            <button type="button" class="btn btn-danger" id="remove-image-btn" style="margin-top: 8px; display: {% if form.image_media.value %}inline-block{% else %}none{% endif %};" onclick="removeImage()">Remove Media</button>
             
+            <div id="media-preview-container" style="display: {% if form.image_media.value %}block{% else %}none{% endif %}; margin-top:10px;">
+                {% if image.is_video %}
+                    <video id="media-preview-video" style="max-width: 200px; max-height: 200px; border-radius: 4px;" controls src="{% if image.media_url %}{{ image.media_url }}{% endif %}"></video>
+                {% else %}
+                    <img id="media-preview-img" style="max-width: 200px; max-height: 200px; object-fit: cover; border-radius: 4px;" src="{% if image.thumbnail_url %}{{ image.thumbnail_url }}{% endif %}">
+                {% endif %}
+            </div>
             <input type="hidden" name="remove_image" id="remove_image" value="0">
         </div>
 
@@ -73,6 +77,19 @@
     document.addEventListener("mediaPicked", function(e) {
         document.getElementById("remove-image-btn").style.display = "inline-block";
         document.getElementById("remove_image").value = "0";
+    });
+
+    // Render media preview (image or video)
+    document.addEventListener("mediaPicked", function(e) {
+        const item = e.detail;
+        const container = document.getElementById("media-preview-container");
+        
+        if (item.is_image) {
+            container.innerHTML = '<img id="media-preview-img" style="max-width: 200px; max-height: 200px; object-fit: cover; border-radius: 4px;" src="' + item.url + '" alt="' + item.title + '">';
+        } else {
+            container.innerHTML = '<video id="media-preview-video" style="max-width: 200px; max-height: 200px; border-radius: 4px;" controls src="' + item.url + '"></video>';
+        }
+        container.style.display = "block";
     });
 </script>
 {% endblock %}

@@ -288,7 +288,26 @@ class GalleryImageSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = GalleryImage
-        fields = '__all__'
+        fields = ['id', 'gallery', 'title', 'active', 'position', 'image', 'image_url', 'media_url', 'media_type', 'is_video', 'thumbnail_url']
+
+    def get_media_url(self, obj):
+        return self.get_image_url(obj)
+
+    def get_media_type(self, obj):
+        return obj.media_type
+
+    def get_is_video(self, obj):
+        return obj.is_video
+
+    def get_thumbnail_url(self, obj):
+        if not obj.image_id:
+            return None
+        try:
+            if obj.is_video:
+                return obj.image_url
+            return obj.image.thumbnail_url or obj.image.file.url
+        except (ValueError, AttributeError):
+            return None
 
     def get_image_url(self, obj):
         if not obj.image_id:

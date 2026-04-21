@@ -6,9 +6,10 @@ from media_manager.models import Media
 class GalleryForm(forms.ModelForm):
     class Meta:
         model = Gallery
-        fields = ['title', 'active']
+        fields = ['title', 'media_type', 'active']
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter gallery title'}),
+            'media_type': forms.Select(attrs={'class': 'form-control'}),
             'active': forms.CheckboxInput(attrs={'class': 'form-check-input'})
         }
 

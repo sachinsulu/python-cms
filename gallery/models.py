@@ -11,9 +11,21 @@ class Gallery(models.Model):
         (TYPE_INNERPAGE, 'Innerpage'),
     ]
 
+    MEDIA_TYPE_IMAGE = 'image'
+    MEDIA_TYPE_VIDEO = 'video'
+    MEDIA_TYPE_MIXED = 'mixed'
+    MEDIA_TYPE_CHOICES = [
+        (MEDIA_TYPE_IMAGE, 'Images Only'),
+        (MEDIA_TYPE_VIDEO, 'Videos Only'),
+        (MEDIA_TYPE_MIXED, 'Images & Videos'),
+    ]
+
     title = models.CharField(max_length=255)
     type = models.CharField(
         max_length=20, choices=TYPE_CHOICES, default=TYPE_INNERPAGE
+    )
+    media_type = models.CharField(
+        max_length=10, choices=MEDIA_TYPE_CHOICES, default=MEDIA_TYPE_MIXED
     )
     active = models.BooleanField(default=True)
     position = models.PositiveIntegerField(default=0)
@@ -77,6 +89,33 @@ class GalleryImage(MediaUsageMixin, models.Model):
             return self.image.thumbnail_url if self.image_id else None
         except (ValueError, AttributeError):
             return None
+
+    @property
+    def media_type(self):
+        """Return media type: 'image', 'video', or None."""
+        if self.image_id:
+            try:
+                return self.image.type
+            except (ValueError, AttributeError):
+                pass
+        return None
+
+    @property
+    def is_video(self):
+        """Return True if media is a video."""
+        return self.media_type == 'video'
+
+    @property
+    def media_url(self):
+        """Return media file URL (same as image_url for compatibility)."""
+        return self.image_url
+
+    @property
+    def thumbnail_or_poster_url(self):
+        """Return thumbnail for images, or file URL for videos."""
+        if self.is_video:
+            return self.image_url
+        return self.thumbnail_url or self.image_url
 
     def __str__(self):
         return self.title or f"Image for {self.gallery.title}"

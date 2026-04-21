@@ -2,267 +2,396 @@
 {% block title %}Dashboard{% endblock %}
 
 {% block content %}
-
-<h2>Dashboard</h2>
-
 <style>
-  /* Make table rows clickable with a hover effect */
-  .log-table tbody tr {
-    transition: background-color 0.15s ease;
+  @import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap');
+
+  .dashboard-shell {
+    --db-bg-soft: linear-gradient(140deg, #f4f7ff 0%, #eefbf4 45%, #fff8ef 100%);
+    --db-ink: #0f172a;
+    --db-muted: #64748b;
+    --db-border: #d8e2ef;
+    --db-card: rgba(255, 255, 255, 0.82);
+    --db-shadow: 0 14px 35px rgba(15, 23, 42, 0.08);
+    --db-radius-lg: 20px;
+    --db-radius-md: 14px;
+    background: var(--db-bg-soft);
+    border: 1px solid #e5ecf5;
+    border-radius: 24px;
+    padding: 24px;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7);
   }
-  .log-table tbody tr:hover {
-    background-color: #f3f4f6;
-    cursor: pointer;
+
+  .dashboard-hero {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+    margin-bottom: 20px;
   }
-  /* Remove default link colors in table to look more unified */
-  .log-table tbody tr a {
-    color: inherit;
+
+  .dashboard-title {
+    margin: 0;
+    font-family: "Archivo Black", sans-serif;
+    font-size: clamp(1.3rem, 2.8vw, 2rem);
+    color: var(--db-ink);
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+  }
+
+  .dashboard-subtitle {
+    margin: 8px 0 0;
+    color: var(--db-muted);
+    font-family: "IBM Plex Sans", sans-serif;
+    font-size: 0.92rem;
+  }
+
+  .dashboard-stamp {
+    text-align: right;
+    font-family: "IBM Plex Sans", sans-serif;
+    color: #0b3b2e;
+    background: #dcfce7;
+    border: 1px solid #bbf7d0;
+    border-radius: 999px;
+    padding: 8px 14px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .dashboard-kpis {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 14px;
+    margin-bottom: 22px;
+  }
+
+  .dashboard-kpi {
+    position: relative;
+    overflow: hidden;
     text-decoration: none;
-    display: block;  /* makes the link take up the cell space */
+    color: white;
+    border-radius: var(--db-radius-lg);
+    padding: 16px;
+    min-height: 110px;
+    box-shadow: var(--db-shadow);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .dashboard-kpi::after {
+    content: "";
+    position: absolute;
+    top: -25px;
+    right: -25px;
+    width: 90px;
+    height: 90px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.2);
+  }
+
+  .dashboard-kpi:hover,
+  .dashboard-kpi:focus-visible {
+    transform: translateY(-4px);
+    box-shadow: 0 18px 30px rgba(15, 23, 42, 0.18);
+  }
+
+  .dashboard-kpi i {
+    font-size: 22px;
+    opacity: 0.92;
+  }
+
+  .dashboard-kpi-count {
+    display: block;
+    margin-top: 14px;
+    font-family: "Archivo Black", sans-serif;
+    font-size: 1.6rem;
+    line-height: 1;
+  }
+
+  .dashboard-kpi-label {
+    display: block;
+    margin-top: 7px;
+    font-family: "IBM Plex Sans", sans-serif;
+    font-size: 0.84rem;
+    opacity: 0.92;
+  }
+
+  .dashboard-board {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 16px;
+  }
+
+  .dashboard-panel {
+    border: 1px solid var(--db-border);
+    border-radius: var(--db-radius-md);
+    background: var(--db-card);
+    box-shadow: 0 8px 20px rgba(148, 163, 184, 0.18);
+    backdrop-filter: blur(8px);
+    overflow: hidden;
+  }
+
+  .dashboard-panel-head {
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--db-border);
+    background: rgba(255, 255, 255, 0.7);
+  }
+
+  .dashboard-panel-title {
+    margin: 0;
+    color: var(--db-ink);
+    font-family: "IBM Plex Sans", sans-serif;
+    font-size: 0.98rem;
+    font-weight: 700;
+  }
+
+  .dashboard-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: "IBM Plex Sans", sans-serif;
+    font-size: 0.87rem;
+  }
+
+  .dashboard-table th,
+  .dashboard-table td {
+    text-align: left;
+    padding: 11px 15px;
+    border-bottom: 1px solid #edf2f7;
+    vertical-align: top;
+  }
+
+  .dashboard-table th {
+    color: #4b5563;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    background: rgba(248, 250, 252, 0.9);
+  }
+
+  .dashboard-table tr:last-child td {
+    border-bottom: none;
+  }
+
+  .dashboard-table tr:hover {
+    background: #f8fbff;
+  }
+
+  .dashboard-link {
+    color: #0f172a;
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  .dashboard-link:hover {
+    color: #2563eb;
+    text-decoration: underline;
+  }
+
+  .dashboard-muted {
+    color: #64748b;
+    font-size: 0.77rem;
+  }
+
+  .dashboard-type {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    border-radius: 999px;
+    padding: 3px 10px;
+    font-weight: 600;
+    font-size: 0.72rem;
+  }
+
+  .dashboard-type-social {
+    background: #dbeafe;
+    color: #1d4ed8;
+  }
+
+  .dashboard-type-ota {
+    background: #dcfce7;
+    color: #15803d;
+  }
+
+  .dashboard-empty {
+    padding: 36px 20px;
+    text-align: center;
+    color: #64748b;
+    font-family: "IBM Plex Sans", sans-serif;
+    border: 1px dashed #cbd5e1;
+    border-radius: var(--db-radius-md);
+    background: rgba(255, 255, 255, 0.72);
+  }
+
+  @media (max-width: 768px) {
+    .dashboard-shell {
+      padding: 14px;
+      border-radius: 16px;
+    }
+
+    .dashboard-hero {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .dashboard-stamp {
+      text-align: left;
+    }
+
+    .dashboard-table {
+      font-size: 0.82rem;
+    }
+
+    .dashboard-table th,
+    .dashboard-table td {
+      padding: 9px 10px;
+    }
   }
 </style>
 
-<!-- Stat Tiles -->
-<div class="tiles">
-  {% for stat in stats %}
-  <a href="{% if stat.url_name %}{% url stat.url_name %}{% else %}#{% endif %}" style="text-decoration:none;">
-    <div class="tile {{ stat.color }}">
-      <i class="{{ stat.icon }}"></i>
-      <div>
-        <strong style="font-size:1.6rem;">{{ stat.count }}</strong>
-        <span style="display:block; font-size:0.85rem; opacity:0.9;">{{ stat.label }}</span>
-      </div>
-    </div>
-  </a>
-  {% endfor %}
-</div>
-
-<!-- Recent Activity -->
-<!-- Recent Activity -->
-{% if recent_articles or recent_blogs or recent_testimonials or recent_socials or recent_nearbys or recent_faqs %}
-<div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(100%, 380px)); gap:20px; margin-top:20px;">
-
-  {% if recent_articles %}
-  <div>
-    <h3 style="margin-bottom:12px; font-size:16px; color:#374151;">Recent Articles</h3>
-    <table class="log-table">
-      <thead>
-        <tr>
-          <th>Title</th>
-          <th>Status</th>
-          <th>Updated</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for article in recent_articles %}
-        <tr onclick="window.location='{% url 'article_edit' article.slug %}'">
-          <td>{{ article.title }}</td>
-          <td>
-            {% if article.active %}
-              <span class="badge badge-green">Active</span>
-            {% else %}
-              <span class="badge badge-gray">Inactive</span>
-            {% endif %}
-          </td>
-          <td style="font-size:12px; color:#6b7280;">{{ article.updated_at|date:"M d, Y" }}</td>
-        </tr>
-        {% empty %}
-        <tr>
-          <td colspan="3" style="text-align:center; color:#9ca3af; padding: 20px 0;">No recent articles.</td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-  </div>
-  {% endif %}
-
-  {% if recent_blogs %}
-  <div>
-    <h3 style="margin-bottom:12px; font-size:16px; color:#374151;">Recent Blogs</h3>
-    <table class="log-table">
-      <thead>
-        <tr>
-          <th>Title</th>
-          <th>Status</th>
-          <th>Updated</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for blog in recent_blogs %}
-        <tr onclick="window.location='{% url 'edit_blog' blog.slug %}'">
-          <td>{{ blog.title }}</td>
-          <td>
-            {% if blog.active %}
-              <span class="badge badge-green">Active</span>
-            {% else %}
-              <span class="badge badge-gray">Inactive</span>
-            {% endif %}
-          </td>
-          <td style="font-size:12px; color:#6b7280;">{{ blog.updated_at|date:"M d, Y" }}</td>
-        </tr>
-        {% empty %}
-        <tr>
-          <td colspan="3" style="text-align:center; color:#9ca3af; padding: 20px 0;">No recent blogs.</td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-  </div>
-  {% endif %}
-
-  {% if recent_testimonials %}
-  <div>
-    <h3 style="margin-bottom:12px; font-size:16px; color:#374151;">Recent Testimonials</h3>
-    <table class="log-table">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Rating</th>
-          <th>Status</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for t in recent_testimonials %}
-        <tr onclick="window.location='{% url 'testimonial_edit' t.pk %}'">
-          <td>
-            {{ t.title }}
-            <br><small style="color:#6b7280;">{{ t.name }}</small>
-          </td>
-          <td style="color:#f59e0b;">
-            {% for i in "12345" %}{% if forloop.counter <= t.rating %}★{% else %}☆{% endif %}{% endfor %}
-          </td>
-          <td>
-            {% if t.active %}
-              <span class="badge badge-green">Active</span>
-            {% else %}
-              <span class="badge badge-gray">Inactive</span>
-            {% endif %}
-          </td>
-        </tr>
-        {% empty %}
-        <tr>
-          <td colspan="3" style="text-align:center; color:#9ca3af; padding: 20px 0;">No recent testimonials.</td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-  </div>
-  {% endif %}
-
-  {% if recent_socials %}
-  <div>
-    <h3 style="margin-bottom:12px; font-size:16px; color:#374151;">Social & OTA</h3>
-    <table class="log-table">
-      <thead>
-        <tr>
-          <th>Title</th>
-          <th>Type</th>
-          <th>Status</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for item in recent_socials %}
-        <tr onclick="window.location='{% url 'social_edit' item.pk %}'">
-          <td>
-            {% if item.icon %}<i class="{{ item.icon }}" style="margin-right:6px;"></i>{% endif %}
-            {{ item.title }}
-          </td>
-          <td>
-            <span style="font-size:0.75rem; font-weight:600; padding:2px 8px; border-radius:4px;
-              background:{% if item.type == 'social' %}#dbeafe{% else %}#dcfce7{% endif %};
-              color:{% if item.type == 'social' %}#1d4ed8{% else %}#15803d{% endif %};">
-              {{ item.get_type_display }}
-            </span>
-          </td>
-          <td>
-            {% if item.active %}
-              <span class="badge badge-green">Active</span>
-            {% else %}
-              <span class="badge badge-gray">Inactive</span>
-            {% endif %}
-          </td>
-        </tr>
-        {% empty %}
-        <tr>
-          <td colspan="3" style="text-align:center; color:#9ca3af; padding: 20px 0;">No recent social links.</td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-  </div>
-  {% endif %}
-
-</div>
-
-  <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(100%, 380px)); gap:20px; margin-top:20px;">
-  
-    {% if recent_nearbys %}
+<section class="dashboard-shell">
+  <div class="dashboard-hero">
     <div>
-      <h3 style="margin-bottom:12px; font-size:16px; color:#374151;">Recent Nearby Places</h3>
-      <table class="log-table">
-        <thead>
-          <tr>
-            <th>Title</th>
-            <th>Distance</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for nearby in recent_nearbys %}
-          <tr onclick="window.location='{% url 'edit_nearby' nearby.pk %}'">
-            <td>{{ nearby.title }}</td>
-            <td>{{ nearby.distance }} KM</td>
-            <td>
-              {% if nearby.active %}
-                <span class="badge badge-green">Active</span>
-              {% else %}
-                <span class="badge badge-gray">Inactive</span>
-              {% endif %}
-            </td>
-          </tr>
-          {% empty %}
-          <tr>
-            <td colspan="2" style="text-align:center; color:#9ca3af; padding: 20px 0;">No nearby places.</td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
+      <h2 class="dashboard-title">Content Command Center</h2>
+      <p class="dashboard-subtitle">Track updates, fix inactive modules, and jump straight into edits.</p>
     </div>
-    {% endif %}
-  
-    {% if recent_faqs %}
-    <div>
-      <h3 style="margin-bottom:12px; font-size:16px; color:#374151;">Recent FAQs</h3>
-      <table class="log-table">
-        <thead>
-          <tr>
-            <th>Title</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for faq in recent_faqs %}
-          <tr onclick="window.location='{% url 'faq_edit' faq.pk %}'">
-            <td>{{ faq.title }}</td>
-            <td>
-              {% if faq.active %}
-                <span class="badge badge-green">Active</span>
-              {% else %}
-                <span class="badge badge-gray">Inactive</span>
-              {% endif %}
-            </td>
-          </tr>
-          {% empty %}
-          <tr>
-            <td colspan="2" style="text-align:center; color:#9ca3af; padding: 20px 0;">No recent FAQs.</td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-    </div>
-    {% endif %}
+    <div class="dashboard-stamp">{% now "l, M d Y" %}</div>
   </div>
 
-{% endif %}
+  <div class="dashboard-kpis">
+    {% for stat in stats %}
+      <a class="dashboard-kpi {{ stat.color }}" href="{% if stat.url_name %}{% url stat.url_name %}{% else %}#{% endif %}" aria-label="Open {{ stat.label }}">
+        <i class="{{ stat.icon }}"></i>
+        <strong class="dashboard-kpi-count">{{ stat.count }}</strong>
+        <span class="dashboard-kpi-label">{{ stat.label }}</span>
+      </a>
+    {% endfor %}
+  </div>
+
+  {% if recent_articles or recent_blogs or recent_testimonials or recent_socials or recent_nearbys or recent_faqs %}
+    <div class="dashboard-board">
+      {% if recent_articles %}
+        <article class="dashboard-panel">
+          <header class="dashboard-panel-head"><h3 class="dashboard-panel-title">Recent Articles</h3></header>
+          <table class="dashboard-table">
+            <thead><tr><th>Title</th><th>Status</th><th>Updated</th></tr></thead>
+            <tbody>
+              {% for article in recent_articles %}
+                <tr>
+                  <td><a class="dashboard-link" href="{% url 'article_edit' article.slug %}">{{ article.title }}</a></td>
+                  <td>{% if article.active %}<span class="badge badge-green">Active</span>{% else %}<span class="badge badge-gray">Inactive</span>{% endif %}</td>
+                  <td class="dashboard-muted">{{ article.updated_at|date:"M d, Y" }}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </article>
+      {% endif %}
+
+      {% if recent_blogs %}
+        <article class="dashboard-panel">
+          <header class="dashboard-panel-head"><h3 class="dashboard-panel-title">Recent Blogs</h3></header>
+          <table class="dashboard-table">
+            <thead><tr><th>Title</th><th>Status</th><th>Updated</th></tr></thead>
+            <tbody>
+              {% for blog in recent_blogs %}
+                <tr>
+                  <td><a class="dashboard-link" href="{% url 'edit_blog' blog.slug %}">{{ blog.title }}</a></td>
+                  <td>{% if blog.active %}<span class="badge badge-green">Active</span>{% else %}<span class="badge badge-gray">Inactive</span>{% endif %}</td>
+                  <td class="dashboard-muted">{{ blog.updated_at|date:"M d, Y" }}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </article>
+      {% endif %}
+
+      {% if recent_testimonials %}
+        <article class="dashboard-panel">
+          <header class="dashboard-panel-head"><h3 class="dashboard-panel-title">Recent Testimonials</h3></header>
+          <table class="dashboard-table">
+            <thead><tr><th>Title</th><th>Rating</th><th>Status</th></tr></thead>
+            <tbody>
+              {% for t in recent_testimonials %}
+                <tr>
+                  <td>
+                    <a class="dashboard-link" href="{% url 'testimonial_edit' t.pk %}">{{ t.title }}</a>
+                    <div class="dashboard-muted">{{ t.name }}</div>
+                  </td>
+                  <td style="color:#f59e0b;">{% for i in "12345" %}{% if forloop.counter <= t.rating %}★{% else %}☆{% endif %}{% endfor %}</td>
+                  <td>{% if t.active %}<span class="badge badge-green">Active</span>{% else %}<span class="badge badge-gray">Inactive</span>{% endif %}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </article>
+      {% endif %}
+
+      {% if recent_socials %}
+        <article class="dashboard-panel">
+          <header class="dashboard-panel-head"><h3 class="dashboard-panel-title">Social & OTA</h3></header>
+          <table class="dashboard-table">
+            <thead><tr><th>Title</th><th>Type</th><th>Status</th></tr></thead>
+            <tbody>
+              {% for item in recent_socials %}
+                <tr>
+                  <td>
+                    <a class="dashboard-link" href="{% url 'social_edit' item.pk %}">
+                      {% if item.icon %}<i class="{{ item.icon }}"></i>{% endif %}
+                      {{ item.title }}
+                    </a>
+                  </td>
+                  <td>
+                    {% if item.type == 'social' %}
+                      <span class="dashboard-type dashboard-type-social">{{ item.get_type_display }}</span>
+                    {% else %}
+                      <span class="dashboard-type dashboard-type-ota">{{ item.get_type_display }}</span>
+                    {% endif %}
+                  </td>
+                  <td>{% if item.active %}<span class="badge badge-green">Active</span>{% else %}<span class="badge badge-gray">Inactive</span>{% endif %}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </article>
+      {% endif %}
+
+      {% if recent_nearbys %}
+        <article class="dashboard-panel">
+          <header class="dashboard-panel-head"><h3 class="dashboard-panel-title">Recent Nearby Places</h3></header>
+          <table class="dashboard-table">
+            <thead><tr><th>Title</th><th>Distance</th><th>Status</th></tr></thead>
+            <tbody>
+              {% for nearby in recent_nearbys %}
+                <tr>
+                  <td><a class="dashboard-link" href="{% url 'edit_nearby' nearby.pk %}">{{ nearby.title }}</a></td>
+                  <td>{{ nearby.distance }} KM</td>
+                  <td>{% if nearby.active %}<span class="badge badge-green">Active</span>{% else %}<span class="badge badge-gray">Inactive</span>{% endif %}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </article>
+      {% endif %}
+
+      {% if recent_faqs %}
+        <article class="dashboard-panel">
+          <header class="dashboard-panel-head"><h3 class="dashboard-panel-title">Recent FAQs</h3></header>
+          <table class="dashboard-table">
+            <thead><tr><th>Title</th><th>Status</th></tr></thead>
+            <tbody>
+              {% for faq in recent_faqs %}
+                <tr>
+                  <td><a class="dashboard-link" href="{% url 'faq_edit' faq.pk %}">{{ faq.title }}</a></td>
+                  <td>{% if faq.active %}<span class="badge badge-green">Active</span>{% else %}<span class="badge badge-gray">Inactive</span>{% endif %}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </article>
+      {% endif %}
+    </div>
+  {% else %}
+    <div class="dashboard-empty">No recent activity yet. Create content to see live dashboard cards.</div>
+  {% endif %}
+</section>
 
 {% endblock %}

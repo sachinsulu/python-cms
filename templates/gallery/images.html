@@ -381,7 +381,7 @@
 <div class="gi-add-panel" id="addPanel">
   <div class="gi-add-panel-title">
     <i class="fa-solid fa-plus-circle"></i>
-    Add Images from Library
+    Add Media from Library
   </div>
 
   <div class="gi-selected-strip" id="selectedStrip"></div>
@@ -389,7 +389,7 @@
   <div class="gi-add-actions">
     <button type="button" class="gi-pick-btn" id="openPickerBtn">
       <i class="fa-solid fa-photo-film"></i>
-      Choose Images
+      Choose Media
     </button>
 
     <button type="button" class="gi-add-btn" id="addSelectedBtn" disabled>
@@ -398,15 +398,15 @@
     </button>
 
     <span class="gi-selection-info" id="selectionInfo" style="display:none;">
-      <strong id="selectionCount">0</strong> image<span id="selectionPlural">s</span> selected
+      <strong id="selectionCount">0</strong> file<span id="selectionPlural">s</span> selected
       &nbsp;·&nbsp;
       <a href="#" id="clearSelectionLink" style="color:#ef4444; text-decoration:none;">Clear</a>
     </span>
   </div>
 </div>
 
-{# ── Existing Images ── #}
-<div class="gi-divider">Gallery Images</div>
+{# ── Existing Media ── #}
+<div class="gi-divider">Gallery Media</div>
 
 <div class="gi-bulk-bar" id="bulkBar" style="display:none;">
   <span class="gi-selection-info" style="color:#374151;">
@@ -440,13 +440,19 @@
     <i class="fa-solid fa-grip-vertical gi-drag-handle"></i>
 
     {% if img.image and img.image.file %}
+            {% if img.is_video %}
+              <div class="gi-thumb" style="background: #0f172a; display: flex; align-items: center; justify-content: center;">
+                <i class="fa-solid fa-play" style="color: white; font-size: 2rem;"></i>
+              </div>
+            {% else %}
       <img class="gi-thumb"
            src="{{ img.thumbnail_url|default:'' }}"
            alt="{{ img.title|default:'Gallery image' }}"
            loading="lazy" draggable="false">
+      {% endif %}
     {% else %}
       <div class="gi-thumb-placeholder">
-        <i class="fa-solid fa-image"></i>
+        <i class="fa-solid fa-file"></i>
       </div>
     {% endif %}
 
@@ -512,7 +518,7 @@
         data-multiple="true"
         data-target-id="#dummyPickerInput"
         data-preview="#dummyPreview"
-        data-type="image">
+        >
 </button>
 <input type="hidden" id="dummyPickerInput">
 <div id="dummyPreview" style="display:none;"></div>
@@ -611,11 +617,6 @@ document.addEventListener('mediaPicked', function(e) {
   if (e.target !== document.getElementById('hiddenPickerTrigger')) return;
 
   const item = e.detail;
-  if (!item.is_image) {
-    showToast('Only images can be added to a gallery.', 'error');
-    return;
-  }
-
   if (pickerSelection.has(item.id)) {
     // Already selected — deselect it
     pickerSelection.delete(item.id);
@@ -625,6 +626,7 @@ document.addEventListener('mediaPicked', function(e) {
       url: item.url,
       thumbnail_url: item.thumbnail || item.url,
       title: item.title,
+      media_type: item.is_image ? 'image' : 'video',
     });
   }
 
@@ -695,9 +697,14 @@ function buildCard(img) {
   card.dataset.id = img.id;
   card.dataset.active = img.active ? 'true' : 'false';
 
-  const thumbHtml = img.thumbnail_url
-    ? `<img class="gi-thumb" src="${img.thumbnail_url}" alt="${img.title}" loading="lazy" draggable="false">`
-    : `<div class="gi-thumb-placeholder"><i class="fa-solid fa-image"></i></div>`;
+  let thumbHtml = '';
+  if (img.media_type === 'video') {
+    thumbHtml = `<div class="gi-thumb" style="background: #0f172a; display: flex; align-items: center; justify-content: center;"><i class="fa-solid fa-play" style="color: white; font-size: 2rem;"></i></div>`;
+  } else if (img.thumbnail_url) {
+    thumbHtml = `<img class="gi-thumb" src="${img.thumbnail_url}" alt="${img.title}" loading="lazy" draggable="false">`;
+  } else {
+    thumbHtml = `<div class="gi-thumb-placeholder"><i class="fa-solid fa-image"></i></div>`;
+  }
 
   card.innerHTML = `
     <input type="checkbox" class="gi-card-checkbox gi-bulk-checkbox" value="${img.id}">

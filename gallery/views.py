@@ -142,7 +142,7 @@ def gallery_bulk_add_images(request, pk):
         return JsonResponse({'error': 'Invalid format for media IDs'}, status=400)
 
     # Fetch valid, active media objects
-    media_qs = Media.objects.filter(pk__in=media_ids, active=True, type=Media.TYPE_IMAGE)
+    media_qs = Media.objects.filter(pk__in=media_ids, active=True, type__in=[Media.TYPE_IMAGE, Media.TYPE_VIDEO])
     media_map = {m.pk: m for m in media_qs}
 
     # Existing media pks already in this gallery (avoid dupes)
@@ -180,6 +180,7 @@ def gallery_bulk_add_images(request, pk):
             'title': gi.title,
             'active': gi.active,
             'position': gi.position,
+            'media_type': media.type,
             'image_url': media.file.url if media.file else None,
             'thumbnail_url': media.thumbnail.url if media.thumbnail else (media.file.url if media.file else None),
             'edit_url': reverse('gallery_image_edit', args=[gallery.pk, gi.pk]),

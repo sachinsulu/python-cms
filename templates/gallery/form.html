@@ -28,6 +28,12 @@
             {{ form.title.errors }}
         </div>
 
+        <div class="form-group">
+            <label for="{{ form.media_type.id_for_label }}">Content Type</label>
+            {{ form.media_type }}
+            {{ form.media_type.errors }}
+        </div>
+
         <div class="form-group" style="display: flex; align-items: center; gap: 10px;">
             <label for="{{ form.active.id_for_label }}" style="margin: 0;">Active:</label>
             {{ form.active }}
@@ -42,6 +48,8 @@
         </div>
     </form>
 </div>
+
+
 {% endblock %}
 
 

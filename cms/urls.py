@@ -19,7 +19,7 @@ from django.contrib import admin
 from django.urls import path, include, re_path
 from django.views.static import serve as static_serve
 from django.http import HttpResponseNotFound
-from accounts.views import login_view, logout_view
+from accounts.views import login_view, logout_view, CustomPasswordResetView, CustomPasswordResetConfirmView
 from .views import dashboard, toggle_status, delete_object, bulk_action, update_order, ajax_check_slug
 from django.conf import settings
 from django.conf.urls.static import static
@@ -31,6 +31,8 @@ cms_patterns = [
     path('', dashboard, name='dashboard'),
     path('login/', login_view, name='login'),
     path('logout/', logout_view, name='logout'),
+    path('password-reset/', CustomPasswordResetView.as_view(), name='password_reset'),
+    path('password-reset-confirm/<uidb64>/<token>/', CustomPasswordResetConfirmView.as_view(), name='password_reset_confirm'),
     path('users/', include('users.urls')),
     path('module/', include('core.urls')),
     path('articles/', include('articles.urls')),

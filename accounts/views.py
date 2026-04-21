@@ -3,6 +3,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
 from django.views.decorators.http import require_POST
+from django.contrib.auth.views import PasswordResetView, PasswordResetConfirmView
+from django.urls import reverse_lazy
 
 
 def login_view(request):
@@ -25,7 +27,7 @@ def login_view(request):
     else:
         form = AuthenticationForm()
 
-    return render(request, "login.html", {"form": form})
+    return render(request, "accounts/login.html", {"form": form})
 
 
 @require_POST
@@ -33,3 +35,23 @@ def logout_view(request):
     logout(request)
     messages.success(request, "Logged out successfully")
     return redirect("login")
+
+
+class CustomPasswordResetView(PasswordResetView):
+    template_name = 'accounts/password_reset_form.html'
+    email_template_name = 'accounts/password_reset_email.html'
+    subject_template_name = 'accounts/password_reset_subject.txt'
+    success_url = reverse_lazy('login')
+
+    def form_valid(self, form):
+        messages.success(self.request, "If an account exists with that email, we've sent you instructions to reset your password.")
+        return super().form_valid(form)
+
+
+class CustomPasswordResetConfirmView(PasswordResetConfirmView):
+    template_name = 'accounts/password_reset_confirm.html'
+    success_url = reverse_lazy('login')
+
+    def form_valid(self, form):
+        messages.success(self.request, "Your password has been set. You may now log in.")
+        return super().form_valid(form)

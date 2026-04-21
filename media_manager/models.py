@@ -59,6 +59,17 @@ class MediaFolder(models.Model):
     def __str__(self):
         return self.name
 
+    def clean(self):
+        from django.core.exceptions import ValidationError
+        if self.parent and self.name.lower() == self.parent.name.lower():
+            raise ValidationError(
+                f"Cannot create folder '{self.name}' inside a folder with the same name."
+            )
+
+    def save(self, *args, **kwargs):
+        self.full_clean()
+        super().save(*args, **kwargs)
+
     def get_absolute_path(self):
         """Returns slash-separated path e.g. 'Articles / Hero'."""
         parts = [self.name]

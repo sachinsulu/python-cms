@@ -16,6 +16,8 @@ from django.utils.text import slugify
 from django_ratelimit.decorators import ratelimit
 from .utils import is_slug_taken
 from core.models import Module
+from django.contrib.contenttypes.models import ContentType
+from audit.signals import log_action
 
 from articles.models import Article
 from blog.models import Blog
@@ -295,18 +297,28 @@ def bulk_action(request, model_name):
             messages.error(request, "This model does not support status toggling.")
             return redirect_back(request)
 
-        count = queryset.count()
-        queryset.update(**{
-            active_field: Case(
-                When(**{active_field: True}, then=Value(False)),
-                When(**{active_field: False}, then=Value(True)),
-                output_field=BooleanField(),
-            )
-        })
+        count = 0
+        # Use a loop to trigger signals for each object individually as requested
+        # This ensures 'before' and 'after' state is captured correctly for Audit
+        for obj in queryset:
+            current_status = getattr(obj, active_field)
+            setattr(obj, active_field, not current_status)
+            obj.save(update_fields=[active_field])
+            count += 1
+            
         messages.success(request, f"{count} {model_name}(s) status toggled.")
 
     elif action == "delete":
         count = queryset.count()
+        # Log BULK_DELETE before the actual deletion
+        log_action(
+            action='BULK_DELETE',
+            content_type=ContentType.objects.get_for_model(model_class),
+            object_repr=f"Bulk {model_name.capitalize()} Delete",
+            model_name=model_name.lower(),
+            extra={'ids': selected_ids, 'count': count},
+            request=request
+        )
         queryset.delete()
         messages.success(request, f"{count} {model_name}(s) deleted successfully.")
 

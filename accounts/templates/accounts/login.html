@@ -1,162 +1,489 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login — {{ site_prefs.site_title|default:"Rudra Hotel" }}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
 
   <style>
-    @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap");
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: "Poppins", sans-serif;
+    :root {
+      --ivory:   #f7f3ed;
+      --ivory-2: #ede7dc;
+      --charcoal: #1c1c1c;
+      --charcoal-2: #2e2b27;
+      --gold:    #b8975a;
+      --gold-light: #d4b07a;
+      --muted:   #8a8278;
+      --white:   #ffffff;
     }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
       display: flex;
-      justify-content: center;
-      align-items: center;
       min-height: 100vh;
-      background: #dfdfdf;
+      font-family: 'Jost', sans-serif;
+      background: var(--charcoal);
+      overflow: hidden;
     }
 
-    .login-box {
+    /* ── LEFT PANEL ── */
+    .panel-left {
+      flex: 1.1;
+      position: relative;
       display: flex;
-      justify-content: center;
       flex-direction: column;
-      width: 440px;
-      height: 480px;
-      padding: 30px;
+      justify-content: flex-end;
+      padding: 56px 52px;
+      overflow: hidden;
+      background: var(--charcoal-2);
     }
 
-    .login-header {
-      text-align: center;
-      margin: 20px 0 40px 0;
+    .panel-left::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 20% 80%, rgba(184,151,90,0.18) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 20%, rgba(184,151,90,0.08) 0%, transparent 50%);
+      z-index: 0;
     }
 
-    .login-header header {
-      color: #333;
-      font-size: 30px;
-      font-weight: 600;
+    /* decorative pattern */
+    .panel-left::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        repeating-linear-gradient(
+          45deg,
+          transparent,
+          transparent 40px,
+          rgba(184,151,90,0.04) 40px,
+          rgba(184,151,90,0.04) 41px
+        );
+      z-index: 0;
     }
 
-    .input-box .input-field {
-      width: 100%;
-      height: 60px;
-      font-size: 17px;
-      padding: 0 25px;
-      margin-bottom: 15px;
-      border-radius: 30px;
-      border: none;
-      box-shadow: 0px 5px 10px 1px rgba(0, 0, 0, 0.05);
-      outline: none;
-      transition: 0.3s;
+    .left-content { position: relative; z-index: 1; }
+
+    .hotel-emblem {
+      width: 64px;
+      height: 64px;
+      border: 1.5px solid var(--gold);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 48px;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.2s forwards;
     }
 
-    ::placeholder {
+    .hotel-emblem svg {
+      width: 32px;
+      height: 32px;
+      fill: none;
+      stroke: var(--gold);
+      stroke-width: 1.2;
+    }
+
+    .left-tagline {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(36px, 4vw, 54px);
+      font-weight: 300;
+      line-height: 1.15;
+      color: var(--ivory);
+      letter-spacing: 0.01em;
+      margin-bottom: 20px;
+      opacity: 0;
+      animation: fadeUp 0.9s ease 0.35s forwards;
+    }
+
+    .left-tagline em {
+      font-style: italic;
+      color: var(--gold-light);
+    }
+
+    .left-divider {
+      width: 48px;
+      height: 1px;
+      background: var(--gold);
+      margin-bottom: 20px;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.5s forwards;
+    }
+
+    .left-sub {
+      font-size: 13px;
+      font-weight: 300;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.6s forwards;
+    }
+
+    /* corner ornament */
+    .ornament {
+      position: absolute;
+      top: 40px;
+      right: 40px;
+      width: 120px;
+      height: 120px;
+      opacity: 0.12;
+      z-index: 0;
+    }
+
+    /* ── RIGHT PANEL ── */
+    .panel-right {
+      flex: 0.9;
+      background: var(--ivory);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 64px 56px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .panel-right::before {
+      content: '';
+      position: absolute;
+      top: -80px;
+      right: -80px;
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(184,151,90,0.08) 0%, transparent 70%);
+    }
+
+    .form-header {
+      margin-bottom: 44px;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.4s forwards;
+    }
+
+    .welcome-label {
+      font-size: 11px;
       font-weight: 500;
-      color: #222;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 10px;
     }
+
+    .form-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 42px;
+      font-weight: 600;
+      color: var(--charcoal);
+      letter-spacing: 0.02em;
+      line-height: 1;
+    }
+
+    /* inputs */
+    .field-group {
+      margin-bottom: 20px;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.55s forwards;
+    }
+
+    .field-group:nth-child(2) { animation-delay: 0.65s; }
+
+    .field-label {
+      display: block;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    .input-wrap {
+      position: relative;
+    }
+
+    .input-field {
+      width: 100%;
+      height: 54px;
+      background: var(--white);
+      border: 1px solid var(--ivory-2);
+      border-radius: 4px;
+      font-family: 'Jost', sans-serif;
+      font-size: 15px;
+      font-weight: 400;
+      color: var(--charcoal);
+      padding: 0 20px 0 48px;
+      outline: none;
+      transition: border-color 0.25s, box-shadow 0.25s;
+    }
+
+    .input-field::placeholder { color: #bbb; }
 
     .input-field:focus {
-      width: 105%;
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(184,151,90,0.12);
     }
 
-    .input-submit {
-      position: relative;
+    .field-icon {
+      position: absolute;
+      left: 18px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 16px;
+      height: 16px;
+      stroke: var(--muted);
+      fill: none;
+      stroke-width: 1.5;
+      transition: stroke 0.25s;
+    }
+
+    .input-field:focus ~ .field-icon { stroke: var(--gold); }
+
+    /* forgot */
+    .forgot-row {
+      text-align: right;
+      margin-top: -8px;
+      margin-bottom: 28px;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.75s forwards;
+    }
+
+    .forgot-link {
+      font-size: 12px;
+      font-weight: 400;
+      letter-spacing: 0.05em;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .forgot-link:hover { color: var(--gold); }
+
+    /* button */
+    .submit-wrap {
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.85s forwards;
     }
 
     .submit-btn {
       width: 100%;
-      height: 60px;
-      background: #222;
+      height: 54px;
+      background: var(--charcoal);
+      color: var(--ivory);
       border: none;
-      border-radius: 30px;
+      border-radius: 4px;
+      font-family: 'Jost', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
       cursor: pointer;
-      transition: 0.3s;
-      color: #fff;
-      font-weight: 600;
-      font-size: 18px;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.3s;
+    }
+
+    .submit-btn::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, transparent 40%, rgba(184,151,90,0.15) 100%);
+      opacity: 0;
+      transition: opacity 0.3s;
     }
 
     .submit-btn:hover {
-      background: #000;
-      transform: scale(1.05, 1);
+      background: var(--charcoal-2);
     }
 
-    /* Admin Panel Style Messages */
+    .submit-btn:hover::after { opacity: 1; }
+
+    /* gold accent line on button */
+    .submit-btn::before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--gold);
+      transition: width 0.4s ease;
+    }
+
+    .submit-btn:hover::before { width: 100%; }
+
+    /* copyright */
+    .copyright {
+      margin-top: 28px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(184, 151, 90, 0.2);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--charcoal);
+      opacity: 0;
+      text-align: center;
+      animation: fadeUp 0.8s ease 1s forwards;
+    }
+
+    /* messages */
     #messages-container {
       position: fixed;
-      top: 20px;
-      right: 20px;
+      top: 24px;
+      right: 24px;
       z-index: 1000;
-      width: 300px;
+      width: 320px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
     }
+
     .message {
-      padding: 15px;
-      margin-bottom: 10px;
-      border-radius: 5px;
+      padding: 14px 18px;
+      border-radius: 4px;
       color: #fff;
-      font-weight: bold;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-      font-size: 14px;
+      font-family: 'Jost', sans-serif;
+      font-size: 13px;
+      font-weight: 400;
+      letter-spacing: 0.02em;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      border-left: 3px solid rgba(255,255,255,0.4);
       opacity: 1;
       transition: opacity 0.6s ease;
     }
-    .message.success { background-color: #28a745; }
-    .message.error { background-color: #dc3545; }
-    .message.warning { background-color: #ffc107; color: #000; }
-    .message.info { background-color: #17a2b8; }
+
+    .message.success { background: #2d6a4f; }
+    .message.error   { background: #c1121f; }
+    .message.warning { background: #e76f51; }
+    .message.info    { background: #1d6fa5; }
+
+    /* animations */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* responsive */
+    @media (max-width: 768px) {
+      body { flex-direction: column; overflow: auto; }
+      .panel-left {
+        flex: none;
+        height: 220px;
+        padding: 36px 32px 32px;
+        justify-content: flex-end;
+      }
+      .ornament { display: none; }
+      .panel-right {
+        flex: 1;
+        padding: 40px 32px;
+      }
+    }
   </style>
-
-  <title>Login</title>
 </head>
-
 <body>
-<div id="messages-container">
-  {% if messages %}
-  {% for message in messages %}
-  <div class="message {{ message.tags }}">
-    {{ message }}
+
+  <div id="messages-container">
+    {% if messages %}
+      {% for message in messages %}
+        <div class="message {{ message.tags }}">{{ message }}</div>
+      {% endfor %}
+    {% endif %}
   </div>
-  {% endfor %}
-  {% endif %}
-</div>
-  <form method="post">
-    {% csrf_token %}
 
-    <div class="login-box">
+  <!-- LEFT -->
+  <div class="panel-left">
+    <!-- corner ornament -->
+    <svg class="ornament" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="1" y="1" width="118" height="118" stroke="#b8975a" stroke-width="1"/>
+      <rect x="10" y="10" width="100" height="100" stroke="#b8975a" stroke-width="0.5"/>
+      <line x1="1" y1="1" x2="30" y2="30" stroke="#b8975a" stroke-width="0.5"/>
+      <line x1="119" y1="1" x2="90" y2="30" stroke="#b8975a" stroke-width="0.5"/>
+      <line x1="1" y1="119" x2="30" y2="90" stroke="#b8975a" stroke-width="0.5"/>
+      <line x1="119" y1="119" x2="90" y2="90" stroke="#b8975a" stroke-width="0.5"/>
+      <circle cx="60" cy="60" r="20" stroke="#b8975a" stroke-width="0.5"/>
+      <circle cx="60" cy="60" r="2" fill="#b8975a"/>
+    </svg>
 
-      <div class="login-header">
-        <header>Login</header>
+    <div class="left-content">
+      <div class="hotel-emblem">
+        <!-- key icon -->
+        <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="12" cy="13" r="7" stroke="#b8975a" stroke-width="1.2" fill="none"/>
+          <circle cx="12" cy="13" r="3" stroke="#b8975a" stroke-width="1" fill="none"/>
+          <line x1="17" y1="18" x2="28" y2="27" stroke="#b8975a" stroke-width="1.2" stroke-linecap="round"/>
+          <line x1="23" y1="23" x2="25" y2="21" stroke="#b8975a" stroke-width="1" stroke-linecap="round"/>
+          <line x1="26" y1="26" x2="28" y2="24" stroke="#b8975a" stroke-width="1" stroke-linecap="round"/>
+        </svg>
       </div>
 
-      <div class="input-box">
-        <input type="text" name="username" class="input-field" placeholder="Username" required autocomplete="off">
+      <div class="left-tagline">
+        Where every<br>arrival feels like<br><em>coming home.</em>
+      </div>
+      <div class="left-divider"></div>
+      <div class="left-sub">Staff Portal Access</div>
+    </div>
+  </div>
+
+  <!-- RIGHT -->
+  <div class="panel-right">
+    <form method="post" style="width:100%; max-width: 360px; margin: 0 auto;">
+      {% csrf_token %}
+
+      <div class="form-header">
+        {% if site_prefs.site_title %}
+          <div class="welcome-label">{{ site_prefs.site_title }}</div>
+        {% else %}
+          <div class="welcome-label">Rudra Hotel</div>
+        {% endif %}
+        <div class="form-title">Sign In</div>
       </div>
 
-      <div class="input-box">
-        <input type="password" name="password" class="input-field" placeholder="Password" required autocomplete="off">
+      <div class="field-group">
+        <label class="field-label" for="username">Username</label>
+        <div class="input-wrap">
+          <input id="username" type="text" name="username" class="input-field" placeholder="Enter your username" required autocomplete="off">
+          <svg class="field-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="12" cy="8" r="4"/>
+            <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+          </svg>
+        </div>
       </div>
 
-      <div style="text-align: right; margin-top: -10px; margin-bottom: 20px; padding-right: 10px;">
-        <a href="{% url 'password_reset' %}" style="color: #222; text-decoration: none; font-size: 14px; font-weight: 500;">Forgot Password?</a>
+      <div class="field-group">
+        <label class="field-label" for="password">Password</label>
+        <div class="input-wrap">
+          <input id="password" type="password" name="password" class="input-field" placeholder="Enter your password" required autocomplete="off">
+          <svg class="field-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <rect x="5" y="11" width="14" height="10" rx="2"/>
+            <path d="M8 11V7a4 4 0 0 1 8 0v4"/>
+          </svg>
+        </div>
       </div>
 
-      <div class="input-submit">
+      <div class="forgot-row">
+        <a href="{% url 'password_reset' %}" class="forgot-link">Forgot password?</a>
+      </div>
+
+      <div class="submit-wrap">
         <button type="submit" class="submit-btn">Sign In</button>
       </div>
 
-    </div>
-  </form>
+      {% if site_prefs.copyright_text %}
+        <div class="copyright">{{ site_prefs.copyright_text }}</div>
+      {% else %}
+        <div class="copyright">© 2025 Rudra Hotel. All rights reserved.</div>
+      {% endif %}
+
+    </form>
+  </div>
 
   <script src="{% static 'js/admin.js' %}"></script>
-
 </body>
-
 </html>

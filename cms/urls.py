@@ -52,6 +52,7 @@ cms_patterns = [
     path('preferences/', include('preferences.urls')),
     path('slideshow/', include('slideshow.urls')),
     path('gallery/', include('gallery.urls')),
+    path('audit/', include('audit.urls')),
     path('toggle-status/<str:model_name>/<int:pk>/', toggle_status, name='toggle_status'),
     path('delete_object/<str:model_name>/<int:pk>/', delete_object, name='delete_object'),
     path('bulk/<str:model_name>/', bulk_action, name='bulk_action'),

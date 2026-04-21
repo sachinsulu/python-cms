@@ -1,4 +1,5 @@
 import os
+from django.utils import timezone
 from preferences.models import SitePreferences
 from location.models import Location
 from social.models import Social
@@ -9,6 +10,9 @@ def frontend_context(request):
         site_prefs = SitePreferences.objects.get_solo()
     except Exception:
         site_prefs = None
+
+    if site_prefs and site_prefs.copyright_text:
+        site_prefs.copyright_text = site_prefs.copyright_text.replace('{year}', str(timezone.now().year))
 
     try:
         site_location = Location.objects.get_solo()

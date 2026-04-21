@@ -316,6 +316,19 @@ body {
   text-decoration: underline;
 }
 
+/* Ensure buttons in tables have visible text (not overridden by .log-table a) */
+.log-table a.btn, 
+.log-table a.btn-sm, 
+.log-table a.btn-danger {
+  color: white;
+}
+.log-table a.btn:hover, 
+.log-table a.btn-sm:hover, 
+.log-table a.btn-danger:hover {
+  text-decoration: none;
+}
+
+
 .log-table ul,
 .log-table li {
   list-style: none;

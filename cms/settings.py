@@ -67,6 +67,7 @@ INSTALLED_APPS = [
     "slideshow",
     "gallery",
     "frontend",
+    "audit",
 
 
     # third-party
@@ -93,6 +94,7 @@ MIDDLEWARE = [
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "audit.middleware.AuditMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
@@ -210,7 +212,7 @@ CORS_ALLOW_ALL_ORIGINS = True
 # ========================
 
 LANGUAGE_CODE = "en-us"
-TIME_ZONE = "UTC"
+TIME_ZONE = "Asia/Kathmandu"
 USE_I18N = True
 USE_TZ = True
 
@@ -319,10 +321,49 @@ RECAPTCHA_SECRET_KEY = os.environ.get("RECAPTCHA_SECRET_KEY")
 # SESSION & CACHE SETTINGS
 # ========================
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
-SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+SESSION_ENGINE = "django.contrib.sessions.backends.db"
 
 CACHES = {
     "default": {
-        "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+        "BACKEND": "django.core.cache.backends.filebased.FileBasedCache",
+        "LOCATION": os.path.join(BASE_DIR, "cache"),
     }
-}
+}
+
+# ========================
+# AUDIT SETTINGS
+# ========================
+AUDIT_TRACKED_MODELS = [
+    'articles.Article',
+    'blog.Blog',
+    'package.Package',
+    'package.SubPackage',
+    'services.Service',
+    'preferences.SitePreferences',
+    'location.Location',
+    'users.User',
+    'media_manager.Media',
+    'faq.FAQ',
+    'testimonials.Testimonial',
+    'social.Social',
+    'menu.MenuItem',
+    'features.Feature',
+    'features.FeatureGroup',
+    'popup.Popup',
+    'offers.Offer',
+    'gallery.Gallery',
+    'gallery.GalleryImage',
+    'slideshow.Slideshow',
+]
+
+AUDIT_MAX_FIELD_LENGTH = 1000
+AUDIT_REDACT_PATTERNS = [
+    r'.*password.*',
+    r'.*secret.*',
+    r'.*token.*',
+    r'.*key.*',
+    r'.*auth.*',
+    r'.*credit.*',
+    r'.*card.*',
+]
+AUDIT_LOG_RETENTION_DAYS = 365

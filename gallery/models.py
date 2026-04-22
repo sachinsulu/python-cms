@@ -13,11 +13,9 @@ class Gallery(models.Model):
 
     MEDIA_TYPE_IMAGE = 'image'
     MEDIA_TYPE_VIDEO = 'video'
-    MEDIA_TYPE_MIXED = 'mixed'
     MEDIA_TYPE_CHOICES = [
-        (MEDIA_TYPE_IMAGE, 'Images Only'),
-        (MEDIA_TYPE_VIDEO, 'Videos Only'),
-        (MEDIA_TYPE_MIXED, 'Images & Videos'),
+        (MEDIA_TYPE_IMAGE, 'Image'),
+        (MEDIA_TYPE_VIDEO, 'Video'),
     ]
 
     title = models.CharField(max_length=255)
@@ -25,7 +23,7 @@ class Gallery(models.Model):
         max_length=20, choices=TYPE_CHOICES, default=TYPE_INNERPAGE
     )
     media_type = models.CharField(
-        max_length=10, choices=MEDIA_TYPE_CHOICES, default=MEDIA_TYPE_MIXED
+        max_length=10, choices=MEDIA_TYPE_CHOICES, default=MEDIA_TYPE_IMAGE
     )
     active = models.BooleanField(default=True)
     position = models.PositiveIntegerField(default=0)
@@ -67,7 +65,9 @@ class GalleryImage(MediaUsageMixin, models.Model):
         on_delete=models.SET_NULL, 
         related_name='gallery_images'
     )
+    youtube_url = models.URLField(max_length=500, blank=True, default='')
     title = models.CharField(max_length=255, blank=True)
+    description = models.TextField(blank=True, default='')
     active = models.BooleanField(default=True)
     position = models.PositiveIntegerField(default=0)
 
@@ -101,9 +101,39 @@ class GalleryImage(MediaUsageMixin, models.Model):
         return None
 
     @property
+    def is_youtube(self):
+        """Return True if this item is a YouTube link (not an uploaded file)."""
+        return bool(self.youtube_url)
+
+    @property
+    def youtube_embed_url(self):
+        """Return the YouTube embed URL extracted from youtube_url, or None."""
+        import re
+        if not self.youtube_url:
+            return None
+        # Robust regex for various YouTube URL formats
+        pattern = r'(?:v=|v\/|youtu\.be\/|embed\/|shorts\/|^)([\w-]{11})(?![^\w-])'
+        m = re.search(pattern, self.youtube_url)
+        if m:
+            return f'https://www.youtube.com/embed/{m.group(1)}'
+        return None
+
+    @property
+    def youtube_thumbnail_url(self):
+        """Return YouTube thumbnail URL, or None."""
+        import re
+        if not self.youtube_url:
+            return None
+        pattern = r'(?:v=|v\/|youtu\.be\/|embed\/|shorts\/|^)([\w-]{11})(?![^\w-])'
+        m = re.search(pattern, self.youtube_url)
+        if m:
+            return f'https://img.youtube.com/vi/{m.group(1)}/mqdefault.jpg'
+        return None
+
+    @property
     def is_video(self):
-        """Return True if media is a video."""
-        return self.media_type == 'video'
+        """Return True if media is a video (uploaded file or YouTube)."""
+        return self.media_type == 'video' or self.is_youtube
 
     @property
     def media_url(self):

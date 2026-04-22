@@ -19,8 +19,67 @@
         </div>
 
         <div class="form-group">
+            <label for="{{ form.description.id_for_label }}">Description</label>
+            {{ form.description }}
+            {{ form.description.errors }}
+        </div>
+
+        {% if gallery.media_type == 'video' or gallery.get_media_type_display == 'Video' %}
+        {# ── YouTube Video Section ── #}
+        <div class="form-group">
+            <label>YouTube Video</label>
+
+            {% if form.youtube_url.errors %}<div class="error">{{ form.youtube_url.errors }}</div>{% endif %}
+
+            {# Hidden field stores the confirmed YT URL for form submission #}
+            <input type="hidden" name="youtube_url" id="ytUrlHidden" value="{{ image.youtube_url|default:'' }}">
+
+            <div style="display: flex; gap: 8px; align-items: center; margin-top: 8px;">
+                <input type="url"
+                       id="ytUrlInput"
+                       class="form-control"
+                       placeholder="https://www.youtube.com/watch?v=..."
+                       value="{{ image.youtube_url|default:'' }}"
+                       style="flex: 1;">
+                <button type="button" class="btn btn-primary" id="ytAddBtn" onclick="addYouTubeVideo()">
+                    Add
+                </button>
+                {% if image.youtube_url %}
+                <button type="button" class="btn btn-danger" id="ytRemoveBtn" onclick="removeYouTubeVideo()">
+                    Remove
+                </button>
+                {% else %}
+                <button type="button" class="btn btn-danger" id="ytRemoveBtn" onclick="removeYouTubeVideo()" style="display:none;">
+                    Remove
+                </button>
+                {% endif %}
+            </div>
+
+            <div id="yt-preview-container"
+                 style="margin-top: 14px; {% if not image.youtube_url %}display:none;{% endif %}">
+                {% if image.youtube_embed_url %}
+                <iframe id="yt-iframe"
+                        src="{{ image.youtube_embed_url }}"
+                        width="320" height="180"
+                        style="border-radius: 6px; border: none;"
+                        allowfullscreen
+                        loading="lazy"></iframe>
+                {% else %}
+                <iframe id="yt-iframe"
+                        src=""
+                        width="320" height="180"
+                        style="border-radius: 6px; border: none;"
+                        allowfullscreen
+                        loading="lazy"></iframe>
+                {% endif %}
+            </div>
+        </div>
+
+        {% else %}
+        {# ── Image / File Picker Section ── #}
+        <div class="form-group">
             <label>Image Selection</label>
-            
+
             {% if form.image_media.errors %}<div class="error">{{ form.image_media.errors }}</div>{% endif %}
 
             <input type="hidden" name="media_url" id="galleryMediaUrl" value="">
@@ -38,17 +97,23 @@
                 <i class="fa-solid fa-photo-film"></i> Choose from Library
             </button>
 
-            <button type="button" class="btn btn-danger" id="remove-image-btn" style="margin-top: 8px; display: {% if form.image_media.value %}inline-block{% else %}none{% endif %};" onclick="removeImage()">Remove Media</button>
-            
-            <div id="media-preview-container" style="display: {% if form.image_media.value %}block{% else %}none{% endif %}; margin-top:10px;">
+            <button type="button" class="btn btn-danger" id="remove-image-btn"
+                    style="margin-top: 8px; display: {% if form.image_media.value %}inline-block{% else %}none{% endif %};"
+                    onclick="removeImage()">Remove Media</button>
+
+            <div id="media-preview-container"
+                 style="display: {% if form.image_media.value %}block{% else %}none{% endif %}; margin-top:10px;">
                 {% if image.is_video %}
-                    <video id="media-preview-video" style="max-width: 200px; max-height: 200px; border-radius: 4px;" controls src="{% if image.media_url %}{{ image.media_url }}{% endif %}"></video>
+                    <video id="media-preview-video" style="max-width: 200px; max-height: 200px; border-radius: 4px;" controls
+                           src="{% if image.media_url %}{{ image.media_url }}{% endif %}"></video>
                 {% else %}
-                    <img id="media-preview-img" style="max-width: 200px; max-height: 200px; object-fit: cover; border-radius: 4px;" src="{% if image.thumbnail_url %}{{ image.thumbnail_url }}{% endif %}">
+                    <img id="media-preview-img" style="max-width: 200px; max-height: 200px; object-fit: cover; border-radius: 4px;"
+                         src="{% if image.thumbnail_url %}{{ image.thumbnail_url }}{% endif %}">
                 {% endif %}
             </div>
             <input type="hidden" name="remove_image" id="remove_image" value="0">
         </div>
+        {% endif %}
 
         <div class="form-group" style="display: flex; align-items: center; gap: 10px;">
             <label for="{{ form.active.id_for_label }}" style="margin: 0;">Active:</label>
@@ -64,26 +129,64 @@
 </div>
 
 <script>
-    // Remove button functionality
+{% if gallery.media_type == 'video' %}
+    // ── YouTube helpers ──────────────────────────────────────────
+    function extractYouTubeId(url) {
+        const pattern = r'(?:v=|youtu\.be\/|embed\/|shorts\/)([\w-]{11})';
+        const m = url.match(pattern);
+        return m ? m[1] : null;
+    }
+
+    function addYouTubeVideo() {
+        const input = document.getElementById('ytUrlInput');
+        const url = input.value.trim();
+        if (!url) { input.focus(); return; }
+
+        const videoId = extractYouTubeId(url);
+        if (!videoId) {
+            alert('Please enter a valid YouTube URL (e.g. https://www.youtube.com/watch?v=...)');
+            return;
+        }
+
+        const embedUrl = 'https://www.youtube.com/embed/' + videoId;
+        document.getElementById('yt-iframe').src = embedUrl;
+        document.getElementById('yt-preview-container').style.display = 'block';
+        document.getElementById('ytUrlHidden').value = url;
+        document.getElementById('ytRemoveBtn').style.display = 'inline-block';
+    }
+
+    function removeYouTubeVideo() {
+        document.getElementById('yt-iframe').src = '';
+        document.getElementById('yt-preview-container').style.display = 'none';
+        document.getElementById('ytUrlHidden').value = '';
+        document.getElementById('ytUrlInput').value = '';
+        document.getElementById('ytRemoveBtn').style.display = 'none';
+    }
+
+    // Enter key in URL field triggers Add
+    document.getElementById('ytUrlInput').addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') { e.preventDefault(); addYouTubeVideo(); }
+    });
+
+{% else %}
+    // ── File picker helpers ──────────────────────────────────────
     function removeImage() {
         document.getElementById("{{ form.image_media.id_for_label }}").value = "";
         document.getElementById("media-preview-container").style.display = "none";
-        document.getElementById("media-preview-img").src = "";
+        const img = document.getElementById("media-preview-img");
+        if (img) img.src = "";
         document.getElementById("remove-image-btn").style.display = "none";
         document.getElementById("remove_image").value = "1";
     }
 
-    // Show remove button when new image picked
     document.addEventListener("mediaPicked", function(e) {
         document.getElementById("remove-image-btn").style.display = "inline-block";
         document.getElementById("remove_image").value = "0";
     });
 
-    // Render media preview (image or video)
     document.addEventListener("mediaPicked", function(e) {
         const item = e.detail;
         const container = document.getElementById("media-preview-container");
-        
         if (item.is_image) {
             container.innerHTML = '<img id="media-preview-img" style="max-width: 200px; max-height: 200px; object-fit: cover; border-radius: 4px;" src="' + item.url + '" alt="' + item.title + '">';
         } else {
@@ -91,5 +194,6 @@
         }
         container.style.display = "block";
     });
+{% endif %}
 </script>
 {% endblock %}

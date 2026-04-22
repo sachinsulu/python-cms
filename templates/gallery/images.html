@@ -359,6 +359,42 @@
   }
   .gi-adding-overlay.show { display: flex; }
   .gi-adding-overlay i { font-size: 2rem; color: #3b82f6; }
+
+  /* ── Video Player Modal ── */
+  .gi-video-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.9);
+    z-index: 10000;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .gi-video-modal.show { display: flex; }
+  .gi-video-container {
+    width: 100%;
+    max-width: 900px;
+    aspect-ratio: 16/9;
+    position: relative;
+    background: #000;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+  }
+  .gi-video-modal-close {
+    position: absolute;
+    top: -40px;
+    right: 0;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 5px;
+    transition: opacity 0.2s;
+  }
+  .gi-video-modal-close:hover { opacity: 0.7; }
 </style>
 
 <div class="gi-header">
@@ -378,6 +414,38 @@
 </div>
 
 {# ── Add Images Panel ── #}
+{# Debug info for developer #}
+<div style="background: #fff5f5; color: #c53030; padding: 5px; font-size: 10px; margin-bottom: 5px; border-radius: 4px; display: none;">
+  Debug: media_type="{{ gallery.media_type }}", display="{{ gallery.get_media_type_display }}"
+</div>
+{% if gallery.media_type == 'video' or gallery.get_media_type_display == 'Video' %}
+{# ── YouTube Add Panel (video galleries) ── #}
+<div class="gi-add-panel" id="addPanel">
+  <div class="gi-add-panel-title">
+    <i class="fa-brands fa-youtube" style="color:#ff0000;"></i>
+    Add YouTube Video
+  </div>
+
+  <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+    <input type="url"
+           id="ytAddUrlInput"
+           class="form-control"
+           placeholder="https://www.youtube.com/watch?v=..."
+           style="flex:1; min-width:240px;">
+    <input type="text"
+           id="ytAddTitleInput"
+           class="form-control"
+           placeholder="Title (optional)"
+           style="flex:1; min-width:160px;">
+    <button type="button" class="gi-add-btn" id="ytAddBtn" onclick="addYouTubeToGallery()">
+      <i class="fa-solid fa-plus"></i> Add
+    </button>
+  </div>
+  <div id="ytAddError" style="color:#ef4444; font-size:0.82rem; margin-top:6px; display:none;"></div>
+</div>
+
+{% else %}
+{# ── File Picker Panel (image galleries) ── #}
 <div class="gi-add-panel" id="addPanel">
   <div class="gi-add-panel-title">
     <i class="fa-solid fa-plus-circle"></i>
@@ -404,6 +472,7 @@
     </span>
   </div>
 </div>
+{% endif %}
 
 {# ── Existing Media ── #}
 <div class="gi-divider">Gallery Media</div>
@@ -439,16 +508,30 @@
          id="dot-{{ img.id }}" title="{% if img.active %}Active{% else %}Inactive{% endif %}"></div>
     <i class="fa-solid fa-grip-vertical gi-drag-handle"></i>
 
-    {% if img.image and img.image.file %}
-            {% if img.is_video %}
-              <div class="gi-thumb" style="background: #0f172a; display: flex; align-items: center; justify-content: center;">
-                <i class="fa-solid fa-play" style="color: white; font-size: 2rem;"></i>
-              </div>
-            {% else %}
-      <img class="gi-thumb"
-           src="{{ img.thumbnail_url|default:'' }}"
-           alt="{{ img.title|default:'Gallery image' }}"
-           loading="lazy" draggable="false">
+    {% if img.is_youtube %}
+      {# YouTube item — show YT thumbnail #}
+      <div class="gi-thumb" style="position:relative; background:#000; cursor:pointer;" onclick="playVideo('{{ img.youtube_embed_url }}')">
+        <img class="gi-thumb"
+             src="{{ img.youtube_thumbnail_url }}"
+             alt="{{ img.title|default:'YouTube video' }}"
+             loading="lazy" draggable="false"
+             style="object-fit:cover; width:100%; height:100%;">
+        <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; pointer-events:none;">
+          <div style="background:rgba(255,0,0,0.85); border-radius:6px; padding:4px 8px;">
+            <i class="fa-brands fa-youtube" style="color:white; font-size:1.4rem;"></i>
+          </div>
+        </div>
+      </div>
+    {% elif img.image and img.image.file %}
+      {% if img.is_video %}
+        <div class="gi-thumb" style="background: #0f172a; display: flex; align-items: center; justify-content: center; cursor:pointer;" onclick="playVideo('{{ img.image.file.url }}', true)">
+          <i class="fa-solid fa-play" style="color: white; font-size: 2rem;"></i>
+        </div>
+      {% else %}
+        <img class="gi-thumb"
+             src="{{ img.thumbnail_url|default:'' }}"
+             alt="{{ img.title|default:'Gallery image' }}"
+             loading="lazy" draggable="false">
       {% endif %}
     {% else %}
       <div class="gi-thumb-placeholder">
@@ -498,6 +581,18 @@
   {% endfor %}
 </div>
 
+{# ── Video Player Modal HTML ── #}
+<div class="gi-video-modal" id="videoModal" onclick="closeVideo()">
+  <div class="gi-video-container" onclick="event.stopPropagation()">
+    <button class="gi-video-modal-close" onclick="closeVideo()">
+      <i class="fa-solid fa-xmark"></i> Close
+    </button>
+    <div id="videoPlayerContent" style="width:100%; height:100%;">
+      <!-- Iframe or Video tag injected here -->
+    </div>
+  </div>
+</div>
+
 {# ── Toast ── #}
 <div class="gi-toast" id="giToast">
   <i class="fa-solid fa-check-circle" id="toastIcon"></i>
@@ -529,7 +624,9 @@ const CSRF_TOKEN        = document.body.dataset.csrfToken || '{{ csrf_token }}';
 const BULK_ADD_URL      = '{% url "gallery_bulk_add_images" gallery.pk %}';
 const BULK_ACTION_URL   = '{% url "bulk_action" "galleryimage" %}';
 const SORT_URL          = '{% url "sort" "galleryimage" %}';
-const GALLERY_PK        = {{ gallery.pk }};
+{% if gallery.media_type == 'video' %}
+const YT_ADD_URL        = '{% url "gallery_add_youtube" gallery.pk %}';
+{% endif %}const GALLERY_PK        = {{ gallery.pk }};
 
 // ── State ─────────────────────────────────────────────────────────
 // pickerSelection: Map<mediaId, { id, url, thumbnail_url, title }>
@@ -552,6 +649,113 @@ function showToast(msg, type = 'success') {
   icon.className = `fa-solid ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}`;
   clearTimeout(toastTimer);
   toastTimer = setTimeout(() => toast.classList.remove('show'), 3500);
+}
+
+// ── YouTube Add ──────────────────────────────────────────────────
+async function addYouTubeToGallery() {
+  const urlInput = document.getElementById('ytAddUrlInput');
+  const titleInput = document.getElementById('ytAddTitleInput');
+  const errorDiv = document.getElementById('ytAddError');
+  const btn = document.getElementById('ytAddBtn');
+
+  const youtube_url = urlInput.value.trim();
+  const title = titleInput.value.trim();
+
+  if (!youtube_url) {
+    urlInput.focus();
+    return;
+  }
+
+  errorDiv.style.display = 'none';
+  btn.disabled = true;
+  const overlay = document.getElementById('addingOverlay');
+  overlay.classList.add('show');
+
+  try {
+    const resp = await fetch(YT_ADD_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': CSRF_TOKEN,
+      },
+      body: JSON.stringify({ youtube_url, title }),
+    });
+
+    const data = await resp.json();
+    if (data.error) {
+      errorDiv.textContent = data.error;
+      errorDiv.style.display = 'block';
+      showToast(data.error, 'error');
+      return;
+    }
+
+    // Success! Inject the new card
+    const grid = document.getElementById('giGrid');
+    const empty = document.getElementById('emptyState');
+    if (empty) empty.remove();
+
+    const card = buildCard(data.image);
+    grid.appendChild(card);
+
+    totalImageCount++;
+    updateCountBadge();
+
+    // Clear inputs
+    urlInput.value = '';
+    titleInput.value = '';
+    showToast('YouTube video added to gallery');
+
+  } catch (err) {
+    console.error(err);
+    showToast('Failed to add video. Please try again.', 'error');
+  } finally {
+    btn.disabled = false;
+    overlay.classList.remove('show');
+  }
+}
+
+// ── Video Player Logic ───────────────────────────────────────────
+function playVideo(url, isDirect = false) {
+  const modal = document.getElementById('videoModal');
+  const container = document.getElementById('videoPlayerContent');
+  
+  if (isDirect) {
+    container.innerHTML = `<video src="${url}" controls autoplay style="width:100%; height:100%;"></video>`;
+  } else {
+    // Add parameters for better compatibility and autoplay
+    let playerUrl = url;
+    const params = new URLSearchParams();
+    params.append('autoplay', '1');
+    params.append('rel', '0');
+    
+    // Some videos require origin for embedding to work correctly
+    try {
+      params.append('origin', window.location.origin);
+    } catch(e) {}
+
+    playerUrl += (playerUrl.includes('?') ? '&' : '?') + params.toString();
+    
+    container.innerHTML = `
+  <iframe 
+    src="${playerUrl}"
+    style="width:100%; height:100%; border:none;"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    referrerpolicy="strict-origin-when-cross-origin"
+    allowfullscreen>
+  </iframe>
+`;
+  }
+  
+  modal.classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeVideo() {
+  const modal = document.getElementById('videoModal');
+  const container = document.getElementById('videoPlayerContent');
+  modal.classList.remove('show');
+  container.innerHTML = ''; // Stop video playback
+  document.body.style.overflow = '';
 }
 
 // ── Picker selection UI ──────────────────────────────────────────
@@ -698,8 +902,18 @@ function buildCard(img) {
   card.dataset.active = img.active ? 'true' : 'false';
 
   let thumbHtml = '';
-  if (img.media_type === 'video') {
-    thumbHtml = `<div class="gi-thumb" style="background: #0f172a; display: flex; align-items: center; justify-content: center;"><i class="fa-solid fa-play" style="color: white; font-size: 2rem;"></i></div>`;
+  if (img.is_youtube) {
+    thumbHtml = `
+      <div class="gi-thumb" style="position:relative; background:#000; cursor:pointer;" onclick="playVideo('${img.youtube_embed_url}')">
+        <img class="gi-thumb" src="${img.youtube_thumbnail_url}" alt="${img.title}" loading="lazy" draggable="false" style="object-fit:cover; width:100%; height:100%;">
+        <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; pointer-events:none;">
+          <div style="background:rgba(255,0,0,0.85); border-radius:6px; padding:4px 8px;">
+            <i class="fa-brands fa-youtube" style="color:white; font-size:1.4rem;"></i>
+          </div>
+        </div>
+      </div>`;
+  } else if (img.media_type === 'video') {
+    thumbHtml = `<div class="gi-thumb" style="background: #0f172a; display: flex; align-items: center; justify-content: center; cursor:pointer;" onclick="playVideo('${img.image_url}', true)"><i class="fa-solid fa-play" style="color: white; font-size: 2rem;"></i></div>`;
   } else if (img.thumbnail_url) {
     thumbHtml = `<img class="gi-thumb" src="${img.thumbnail_url}" alt="${img.title}" loading="lazy" draggable="false">`;
   } else {

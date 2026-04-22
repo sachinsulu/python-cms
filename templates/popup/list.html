@@ -73,9 +73,13 @@
                         <span class="type-badge type-image">
                             <i class="fa-solid fa-image"></i> Image
                         </span>
-                    {% else %}
-                        <span class="type-badge type-video">
-                            <i class="fa-solid fa-video"></i> Video
+                    {% elif item.type == 'reels' %}
+                        <span class="type-badge" style="background:#fce7f3; color:#9d174d;">
+                            <i class="fa-brands fa-instagram"></i> Reels
+                        </span>
+                    {% elif item.type == 'yt_shorts' %}
+                        <span class="type-badge" style="background:#fee2e2; color:#991b1b;">
+                            <i class="fa-brands fa-youtube"></i> YT Shorts
                         </span>
                     {% endif %}
                 </td>

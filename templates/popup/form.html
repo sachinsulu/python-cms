@@ -52,6 +52,45 @@
         max-width: 100%; max-height: 220px;
         border-radius: 8px; border: 1px solid #e5e7eb; display: block;
     }
+
+    .yt-thumbnail-wrapper {
+        position: relative;
+        width: 315px;
+        cursor: pointer;
+        margin-top: 10px;
+    }
+    .yt-thumbnail-wrapper img {
+        width: 315px;
+        height: 560px;
+        object-fit: cover;
+        border-radius: 8px;
+        border: 1px solid #e5e7eb;
+        display: block;
+        max-height: none;
+    }
+    .yt-play-btn {
+        position: absolute;
+        top: 50%; left: 50%;
+        transform: translate(-50%, -50%);
+        width: 64px; height: 64px;
+        background: rgba(0,0,0,0.7);
+        border-radius: 50%;
+        display: flex; align-items: center; justify-content: center;
+        pointer-events: none;
+    }
+    .yt-play-btn-arrow {
+        width: 0; height: 0;
+        border-top: 14px solid transparent;
+        border-bottom: 14px solid transparent;
+        border-left: 22px solid white;
+        margin-left: 4px;
+    }
+    .reels-placeholder-label {
+        display: block;
+        margin-top: 6px;
+        font-size: 12px;
+        color: #f59e0b;
+    }
 </style>
 
 <div class="form-container">
@@ -106,17 +145,14 @@
         Type <span style="color:red;">*</span>
       </label>
       <div class="type-tabs">
-        <button type="button"
-                class="type-tab {% if not is_edit or item.type == 'image' %}active{% endif %}"
-                data-type="image"
-                id="tab-image">
+        <button type="button" class="type-tab" data-type="image" id="tab-image">
           <i class="fa-solid fa-image"></i> Image
         </button>
-        <button type="button"
-                class="type-tab {% if is_edit and item.type == 'video' %}active{% endif %}"
-                data-type="video"
-                id="tab-video">
-          <i class="fa-solid fa-video"></i> Video
+        <button type="button" class="type-tab" data-type="reels" id="tab-reels">
+          <i class="fa-brands fa-instagram"></i> Reels
+        </button>
+        <button type="button" class="type-tab" data-type="yt_shorts" id="tab-yt_shorts">
+          <i class="fa-brands fa-youtube"></i> YT Shorts
         </button>
       </div>
       {# Hidden real select keeps Django form binding #}
@@ -126,8 +162,8 @@
       {% endif %}
     </div>
 
-    <!-- File — Media Library Picker -->
-    <div class="form-group">
+    <!-- File — Media Library Picker (Only for Image) -->
+    <div class="form-group" id="file-picker-group">
       <label>File</label>
 
       {% if form.file_media.errors %}
@@ -136,14 +172,10 @@
 
       <!-- Current file preview -->
       <div id="filePreview" class="file-preview-wrap">
-        {% if is_edit and item.file_url %}
+        {% if is_edit and item.file_url and item.is_image %}
           <div class="preview-wrapper"
                style="position:relative; display:inline-block; margin-top:10px;">
-            {% if item.is_image %}
-              <img src="{{ item.thumbnail_url }}" alt="{{ item.title }}">
-            {% else %}
-              <video src="{{ item.file_url }}" controls></video>
-            {% endif %}
+            <img src="{{ item.thumbnail_url }}" alt="{{ item.title }}">
             <span class="remove-file-btn"
                   style="position:absolute; top:-8px; right:-8px;
                          background:#ef4444; color:white; border-radius:50%;
@@ -168,7 +200,7 @@
         {% endif %}
       </div>
 
-      <!-- Picker trigger — data-type is updated by JS when type tab changes -->
+      <!-- Picker trigger -->
       <button type="button"
               class="btn"
               style="margin-top:8px;"
@@ -176,7 +208,7 @@
               data-media-picker
               data-target-id="#id_file_media"
               data-preview="#filePreview"
-              data-type="{% if is_edit and item.is_video %}video{% else %}image{% endif %}">
+              data-type="image">
         <i class="fa-solid fa-photo-film"></i> Choose from Library
       </button>
 
@@ -187,10 +219,45 @@
       </small>
     </div>
 
+    <!-- Video Preview (For Reels/Shorts) -->
+    <div class="form-group" id="video-preview-group" style="display:none;">
+      <label>Video Preview</label>
+      <div id="videoPreviewContainer" class="file-preview-wrap">
+        {% if is_edit and item.link %}
+          {% if item.type == 'reels' %}
+            <div class="yt-thumbnail-wrapper"
+                 onclick="window.open('{{ item.link }}', '_blank')">
+              <img src="https://via.placeholder.com/315x560?text=Instagram+Reel"
+                   alt="Instagram Reel preview (click to open)">
+              <div class="yt-play-btn">
+                <div class="yt-play-btn-arrow"></div>
+              </div>
+            </div>
+            <span class="reels-placeholder-label">
+              <i class="fa-solid fa-triangle-exclamation"></i>
+              Placeholder preview — Instagram does not provide public thumbnails. Click to open reel.
+            </span>
+          {% elif item.type == 'yt_shorts' %}
+            <div class="yt-thumbnail-wrapper" id="yt-edit-thumb" data-link="{{ item.link }}">
+              <img src="" alt="YouTube thumbnail" id="yt-edit-thumb-img">
+              <div class="yt-play-btn"><div class="yt-play-btn-arrow"></div></div>
+            </div>
+          {% endif %}
+        {% else %}
+          <p class="no-image text-muted">No video link added</p>
+        {% endif %}
+      </div>
+    </div>
+
     <!-- Link -->
     <div class="form-group">
       <label for="{{ form.link.id_for_label }}">{{ form.link.label }}</label>
-      {{ form.link }}
+      <div style="display:flex; gap:8px;">
+          {{ form.link }}
+          <button type="button" class="btn" id="add-link-btn" style="background:#6366f1; white-space:nowrap;">
+              <i class="fa-solid fa-plus"></i> Add
+          </button>
+      </div>
       <small class="help-text">
         Optional. E.g. <code>/about/</code> or <code>https://example.com</code>
       </small>
@@ -227,6 +294,13 @@
 </div>
 
 <script>
+// ── Sanitize helper (fix #6: XSS prevention) ──────────────────────
+function sanitizeText(str) {
+    const div = document.createElement('div');
+    div.appendChild(document.createTextNode(String(str || '')));
+    return div.innerHTML;
+}
+
 // ── Form action ────────────────────────────────────────────────────
 function setFormAction(action) {
     document.getElementById('form-action').value = action;
@@ -241,39 +315,175 @@ function updateStatusText() {
 if (statusInput) { updateStatusText(); statusInput.addEventListener('change', updateStatusText); }
 
 // ── Type tabs ──────────────────────────────────────────────────────
-// Drives both the hidden <select> value AND the picker button's data-type
-// so the modal opens filtered to the correct media type.
 const hiddenTypeSelect = document.getElementById('id_type');
 const pickerBtn        = document.getElementById('filePickerBtn');
 
-function setType(type) {
-    // Update hidden select
+function setType(type, clearMedia) {
     hiddenTypeSelect.value = type;
 
-    // Update picker button so modal filters correctly
-    pickerBtn.dataset.type = type;
+    const fileGroup  = document.getElementById('file-picker-group');
+    const videoGroup = document.getElementById('video-preview-group');
 
-    // Update tab active state
+    if (type === 'image') {
+        fileGroup.style.display  = 'block';
+        videoGroup.style.display = 'none';
+        pickerBtn.dataset.type   = 'image';
+    } else {
+        fileGroup.style.display  = 'none';
+        videoGroup.style.display = 'block';
+        updateVideoPreview();
+    }
+
     document.querySelectorAll('.type-tab').forEach(t => t.classList.remove('active'));
-    document.getElementById('tab-' + type).classList.add('active');
+    const targetTab = document.getElementById('tab-' + type);
+    if (targetTab) targetTab.classList.add('active');
 
-    // Reset preview and picker input on type switch
-    // (avoids mismatched type — e.g. image FK stored on a video popup)
-    document.getElementById('id_file_media').value = '';
-    document.getElementById('remove_file').value   = '0';
-    document.getElementById('filePreview').innerHTML =
-        '<p class="no-image text-muted">No file selected</p>';
+    // FIX #4: only clear file_media on explicit user-triggered type changes
+    if (clearMedia) {
+        document.getElementById('id_file_media').value = '';
+    }
 }
 
+// FIX #4: init call without clearing media, then enable clearing for user actions
+setType(hiddenTypeSelect.value || 'image', false);
+
 document.querySelectorAll('.type-tab').forEach(tab => {
-    tab.addEventListener('click', () => setType(tab.dataset.type));
+    tab.addEventListener('click', () => setType(tab.dataset.type, true));
+});
+
+// ── YouTube helpers ────────────────────────────────────────────────
+function getYouTubeId(url) {
+    try {
+        const u = new URL(url);
+
+        if (u.hostname === 'youtu.be') {
+            return u.pathname.slice(1);
+        }
+
+        if (u.pathname.startsWith('/shorts/')) {
+            return u.pathname.split('/')[2];
+        }
+
+        if (u.searchParams.get('v')) {
+            return u.searchParams.get('v');
+        }
+
+        return null;
+    } catch {
+        return null;
+    }
+}
+
+// FIX #1: removed autoplay=1 from embed
+function buildYouTubeEmbed(id) {
+    return `<iframe width="315" height="560"
+        src="https://www.youtube.com/embed/${id}?rel=0"
+        frameborder="0"
+        allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen></iframe>`;
+}
+
+function getInstagramId(url) {
+    const match = url.match(/(?:reels\/|reel\/|p\/)([a-zA-Z0-9_-]+)/);
+    return match ? match[1] : null;
+}
+
+// FIX #6: use sanitizeText for ytId (alphanumeric only from regex, but belt+suspenders)
+function buildYtThumbnail(id) {
+    const safeId = sanitizeText(id);
+    return `<div class="yt-thumbnail-wrapper" data-ytid="${safeId}">
+        <img src="https://img.youtube.com/vi/${safeId}/hqdefault.jpg"
+             alt="YouTube thumbnail"
+             style="max-height:none;">
+        <div class="yt-play-btn"><div class="yt-play-btn-arrow"></div></div>
+    </div>`;
+}
+
+// ── Click-to-play: delegated on videoPreviewContainer ─────────────
+const videoPreview = document.getElementById('videoPreviewContainer');
+
+videoPreview.addEventListener('click', function(e) {
+    const wrapper = e.target.closest('.yt-thumbnail-wrapper');
+    if (!wrapper) return;
+    const ytId = wrapper.dataset.ytid;
+    if (!ytId) return;
+    wrapper.outerHTML = `<div class="preview-wrapper" style="margin-top:10px;">
+        ${buildYouTubeEmbed(ytId)}
+    </div>`;
+});
+
+// ── Init edit-mode YT thumbnail ────────────────────────────────────
+(function initEditYtThumbnail() {
+    const editThumb = document.getElementById('yt-edit-thumb');
+    if (!editThumb) return;
+    const link = editThumb.dataset.link || '';
+    const ytId = getYouTubeId(link);
+    if (ytId) {
+        editThumb.dataset.ytid = ytId;
+        const img = document.getElementById('yt-edit-thumb-img');
+        if (img) img.src = 'https://img.youtube.com/vi/' + ytId + '/hqdefault.jpg';
+    } else {
+        editThumb.outerHTML = '<p class="no-image text-muted">Invalid YouTube URL</p>';
+    }
+})();
+
+// ── Video Preview Logic (new link) ────────────────────────────────
+const linkInput  = document.getElementById('{{ form.link.id_for_label }}');
+const addLinkBtn = document.getElementById('add-link-btn');
+
+function updateVideoPreview() {
+    const type = hiddenTypeSelect.value;
+    const url  = linkInput.value.trim();
+
+    if (type === 'image' || !url) {
+        if (type !== 'image') videoPreview.innerHTML = '<p class="no-image text-muted">No video link added</p>';
+        return;
+    }
+
+    let previewHtml = '';
+
+    if (type === 'yt_shorts') {
+        const id = getYouTubeId(url);
+        previewHtml = id
+            ? buildYtThumbnail(id)
+            : '<p class="error">Invalid YouTube Shorts URL</p>';
+
+    } else if (type === 'reels') {
+        const id = getInstagramId(url);
+        // FIX #2: clearly label placeholder; FIX #6: sanitize url before injecting into onclick
+        const safeUrl = sanitizeText(url);
+        previewHtml = id
+            ? `<div>
+                    <div class="yt-thumbnail-wrapper"
+                         onclick="window.open(${JSON.stringify(url)}, '_blank')">
+                        <img src="https://via.placeholder.com/315x560?text=Instagram+Reel"
+                             alt="Instagram Reel preview (click to open)">
+                        <div class="yt-play-btn">
+                            <div class="yt-play-btn-arrow"></div>
+                        </div>
+                    </div>
+                    <span class="reels-placeholder-label">
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+                        Placeholder preview — Instagram does not provide public thumbnails. Click to open reel.
+                    </span>
+               </div>`
+            : '<p class="error">Invalid Instagram Reels URL</p>';
+    }
+
+    if (previewHtml) videoPreview.innerHTML = previewHtml;
+}
+
+addLinkBtn.addEventListener('click', updateVideoPreview);
+// FIX #5: keypress deprecated → keydown
+linkInput.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') { e.preventDefault(); updateVideoPreview(); }
 });
 
 // ── Remove current file ────────────────────────────────────────────
-document.addEventListener('click', function (e) {
+document.addEventListener('click', function(e) {
     if (e.target.classList.contains('remove-file-btn')) {
-        document.getElementById('remove_file').value    = '1';
-        document.getElementById('id_file_media').value  = '';
+        document.getElementById('remove_file').value   = '1';
+        document.getElementById('id_file_media').value = '';
         e.target.closest('.preview-wrapper').remove();
         document.getElementById('filePreview').innerHTML =
             '<p class="no-image text-muted">No file selected</p>';
@@ -281,21 +491,24 @@ document.addEventListener('click', function (e) {
 });
 
 // ── Picker insertion handler ───────────────────────────────────────
-document.addEventListener('mediaPicked', function (e) {
+document.addEventListener('mediaPicked', function(e) {
     const item    = e.detail;
     const preview = document.getElementById('filePreview');
     const type    = hiddenTypeSelect.value;
 
-    // Clear remove flag
     document.getElementById('remove_file').value = '0';
 
     let previewHtml = '';
 
+    // FIX #3: was checking type === 'video' (dead branch) — now correctly handles image type
     if (type === 'image' && item.is_image) {
+        // FIX #6: sanitize item.url and item.title before injecting into innerHTML
+        const safeUrl   = sanitizeText(item.url);
+        const safeTitle = sanitizeText(item.title);
         previewHtml = `
             <div class="preview-wrapper"
                  style="position:relative; display:inline-block; margin-top:10px;">
-                <img src="${item.url}"
+                <img src="${safeUrl}"
                      style="max-width:300px; max-height:200px;
                             border:1px solid #e5e7eb; border-radius:4px; display:block;">
                 <span class="remove-file-btn"
@@ -305,18 +518,20 @@ document.addEventListener('mediaPicked', function (e) {
                              line-height:24px; cursor:pointer;
                              font-weight:bold; font-size:16px;">×</span>
                 <p style="margin-top:5px; font-size:12px; color:#666;">
-                    ${item.title}
+                    ${safeTitle}
                     <span style="color:#10b981;">
                         <i class="fa-solid fa-circle-check"></i> From library
                     </span>
                 </p>
             </div>`;
-    } else if (type === 'video') {
+    } else if (type === 'image' && !item.is_image) {
+        // FIX #3: video files picked from library while in image mode
+        const safeUrl   = sanitizeText(item.url);
+        const safeTitle = sanitizeText(item.title);
         previewHtml = `
             <div class="preview-wrapper"
                  style="position:relative; display:inline-block; margin-top:10px;">
-                <video src="${item.url}"
-                       controls
+                <video src="${safeUrl}" controls
                        style="max-width:400px; border-radius:8px;
                               border:1px solid #e5e7eb; display:block;"></video>
                 <span class="remove-file-btn"
@@ -326,7 +541,7 @@ document.addEventListener('mediaPicked', function (e) {
                              line-height:24px; cursor:pointer;
                              font-weight:bold; font-size:16px;">×</span>
                 <p style="margin-top:5px; font-size:12px; color:#666;">
-                    ${item.title}
+                    ${safeTitle}
                     <span style="color:#10b981;">
                         <i class="fa-solid fa-circle-check"></i> From library
                     </span>
@@ -334,9 +549,7 @@ document.addEventListener('mediaPicked', function (e) {
             </div>`;
     }
 
-    if (previewHtml) {
-        preview.innerHTML = previewHtml;
-    }
+    if (previewHtml) preview.innerHTML = previewHtml;
 });
 </script>
 

@@ -8,17 +8,19 @@ from media_manager.mixins import MediaUsageMixin
 class Popup(MediaUsageMixin, models.Model):
     media_fields = ['file']
     TYPE_IMAGE = 'image'
-    TYPE_VIDEO = 'video'
+    TYPE_REELS = 'reels'
+    TYPE_YT_SHORTS = 'yt_shorts'
     TYPE_CHOICES = [
         (TYPE_IMAGE, 'Image'),
-        (TYPE_VIDEO, 'Video'),
+        (TYPE_REELS, 'Reels'),
+        (TYPE_YT_SHORTS, 'YT Shorts'),
     ]
 
     title      = models.CharField(max_length=255)
     start_date = models.DateField()
     end_date   = models.DateField()
     type       = models.CharField(
-        max_length=10, choices=TYPE_CHOICES, default=TYPE_IMAGE
+        max_length=15, choices=TYPE_CHOICES, default=TYPE_IMAGE
     )
     link       = models.CharField(max_length=500, blank=True)
     status     = models.BooleanField(default=True)
@@ -80,5 +82,9 @@ class Popup(MediaUsageMixin, models.Model):
         return self.type == self.TYPE_IMAGE
 
     @property
-    def is_video(self):
-        return self.type == self.TYPE_VIDEO
+    def is_reels(self):
+        return self.type == self.TYPE_REELS
+
+    @property
+    def is_yt_shorts(self):
+        return self.type == self.TYPE_YT_SHORTS
